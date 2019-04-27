@@ -1,71 +1,3 @@
-.color1{
-	color: #AFAFB1;
-}
-.color2{
-	color: rgb(34,34,34);
-}
-.ilblock{
-	display: inline-block;
-}
-body{
-	background: #F2F2F2;
-}
-body div{
-	box-sizing: border-box;
-}
-
-
-
-
-.home{
-	width: 100%;
-	height: 46px;
-	font-size: 16px;
-	line-height: 46px;
-}
-.home img{
-	width: 14px;
-	height: 14px;
-	margin: 16px 20px;
-}
-.index-top{
-	height:46px ;
-	background: #fff;
-	width: 100%;
-	border: solid 1px #E2E2E2;
-	box-shadow: 0px 0px 8px #D3D3D3;
-	border-left: none;
-	border-right: none;
-}
-.logo{
-	width: 50%;
-	height: 100%;
-	font-size: 15px;
-	color: rgb(34,34,34);
-}
-.logo img{
-	height: 30px;
-	width: 30px;
-	margin: 8px 15px;
-}
-.logo-right{
-	float: right;
-	font-size: 14px;
-	color:rgb(102,102,102);
-	
-}
-.logo-right img{
-	width: 22px;
-	height: 22px;
-	margin: 12px 20px;
-}
-.logo-right-span{
-	width: 62px;
-	height: 100%;
-	/* border: solid 1px red; */
-	background: url(../images/home-icon10.png) no-repeat 48px center;
-	background-size: 20%;
-}
 
 /* =======================geng'duo */
 .commodity{
@@ -244,6 +176,7 @@ body div{
 	border-bottom: solid 1px #EAEAEA;
 	margin: 5px auto;
 	padding-bottom: 6px;
+	position: relative;
 }
 .all-store-img{
 	width: 115px;
@@ -281,8 +214,9 @@ overflow: hidden;
 	width:210px ;
 	font-size: 13px;
 	float: right;
-	position: relative;
+	position: absolute;
 	top: 5px;
+	left: 135px;
 }
 .all-store-text2 span{
 	background: #F98A48;
@@ -292,44 +226,48 @@ overflow: hidden;
 	
 }
 .store-textb{
-	position: relative;
-	top: -90px;
+	position: absolute;
+	top: 27px;
+	left: 120px;
 }
 .store-textc{
 	position: relative;
-	top: -45px;
+	top: 0px,
 }
 
+.best-topred{
+	font-size: 13px;
+	color: rgb(241,70,103);
+	margin-left: 30px;
+	margin-right: 15px;
+}
+.best-botred{
+	font-size: 13px;
+	color: rgb(241,70,103);
+	position: absolute;
+	top: 6px;
+	left: 130px;
+}
 
-
-
-/* ==========导航栏 */
-.navbar-brand{
+/* ====================西安站 */
+.zhan{
 	width: 100%;
-	height: 60px;
-	border: solid 1px red;
-	position: fixed;
-	bottom: 0px;
+	position: absolute;
+	top: 91px;
+	z-index: 8;
 	background: #fff;
-	font-size: 11px;
-	
-	}
-.navbar-brand ul li{
-	display: inline-block;
-	border: solid 1px red;
-	float: left;
-	width: 33.33%;
 	
 }
-.navbar-brand img{
-	width: 27px;
-	height: 27px;
-	
-}
-.navbar-brand a{
-	color: #9C9C9C;
+.zhan-item{
+	width: 70px;
+	height: 30px;
+	font-size: 13px;
+	color: rgb(34,34,34,);
+	border: solid 1px #EEEEEE;
+	border-radius: 6px;
+	margin-left: 40px;
+	text-align: center;
+	line-height: 30px;
+	margin-top: 20px;
 }
 
-.navbar-a{
-	color: rgb(153,153,153) !important;
-}

@@ -27,11 +27,12 @@
 		<!-- <script src="js/jquery.stellar.js"></script> -->
 		<script src="js/jquery.waypoints.min.js"></script>
 		<link rel="stylesheet" media="screen and (max-width:500px)" href="style.css">
-		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+		<link rel="stylesheet" type="text/css" href="GXcss/index.css"/>
+		<link rel="stylesheet" type="text/css" href="GXcss/public.css"/>
 	</head>
 	<body>
 		<div class="home color2">
-			<span>
+			<span onclick="backk()">
 				<img src="images/home-icon14.png" />
 			</span>
 			吃喝玩乐推荐
@@ -41,53 +42,71 @@
 				<img src="images/home-img1.png" /><span>购选</span>
 			</div>
 			<div class="logo-right">
-				<div class="logo-right-span ilblock">陕西站</div>
+				<div class="logo-right-span ilblock" onclick="show()">陕西站</div>
 				<span>
 					<img src="images/home-icon13.png" />
 				</span>
 			</div>
 		</div>
-		<div style="width: 100%;background: #fff;">
+		<div style="width: 100%;background: #F8F8F8;">
 			<div class="commodity">
 				<img src="images/home-banner.png" />
 			</div>
 			<div class="radionav">
 				<div class="radionav-box ilblock">
 					<div class="radionav-item" style="margin-left: 0px;">
+						<a href="more.html">
 						<img src="images/home-icon.png" />
 						<div class="color2">美食</div>
+						</a>
 					</div>
 					<div class="radionav-item">
+						<a href="more.html">
 						<img src="images/home-icon1.png" />
 						<div class="color2">亲子乐园</div>
+						</a>
 					</div>
 					<div class="radionav-item">
+						<a href="more.html">
 						<img src="images/home-icon2.png" />
 						<div class="color2">门票</div>
+						</a>
 					</div>
 					<div class="radionav-item">
+						<a href="more.html">
 						<img src="images/home-icon3.png" />
 						<div class="color2">生活服务</div>
+						</a>
 					</div>
 					<div class="radionav-item">
+						<a href="more.html">
 						<img src="images/home-icon4.png" />
 						<div class="color2">9块9专区</div>
+						</a>
 					</div>
 					<div class="radionav-item">
+						<a href="more.html">
 						<img src="images/home-icon5.png" />
 						<div class="color2">西安</div>
+						</a>
 					</div>
 					<div class="radionav-item">
+						<a href="more.html">
 						<img src="images/home-icon6.png" />
 						<div class="color2">咸阳</div>
+						</a>
 					</div>
 					<div class="radionav-item">
+						<a href="more.html">
 						<img src="images/home-icon7.png" />
 						<div class="color2">宝鸡</div>
+						</a>
 					</div>
 					<div class="radionav-item">
+						<a href="more.html">
 						<img src="images/home-icon8.png" />
 						<div class="color2">渭南</div>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -133,11 +152,11 @@
 			<div style="width: 100%; height: 15px;"></div>
 		</div>
 		<div style="width: 100%; height: 10px;"></div>
-		<div style="width: 100%; background: #fff; overflow: hidden; 
+		<div style="width: 100%; background: #F8F8F8; overflow: hidden; 
 		overflow: hidden;white-space: nowrap;">
 			<div class="best-top">
 				<div class="color2 ilblock" style="margin-left: 15px;">最火热买</div>
-				<div class="color1 ilblock besttext">查看更多</div>
+				<div class="color1 ilblock besttext"><a class="color1" style="width: 100%; height: 100%;" href="more.html"> 查看更多</a></div>
 			</div>
 			<div class="best-box ilblock" style="margin-left: 15px;">
 				<div class="best-box-top">
@@ -188,12 +207,13 @@
 			<div style="width: 100%; height: 15px;"></div>
 		</div>
 		<div style="width: 100%; height: 10px;"></div>
-		<div style="width: 100%; background: #fff; overflow: hidden;">
+		<div style="width: 100%; background: #F8F8F8; overflow: hidden; margin-bottom: 50px;">
 			<div class="best-top">
 				<div class="color2 ilblock" style="margin-left: 15px;">全部商品</div>
 				<div class="color1 ilblock besttext">查看更多</div>
 			</div>
 			<div class="all-store">
+				<a href="#">
 				<div class="all-store-img ilblock">
 					<img src="images/home-img3.png" />
 					<div class="store-num ilblock">
@@ -214,9 +234,11 @@
 						<span class="span2">￥23</span>
 					</div>	
 				</div>
+				</a>
 			</div>
 			
 			<div class="all-store">
+				<a href="#">
 				<div class="all-store-img ilblock">
 					<img src="images/home-img3.png" />
 					<div class="store-num ilblock">
@@ -241,28 +263,132 @@
 					</div>
 						
 				</div>
+				</a>
 			</div>
-			
-			
-			<div style="width: 100%; height: 15px;"></div>
+			<div class="all-store">
+				<a href="#">
+				<div class="all-store-img ilblock">
+					<img src="images/home-img3.png" />
+					<div class="store-num ilblock">
+						已售1235
+					</div>
+				</div>
+				<div class="ilblock color2 all-store-text">
+					[天水]仅138元抢2大1小亲子套票！喜迎五一国际劳动节，纯正纯正纯正
+				</div>
+				<div class="ilblock" style="margin-left: 15px; float: right; clear: both;margin-top: -40px;">
+					<div class="ilblock" style="font-size: 12px; color: rgb(249,138,72);">￥<span style="font-size: 20px;">298</span></div>
+					<div class="ilblock best-topred" style="left: -10px;" >
+						返佣具体以日期为准
+					</div>	
+				</div>
+				</a>
+			</div>
+			<div class="all-store">
+				<a href="#">
+				<div class="all-store-img ilblock">
+					<img src="images/home-img3.png" />
+					<div class="store-num ilblock">
+						已售1235
+					</div>
+				</div>
+				<div class="best-botred ilblock">【即将开售】</div>
+				<div class="ilblock color2 all-store-text" style="margin-top: 24px;">
+					[天水]仅138元抢2大1小亲子套票！喜迎五一国际劳动节，纯正纯正纯正
+				</div>
+				<div class="ilblock" style="margin-left: 15px; float: right; clear: both;margin-top: -40px;">
+					<div class="ilblock" style="font-size: 12px; color: rgb(249,138,72);">￥<span style="font-size: 20px;">298</span></div>
+					<div class="ilblock best-money1" style="left: -10px;" >
+						<span class="span1">店反</span>
+						<span class="span2">￥23</span>
+					</div>	
+					<div class="ilblock best-money2" style="left: -10px;">
+						<span class="span1">团反</span>
+						<span class="span2">￥23</span>
+					</div>	
+				</div>
+				</a>
+			</div>
+			<div style="width: 100%; height: 15px; background: #F8F8F8;"></div>
+			<div class="zhan" style="display: none;">
+				<div class="zhan-item ilblock">
+					辽宁站
+				</div>
+				<div class="zhan-item ilblock">
+					黑龙江站
+				</div>
+				<div class="zhan-item ilblock">
+					辽宁站
+				</div>
+				<div class="zhan-item ilblock">
+					辽宁站
+				</div>
+				<div class="zhan-item ilblock">
+					辽宁站
+				</div>
+				<div class="zhan-item ilblock">
+					辽宁站
+				</div>
+				<div class="zhan-item ilblock">
+					辽宁站
+				</div>
+				<div class="zhan-item ilblock">
+					辽宁站
+				</div>
+				<div class="zhan-item ilblock">
+					辽宁站
+				</div>
+				<div class="zhan-item ilblock">
+					辽宁站
+				</div>
+				<div class="zhan-item ilblock">
+					辽宁站
+				</div>
+				<div class="zhan-item ilblock">
+					辽宁站
+				</div>
+				<div class="zhan-item ilblock">
+					辽宁站
+				</div>
+				<div class="zhan-item ilblock">
+					辽宁站
+				</div>
+				<div class="zhan-item ilblock">
+					辽宁站
+				</div>
+				<div style="width: 100%; height: 20px;"></div>
+			</div>
 		</div>
 		<div class="navbar-brand">
 			<ul>
-				<li><a href="#">
-				<div class="navbar-img"><img src="images/navbar1-a.png"/></div>
-				<div class="navbar-a">首页</div>
-				</a></li>
-				<li><a href="#">
-				<div class="navbar-img"><img src="images/navbar2.png" /> </div>
-				<div>关注</div>
-				</a></li>
-				<li><a href="#">
+				<li>
+					<a href="index.html">
+						<div class="navbar-img"><img src="images/navbar1-a.png"/></div>
+						<div style="color: #FC7C5D;">首页</div>
+					</a>
+				</li>
+				<li>
+					<a href="follow.html">
+						<div class="navbar-img"><img src="images/navbar2.png" /> </div>
+						<div>关注</div>
+					</a>	
+				</li>
+				<li><a href="user.html">
 				<div class="navbar-img"><img src="images/navbar3.png" /></div>
 				<div>我的</div>
 				</a></li>
 			</ul>
 		</div>
 	</body>
+	<script type="text/javascript">
+		function backk(){
+			window.history.go(-1);
+		}
+		function show(){
+			
+			
+		}
+	</script>
 </html>
 	
 
