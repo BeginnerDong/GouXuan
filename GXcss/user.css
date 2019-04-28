@@ -54,7 +54,8 @@
 	margin-left: 5px;
 	}
 .list a{
-	text-indent: 42px;
+	display: inline;
+	
 }
 .list li{
 	height: 46px;
@@ -62,4 +63,5 @@
 	border-bottom: solid 1px #EFEFEF;
 	background: url(../images/home-icon9.png) no-repeat 348px center;
 	background-size: 1.6%;
+	text-indent: 42px;
 }

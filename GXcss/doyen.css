@@ -1,0 +1,15 @@
+.top{
+	height: 375px;
+	height: 118px;
+	background: #FF854E;
+	position: relative;
+}
+.top-img{
+	width:60px;
+	height: 61px;
+	border-radius: 50%;
+	/* margin: 30px 15px 30px 25px; */
+	position: absolute;
+	top: 32px;
+	left: 25px;
+}

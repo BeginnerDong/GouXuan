@@ -11,6 +11,36 @@
 .color4{
 	color:#3C3C3C;
 }
+.color5{
+	color: #FFECE6;
+}
+.color6{
+	color: rgb(249,138,72);
+}
+
+.font15{
+	font-size: 15px;
+}
+.font14{
+	font-size: 14px;
+}
+.font13{
+	font-size: 13px;
+}
+.font12{
+	font-size: 12px;
+}
+.font10{
+	font-size: 10px;
+}
+
+
+.radiu20{
+	border-radius: 20px;
+}
+.radiu50{
+	border-radius: 50%;
+}
 
 
 .bg1{
@@ -29,11 +59,25 @@
 .ilblock{
 	display: inline-block;
 }
+.overflow0{
+	overflow: hidden;
+}
+.overflow1{
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+}
+.overflow2{
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+}
 
 
 
-
-
+.home{
+	background: #F2F2F2;
+}
 body{
 	background: #F2F2F2;
 }
