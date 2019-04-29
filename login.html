@@ -27,52 +27,66 @@
 		<link rel="stylesheet" type="text/css" href="GXcss/public.css"/>
 		<style type="text/css">
 			body{
-				padding: 0px 15px 15px;
+					background: #fff;
 			}
 			.home{
-				border-bottom: solid 1px #EEEEEE;
+				background: none;
 			}
 			.top{
-				border-radius: 8px;
-				width:100% ;
-				text-align: justify;
-				padding: 15px 10px;
-				
+				width: 100%;
+				height: 240px;
+				background: url(images/服务/service-icon1.png) no-repeat;
+				background-size: 100%;
+				margin-bottom: 30px;
 			}
-			.img-one{
-				width: 165px;
-				height: 235x;
+			.top-img{
+				border-top:solid 2px #F19C7F ;
 			}
+			.top-list{
+				border-bottom: solid 1px #F0F0F0;
+				height: 60px;
+				width: 80%;
+				line-height: 66px;
+			}
+			
 		</style>
 	</head>
 	<body>
-		<div class="home color2">
-			<span onclick="backk()">
-				<img src="images/home-icon14.png" />
-			</span>
-			达人二维码
-		</div>
-		<div class="color2 font14 top bg1" style="margin: 15px 0px 20px;">
-			<div style="padding-left: 6%;">
-				<ol style="list-style-type:decimal;">
-					<li>选择海报后，长按海报</li>
-					<li>发送还给微信好友或保存海报分享到朋友圈</li>
-					<li>内容内容内容内容内容内容内容内容</li>
-				</ol>
+		<div class="top">
+			<div class="home color5">
+				<span onclick="backk()">
+					<img src="images/微信图片_20190429164230.png" />
+				</span>
+				商家登录
 			</div>
-			<div style="color: #FE986F; text-align: center;">
-				<div class="ilblock flo-left font10" style="width: 50%;">识别海报二维码</div>
-				<div class="ilblock flo-left font10" style="width: 50%;">成为您的客户</div>
+			<div class="top-img">
+				<img src="images/达人/img3.png" style="width: 105px;position: relative; top: 36px; left: 125px;"/>
 			</div>
-			<div style="clear: both;"></div>
 		</div>
-		<div class="bg1" style="width: 100%; padding: 20px 0px; border-radius: 8px;">
-			<a href="code-first.html">
-				<img class="img-one" src="images/达人/img1.png" />
-			</a>
-			<a href="code-second.html">
-				<img class="img-one" src="images/达人/img2.png" style="margin-left: 10px;"/>
-			</a>
+		<div style="padding-left: 15px; padding-right: 15px;">
+			<div class="color2">
+				<div class="ilblock">
+					用户名：
+				</div>
+				<div class="color1 ilblock top-list">请输入用户名或者手机号</div>
+			</div>
+			<div class="color2">
+				<div class="ilblock">
+					验证码：
+				</div>
+				<div class="color1 ilblock top-list">
+					<div class="flo-left ilblock flo-right">获取验证码</div>
+				</div>
+			</div>
+			<div class="color2">
+				<div class="ilblock">
+					验证符：
+				</div>
+				<div class="color1 ilblock top-list">
+					<img class="flo-right" src="images/服务/service-img1.png" style="width: 80px; position: relative; top: 20px;"/>
+				</div>
+			</div>
+			<button class=" radiu20" style="width: 80%; margin: 50px auto;height: 40px; line-height: 40px; background: #F8835B;"><a class="color5" href="store.html">登录</a></button>
 		</div>
 		
 	</body>

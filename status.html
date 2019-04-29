@@ -27,22 +27,25 @@
 		<link rel="stylesheet" type="text/css" href="GXcss/public.css"/>
 		<style type="text/css">
 			body{
-				padding: 0px 15px 15px;
+				background: #fff;
 			}
-			.home{
-				border-bottom: solid 1px #EEEEEE;
-			}
-			.top{
-				border-radius: 8px;
-				width:100% ;
-				text-align: justify;
-				padding: 15px 10px;
+			.big-box{
+				width: 345px;
+				height: 490px;
 				
+				border: solid 2px #E8E8E8;
+				margin: 30px auto;
+				border-radius: 8px;
+				box-shadow: 0px 0px 12px #E8E8E8;
+				padding: 45px 15px ;
 			}
-			.img-one{
-				width: 165px;
-				height: 235x;
+			.list{
+				height: 50px;
+				border-bottom: solid 1px #F6F6F6;
+				line-height: 52px;
 			}
+			
+		</div>
 		</style>
 	</head>
 	<body>
@@ -50,30 +53,37 @@
 			<span onclick="backk()">
 				<img src="images/home-icon14.png" />
 			</span>
-			达人二维码
+			电子码查询系统
 		</div>
-		<div class="color2 font14 top bg1" style="margin: 15px 0px 20px;">
-			<div style="padding-left: 6%;">
-				<ol style="list-style-type:decimal;">
-					<li>选择海报后，长按海报</li>
-					<li>发送还给微信好友或保存海报分享到朋友圈</li>
-					<li>内容内容内容内容内容内容内容内容</li>
-				</ol>
+		<div class="big-box">
+			<div class="list">
+				身份验证
 			</div>
-			<div style="color: #FE986F; text-align: center;">
-				<div class="ilblock flo-left font10" style="width: 50%;">识别海报二维码</div>
-				<div class="ilblock flo-left font10" style="width: 50%;">成为您的客户</div>
+			<div class="list">
+				手机号：
 			</div>
-			<div style="clear: both;"></div>
+			<div class="color1 font10" style="border: solid 1px #FFF0EA; height: 30px; line-height: 30px; padding: 0px 15px;
+			 box-shadow: 0px 0px 6px #FFF0EA; border-radius: 3px;">
+				购买时等级的手机号
+			</div>
+			<div class="list">
+				图形验证码
+			</div>
+			<input class="color1 font10" style="border: solid 1px #EBEBEB; height: 30px; line-height: 30px; padding: 0px 15px;
+			 box-shadow: 0px 0px 6px #EBEBEB; border-radius: 3px;width: 100%; " placeholder="输入右边字符">
+				<img src="images/服务/service-img1.png" style="height: 30px; float: right; position: relative; top: -30px;"/>
+			</input>
+			<div class="list">
+				短信验证
+			</div>
+			<input class="color1 font10" style="border: solid 1px #EBEBEB; height: 30px; line-height: 30px; padding: 0px 15px;
+			 box-shadow: 0px 0px 6px #EBEBEB; border-radius: 3px;width: 100%; " placeholder="6位短信验证">
+				<div class="font10 color2 bg2 ilblock flo-right" style="height: 30px; line-height: 30px;position: relative; top: -30px;width: 80px;text-align: center; border: solid 1px #EBEBEB; ">获取验证码</div>
+			</input>
+			<button class="color5 font13" style="width: 88%;height: 30px; background: #F67550; margin: 20px auto;">进入系统</button>
 		</div>
-		<div class="bg1" style="width: 100%; padding: 20px 0px; border-radius: 8px;">
-			<a href="code-first.html">
-				<img class="img-one" src="images/达人/img1.png" />
-			</a>
-			<a href="code-second.html">
-				<img class="img-one" src="images/达人/img2.png" style="margin-left: 10px;"/>
-			</a>
-		</div>
+		
+		
 		
 	</body>
 </html>
