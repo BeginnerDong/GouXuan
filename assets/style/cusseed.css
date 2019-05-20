@@ -1,0 +1,129 @@
+.top{
+	height:40px ;
+	width: 100%;
+}
+.top-left{
+	background: #fff;
+	width: 272px;
+	height: 100%;
+	float: left;
+	font-size: 15px;
+	line-height: 40px;
+}
+.top-right{
+	background: #fff;
+	width: 97px;
+	height: 100%;
+	float: right;
+}
+
+
+
+.best-box{
+	border:solid 1px #EEEEEE;
+	width: 168px;
+	height:316px;
+	border-radius:10px 10px 0px 0px ;
+	position: relative;
+	overflow: hidden;
+	background: #fff;
+	margin-top: 10px;
+	display: inline-block;
+	margin-left: 8px;
+}
+.best-box-top{
+	width: 168px;
+	height: 188px;
+	
+}
+.best-box-top img{
+	height: 188px;
+	width: 168px;
+}
+.best-num{
+	font-size: 12px;
+	color: #EBEBEB;
+	background: rgba(0,0,0,0.6);
+	border-radius: 18px;
+	position: absolute;
+	padding: 3px 12px;
+	top: 150px;
+	left: 6px;
+	}
+.best-text{
+	margin: 10px 10px 5px 10px;
+	text-align: justify;
+	font-size: 12px;
+	height: 46px;
+	line-height: 21px;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+	
+}
+.best-money1{
+	height: 18px;
+	width: 59px;
+	background: url(/static/images/home-icon15.png) no-repeat;
+	background-size: 100%;
+	margin-left: 15px;
+	position: relative;
+	font-size: 10px;
+	
+	
+}
+.best-money2{
+	height: 18px;
+	width: 59px;
+	margin-left: 5px;
+	background: url(/static/images/home-icon16.png) no-repeat;
+	background-size: 100%;
+	position: relative;
+	font-size: 10px;
+}
+.best-money1 .span1{
+	color: #fff;
+	position: relative;
+	left: 3px;
+	
+}
+.best-money1 .span2{
+	color: #F98A48;
+	position: relative;
+	left: 2px;
+}
+.best-money2 .span1{
+	color: #fff;
+	position: relative;
+	left: 3px;
+}
+.best-money2 .span2{
+	color: #F14667;
+	position: relative;
+	left: 2px;
+}
+
+.best-time{
+	background: rgba(0,0,0,0.7);
+	width: 100%;
+	height: 30px;
+	position: absolute;
+	top: 130px;
+	color: #fff;
+	font-size:12px ;text-align: center;
+	line-height: 30px;
+}
+.best-time span{
+	background: #F98A48;
+	padding: 1px 4px;
+	border-radius: 3px;
+}
+.best-time2{
+	font-size: 15px;
+}
+.best-moneyleft{
+	font-size: 13px;
+	color: #F2456F;
+	margin-left: 30px;
+}

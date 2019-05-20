@@ -1,2 +1,2 @@
-# GouXuan
+# SolelyTech
 miniprogram
