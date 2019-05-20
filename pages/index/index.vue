@@ -202,6 +202,32 @@
 					</view>
 				</view>
 			</view>
+			<view class="all-store" v-for="item in mainData" :data-id="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/calendarWatch/calendarWatch?id='+$event.currentTarget.dataset.id}})">
+				<view class="all-store-img ilblock">
+					<img src="/static/images/home-img3.png" />
+					<view class="store-num ilblock" v-if="item.start_time>now">
+						已售{{item.false_sale_count }}
+					</view>
+				</view>
+				<view class="best-botred ilblock" v-if="item.start_time<now">【即将开售】</view>
+				<view class="ilblock color2 all-store-text">
+					[{{item.city}}]{{item.title}}
+				</view>
+				<view class="ilblock" style="margin-left: 15px; float: right; clear: both;margin-top: -40px;">
+					<view class="ilblock" style="font-size: 12px; color: rgb(249,138,72);">￥<span style="font-size: 20px;">{{item.price}}</span></view>
+					<view class="ilblock best-money1" style="left: -10px;" v-if="item.skuDate.length==0">
+						<span class="span1">店反</span>
+						<span class="span2">￥{{item.shop_reward}}</span>
+					</view>
+					<view class="ilblock best-money2" style="left: -10px;" v-if="item.skuDate.length==0">
+						<span class="span1">团反</span>
+						<span class="span2">￥{{item.group_reward}}</span>
+					</view>
+					<view class="ilblock best-topred" style="left: -10px;" v-if="item.skuDate.length>0">
+						返佣具体以日期为准
+					</view>
+				</view>
+			</view>
 			<view style="width: 100%; height: 15px; background: #F8F8F8;"></view>
 			<view class="zhan" style="display: none;">
 				<view class="zhan-item ilblock">
