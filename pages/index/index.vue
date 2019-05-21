@@ -212,14 +212,16 @@
 					</view>
 				</view>
 				<view class=" ilblock" style="width: 67%;position: absolute; top: 0px;right: 0px;"> 
-					<view class="best-botred" v-if="item.start_time<now">【即将开售】</view>
+					<!-- <view class="best-botred" v-if="item.start_time<now">【即将开售】</view> -->
+					<view class="color1 font12 time" v-if="item.start_time<now">距结束仅剩
+					<view class="bg3">00</view>天<view class="bg3">13</view>:<view class="bg3">34</view>:<view class="bg3">30</view> </view>
 					<view class="ilblock color2 all-store-text">
 						[{{item.city}}]{{item.title}}
 					</view>
 					<view class="ilblock" style="padding: 0px 5px;width: 100%;">
 						<view class="ilblock" style="font-size: 12px; color: rgb(249,138,72);margin-bottom: 10pz;">￥<span style="font-size: 20px;">{{item.price}}</span></view>
 						
-						<view class="ilblock" style="flex-wrap: nowrap;width: 65%;">
+						<view class="ilblock" style="flex-wrap: nowrap;width: 64%;">
 							<div class="ilblock best-money1" style="width:42%;" v-if="item.skuDate.length==0">
 								<view class="span1 ilblock bg3">店反</view>
 								<view class="span2 ilblock color8">￥{{item.shop_reward}}</view>

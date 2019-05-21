@@ -235,6 +235,26 @@ overflow: hidden;
 	padding-left: 5px;
 }
 
+.time{
+	margin-left: 15px;
+}
+.time .bg3{
+	display: inline-block;
+	color: #fff;
+	width: 23px;
+	height: 16px;
+	border-radius: 2px;
+	line-height: 16px;
+	text-align: center;
+	margin: 0px 3px;
+}
+
+
+
+
+
+
+
 /* ====================西安站 */
 .zhan{
 	width: 100%;
