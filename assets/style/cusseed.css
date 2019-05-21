@@ -4,7 +4,7 @@
 }
 .top-left{
 	background: #fff;
-	width: 272px;
+	width:71%;
 	height: 100%;
 	float: left;
 	font-size: 15px;
@@ -12,7 +12,7 @@
 }
 .top-right{
 	background: #fff;
-	width: 97px;
+	width:26%;
 	height: 100%;
 	float: right;
 }
@@ -21,9 +21,9 @@
 
 .best-box{
 	border:solid 1px #EEEEEE;
-	width: 168px;
+	width: 42%;
 	height:316px;
-	border-radius:10px 10px 0px 0px ;
+	border-radius:10px;
 	position: relative;
 	overflow: hidden;
 	background: #fff;
@@ -32,13 +32,13 @@
 	margin-left: 8px;
 }
 .best-box-top{
-	width: 168px;
+	width: 100%;
 	height: 188px;
 	
 }
 .best-box-top img{
-	height: 188px;
-	width: 168px;
+	height: 100%;
+	width: 100%;
 }
 .best-num{
 	font-size: 12px;
@@ -64,44 +64,34 @@
 }
 .best-money1{
 	height: 18px;
-	width: 59px;
-	background: url(/static/images/home-icon15.png) no-repeat;
-	background-size: 100%;
+	width: 38%;
 	margin-left: 15px;
-	position: relative;
 	font-size: 10px;
-	
+	line-height:15px ;
+	border-radius: 4px;
+	border: solid 1px #F98A48;
 	
 }
 .best-money2{
 	height: 18px;
-	width: 59px;
+	width: 38%;
 	margin-left: 5px;
-	background: url(/static/images/home-icon16.png) no-repeat;
-	background-size: 100%;
-	position: relative;
 	font-size: 10px;
+	line-height:18px ;
+	border-radius: 4px;
+	border: solid 1px #F14667;
 }
-.best-money1 .span1{
+.span1{
+	width: 50%;
+	height: 100%;
 	color: #fff;
-	position: relative;
-	left: 3px;
-	
+	text-align: center;
 }
-.best-money1 .span2{
+.span2{
+	width: 50%;
+	height: 100%;
 	color: #F98A48;
-	position: relative;
-	left: 2px;
-}
-.best-money2 .span1{
-	color: #fff;
-	position: relative;
-	left: 3px;
-}
-.best-money2 .span2{
-	color: #F14667;
-	position: relative;
-	left: 2px;
+	text-align: center;
 }
 
 .best-time{

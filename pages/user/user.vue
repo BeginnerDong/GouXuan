@@ -115,22 +115,22 @@
 
 		<!-- ------------footer----------------- -->
 		<div style="width: 100%; height: 65px;"></div>
-		<view class="navbar-brand">
+		<!-- <view class="navbar-brand">
 			<ul>
 				<li @click="webSelf.$Router.navigateTo({route:{path:'/pages/index/index'}})">
-					<view class="navbar-img"><img src="/static/images/navbar1-a.png" /></view>
-					<view style="color: #FC7C5D;">首页</view>
+					<view class="navbar-img"><img src="/static/images/navbar1.png" /></view>
+					<view >首页</view>
 				</li>
 				<li @click="webSelf.$Router.navigateTo({route:{path:'/pages/follow/follow'}})">
 					<view class="navbar-img"><img src="/static/images/navbar2.png" /> </view>
 					<view>关注</view>
 				</li>
 				<li >
-					<view class="navbar-img"><img src="/static/images/navbar3.png" /></view>
-					<view>我的</view>
+					<view class="navbar-img"><img src="/static/images/navbar3-a.png" /></view>
+					<view style="color: #FC7C5D;">我的</view>
 				</li>
 			</ul>
-		</view>
+		</view> -->
 	</view>
 </template>
 

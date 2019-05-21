@@ -30,6 +30,13 @@ html {
 	color:#FF895A;
 }
 
+.color8{
+	color: #F98A48;
+}
+.color9{
+	color: #F14667;
+}
+
 .font15{
 	font-size: 15px;
 }
@@ -61,6 +68,14 @@ html {
 .bg2{
 	background: #F2F2F2;
 }
+.bg3{
+	background: #F98A48;
+}
+.bg4{
+	background: #F14667;
+}
+
+
 
 .flo-left{
 	float: left;
@@ -169,25 +184,15 @@ body div{
 	background: #fff;
 	font-size: 11px;
 	box-shadow: 0px 0px 45px #E9E9E9;
-	padding: 15px 15px;
 }
-.navbar-brand ul li{
-	display: inline-block;
-	/* float: left; */
-	width: 32.5%;
-	text-align: center;
+.navbar-item{
+	display:inline-block;
+	width: 33.3%;
 	height: 60px;
-	list-style: none;
-	position: relative;
-	top: -9px;
-	
-}
-.navbar-brand img{
-	width: 27px;
-	height: 25px;
-	margin-bottom: 3px;
-}
-.navbar-brand a{
-	color: #9C9C9C;
 	text-align: center;
+}
+.navbar-brand image{
+	width: 26px;
+	height: 24px;
+	margin-bottom: 3px;
 }

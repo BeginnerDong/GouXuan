@@ -134,14 +134,14 @@
 				</view>
 				<view style="margin-left: 15px;">
 					<view class="ilblock" style="font-size: 12px; color: rgb(249,138,72);">￥<span style="font-size: 20px;">298</span></view>
-					<view class="ilblock best-money1">
-						<span class="span1">店反</span>
-						<span class="span2">￥23</span>
-					</view>
-					<view class="ilblock best-money2">
-						<span class="span1">团反</span>
-						<span class="span2">￥23</span>
-					</view>
+					<div class="ilblock best-money1">
+						<view class="span1 ilblock bg3">店反</view>
+						<view class="span2 ilblock color8">￥12</view>
+					</div>
+					<div class="ilblock best-money2">
+						<view class="span1 ilblock bg4">团反</view>
+						<view class="span2 ilblock color9">￥13</view>
+					</div>
 				</view>
 			</view>
 
@@ -157,14 +157,14 @@
 				</view>
 				<view style="margin-left: 15px;">
 					<view class="ilblock" style="font-size: 12px; color: rgb(249,138,72);">￥<span style="font-size: 20px;">298</span></view>
-					<view class="ilblock best-money1">
-						<span class="span1">店反</span>
-						<span class="span2">￥23</span>
-					</view>
-					<view class="ilblock best-money2">
-						<span class="span1">团反</span>
-						<span class="span2">￥23</span>
-					</view>
+					<div class="ilblock best-money1">
+						<view class="span1 ilblock bg3">店反</view>
+						<view class="span2 ilblock color8">￥12</view>
+					</div>
+					<div class="ilblock best-money2">
+						<view class="span1 ilblock bg4">团反</view>
+						<view class="span2 ilblock color9">￥13</view>
+					</div>
 				</view>
 			</view>
 
@@ -176,55 +176,63 @@
 				<view class="color2 ilblock" style="margin-left: 15px;font-size:14px">全部商品</view>
 				<view class="color1 ilblock besttext" style="font-size:14px">查看更多</view>
 			</view>
-			<view class="all-store" v-for="item in mainData" :data-id="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/recommend/recommend?id='+$event.currentTarget.dataset.id}})">
+			<!-- <view class="all-store" v-for="item in mainData" :data-id="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/recommend/recommend?id='+$event.currentTarget.dataset.id}})">
 				<view class="all-store-img ilblock">
 					<img src="/static/images/home-img3.png" />
 					<view class="store-num ilblock" v-if="item.start_time>now">
 						已售{{item.false_sale_count }}
 					</view>
 				</view>
-				<view class="best-botred ilblock" v-if="item.start_time<now">【即将开售】</view>
-				<view class="ilblock color2 all-store-text">
-					[{{item.city}}]{{item.title}}
+				<view class="ilblock" style="border: solid 1rpx; width:67%; height: 100%;">
+					<view class="best-botred ilblock" v-if="item.start_time<now">【即将开售】</view>
+					<view class="ilblock color2 all-store-text">
+						[{{item.city}}]{{item.title}}
+					</view>
+					<view class="ilblock" style="margin-left: 15px; float: right; clear: both;margin-top: -40px;">
+						<view class="ilblock" style="font-size: 12px; color: rgb(249,138,72);">￥<span style="font-size: 20px;">{{item.price}}</span></view>
+						<view class="ilblock best-money1" style="left: -10px;" v-if="item.skuDate.length==0">
+							<span class="span1">店反</span>
+							<span class="span2">￥{{item.shop_reward}}</span>
+						</view>
+						<view class="ilblock best-money2" style="left: -10px;" v-if="item.skuDate.length==0">
+							<span class="span1">团反</span>
+							<span class="span2">￥{{item.group_reward}}</span>
+						</view>
+						<view class="ilblock best-topred" style="left: -10px;" v-if="item.skuDate.length>0">
+							返佣具体以日期为准
+						</view>
+					</view>
 				</view>
-				<view class="ilblock" style="margin-left: 15px; float: right; clear: both;margin-top: -40px;">
-					<view class="ilblock" style="font-size: 12px; color: rgb(249,138,72);">￥<span style="font-size: 20px;">{{item.price}}</span></view>
-					<view class="ilblock best-money1" style="left: -10px;" v-if="item.skuDate.length==0">
-						<span class="span1">店反</span>
-						<span class="span2">￥{{item.shop_reward}}</span>
-					</view>
-					<view class="ilblock best-money2" style="left: -10px;" v-if="item.skuDate.length==0">
-						<span class="span1">团反</span>
-						<span class="span2">￥{{item.group_reward}}</span>
-					</view>
-					<view class="ilblock best-topred" style="left: -10px;" v-if="item.skuDate.length>0">
-						返佣具体以日期为准
-					</view>
-				</view>
-			</view>
+			</view> -->
 			<view class="all-store" v-for="item in mainData" :data-id="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/calendarWatch/calendarWatch?id='+$event.currentTarget.dataset.id}})">
 				<view class="all-store-img ilblock">
 					<img src="/static/images/home-img3.png" />
-					<view class="store-num ilblock" v-if="item.start_time>now">
+					<view class="store-num ilblock" >
 						已售{{item.false_sale_count }}
 					</view>
 				</view>
-				<view class="best-botred ilblock" v-if="item.start_time<now">【即将开售】</view>
-				<view class="ilblock color2 all-store-text">
-					[{{item.city}}]{{item.title}}
-				</view>
-				<view class="ilblock" style="margin-left: 15px; float: right; clear: both;margin-top: -40px;">
-					<view class="ilblock" style="font-size: 12px; color: rgb(249,138,72);">￥<span style="font-size: 20px;">{{item.price}}</span></view>
-					<view class="ilblock best-money1" style="left: -10px;" v-if="item.skuDate.length==0">
-						<span class="span1">店反</span>
-						<span class="span2">￥{{item.shop_reward}}</span>
+				<view class=" ilblock" style="width: 67%;position: absolute; top: 0px;right: 0px;"> 
+					<view class="best-botred" v-if="item.start_time<now">【即将开售】</view>
+					<view class="ilblock color2 all-store-text">
+						[{{item.city}}]{{item.title}}
 					</view>
-					<view class="ilblock best-money2" style="left: -10px;" v-if="item.skuDate.length==0">
-						<span class="span1">团反</span>
-						<span class="span2">￥{{item.group_reward}}</span>
-					</view>
-					<view class="ilblock best-topred" style="left: -10px;" v-if="item.skuDate.length>0">
-						返佣具体以日期为准
+					<view class="ilblock" style="padding: 0px 5px;width: 100%;">
+						<view class="ilblock" style="font-size: 12px; color: rgb(249,138,72);margin-bottom: 10pz;">￥<span style="font-size: 20px;">{{item.price}}</span></view>
+						
+						<view class="ilblock" style="flex-wrap: nowrap;width: 65%; position: relative;top:3px;">
+							<div class="ilblock best-money1" style="width:42%;" v-if="item.skuDate.length==0">
+								<view class="span1 ilblock bg3">店反</view>
+								<view class="span2 ilblock color8">￥{{item.shop_reward}}</view>
+							</div>
+							<div class="ilblock best-money2"  style=" width:42%;" v-if="item.skuDate.length==0">
+								<view class="span1 ilblock bg4">团反</view>
+								<view class="span2 ilblock color9">￥{{item.group_reward}}</view>
+							</div>
+						</view>
+						
+						<view class="ilblock best-topred" style="position: absolute; bottom: 5px; left: 32%;" v-if="item.skuDate.length>0">
+							返佣具体以日期为准
+						</view>
 					</view>
 				</view>
 			</view>
@@ -337,22 +345,27 @@
 
 		<view style="width: 100%; height: 20px;"></view>
 		<view class="navbar-brand">
-			<ul>
-				<li>
-					<view class="navbar-img"><img src="/static/images/navbar1-a.png" /></view>
-					<view style="color: #FC7C5D;">首页</view>
-				</li>
-				<li @click="webSelf.$Router.navigateTo({route:{path:'/pages/follow/follow'}})">
-					<view class="navbar-img"><img src="/static/images/navbar2.png" /> </view>
+			<view style="margin-top: 10px;">
+				<view class="navbar-item ilblock">
+					<view class="navbar-img">
+						<image src="/static/images/navbar1-a.png"></image>
+					</view>
+					<view class="color8">首页</view>
+				</view>
+				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/follow/follow'}})">
+					<view class="navbar-img">
+						<image src="/static/images/navbar2.png"></image>
+					</view>
 					<view>关注</view>
-				</li>
-				<li @click="webSelf.$Router.navigateTo({route:{path:'/pages/user/user'}})">
-					<view class="navbar-img"><img src="/static/images/navbar3.png" /></view>
+				</view>
+				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/user/user'}})">
+					<view class="navbar-img">
+						<image src="/static/images/navbar3.png"></image>
+					</view>
 					<view>我的</view>
-				</li>
-			</ul>
+				</view>
+			</view>
 		</view>
-
 	</view>
 </template>
 
@@ -454,7 +467,7 @@
 <style>
 	@import "../../assets/style/public.css";
 	@import "../../assets/style/index.css";
-
+	
 	@import "../../assets/style/bootstrap.css";
 	@import "../../assets/style/basic.css";
 </style>

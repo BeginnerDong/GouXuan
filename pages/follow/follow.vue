@@ -17,7 +17,7 @@
 		<div class="top" v-else>
 			<div class="top-left ilblock">
 				<div class="ilblock">
-					<span class="color1" style="margin-left: 10px;">全部</span>
+					<span class="color2" style="margin-left: 10px;">全部</span>
 				</div>
 				<div class="ilblock" style="text-align: center;width:25%">
 					<span class="color1" style="margin-left: 10px;">酒店</span>
@@ -25,8 +25,8 @@
 			</div>
 
 			<div class="top-right ilblock"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/follow-content/follow-content'}})">
-				<img src="/static/images/focus%20on-icon1.png" style="width: 20px; margin: 8px 5px;" />
-				<div class="ilblock" style="color: rgb(249,138,72); font-size: 13px;">关注管理</div>
+				<img src="/static/images/focus%20on-icon1.png" style="width:20%; margin: 8px 6px;" />
+				<div class="ilblock" style="color: rgb(249,138,72); font-size: 13px; position: relative; top: -16px;">关注管理</div>
 			</div>
 		</div>
 		
@@ -40,37 +40,39 @@
 			<div class="best-text color2">
 				{{item.title}}
 			</div>
-			<div class="ilblock best-money1">
-				<span class="span1">店反</span>
-				<span class="span2">￥{{item.shop_reward}}</span>
-			</div>
-			<div class="ilblock best-money2">
-				<span class="span1">团反</span>
-				<span class="span2">￥{{item.group_reward}}</span>
-			</div>
-			<div class="ilblock" style="font-size: 12px; color: rgb(249,138,72); margin-left: 15px; margin-top: 8px;">￥
-				<span style="font-size: 20px;">{{item.price}}</span>
-			</div>
+			<view>
+				<div class="ilblock best-money1">
+					<view class="span1 ilblock" style="background: #F98A48;">店反</view>
+					<view class="span2 ilblock" style="color: #F98A48;">￥{{item.shop_reward}}</view>
+				</div>
+				<div class="ilblock best-money2">
+					<view class="span1 ilblock" style="background: #F14667;">团反</view>
+					<view class="span2 ilblock" style="color: #F14667;">￥{{item.group_reward}}</view>
+				</div>
+				<div class="ilblock" style="font-size: 12px; color: rgb(249,138,72); margin-left: 15px; margin-top: 8px;">￥
+					<span style="font-size: 20px;">{{item.price}}</span>
+				</div>
+			</view>
 		</div>
 
+		
 
-		<div style="width: 100%; height: 60px;"></div>
-		<view class="navbar-brand">
-			<ul>
-				<li  @click="webSelf.$Router.navigateTo({route:{path:'/pages/index/index'}})">
+		<!-- <view class="navbar-brand">
+			<view style="margin-top: 10px;">
+				<view class="navbar-item ilblock"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/index/index'}})">
 					<view class="navbar-img"><img src="/static/images/navbar1.png" /></view>
-					<view >首页</view>
-				</li>
-				<li>
-					<view class="navbar-img"><img src="/static/images/navbar2-a.png" /> </view>
+					<view>首页</view>
+				</view>
+				<view class="navbar-item ilblock">
+					<view class="navbar-img"><image src="../../static/images/navbar2-a.png"/> </view>
 					<view style="color: #FC7C5D;">关注</view>
-				</li>
-				<li @click="webSelf.$Router.navigateTo({route:{path:'/pages/user/user'}})">
+				</view>
+				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/user/user'}})">
 					<view class="navbar-img"><img src="/static/images/navbar3.png" /></view>
 					<view>我的</view>
-				</li>
-			</ul>
-		</view>
+				</view>
+			</view>
+		</view> -->
 	</view>
 </template>
 

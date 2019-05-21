@@ -10,11 +10,10 @@
 	height: 170px;
 }
 .radionav-box{
-	/* border: solid 1px red; */
 	margin: 25px 0px 10px 0px;
 }
 .radionav-item{
-	width: 74px;
+	width: 20%;
 	height: 90px;
 	/* border: solid 1px red; */
 	font-size: 13px;
@@ -25,7 +24,7 @@
 	float: left;
 	}
 .radionav-item img{
-	width:46px ;
+	width:46px;
 	height:46px;
 	margin-bottom: 10px;
 	margin-left: 0px;
@@ -82,7 +81,7 @@
 	width: 90px;
 	float: right;
 	background: url(/static/images/home-icon9.png) no-repeat 65px center;
-	background-size: 9%;
+	background-size: 7%;
 }
 .best-box{
 	border:solid 1px #EEEEEE;
@@ -124,50 +123,40 @@
 	overflow: hidden;
 	
 }
+
 .best-money1{
-	height: 25px;
-	width: 76px;
-	background: url(/static/images/home-icon15.png) no-repeat;
-	background-size: 100%;
+	height: 21px;
+	width: 30%;
 	margin-left: 15px;
 	position: relative;
-	top: -6px;
+	top: -3px;
 	font-size: 11px;
+	line-height:21px ;
+	border-radius: 4px;
+	border: solid 1px #F98A48;
 }
 .best-money2{
-	height: 25px;
-	width: 76px;
+	height: 21px;
+	width:30%;
 	margin-left: 5px;
-	background: url(/static/images/home-icon16.png) no-repeat;
-	background-size: 100%;
 	position: relative;
-	top: -6px;
+	top: -3px;
 	font-size: 11px;
+	line-height:21px ;
+	border-radius: 4px;
+	border: solid 1px #F14667;
 }
-.best-money1 .span1{
+.span1{
+	width: 50%;
+	height: 100%;
 	color: #fff;
-	position: relative;
-	top: 3px;
-	left: 4px;
-	
+	text-align: center;
 }
-.best-money1 .span2{
+.span2{
+	width: 50%;
+	height: 100%;
 	color: #F98A48;
-	position: relative;
-	top: 3px;
-	left: 9px;
-}
-.best-money2 .span1{
-	color: #fff;
-	position: relative;
-	top: 3px;
-	left: 4px;
-}
-.best-money2 .span2{
-	color: #F14667;
-	position: relative;
-	top: 3px;
-	left: 9px;
+	text-align: center;
 }
 
 /* ============全部商品 */
@@ -186,14 +175,14 @@
 	overflow: hidden;
 }
 .all-store-img img{
-	width: 115px;
-	height: 115px;
+	width: 100%;
+	height: 100%;
 }
 .all-store-text{
-	width:225px ;
+	width:100% ;
 	font-size: 14px;
 	float: right;
-	height: 48px;
+	height: 66px;
 	padding:6px 15px ;
 	display: -webkit-box;
 -webkit-box-orient: vertical;
@@ -211,7 +200,7 @@ overflow: hidden;
 	left: -12px;
 	}
 .all-store-text2{
-	width:210px ;
+	width:100% ;
 	font-size: 13px;
 	float: right;
 	position: absolute;
@@ -236,17 +225,14 @@ overflow: hidden;
 }
 
 .best-topred{
-	font-size: 13px;
+	font-size:13px;
 	color: rgb(241,70,103);
-	margin-left: 30px;
-	margin-right: 15px;
+	margin-left: 20px;
 }
 .best-botred{
 	font-size: 13px;
 	color: rgb(241,70,103);
-	position: absolute;
-	top: 6px;
-	left: 130px;
+	padding-left: 5px;
 }
 
 /* ====================西安站 */
