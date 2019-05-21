@@ -219,7 +219,7 @@
 					<view class="ilblock" style="padding: 0px 5px;width: 100%;">
 						<view class="ilblock" style="font-size: 12px; color: rgb(249,138,72);margin-bottom: 10pz;">￥<span style="font-size: 20px;">{{item.price}}</span></view>
 						
-						<view class="ilblock" style="flex-wrap: nowrap;width: 65%; position: relative;top:3px;">
+						<view class="ilblock" style="flex-wrap: nowrap;width: 65%;">
 							<div class="ilblock best-money1" style="width:42%;" v-if="item.skuDate.length==0">
 								<view class="span1 ilblock bg3">店反</view>
 								<view class="span2 ilblock color8">￥{{item.shop_reward}}</view>
