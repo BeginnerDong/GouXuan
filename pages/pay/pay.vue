@@ -84,12 +84,66 @@
 				count: 1,
 				webSelf:this,
 				price:'',
-				orderId:''
+				orderId:'',
+				getBefore:{},
+				getAfter:{}
 			}
 		},
 		onLoad(options) {
 			const self = this;
-			self.id = options.id;
+			var options = self.$Utils.getHashParameters();
+			console.log('options',options)
+			self.id = options[0].id;
+			self.type = options[0].type;
+			if(self.type==1){
+				self.getBefore = {
+					sku: {
+						tableName: 'Sku',
+						searchItem: {
+							id:['in',[self.id]]
+						},
+						middleKey: 'product_no',
+						key: 'product_no',
+						condition: 'in',
+					}
+				},
+				self.getAfter = {
+					sku: {
+						tableName: 'Sku',
+						searchItem: {
+							status:1,
+							id:self.id
+						},
+						middleKey: 'product_no',
+						key: 'product_no',
+						condition: 'in',
+					},
+				}
+			}else if(self.type==2){
+				self.getBefore = {
+					date: {
+						tableName: 'SkuDate',
+						searchItem: {
+							id:['in',[self.id]]
+						},
+						middleKey: 'product_no',
+						key: 'product_no',
+						condition: 'in',
+					},
+				},
+				self.getAfter = {
+					sku: {
+						tableName: 'SkuDate',
+						searchItem: {
+							status:1,
+							id:self.id
+						},
+						middleKey: 'product_no',
+						key: 'product_no',
+						condition: 'in',
+					},
+				}
+			}
 			self.$Utils.loadAll(['getMainData'], self)
 
 		},
@@ -100,17 +154,18 @@
 				const postData = {};
 				postData.searchItem = {
 					thirdapp_id: 2,
-					id: self.id
 				};
+				postData.getBefore = self.$Utils.cloneForm(self.getBefore);
+				postData.getAfter = self.$Utils.cloneForm(self.getAfter);
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
-						self.mainData = res.info.data[0];
+						self.mainData = res.info.data[0].sku[0];
 						self.count = 1;
 						self.price = self.mainData.price
 					}
 					self.$Utils.finishFunc('getMainData');
 				};
-				self.$apis.skuGet(postData, callback);
+				self.$apis.productGet(postData, callback);
 			},
 
 			counter(type) {
@@ -144,6 +199,26 @@
 					self.$Utils.showToast('请填写电话')
 					return
 				};
+				var orderList =  [];
+				if(self.mainData.type==1){
+					orderList.push(
+						{
+							sku: [{
+								id: self.mainData.id,
+								count: self.count,
+							}]
+						}
+					)
+				}else if(self.mainData.type==2){
+					orderList.push(
+						{
+							date: [{
+								id: self.mainData.id,
+								count: self.count,
+							}]
+						}
+					)
+				}
 				const postData = {
 					tokenFuncName:'getProjectToken',
 					orderList: [{
@@ -156,7 +231,9 @@
 					data: {
 						phone:self.submitData.phone,
 						name:self.submitData.name,
-						remark:self.submitData.remark
+						remark:self.submitData.remark,
+						shop_no:self.mainData.user_no,
+						province_id:self.mainData.province_id,
 					},
 				};
 				const callback = (res) => {

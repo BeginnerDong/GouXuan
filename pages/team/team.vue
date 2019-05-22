@@ -1,21 +1,17 @@
 <template>
 	<view>
-		<div class="home color2">
-			<span onclick="backk()">
-				<img src="images/home-icon14.png" />
-			</span>
-			达人后台
-		</div>
+
 
 		<div class="bg1" style="padding-top:25px;padding-bottom:25px;">
-			
-				
-				
-			
+
+
+
+
 			<div style="text-align: center;">
-				<canvas canvas-id="canvasLineB" id="canvasLineB" :style="{'width':cWidth2+'px','height':cHeight2+'px'}" disable-scroll=true class="charts-rotate"  @touchstart="touchMix" @touchmove="moveMix" @touchend="touchEndMix"></canvas>
+				<canvas canvas-id="canvasLineB" id="canvasLineB" :style="{'width':cWidth2+'px','height':cHeight2+'px'}"
+				 disable-scroll=true class="charts-rotate" @touchstart="touchMix" @touchmove="moveMix" @touchend="touchEndMix"></canvas>
 			</div>
-			
+
 			<div style="width: 100%; margin-top: 30px;padding-left: 15px;padding-right: 15px;">
 				<div class="color2 font15 ilblock" style="width: 38%;">
 					达人营业额
@@ -29,30 +25,30 @@
 				<div class="ilblock" style="color: rgb(49,160,254); font-size: 20px;">0</div>
 			</div>
 		</div>
-		<div class="bg1" style="margin-top: 10px;width: 100%;">
-			<a href="order-search.html" class="color2">
-				<div class="flo-left color2 font14" style="height: 52px;width: 100%; line-height: 52px;text-indent: 15px;border-bottom: solid 1px #E9E9E9;">
-					<div class="ilblock color2 font14" style="width: 251px;">团队订单</div>
-					<div class="ilblock color1 font14" style="width: 100px; background: url(images/home-icon9.png) no-repeat 70px 18.5px;
+		<div style="margin-top: 10px;width: 100%;">
+
+			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/order-search/order-search'}})" class="color2 font14 bg1" style="height: 52px;width: 100%; line-height: 52px;text-indent: 15px;border-bottom: solid 1px #E9E9E9;">
+				<div class="ilblock color2 font14" style="width: 251px;">团队订单</div>
+				<div class="ilblock color1 font14" style="width: 100px; background: url(/static/images/home-icon9.png) no-repeat 70px 18.5px;
 					 background-size: 6%;
 					 ">共0单</div>
+			</div>
+
+
+			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/return-first/return-first'}})" class="color2 font14 bg1" style="height: 52px;width: 100%; line-height: 52px;text-indent: 15px;border-bottom: solid 1px #E9E9E9;">
+				<div class="ilblock color2 font14" style="width: 304px;">达人团队奖励</div>
+				<div class="ilblock color1 font14" style="width: 45px;"><img src="/static/images/home-icon9.png" style="width: 6px;" />
 				</div>
-			</a>
-			<a href="return-first.html" class="color2">
-				<div class="flo-left color2 font14" style="height: 52px;width: 100%; line-height: 52px;text-indent: 15px;border-bottom: solid 1px #E9E9E9;">
-					<div class="ilblock color2 font14" style="width: 304px;">达人团队奖励</div>
-					<div class="ilblock color1 font14" style="width: 45px;"><img src="images/home-icon9.png" style="width: 6px;" />
-					</div>
-				</div>
-			</a>
-			<a href="team-team.html" class="color2">
-				<div class="flo-left color2 font14" style="height: 52px;width: 100%; line-height: 52px;text-indent: 15px;">
-					<div class="ilblock color2 font14">达人团队</div>
-				</div>
-			</a>
+			</div>
+
+
+			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/team-team/team-team'}})" class="color2 font14 bg1" style="height: 52px;width: 100%; line-height: 52px;text-indent: 15px;">
+				<div class="ilblock color2 font14">达人团队</div>
+			</div>
+
 		</div>
-		<button style="background: #FB8448;width:320px;height: 35px;border-radius: 20px; margin: 20px auto 100px;">
-			<a class="color5" href="team-code.html">邀请达人(课邀请500人)</a>
+		<button @click="webSelf.$Router.navigateTo({route:{path:'/pages/team-code/team-code'}})"  class="color5" style="font-size:14px;;background: #FB8448;width:320px;height: 35px;line-height: 35px;border-radius: 20px; margin: 20px auto 100px;">
+			邀请达人(课邀请500人)
 		</button>
 
 
@@ -60,7 +56,7 @@
 
 		<view class="navbar-brand">
 			<view style="margin-top: 10px;">
-				<view class="navbar-item ilblock"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/doyen/doyen'}})">
+				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/doyen/doyen'}})">
 					<view class="navbar-img">
 						<image src="/static/images/达人/Talent%20show1.png"></image>
 					</view>
@@ -70,7 +66,7 @@
 					<view class="navbar-img">
 						<image src="/static/images/达人/Talent%20show2-a.png"></image>
 					</view>
-					<view  class="color8">达人团队</view>
+					<view class="color8">达人团队</view>
 				</view>
 				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/return/return'}})">
 					<view class="navbar-img">
@@ -85,38 +81,40 @@
 
 <script>
 	import uCharts from '@/common/u-charts.js';
-	var canvaLineB=null;
+	var canvaLineB = null;
 	export default {
 
 		data() {
 			return {
-				cWidth2:'',//横屏图表
-				cHeight2:'',//横屏图表
-				pixelRatio:1,
+
+				webSelf: this,
+				cWidth2: '', //横屏图表
+				cHeight2: '', //横屏图表
+				pixelRatio: 1,
 				"LineB": {
-					  "categories": ["2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020",],
-					  "series": [{
+					"categories": ["2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", ],
+					"series": [{
 						"name": "成交量A",
-						"data": [350, 200, 250, 307, 40, 200,500,400,605]
-					  },{
+						"data": [350, 200, 250, 307, 40, 200, 500, 400, 605]
+					}, {
 						"name": "奖励金额",
-						"data": [35, 20, 25, 37, 4, 20,50,40,65]
-					  }]
+						"data": [35, 20, 25, 37, 4, 20, 50, 40, 65]
+					}]
 				}
 			}
 		},
 		onLoad(options) {
 			const self = this;
 			var documentWidth = document.body.clientWidth;
-			this.cWidth2=parseInt(documentWidth*0.9);
-			this.cHeight2=parseInt(documentWidth*0.9*0.7);
-			this.showLineB('canvasLineB',this.LineB)
+			this.cWidth2 = parseInt(documentWidth * 0.9);
+			this.cHeight2 = parseInt(documentWidth * 0.9 * 0.7);
+			this.showLineB('canvasLineB', this.LineB)
 			/* self.$Utils.loadAll(['getMainData', 'getLabelData', 'getCaseData'], self) */
 
 		},
 		methods: {
-			
-			touchMix(e){
+
+			touchMix(e) {
 				canvaLineB.scrollStart(e);
 			},
 			moveMix(e) {
@@ -126,47 +124,47 @@
 				canvaLineB.scrollEnd(e);
 				//下面是toolTip事件，如果滚动后不需要显示，可不填写
 				canvaLineB.showToolTip(e, {
-					format: function (item, category) {
-						return category + ' ' + item.name + ':' + item.data 
+					format: function(item, category) {
+						return category + ' ' + item.name + ':' + item.data
 					}
 				});
 			},
-			
-			showLineB(canvasId,chartData){
-				canvaLineB=new uCharts({
-					$this:this,
+
+			showLineB(canvasId, chartData) {
+				canvaLineB = new uCharts({
+					$this: this,
 					canvasId: canvasId,
 					type: 'line',
-					legend:false,
-					background:'#FFFFFF',
-					pixelRatio:this.pixelRatio,
-					rotate:false,//开启图表横屏
+					legend: false,
+					background: '#FFFFFF',
+					pixelRatio: this.pixelRatio,
+					rotate: false, //开启图表横屏
 					// #ifdef MP-ALIPAY
-					rotateLock:true,//百度及支付宝需要锁定旋转
+					rotateLock: true, //百度及支付宝需要锁定旋转
 					// #endif
 					categories: chartData.categories,
 					animation: false,
 					series: chartData.series,
-					enableScroll:true,
+					enableScroll: true,
 					xAxis: {
-						disableGrid:true,
-						itemCount:5,
-						scrollShow:true,
-						scrollAlign:'right'
+						disableGrid: true,
+						itemCount: 5,
+						scrollShow: true,
+						scrollAlign: 'right'
 					},
 					yAxis: {
 						//disabled:true
 					},
 					width: this.cWidth2,
 					height: this.cHeight2,
-					
-					
+
+
 				});
 			},
-			
-			
-			
-			
+
+
+
+
 			test($event) {
 				var testres = this.getCaseData()
 			},
@@ -283,11 +281,10 @@
 	@import "../../assets/style/public.css";
 	@import "../../assets/style/index.css";
 
-	@import "../../assets/style/bootstrap.css";
-	@import "../../assets/style/basic.css";
-	.charts-rotate{
+	.charts-rotate {
 		background-color: #FFFFFF;
 	}
+
 	.team-inlin {
 		width: 100%;
 	}
@@ -321,4 +318,7 @@
 		border-radius: 50%;
 		border: solid 1px #B01313;
 	}
+
+	@import "../../assets/style/bootstrap.css";
+	@import "../../assets/style/basic.css";
 </style>

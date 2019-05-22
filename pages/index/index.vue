@@ -279,6 +279,11 @@
 			self.$Utils.loadAll(['getMainData', 'getSiteData', 'getSliderData', 'tokenGet', 'getLabelData', 'getHotData'], self)
 
 		},
+		
+		destroyed () {
+            clearTimeout(this.countDown);  
+        },
+		
 		methods: {
 
 			tokenGet() {
@@ -371,15 +376,15 @@
 				// 对结束时间进行处理渲染到页面
 				for (var i = 0; i < self.endTimeList.length; i++) {
 					let endTime = new Date(self.endTimeList[i].actEndTime).getTime();
-					console.log('endTime',endTime)
-					console.log('newTime',newTime)
+					/* console.log('endTime',endTime)
+					console.log('newTime',newTime) */
 					let obj = null;
 					// 如果活动未结束，对时间进行处理
-					console.log(endTime - newTime)
+					/* console.log(endTime - newTime) */
 					if (endTime - newTime > 0) {
 						let time = (endTime - newTime)/1000;
 						// 获取天、时、分、秒
-						console.log('time',time)
+						/* console.log('time',time) */
 					
 						let day = parseInt(time / (60 * 60 * 24));
 						let hou = parseInt(time % (60 * 60 * 24) / 3600);
@@ -404,12 +409,13 @@
 					}
 
 					self.countDownList.push(obj);
-					console.log('self.countDownList',self.countDownList)
-				}
-				
+					/* console.log('self.countDownList',self.countDownList) */
+				}	
 				setTimeout(this.countDown, 1000);
 			},
-
+			
+			
+		
 
 			getHotData() {
 				const self = this;
