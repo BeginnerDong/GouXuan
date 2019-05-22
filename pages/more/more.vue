@@ -12,30 +12,7 @@
 				</span>
 			</div>
 		</div>
-		<div class="best-box ilblock" style="margin-left: 15px;">
-			<div class="best-box-top">
-				<img src="/static/images/home-img2.png"/>
-				<div class="best-num ilblock">
-					已售1235
-				</div>
-			</div>
-			<div class="best-text">
-				[西安.牛脊梁]国家级森林公园，世界生物圈，世界生物圈保护区！仅298元=2大人1小孩仅298元=2大人1小孩
-			</div>
-			<div style="margin-left: 15px;">
-				<div class="ilblock" style="font-size: 12px; color: rgb(249,138,72);">￥<span style="font-size: 20px;">298</span></div>
-				<div class="ilblock best-money1" >
-					<span class="span1">店反</span>
-					<span class="span2">￥23</span>
-				</div>	
-				<div class="ilblock best-money2" >
-					<span class="span1">团反</span>
-					<span class="span2">￥23</span>
-				</div>	
-			</div>
-		</div>
-		
-		<div class="best-box ilblock" style="margin-left: 15px;">
+		<div class="best-box ilblock" style="margin-left: 15px;" v-for="item in mainData">
 			<div class="best-box-top">
 				<img src="/static/images/home-img2.png"/>
 				<div class="best-num ilblock">
@@ -43,28 +20,6 @@
 				</div>
 				<div class="best-time">
 					距结束仅剩 <span>0 0</span> 天 <span>1 3</span> : <span>3 4</span> : <span>3 0</span>
-				</div>
-			</div>
-			<div class="best-text">
-				[西安.牛脊梁]国家级森林公园，世界生物圈，世界生物圈保护区！仅298元=2大人1小孩仅298元=2大人1小孩
-			</div>
-			<div style="margin-left: 15px;">
-				<div class="ilblock" style="font-size: 12px; color: rgb(249,138,72);">￥<span style="font-size: 20px;">298</span></div>
-				<div class="ilblock best-money1" >
-					<span class="span1">店反</span>
-					<span class="span2">￥23</span>
-				</div>	
-				<div class="ilblock best-money2" >
-					<span class="span1">团反</span>
-					<span class="span2">￥23</span>
-				</div>	
-			</div>
-		</div>
-		<div class="best-box ilblock" style="margin-left: 15px;">
-			<div class="best-box-top">
-				<img src="/static/images/home-img2.png"/>
-				<div class="best-num ilblock">
-					已售1235
 				</div>
 				<div class="best-time best-time2">
 					【即将开售】
@@ -75,33 +30,22 @@
 			</div>
 			<div style="margin-left: 15px;">
 				<div class="ilblock" style="font-size: 12px; color: rgb(249,138,72);">￥<span style="font-size: 20px;">298</span></div>
-				<div class="ilblock best-money1" >
+				<div class="ilblock best-moneyleft" v-if="item.skuDate.length>0">
+					返佣具体以日期为准
+				</div>	
+				<div class="ilblock best-money1" v-if="item.skuDate.length==0">
 					<span class="span1">店反</span>
 					<span class="span2">￥23</span>
 				</div>	
-				<div class="ilblock best-money2" >
+				<div class="ilblock best-money2" v-if="item.skuDate.length==0">
 					<span class="span1">团反</span>
 					<span class="span2">￥23</span>
 				</div>	
 			</div>
 		</div>
-		<div class="best-box ilblock" style="margin-left: 15px;">
-			<div class="best-box-top">
-				<img src="/static/images/home-img2.png"/>
-				<div class="best-num ilblock">
-					已售1235
-				</div>
-			</div>
-			<div class="best-text">
-				[西安.牛脊梁]国家级森林公园，世界生物圈，世界生物圈保护区！仅298元=2大人1小孩仅298元=2大人1小孩
-			</div>
-			<div style="margin-left: 15px;">
-				<div class="ilblock" style="font-size: 12px; color: rgb(249,138,72);">￥<span style="font-size: 20px;">298</span></div>
-				<div class="ilblock best-moneyleft" >
-					返佣具体以日期为准
-				</div>	
-			</div>
-		</div>
+		
+
+	
 		
 		
 		<div style="width: 100%; height: 65px;"></div>

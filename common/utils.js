@@ -638,6 +638,38 @@ export default {
 
 	},
 
-
+	timeto(date, type) {
+		var seperator1 = "-";
+		var seperator2 = ":";
+		var date = parseInt(date);
+		console.log('date11',date)
+		
+		var date = new Date(date);
+		console.log('date22',date)
+		var month = date.getMonth() + 1;
+		var strDate = date.getDate();
+		if (month >= 1 && month <= 9) {
+			month = "0" + month;
+		}
+		if (strDate >= 0 && strDate <= 9) {
+			strDate = "0" + strDate;
+		}
+		if (type == "ym") {
+			// 转年月
+			var currentdate = date.getFullYear() + seperator1 + month;
+		} else if (type == "ymd") {
+			// 转年月日
+			var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate;
+		} else if (type == "ymd-hms") {
+			//转年月日 时分秒
+			var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate +
+				" " + date.getHours() + seperator2 + date.getMinutes() +
+				seperator2 + date.getSeconds();
+		} else if (type == "hms") {
+			//转时分秒
+			var currentdate = date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
+		}
+		return currentdate;
+	}
 
 }

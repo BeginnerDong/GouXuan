@@ -12,9 +12,8 @@
 			</view>
 		</view>
 		<view style="width: 100%;background: #F8F8F8;">
-			<view class="commodity">
-				<img src="/static/images/home-banner.png" />
-			</view>
+			<c-swiper :list="swiperData">
+			</c-swiper>
 			<view class="radionav">
 				<view class="radionav-box ilblock" style="width:100%">
 					<view class="radionav-item" style="margin-left: 0px;" v-for="(item,index) in labelData" v-if="index<5" :data-id="item.id"
@@ -49,25 +48,25 @@
 						<view class="color2" style="font-weight: bold;">全国酒店</view>
 						<view class="color1">全国精选</view>
 					</view>
-					<view class="recommend-box" style="width: 106px;">
+					<view class="recommend-box" style="width: 106px;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=32'}})">
 						<view class="color2" style="font-weight: bold;">长隆度假区</view>
 						<view class="color1">长隆</view>
 					</view>
-					<view class="recommend-box" style="width: 80px;">
+					<view class="recommend-box" style="width: 80px;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=33'}})">
 						<view class="color2" style="font-weight: bold;">港澳酒店</view>
 						<view class="color1">动感之都</view>
 					</view>
 				</view>
-				<view class="recommend-middle">
+				<view class="recommend-middle" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=33'}})">
 					<view class="recommend-box" style="width: 120px;">
 						<view class="color2" style="font-weight: bold;">全球购</view>
 						<view class="color1">全球热卖好货</view>
 					</view>
-					<view class="recommend-box" style="width: 120px;">
+					<view class="recommend-box" style="width: 120px;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=34'}})">
 						<view class="color2" style="font-weight: bold;">果蔬百货</view>
 						<view class="color1">果蔬百货</view>
 					</view>
-					<view class="recommend-box" style="width: 120px;">
+					<view class="recommend-box" style="width: 120px;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=35'}})">
 						<view class="color2" style="font-weight: bold;">一日游</view>
 						<view class="color1">周边精选</view>
 					</view>
@@ -80,9 +79,8 @@
 		overflow: hidden;white-space: nowrap;">
 			<view class="best-top">
 				<view class="color2 ilblock" style="margin-left: 15px;font-size:14px">最火热买</view>
-				<view class="color1 ilblock besttext" style="font-size:14px"
-				@click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?order=sale_count'}})">
-				查看更多</view>
+				<view class="color1 ilblock besttext" style="font-size:14px" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?order=sale_count'}})">
+					查看更多</view>
 			</view>
 			<scroll-view scroll-x="true">
 				<view class="best-box ilblock" style="margin-left: 15px;" v-for="item in hotData">
@@ -93,7 +91,7 @@
 						</view>
 					</view>
 					<view class="best-text">
-						[西安.牛脊梁]{{item.title}}
+						{{item.title}}
 					</view>
 					<view style="margint: 0 4%;">
 						<view class="ilblock" style="font-size: 12px; color: rgb(249,138,72);">￥<span style="font-size: 20px;">{{item.price}}</span></view>
@@ -116,7 +114,7 @@
 				<view class="color2 ilblock" style="margin-left: 15px;font-size:14px">全部商品</view>
 				<view class="color1 ilblock besttext" style="font-size:14px" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more'}})">查看更多</view>
 			</view>
-			<view class="all-store" v-for="item in mainData" :data-id="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/recommend/recommend?id='+$event.currentTarget.dataset.id}})">
+			<view class="all-store" v-for="(item,index) in mainData" :data-id="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/recommend/recommend?id='+$event.currentTarget.dataset.id}})">
 				<view class="all-store-img ilblock">
 					<img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
 					<view class="store-num ilblock">
@@ -124,9 +122,9 @@
 					</view>
 				</view>
 				<view class=" ilblock" style="width: 67%;position: absolute; top: 0px;right: 0px;">
-					<!-- <view class="best-botred" v-if="item.start_time<now">【即将开售】</view> -->
-					<view class="color1 font12 time" v-if="item.start_time<now">距结束仅剩
-						<view class="bg3">00</view>天<view class="bg3">13</view>:<view class="bg3">34</view>:<view class="bg3">30</view>
+					<view class="best-botred" v-if="item.start_time>now">【即将开售】</view>
+					<view class="color1 font12 time" v-if="item.start_time<now&&countDownList[index].day=='00'"> 距结束仅剩
+						<view class="bg3">{{countDownList[index].day}}</view>天<view class="bg3">{{countDownList[index].hou}}</view>:<view class="bg3">{{countDownList[index].min}}</view>:<view class="bg3">{{countDownList[index].sec}}</view>
 					</view>
 					<view class="ilblock color2 all-store-text">
 						[{{item.city}}]{{item.title}}
@@ -160,7 +158,7 @@
 				<view style="width: 100%; height: 20px;"></view>
 			</view>
 		</view>
-		
+
 		<view style="position: fixed; top: 0px; z-index: 50;display: none;">
 
 			<view style="width: 100%; height: 200px; background: rgba(0,0,0,0.5);"></view>
@@ -245,17 +243,24 @@
 </template>
 
 <script>
+	import cSwiper from "@/components/swiper/swiper.vue"
+	import cTabbar from "@/components/tabbar/tabbar.vue"
 	export default {
-
+		components: {
+			cSwiper,
+			cTabbar
+		},
 		data() {
 			return {
 				siteDataId: [],
-				hotData:[],
+				hotData: [],
 				siteData: [],
 				mainData: [],
 				labelData: [],
 				cityData: [],
 				currentSiteData: [],
+				endTimeList: [],
+				countDownList:[],
 				swiperData: [],
 				webSelf: this,
 				now: '',
@@ -270,8 +275,8 @@
 			/* 	if(options.site_id){
 					self.site_id = options.site_id
 				}; */
-			self.now = Date.parse(new Date());
-			self.$Utils.loadAll(['getMainData', 'getSiteData', 'getSliderData', 'tokenGet', 'getLabelData','getHotData'], self)
+			self.now = new Date().getTime();
+			self.$Utils.loadAll(['getMainData', 'getSiteData', 'getSliderData', 'tokenGet', 'getLabelData', 'getHotData'], self)
 
 		},
 		methods: {
@@ -305,17 +310,19 @@
 					}
 				};
 				self.show_city = false;
-				self.$Utils.loadAll(['getMainData', 'getCityData','getHotData'], self)
+				self.$Utils.loadAll(['getMainData', 'getCityData', 'getHotData'], self)
 			},
 
 			getMainData() {
 				const self = this;
+				var now = new Date().getTime();
 				self.mainData = [];
 				const postData = {};
 				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 				postData.searchItem = {
 					thirdapp_id: self.$AssetsConfig.thirdapp_id,
-					province_id:uni.getStorageSync('siteData').id
+					province_id: uni.getStorageSync('siteData').id,
+					end_time: ['>', now]
 				};
 				postData.getAfter = {
 					skuDate: {
@@ -328,13 +335,20 @@
 						}
 					}
 				};
-				postData.order ={
-					listorder:'desc'
+				postData.order = {
+					listorder: 'desc'
 				};
 				console.log('postData', postData)
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.mainData.push.apply(self.mainData, res.info.data);
+						for (var i = 0; i < self.mainData.length; i++) {
+							self.endTimeList.push({
+								actEndTime: self.$Utils.timeto(self.mainData[i].end_time, "ymd-hms")
+							});
+							self.mainData[i].endTimeList = [];
+						};
+						self.countDown();
 					};
 					console.log('self.mainData', self.mainData)
 					self.$Utils.finishFunc('getMainData');
@@ -342,6 +356,61 @@
 				self.$apis.productGet(postData, callback);
 			},
 			
+			timeFormat(param) { //小于10的格式化函数
+				const self = this;
+				return param < 10 ? '0' + param : param;
+			},
+
+			countDown() { //倒计时函数
+				// 获取当前时间，同时得到活动结束时间数组
+				const self = this;
+				self.countDownList = [];
+				let newTime =  Date.parse(new Date());
+				let endTimeList = self.endTimeList;
+				
+				// 对结束时间进行处理渲染到页面
+				for (var i = 0; i < self.endTimeList.length; i++) {
+					let endTime = new Date(self.endTimeList[i].actEndTime).getTime();
+					console.log('endTime',endTime)
+					console.log('newTime',newTime)
+					let obj = null;
+					// 如果活动未结束，对时间进行处理
+					console.log(endTime - newTime)
+					if (endTime - newTime > 0) {
+						let time = (endTime - newTime)/1000;
+						// 获取天、时、分、秒
+						console.log('time',time)
+					
+						let day = parseInt(time / (60 * 60 * 24));
+						let hou = parseInt(time % (60 * 60 * 24) / 3600);
+						let min = parseInt(time % (60 * 60 * 24) % 3600 / 60);
+						let sec = parseInt(time % (60 * 60 * 24) % 3600 % 60);
+						if (day > 0) {
+							hou = hou + day * 24
+						}
+						obj = {
+							day: self.timeFormat(day),
+							hou: self.timeFormat(hou),
+							min: self.timeFormat(min),
+							sec: self.timeFormat(sec)
+						}
+					} else { //活动已结束，全部设置为'00'
+						obj = {
+							day:'00',
+							hou: '00',
+							min: '00',
+							sec: '00'
+						}
+					}
+
+					self.countDownList.push(obj);
+					console.log('self.countDownList',self.countDownList)
+				}
+				
+				setTimeout(this.countDown, 1000);
+			},
+
+
 			getHotData() {
 				const self = this;
 				self.hotData = [];
@@ -349,10 +418,10 @@
 				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 				postData.searchItem = {
 					thirdapp_id: self.$AssetsConfig.thirdapp_id,
-					province_id:uni.getStorageSync('siteData').id
+					province_id: uni.getStorageSync('siteData').id
 				};
 				postData.order = {
-					false_sale_count:'desc'
+					false_sale_count: 'desc'
 				};
 				console.log('postData', postData)
 				const callback = (res) => {
@@ -403,7 +472,7 @@
 				const postData = {};
 				postData.searchItem = {
 					thirdapp_id: self.$AssetsConfig.thirdapp_id,
-					type:9
+					type: 9
 				};
 				postData.order = {
 					listorder: 'desc'
@@ -467,7 +536,7 @@
 					city: {
 						tableName: 'Label',
 						searchItem: {
-							title: ['=', ['城市分站']],
+							title: ['=', ['首页轮播']],
 						},
 						middleKey: 'parentid',
 						key: 'id',
@@ -477,7 +546,10 @@
 				const callback = (res) => {
 					console.log(1000, res);
 					if (res.info.data.length > 0) {
-						self.swiperData.push.apply(self.swiperData);
+						for (var i = 0; i < res.info.data.length; i++) {
+							self.swiperData.push(res.info.data[i].mainImg[0])
+						}
+						console.log('self.swiperData', self.swiperData)
 					};
 					self.$Utils.finishFunc('getSliderData');
 				};
