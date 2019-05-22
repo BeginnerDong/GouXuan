@@ -1,11 +1,6 @@
 <template>
 	<view class="body">
-		<div class="home color2">
-			<span onclick="backk()">
-				<img src="images/home-icon14.png" />
-			</span>
-			电子码查询系统
-		</div>
+		
 		<div class="big-box">
 			<div class="list">
 				身份验证
@@ -21,15 +16,15 @@
 				图形验证码
 			</div>
 			<input class="color1 font10" style="border: solid 1px #EBEBEB; height: 30px; line-height: 30px; padding: 0px 15px;
-			 box-shadow: 0px 0px 6px #EBEBEB; border-radius: 3px;width: 100%; "
+			 box-shadow: 0px 0px 6px #EBEBEB; border-radius: 3px;width: 90%; "
 			 placeholder="输入右边字符">
-			<img src="images/服务/service-img1.png" style="height: 30px; float: right; position: relative; top: -30px;" />
+			<img src="/static/images/服务/service-img1.png" style="height: 30px; float: right; position: relative; top: -30px;" />
 			</input>
 			<div class="list">
 				短信验证
 			</div>
 			<input class="color1 font10" style="border: solid 1px #EBEBEB; height: 30px; line-height: 30px; padding: 0px 15px;
-			 box-shadow: 0px 0px 6px #EBEBEB; border-radius: 3px;width: 100%; "
+			 box-shadow: 0px 0px 6px #EBEBEB; border-radius: 3px;width: 90%; "
 			 placeholder="6位短信验证">
 			<div class="font10 color2 bg2 ilblock flo-right" style="height: 30px; line-height: 30px;position: relative; top: -30px;width: 80px;text-align: center; border: solid 1px #EBEBEB; ">获取验证码</div>
 			</input>
@@ -168,28 +163,28 @@
 <style>
 	@import "../../assets/style/public.css";
 	@import "../../assets/style/index.css";
-	
-	@import "../../assets/style/bootstrap.css";
-	@import "../../assets/style/basic.css";
-
-	body {
+	page {
 		background: #fff;
 	}
-
+	
 	.big-box {
 		width: 345px;
 		height: 490px;
-
+	
 		border: solid 2px #E8E8E8;
 		margin: 30px auto;
 		border-radius: 8px;
 		box-shadow: 0px 0px 12px #E8E8E8;
 		padding: 45px 15px;
 	}
-
+	
 	.list {
 		height: 50px;
 		border-bottom: solid 1px #F6F6F6;
 		line-height: 52px;
 	}
+	@import "../../assets/style/bootstrap.css";
+	@import "../../assets/style/basic.css";
+
+	
 </style>

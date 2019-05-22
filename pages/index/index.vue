@@ -310,10 +310,12 @@
 
 			getMainData() {
 				const self = this;
+				self.mainData = [];
 				const postData = {};
 				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 				postData.searchItem = {
 					thirdapp_id: self.$AssetsConfig.thirdapp_id,
+					province_id:uni.getStorageSync('siteData').id
 				};
 				postData.getAfter = {
 					skuDate: {
@@ -342,10 +344,12 @@
 			
 			getHotData() {
 				const self = this;
+				self.hotData = [];
 				const postData = {};
 				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 				postData.searchItem = {
 					thirdapp_id: self.$AssetsConfig.thirdapp_id,
+					province_id:uni.getStorageSync('siteData').id
 				};
 				postData.order = {
 					false_sale_count:'desc'
