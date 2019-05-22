@@ -90,6 +90,30 @@ export default {
 		};
 		http.HTTP(allParams);
 	},
+	
+	getQrCommonCode(param, callback) {
+		var allParams = {
+			url: 'Base/Qr/PHPQrGet',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
+	
+	wechatGet(param, callback) {
+		var allParams = {
+			url: 'Common/Wechat/get',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
 
 	skuGet(param, callback) {
 		var allParams = {

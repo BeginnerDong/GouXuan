@@ -22,12 +22,12 @@ Vue.config.productionTip = false
 $Router.beforeEach((navType, to) => {
 	if (to.route === undefined) throw ("路由钩子函数中没有找到to.route对象，路由信息:" + JSON.stringify(to));
 
-	if (to.route.path === $RoutesConfig.login.path && store.getters.hasLogin) {
+	/* if (to.route.path === $RoutesConfig.login.path && store.getters.hasLogin) {
 		uni.redirectTo({
 			url: $Utils.objParseUrlAndParam($RoutesConfig.main.path, to.query)
 		})
 		return;
-	};
+	}; */
 	console.log('url',$Utils.objParseUrlAndParam(to.route.path, to.query))
 	uni[navType]({
 		url: $Utils.objParseUrlAndParam(to.route.path, to.query)

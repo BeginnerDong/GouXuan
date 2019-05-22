@@ -49,11 +49,154 @@
 			<div class="ilblock">
 				<div class="color2" style="margin-top: 10px;">{{choosed_skuData.title}}:</div>
 				<div class="chioce-item ilblock">
-					{{choosed_skuData.price}}元{{num}}
+					{{choosed_skuData.price}}元
 				</div>
 			</div>
 		</div>
-
+		<div style="color: #818181; font-size: 15px; padding: 10px 15px; background: #F2F2F2;" >
+			日历
+		</div>
+		<div class="wahct-top">
+			<div class="color3 ilblock wahct-topleft">
+				<image src="../../static/images/微信图片_20190520155420.png"></image>
+				上月
+				
+			</div>
+			<div class="color2 ilblock wahct-topleft" style="font-size: 16px;">
+				2019年1月
+			</div>
+			<div class="ilblock wahct-topright">
+				下月
+				<image src="../../static/images/微信图片_20190520155409.png"></image>
+			</div>
+		</div>
+		<div class="week">
+			<div class="week-item ilblock">
+				日
+			</div>
+			<div class="week-item ilblock">
+				一
+			</div>
+			<div class="week-item ilblock">
+				二
+			</div>
+			<div class="week-item ilblock">
+				三
+			</div>
+			<div class="week-item ilblock">
+				四
+			</div>
+			<div class="week-item ilblock">
+				五
+			</div>
+			<div class="week-item ilblock">
+				六
+			</div>
+		</div>
+		<view class="bg1" style="padding: 20upx 0upx 70upx;">
+			<div class="day-item ilblock">
+				0
+			</div><div class="day-item ilblock">
+				1
+			</div>
+			<div class="day-item ilblock">
+				2
+			</div>
+			<div class="day-item ilblock">
+				3
+			</div>
+			<div class="day-item ilblock">
+				4
+			</div>
+			<div class="day-item ilblock">
+				5
+			</div>
+			<div class="day-item ilblock">
+				6
+			</div>
+			<div class="day-item ilblock">
+				7
+			</div>
+			<div class="day-item ilblock">
+				8
+			</div>
+			<div class="day-item ilblock">
+				9
+			</div>
+			<div class="day-item ilblock">
+				10
+			</div>
+			<div class="day-item ilblock">
+				11
+			</div>
+			<div class="day-item ilblock">
+				12
+			</div>
+			<div class="day-item ilblock">
+				13
+			</div>
+			<div class="day-item ilblock">
+				14
+			</div>
+			<div class="day-item ilblock">
+				15
+			</div>
+			<div class="day-item ilblock">
+				16
+			</div>
+			<div class="day-item ilblock">
+				17
+			</div>
+			<div class="day-item ilblock">
+				18
+			</div>
+			<div class="day-item ilblock">
+				19
+			</div>
+			<div class="day-item ilblock">
+				20
+			</div>
+			<div class="day-item ilblock">
+				21
+			</div>
+			<div class="day-item ilblock">
+				22
+			</div>
+			<div class="day-item ilblock">
+				23
+			</div>
+			<div class="day-item ilblock">
+				24
+			</div>
+			<div class="day-item ilblock">
+				25
+			</div>
+			<div class="day-item ilblock">
+				26
+			</div>
+			<div class="day-item ilblock">
+				27
+			</div>
+			<div class="day-item ilblock day-star">
+				<div>28</div>
+				<div>￥138</div>
+				<div style="color:#72B784;">返8</div>
+				<div style="color:#71C3CB; margin-top: 8upx;">充足</div>
+			</div>
+			<div class="day-item ilblock day-star">
+				<div>29</div>
+				<div>￥138</div>
+				<div style="color:#72B784;">返9</div>
+				<div style="color:#71C3CB; margin-top: 8upx;">充足</div>
+			</div>
+			<div class="day-item ilblock">
+				30
+			</div>
+			<div class="day-item ilblock">
+				31
+			</div>
+			
+		</view>
 		<div class="foter1" style="color: #848484; font-size: 15px; padding: 10px 15px;" >
 			图文介绍
 			<div v-if="num==0">
@@ -142,6 +285,15 @@
 				postData.getAfter = {
 					sku: {
 						tableName: 'Sku',
+						middleKey: 'product_no',
+						key: 'product_no',
+						condition: '=',
+						searchItem: {
+							status: 1
+						}
+					},
+					skuDate: {
+						tableName: 'SkuDate',
 						middleKey: 'product_no',
 						key: 'product_no',
 						condition: '=',

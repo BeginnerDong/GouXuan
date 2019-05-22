@@ -71,26 +71,28 @@
 
 
 
-		<div class="navbar-brand">
-			<ul>
-				<li>
-					<a href="doyen.html">
-						<div class="navbar-img"><img src="images/达人/Talent%20show1.png" /></div>
-						<div>达人</div>
-					</a>
-				</li>
-				<li>
-					<a href="team.html">
-						<div class="navbar-img"><img src="images/达人/Talent%20show2-a.png" /> </div>
-						<div style="color: #FC7C5D;">达人团队</div>
-					</a>
-				</li>
-				<li><a href="return.html">
-						<div class="navbar-img"><img src="images/达人/Talent%20show3.png" /></div>
-						<div>返佣</div>
-					</a></li>
-			</ul>
-		</div>
+		<view class="navbar-brand">
+			<view style="margin-top: 10px;">
+				<view class="navbar-item ilblock"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/doyen/doyen'}})">
+					<view class="navbar-img">
+						<image src="/static/images/达人/Talent%20show1.png"></image>
+					</view>
+					<view>达人</view>
+				</view>
+				<view class="navbar-item ilblock">
+					<view class="navbar-img">
+						<image src="/static/images/达人/Talent%20show2-a.png"></image>
+					</view>
+					<view  class="color8">达人团队</view>
+				</view>
+				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/return/return'}})">
+					<view class="navbar-img">
+						<image src="/static/images/达人/Talent%20show3.png"></image>
+					</view>
+					<view>返佣</view>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -224,7 +226,7 @@
 <style>
 	@import "../../assets/style/public.css";
 	@import "../../assets/style/index.css";
-	
+
 	@import "../../assets/style/bootstrap.css";
 	@import "../../assets/style/basic.css";
 

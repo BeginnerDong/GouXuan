@@ -1,16 +1,10 @@
 <template>
-	<view>
-		<div class="home color2" style="border-bottom:solid 1px #E7E7E7;">
-			<span onclick="backk()">
-				<img src="/static/images/home-icon14.png" />
-			</span>
-			吃喝玩乐推荐
-		</div>
-		<div class="img">
-			<img class="img-one" src="/static/images/达人/img1.png" />
+	<div >
+		<div class="img" id="poster">
+			<img class="img-one" :src="mainData.mainImg&&mainData.mainImg[index]?mainData.mainImg[index].url:''" />
 		</div>
 		<div class="ilblock imgb">
-			<img src="/static/images/达人/img8.png" />
+			<img :src="QrData.url" />
 		</div>
 		<div class="ilblock">
 			<div class="color2 font14" style="position: relative; top: 3px;">长按二维码看购买详情</div>
@@ -19,131 +13,71 @@
 		<div class="ilblock" style="position: relative; left: 42px;">
 			<img src="/static/images/达人/Talent%20show-img.png" style="width: 85px;" />
 		</div>
-	</view>
+	</div>
 </template>
 
 <script>
+	import html2canvas from '../../common/html2canvas.js'
 	export default {
 
 		data() {
 			return {
-
-
+				mainData:[],
+				QrData:[],
+				index:'',
+				url:'',
+				
 			}
 		},
 		onLoad(options) {
 			const self = this;
-			/* self.$Utils.loadAll(['getMainData', 'getLabelData', 'getCaseData'], self) */
-
+		
+			self.$Utils.loadAll(['getQrData','getMainData'], self)
+			var options = self.$Utils.getHashParameters();
+			console.log('options', options)
+			self.index = options[0].index
+		
+			
+			html2canvas(document.getElementById("poster"),{ width:375,height:667 }).then(function(canvas){
+				var imgUrl = canvas.toDataURL();
+				self.url = imgUrl;
+				console.log('self.url',self.url )
+			});	
 		},
 		methods: {
-			test($event) {
-				var testres = this.getCaseData()
-			},
-
+			
+		
+			
 			getMainData() {
 				const self = this;
 				const postData = {};
-				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 				postData.searchItem = {
-					thirdapp_id: self.$Config.solely_thirdapp_id
-				};
-				postData.getBefore = {
-					caseData: {
-						tableName: 'Label',
-						searchItem: {
-							title: ['=', ['推荐阅读']],
-						},
-						middleKey: 'menu_id',
-						key: 'id',
-						condition: 'in',
-					},
-				};
-				const callback = (res) => {
-					if (res.info.data.length > 0) {
-						self.mainData.push.apply(self.mainData, res.info.data);
-						if (self.mainData.length > 2) {
-							self.mainData = self.mainData.slice(0, 2)
-						}
-					};
-					self.$Utils.finishFunc('getMainData');
-				};
-				self.$apis.articleGet(postData, callback);
-			},
-
-			getLabelData(isNew) {
-				var self = this;
-				if (isNew) {
-					self.$Utils.clearPageIndex(self)
-				};
-				var postData = {};
-				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-				postData.searchItem = {
-					type: 1,
-					thirdapp_id: 21,
-					parentid: 2
-				};
-				var callback = function(res) {
-					if (res.info.data.length > 0) {
-						self.labelData.push.apply(self.labelData, res.info.data)
-					}
-					for (var i = 0; i < res.info.data.length; i++) {
-						self.menu_array.push(res.info.data[i].id)
-					};
-					self.$Utils.finishFunc('getLabelData');
-					//self.getCaseData();
-				};
-				console.log('self.$apis', self.$apis)
-				self.$apis.labelGet(postData, callback);
-			},
-
-
-			getSliderData() {
-				const self = this;
-				const postData = {};
-				postData.searchItem = {
-					title: '首页轮播',
-					thirdapp_id: self.$Config.solely_thirdapp_id
+					title: '达人海报',
+					thirdapp_id: self.$AssetsConfig.thirdapp_id,
 				};
 				const callback = (res) => {
 					console.log(1000, res);
 					if (res.info.data.length > 0) {
-						self.swiperData = res.info.data[0]['mainImg'];
+						self.mainData = res.info.data[0];
 					};
-					self.$Utils.finishFunc('getSliderData');
+					self.$Utils.finishFunc('getMainData');
 				};
 				self.$apis.labelGet(postData, callback);
 			},
-			getCaseData() {
-				var self = this;
-				var postData = {};
-				postData.searchItem = {
-					thirdapp_id: getApp().globalData.solely_thirdapp_id
-				}
-				postData.getBefore = {
-					caseData: {
-						tableName: 'Label',
-						searchItem: {
-							parentid: ['in', [146]]
-						},
-						middleKey: 'menu_id',
-						key: 'id',
-						condition: 'in',
-					},
-				};
-				var callback = (res) => {
-				console.log('self.caseData.res', res);
-					if (res.info.data.length > 0) {
-						self.caseData.push.apply(self.caseData, res.info.data)
-						if (res.info.data.length > 4) {
-							self.caseData = self.caseData.slice(0, 4)
-						}
-					};
-					self.$Utils.finishFunc('getCaseData');
-				};
-
-
-				self.$apis.articleGet(postData, callback);
+			
+			getQrData(){
+			    const self = this;
+			    const postData = {};
+			    postData.tokenFuncName = 'getProjectToken';
+			    postData.param = 'http://106.12.155.217/index.html'+'&user_no='+uni.getStorageSync('info').user_no;
+			    postData.ext = 'png';
+			    const callback = (res)=>{
+			      console.log(res);
+			      self.QrData = res.info;
+			      console.log(9990,self.QrData)
+				  self.$Utils.finishFunc('getQrData');
+			    };
+			    self.$apis.getQrCommonCode(postData,callback);
 			},
 		}
 	}
@@ -151,7 +85,7 @@
 
 <style>
 	@import "../../assets/style/public.css";
-	@import "../../assets/style/code.css";
+	@import "../../assets/style/code-first.css";
 	
 	@import "../../assets/style/bootstrap.css";
 	@import "../../assets/style/basic.css";

@@ -152,7 +152,7 @@
 							count: self.count,
 						}]
 					}],
-					type: 1,
+					type: 2,
 					data: {
 						phone:self.submitData.phone,
 						name:self.submitData.name,

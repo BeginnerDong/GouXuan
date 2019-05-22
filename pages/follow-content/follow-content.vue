@@ -7,7 +7,7 @@
 		<div class="content-more">
 			<div class="content-top color2" style="border: none;">更多内容</div>
 			<div class="ilblock" v-for="(item,index) in mainData" @click="select(index)" 
-			:style="webSelf.$Utils.inArray(item.id,follow)!=-1?'background: linear-gradient(to right,#FF9B5C,#FF6160)':''">{{item.title}}</div>
+			:style="webSelf.$Utils.inArray(item.id,follow)!=-1?'background: linear-gradient(to right,#FF9B5C,#FF6160);color:#fff':''">{{item.title}}</div>
 		</div>
 		<button class="buttonB" @click="webSelf.$Utils.stopMultiClick(userInfoUpdate)">确认</button>
 	</view>
@@ -56,6 +56,20 @@
 				postData.searchItem = {
 					thirdapp_id: 2,
 					type: 3
+				};
+				postData.getBefore = {
+					city: {
+						tableName: 'Label',
+						searchItem: {
+							title: ['=', ['商品类别']],
+						},
+						middleKey: 'parentid',
+						key: 'id',
+						condition: 'in',
+					},
+				};
+				postData.order = {
+					listorder: 'desc'
 				};
 				console.log('postData', postData)
 				const callback = (res) => {
@@ -141,7 +155,7 @@
 		line-height: 40px;
 	}
 
-	html {
+	page {
 		background: #fff;
 	}
 

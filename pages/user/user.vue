@@ -5,7 +5,7 @@
 				<div class="tou-img">
 					<img src="/static/images/about-img1.png" />
 				</div>
-				<div class="color2 user-name">名称名称名称</div>
+				<div class="color2 user-name"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/serve/serve'}})">名称名称名称</div>
 			</div>
 		</div>
 		<div class="status bg1">
@@ -81,14 +81,14 @@
 						我的优惠券
 					</li>
 				</div>
-				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/code/code'}})" class="color2" style="position: relative;">
+			<!-- 	<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/code/code'}})" class="color2" style="position: relative;">
 					<div class="ilblock" style="position: absolute;top: 12px;left: 17px;">
 						<img src="/static/images/about-icon8.png" style="width: 14px;" />
 					</div>
 					<li>
 						店铺二维码
 					</li>
-				</div>
+				</div> -->
 				<div class="color2" @click="webSelf.$Router.navigateTo({route:{path:'/pages/course/course'}})" style="position: relative;">
 					<div class="ilblock" style="position: absolute;top: 12px;left: 17px;">
 						<img src="/static/images/about-icon9.png" style="width: 14px;" />
@@ -115,22 +115,28 @@
 
 		<!-- ------------footer----------------- -->
 		<div style="width: 100%; height: 65px;"></div>
-		<!-- <view class="navbar-brand">
-			<ul>
-				<li @click="webSelf.$Router.navigateTo({route:{path:'/pages/index/index'}})">
-					<view class="navbar-img"><img src="/static/images/navbar1.png" /></view>
-					<view >首页</view>
-				</li>
-				<li @click="webSelf.$Router.navigateTo({route:{path:'/pages/follow/follow'}})">
-					<view class="navbar-img"><img src="/static/images/navbar2.png" /> </view>
+		<view class="navbar-brand">
+			<view style="margin-top: 10px;">
+				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/index/index'}})">
+					<view class="navbar-img">
+						<image src="/static/images/navbar1.png"></image>
+					</view>
+					<view>首页</view>
+				</view>
+				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/follow/follow'}})">
+					<view class="navbar-img">
+						<image src="/static/images/navbar2.png"></image>
+					</view>
 					<view>关注</view>
-				</li>
-				<li >
-					<view class="navbar-img"><img src="/static/images/navbar3-a.png" /></view>
-					<view style="color: #FC7C5D;">我的</view>
-				</li>
-			</ul>
-		</view> -->
+				</view>
+				<view class="navbar-item ilblock" >
+					<view class="navbar-img">
+						<image src="/static/images/navbar3-a.png"></image>
+					</view>
+					<view class="color8">我的</view>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 

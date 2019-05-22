@@ -57,22 +57,28 @@
 
 		
 
-		<!-- <view class="navbar-brand">
+		<view class="navbar-brand">
 			<view style="margin-top: 10px;">
-				<view class="navbar-item ilblock"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/index/index'}})">
-					<view class="navbar-img"><img src="/static/images/navbar1.png" /></view>
+				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/index/index'}})">
+					<view class="navbar-img">
+						<image src="/static/images/navbar1.png"></image>
+					</view>
 					<view>首页</view>
 				</view>
 				<view class="navbar-item ilblock">
-					<view class="navbar-img"><image src="../../static/images/navbar2-a.png"/> </view>
-					<view style="color: #FC7C5D;">关注</view>
+					<view class="navbar-img">
+						<image src="/static/images/navbar2-a.png"></image>
+					</view>
+					<view  class="color8">关注</view>
 				</view>
 				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/user/user'}})">
-					<view class="navbar-img"><img src="/static/images/navbar3.png" /></view>
+					<view class="navbar-img">
+						<image src="/static/images/navbar3.png"></image>
+					</view>
 					<view>我的</view>
 				</view>
 			</view>
-		</view> -->
+		</view>
 	</view>
 </template>
 
@@ -150,9 +156,6 @@
 		line-height: 40px;
 	}
 
-	html {
-		background: #f2f2f2;
-	}
 
 	@import "../../assets/style/bootstrap.css";
 	@import "../../assets/style/basic.css";

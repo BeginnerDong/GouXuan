@@ -85,7 +85,7 @@
 }
 .best-box{
 	border:solid 1px #EEEEEE;
-	width: 265px;
+	width: 66%;
 	height:228px;
 	border-radius:10px ;
 	overflow: hidden;
@@ -259,7 +259,7 @@ overflow: hidden;
 .zhan{
 	width: 100%;
 	position: absolute;
-	top: 91px;
+	top: 51px;
 	z-index: 8;
 	background: #fff;
 	

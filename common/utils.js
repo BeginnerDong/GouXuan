@@ -37,6 +37,29 @@ export default {
 		}
 	
 	},
+	
+	getHashParameters() {
+		if(location.search){
+			var arr = location.search.substr(1).split('&');
+		}else if(location.hash&&location.hash .split('?')[1]){
+			var arr = location.hash .split('?')[1].split('&');
+			var hash = location.hash .split('?')[0]
+		}else{
+			var arr = [];
+		};
+      
+		var params = {}
+		for (var i = 0; i < arr.length; i++) {
+			var data = arr[i].split('=')
+			if (data.length === 2) {
+			  params[data[0]] = data[1]
+			};
+		};
+		if(!hash){
+			var hash = location.hash
+		};
+		return [params,hash]
+    },
 
 	showToast(title, type, duration, func) {
 		uni.showToast({

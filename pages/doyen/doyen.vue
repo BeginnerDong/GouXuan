@@ -81,9 +81,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="bg1" style="margin-top: 10px; margin-bottom: 70px;">
+		<div class="bg1" >
 			<div class="color2" @click="webSelf.$Router.navigateTo({route:{path:'/pages/code-all/code-all'}})">
-				<div class="flo-left color2 font14" style="background: #fff;height: 52px;width: 100%; line-height: 52px;text-indent: 15px;">
+				<div class="flo-left color2 font14" style="background: #fff;height: 52px;width: 100%; line-height: 52px;text-indent: 15px;margin-top: 10px; margin-bottom: 70px">
 					<div class="ilblock color2 font14" style="width: 221px;">达人海报</div>
 					<div class="ilblock color1 font14" style="width: 110px; background: url(/static/images/home-icon9.png) no-repeat 100px 19.5px;
 					 background-size: 5%;">
@@ -98,28 +98,29 @@
 
 
 
+		<view class="navbar-brand">
+			<view style="margin-top: 10px;">
+				<view class="navbar-item ilblock">
+					<view class="navbar-img">
+						<image src="/static/images/达人/Talent%20show1-a.png"></image>
+					</view>
+					<view  class="color8">达人</view>
+				</view>
+				<view class="navbar-item ilblock" @click="webSelf.$Router.redirectTo({route:{path:'/pages/team/team'}})">
+					<view class="navbar-img">
+						<image src="/static/images/达人/Talent%20show2.png"></image>
+					</view>
+					<view>达人团队</view>
+				</view>
+				<view class="navbar-item ilblock"  @click="webSelf.$Router.redirectTo({route:{path:'/pages/return/return'}})">
+					<view class="navbar-img">
+						<image src="/static/images/达人/Talent%20show3.png"></image>
+					</view>
+					<view>返佣</view>
+				</view>
+			</view>
+		</view>
 
-
-		<div class="navbar-brand">
-			<ul>
-				<li>
-					<a href="doyen.html">
-						<div class="navbar-img"><img src="/static/images/达人/Talent%20show1-a.png" /></div>
-						<div style="color: #FC7C5D;">达人</div>
-					</a>
-				</li>
-				<li>
-					<a href="team.html">
-						<div class="navbar-img"><img src="/static/images/达人/Talent%20show2.png" /> </div>
-						<div>达人团队</div>
-					</a>
-				</li>
-				<li><a href="return.html">
-						<div class="navbar-img"><img src="/static/images/达人/Talent%20show3.png" /></div>
-						<div>返佣</div>
-					</a></li>
-			</ul>
-		</div>
 	</view>
 </template>
 
@@ -129,31 +130,31 @@
 		data() {
 			return {
 				webSelf: this,
-				mainData:[],
-				type:2,
-				totalCount:'0.00',
-				monthCount:'0.00',
-				distriData:[],
-				searchItem:{
-					type:2
+				mainData: [],
+				type: 2,
+				totalCount: '0.00',
+				monthCount: '0.00',
+				distriData: [],
+				searchItem: {
+					type: 2
 				},
-				orderData:[]
+				orderData: []
 			}
 		},
 		onLoad(options) {
 			const self = this;
 			self.$Utils.loadAll(['getMainData', 'getDistriData'], self)
 		},
-		
+
 		methods: {
 
 			getMainData() {
 				const self = this;
-				var now  = Date.parse(new Date())/1000;
+				var now = Date.parse(new Date()) / 1000;
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
 				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
-				postData.searchItem.user_no= uni.getStorageSync('user_no');
+				postData.searchItem.user_no = uni.getStorageSync('user_no');
 				postData.order = {
 					create_time: 'desc'
 				};
@@ -164,53 +165,53 @@
 							for (var i = 0; i < self.mainData.length; i++) {
 								self.totalCount += self.mainData[i].count.toFixed(2)
 							}
-							if(self.mainData[i].create_time<now&&self.mainData[i].create_time<now-2592000){
+							if (self.mainData[i].create_time < now && self.mainData[i].create_time < now - 2592000) {
 								self.monthCount += self.mainData[i].count.toFixed(2)
 							}
-								
-						} 
-						
+
+						}
+
 					} else {
-						self.$Utils.showToast(res.msg,'none')
+						self.$Utils.showToast(res.msg, 'none')
 					};
 					self.$Utils.finishFunc('getMainData');
 				};
 				self.$apis.flowLogGet(postData, callback);
 			},
-			
+
 			getDistriData() {
 				const self = this;
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
 				postData.searchItem = {
-					parent_no:uni.getStorageSync('user_no'),
-					type:2
-				};				
+					parent_no: uni.getStorageSync('user_no'),
+					type: 2
+				};
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
 						if (res.info.data.length > 0) {
 							self.distriData.push.apply(self.distriData, res.info.data);
-						} 
-						
+						}
+
 					} else {
-						self.$Utils.showToast(res.msg,'none')
+						self.$Utils.showToast(res.msg, 'none')
 					};
 					self.$Utils.finishFunc('getDistriData');
 				};
 				self.$apis.distriGet(postData, callback);
 			},
-			
+
 			getOrderData() {
-				const self = this;			
+				const self = this;
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
-				postData.searchItem.user_no= uni.getStorageSync('user_no');
+				postData.searchItem.user_no = uni.getStorageSync('user_no');
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
 						if (res.info.data.length > 0) {
 							self.orderData.push.apply(self.orderData, res.info.data);
-						} 
-					} 	
+						}
+					}
 					self.$Utils.finishFunc('getOrderData');
 				};
 				self.$apis.orderGet(postData, callback);

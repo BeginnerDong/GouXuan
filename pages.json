@@ -5,163 +5,245 @@
 
 		{
 			"path": "pages/index/index",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/address/address",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/address-save/address-save",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/code/code",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/code-all/code-all",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/code-first/code-first",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/code-second/code-second",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/coupon/coupon",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/course/course",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/deposit/deposit",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/depositld/depositld",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/doyen/doyen",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/follow/follow",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/follow-content/follow-content",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 
 		{
 			"path": "pages/index-befor/index-befor",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/install/install",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/login/login",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
+		},
+		{
+			"path": "pages/status/status",
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/more/more",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/order/order",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/other/other",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/panic/panic",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/panic-second/panic-second",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/calendarWatch/calendarWatch",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/pay/pay",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/recommend/recommend",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/regular/regular",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/return/return",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/return-first/return-first",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/serve/serve",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/store/store",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/store-all/store-all",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/store-ed/store-ed",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/store-ing/store-ing",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/store-waie/store-waie",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 
 		{
 			"path": "pages/team/team",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/team-code/team-code",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/team-team/team-team",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		},
 		{
 			"path": "pages/user/user",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
 		}
 	],
 
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "吃喝玩乐推荐",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
