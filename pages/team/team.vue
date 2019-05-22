@@ -8,27 +8,14 @@
 		</div>
 
 		<div class="bg1" style="padding-top:25px;padding-bottom:25px;">
-			<div class="team-top" style="margin-left: 110px; margin-bottom: 4px;">
-				<div class="font11 color2">4月11日</div>
-				<div class="font11 color2">团队营业额</div>
-				<div class="font11 color2">团队奖励0</div>
+			
+				
+				
+			
+			<div style="text-align: center;">
+				<canvas canvas-id="canvasLineB" id="canvasLineB" :style="{'width':cWidth2+'px','height':cHeight2+'px'}" disable-scroll=true class="charts-rotate"  @touchstart="touchMix" @touchmove="moveMix" @touchend="touchEndMix"></canvas>
 			</div>
-			<div style="height: 159px; width: 2px;border-left: 2px solid #E7B568;margin-left: 142px;"></div>
-			<div class="team-inlin">
-				<div class="inlin inlin-a" style="width: 21px;"></div>
-				<div class="inlin inlin-b"></div>
-				<div class="inlin inlin-a"></div>
-				<div class="inlin inlin-b"></div>
-				<div class="inlin inlin-a"></div>
-				<div class="inlin inlin-c"></div>
-				<div class="inlin inlin-a"></div>
-				<div class="inlin inlin-b"></div>
-				<div class="inlin inlin-a"></div>
-				<div class="inlin inlin-b"></div>
-				<div class="inlin inlin-a"></div>
-				<div class="inlin inlin-b"></div>
-				<div class="inlin inlin-a"></div>
-			</div>
+			
 			<div style="width: 100%; margin-top: 30px;padding-left: 15px;padding-right: 15px;">
 				<div class="color2 font15 ilblock" style="width: 38%;">
 					达人营业额
@@ -97,20 +84,89 @@
 </template>
 
 <script>
+	import uCharts from '@/common/u-charts.js';
+	var canvaLineB=null;
 	export default {
 
 		data() {
 			return {
-
-
+				cWidth2:'',//横屏图表
+				cHeight2:'',//横屏图表
+				pixelRatio:1,
+				"LineB": {
+					  "categories": ["2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020",],
+					  "series": [{
+						"name": "成交量A",
+						"data": [350, 200, 250, 307, 40, 200,500,400,605]
+					  },{
+						"name": "奖励金额",
+						"data": [35, 20, 25, 37, 4, 20,50,40,65]
+					  }]
+				}
 			}
 		},
 		onLoad(options) {
 			const self = this;
+			var documentWidth = document.body.clientWidth;
+			this.cWidth2=parseInt(documentWidth*0.9);
+			this.cHeight2=parseInt(documentWidth*0.9*0.7);
+			this.showLineB('canvasLineB',this.LineB)
 			/* self.$Utils.loadAll(['getMainData', 'getLabelData', 'getCaseData'], self) */
 
 		},
 		methods: {
+			
+			touchMix(e){
+				canvaLineB.scrollStart(e);
+			},
+			moveMix(e) {
+				canvaLineB.scroll(e);
+			},
+			touchEndMix(e) {
+				canvaLineB.scrollEnd(e);
+				//下面是toolTip事件，如果滚动后不需要显示，可不填写
+				canvaLineB.showToolTip(e, {
+					format: function (item, category) {
+						return category + ' ' + item.name + ':' + item.data 
+					}
+				});
+			},
+			
+			showLineB(canvasId,chartData){
+				canvaLineB=new uCharts({
+					$this:this,
+					canvasId: canvasId,
+					type: 'line',
+					legend:false,
+					background:'#FFFFFF',
+					pixelRatio:this.pixelRatio,
+					rotate:false,//开启图表横屏
+					// #ifdef MP-ALIPAY
+					rotateLock:true,//百度及支付宝需要锁定旋转
+					// #endif
+					categories: chartData.categories,
+					animation: false,
+					series: chartData.series,
+					enableScroll:true,
+					xAxis: {
+						disableGrid:true,
+						itemCount:5,
+						scrollShow:true,
+						scrollAlign:'right'
+					},
+					yAxis: {
+						//disabled:true
+					},
+					width: this.cWidth2,
+					height: this.cHeight2,
+					
+					
+				});
+			},
+			
+			
+			
+			
 			test($event) {
 				var testres = this.getCaseData()
 			},
@@ -229,7 +285,9 @@
 
 	@import "../../assets/style/bootstrap.css";
 	@import "../../assets/style/basic.css";
-
+	.charts-rotate{
+		background-color: #FFFFFF;
+	}
 	.team-inlin {
 		width: 100%;
 	}
