@@ -2,6 +2,7 @@
 // 全局变量以g_开头
 // 私有函数以_开头
 import config from "@/config/index.config.js";
+import $Utils from "./utils.js";
 
 class Token {
     g_params={};
@@ -17,16 +18,53 @@ class Token {
         };
     }
 	
-	getWeixinToken(callback){
+	getWxToken(callback,postData) { 
+		
+	    if((postData&&postData.refreshToken)||!uni.getStorageSync('entrance_token')){
+	        var params = {
+	            token_name:'entrance_token',
+	            info_name:'entrance_info',
+	            thirdapp_id:22
+	        };
+			if(callback){
+				this.getWeixinToken(params,callback);
+			}else{
+				this.getWeixinToken(params);
+			};
+	        
+	    }else{
+	        return uni.getStorageSync('entrance_token');
+	    }
+	}
+	
+	getWeixinToken(params,callback){
 
-
-        var param = this.GetRequest();
-        console.log(param);
+		var href =  window.location.origin;
+		var href =  'http://test.solelycloud.com/gouxuanweb';
+        var param = $Utils.getHashParameters()[0];
+        var hash = $Utils.getHashParameters()[1];
+        console.log('param',param);
+		
         if(param.code){
+			if(param.sub_appid&&param.sub_appsecret&&!param.sub_code){
+				
+				href = href + '?sub_code=' + param.code + '&sub_appid=' + param.sub_appid + '&sub_appsecret' + param.sub_appsecret + hash; 
+				console.log('code-hrefs',href);
+				//return;
+				window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7db54ed176405e24&redirect_uri='+
+				encodeURIComponent(href)+'&response_type=code&scope=snsapi_userinfo';
+				return;
+			};
             var postData = {
                 thirdapp_id:2,
                 code:param.code,
             };
+			
+			if(param.sub_appid&&param.sub_code){
+				postData.sub_appid = param.sub_appid;
+				postData.sub_code = param.sub_code;
+			};
+			
             var c_callback = (res)=>{
                 console.log(res)
                 if(res.token){
@@ -38,13 +76,48 @@ class Token {
                     alert('获取token失败')
                 };
             };  
-            this.getWxauthToken(postData,c_callback);
+            //this.getWxauthToken(postData,c_callback);
+			uni.request({
+			    url: config.baseUrl+'/Wxauth',
+			    method:'POST',
+			    data:postData,
+			    success:function(res){
+			        console.log(res)
+			        if(res.data&&res.data.solely_code==100000){  
+			            if(c_callback){
+			                c_callback && c_callback(res.data.token);
+			            };      
+			        }else{
+			            uni.showToast({
+			                title: '获取token失败',
+			                icon: 'fail',
+			                duration: 1000,
+			                mask:true
+			            });
+			        };
+			        
+			        
+			    }
+			})
         }else if(uni.getStorageSync('user_token')){
             callback&&callback();
         }else{
-            var href =  window.location.href;
-            window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7db54ed176405e24&redirect_uri='+
-            encodeURIComponent(href)+'&response_type=code&scope=snsapi_userinfo';
+           
+			
+			if(param.sub_appid&&param.sub_appsecret){
+				href =  href+'?sub_appid='+param.sub_appid+'&sub_appsecret='+param.sub_appsecret + hash;
+				console.log('sub-code-one-herf',href);
+				return;
+				window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+ param.sub_appid +'&redirect_uri='+
+				encodeURIComponent(href)+'&response_type=code&scope=snsapi_userinfo';
+			}else{
+				var href =  'http://test.solelycloud.com/gouxuanweb/'+hash;
+				console.log('code-one-herf',href);
+				//return;
+				window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7db54ed176405e24&redirect_uri='+
+				encodeURIComponent(href)+'&response_type=code&scope=snsapi_userinfo';
+			};   
+			 
         };
         
     } 

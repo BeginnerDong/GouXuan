@@ -1,7 +1,9 @@
 <script>
+	import token from "./common/token.js"
 	export default {
 		onLaunch: function() {
-			console.log('App Launch')
+			console.log('App Launch');
+			//token.getWxToken();
 		},
 		onShow: function() {
 			console.log('App Show')
