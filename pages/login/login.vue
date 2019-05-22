@@ -11,13 +11,16 @@
 				<div class="ilblock">
 					用户名：
 				</div>
-				<div class="color1 ilblock top-list">请输入用户名或者手机号</div>
+				<div class="color1 ilblock top-list">
+					<input class="color1 ilblock" placeholder="请输入用户名或者手机号"/>
+				</div>
 			</div>
 			<div class="color2">
 				<div class="ilblock">
 					验证码：
 				</div>
 				<div class="color1 ilblock top-list">
+					<input class="color1 ilblock"/>
 					<div class="flo-left ilblock flo-right">获取验证码</div>
 				</div>
 			</div>
@@ -26,6 +29,7 @@
 					验证符：
 				</div>
 				<div class="color1 ilblock top-list">
+					<input class="color1 ilblock"/>
 					<img class="flo-right" src="/static/images/服务/service-img1.png" style="width: 80px; position: relative; top: 20px;"/>
 				</div>
 			</div>
@@ -83,6 +87,10 @@
 		height: 60px;
 		width: 80%;
 		line-height: 66px;
+	}
+	.top-list input{
+		position: relative;
+		top: 6px;
 	}
 	@import "../../assets/style/bootstrap.css";
 	@import "../../assets/style/basic.css";
