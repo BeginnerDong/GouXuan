@@ -29,9 +29,12 @@
 					验证符：
 				</div>
 				<div class="color1 ilblock top-list">
-					<input class="color1 ilblock" />
-					<img class="flo-right" src="/static/images/服务/service-img1.png" style="width: 80px; position: relative; top: 20px;" />
+					<input class="color1 ilblock" placeholder="请输入验证符" v-model="submitData.passwordByJs"/>	
 				</div>
+			</div>
+			<div style="text-align: center;" @click="refresh()">
+				<imgCode ref="imgcode"></imgCode>{{show()}}
+				<text >看不清？点击图片刷新</text>
 			</div>
 			<button class=" radiu20 color5" style="width: 80%; margin: 50px auto;height: 40px; line-height: 40px; background: #F8835B;" @click="submit">登录</button>
 		</div>
@@ -39,6 +42,7 @@
 </template>
 
 <script>
+	import imgCode from '@/components/imgCode/imgCode.vue';
 	export default {
 
 		data() {
@@ -50,6 +54,7 @@
 
 			}
 		},
+		components:{imgCode},
 		onLoad(options) {
 			const self = this;
 			/* self.$Utils.loadAll(['getMainData', 'getLabelData', 'getCaseData'], self) */
@@ -60,6 +65,17 @@
 			};
 		},
 		methods: {
+			
+			
+			refresh:function(){
+				this.$refs.imgcode.refresh();
+			},
+			show:function(){
+				var _self=this;
+				setTimeout(function(){
+					_self.refresh();
+				},500);
+			},
 		
 
 			submit() {
