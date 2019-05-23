@@ -43,7 +43,7 @@
 				const self = this;
 				const postData = {};
 				postData.searchItem = {
-					title: '达人海报',
+					title: '达人锁粉海报',
 					thirdapp_id: self.$AssetsConfig.thirdapp_id,
 				};
 				const callback = (res) => {

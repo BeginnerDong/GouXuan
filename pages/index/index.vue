@@ -83,7 +83,7 @@
 					查看更多</view>
 			</view>
 			<scroll-view scroll-x="true">
-				<view class="best-box ilblock" style="margin-left: 15px;" v-for="item in hotData">
+				<view class="best-box ilblock" style="margin-left: 15px;" v-for="item in hotData" :data-id="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/recommend/recommend?id='+$event.currentTarget.dataset.id}})">
 					<view class="best-box-top">
 						<img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
 						<view class="best-num ilblock">
@@ -96,11 +96,11 @@
 					<view style="margint: 0 4%;">
 						<view class="ilblock" style="font-size: 12px; color: rgb(249,138,72);">￥<span style="font-size: 20px;">{{item.price}}</span></view>
 						<div class="ilblock best-money1">
-							<view class="span1 ilblock bg3">店反</view>
+							<view class="span1 ilblock bg3">店返</view>
 							<view class="span2 ilblock color8">￥{{item.shop_reward}}</view>
 						</div>
 						<div class="ilblock best-money2">
-							<view class="span1 ilblock bg4">团反</view>
+							<view class="span1 ilblock bg4">团返</view>
 							<view class="span2 ilblock color9">￥{{item.group_reward}}</view>
 						</div>
 					</view>
@@ -134,11 +134,11 @@
 
 						<view class="ilblock" style="flex-wrap: nowrap;width: 64%;">
 							<div class="ilblock best-money1" style="width:42%;" v-if="item.skuDate.length==0">
-								<view class="span1 ilblock bg3">店反</view>
+								<view class="span1 ilblock bg3">店返</view>
 								<view class="span2 ilblock color8">￥{{item.shop_reward}}</view>
 							</div>
 							<div class="ilblock best-money2" style=" width:42%;" v-if="item.skuDate.length==0">
-								<view class="span1 ilblock bg4">团反</view>
+								<view class="span1 ilblock bg4">团返</view>
 								<view class="span2 ilblock color9">￥{{item.group_reward}}</view>
 							</div>
 						</view>
@@ -281,7 +281,8 @@
 		},
 		
 		destroyed () {
-            clearTimeout(this.countDown);  
+			const self = this;
+            clearTimeout(self.countDown);  
         },
 		
 		methods: {
