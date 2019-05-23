@@ -2,13 +2,12 @@
 	<view>
 		<view class="color2 font15 top-box" >
 			电子码查询系统
-			<image src="../../static/images/nav.png"></image>
 		</view>
-		<view class="list font12 color3">
+		<!-- <view class="list font12 color3">
 			<view>查询</view>
 			<view>说明</view>
 			<view>退出</view>
-		</view>
+		</view> -->
 		<view class="info color2 font13">
 			<image src="../../static/images/20190523145822.png"></image>
 			15986457896
@@ -25,7 +24,6 @@
 				</view>
 				<view>
 					说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明
-
 				</view>
 			</view>
 			
@@ -136,11 +134,10 @@
 		padding: 20rpx 30rpx;
 	}
 	.info image{
-		width: 46rpx;
-		height:54rpx;
-		border: solid 1rpx;
+		width: 38rpx;
+		height:36rpx;
 		position: relative;
-		top:14rpx;
+		top:12rpx;
 	}
 	
 	.text{
