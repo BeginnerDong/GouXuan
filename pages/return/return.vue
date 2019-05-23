@@ -214,13 +214,13 @@
 	@import "../../assets/style/public.css";
 	@import "../../assets/style/index.css";
 	.retun-top {
-		width: 375px;
+		width: 100%;
 		height: 152px;
 		background: #FF844D;
 	}
 	
 	.retun-middle {
-		width: 345px;
+		width: 90%;
 		height: 83px;
 		margin: -32px auto 30px;
 		border-radius: 5px;
