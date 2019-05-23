@@ -46,7 +46,7 @@
 .best-money1{
 	height: 25px;
 	width: 76px;
-	background: url(/static/images/home-icon15.png) no-repeat;
+	background: url(../../static/images/home-icon15.png) no-repeat;
 	background-size: 100%;
 	margin-left: 15px;
 	position: relative;
@@ -59,7 +59,7 @@
 	height: 25px;
 	width: 76px;
 	margin-left: 5px;
-	background: url(/static/images/home-icon16.png) no-repeat;
+	background: url(../../static/images/home-icon16.png) no-repeat;
 	background-size: 100%;
 	position: relative;
 	top: -6px;

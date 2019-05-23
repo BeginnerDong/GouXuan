@@ -80,7 +80,7 @@
 .besttext{
 	width: 90px;
 	float: right;
-	background: url(/static/images/home-icon9.png) no-repeat 65px center;
+	background: url(../../static/images/home-icon9.png) no-repeat 65px center;
 	background-size: 7%;
 }
 .best-box{
