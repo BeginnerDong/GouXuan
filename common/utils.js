@@ -1,6 +1,8 @@
 import assetsConfig from "@/config/assets.config.js";
 
 export default {
+	
+	
 
 	realPay(param, callback) {
 	
@@ -88,7 +90,7 @@ export default {
 	},
 
 	inArray(value, array) {
-		console.log('funcarray', array);
+		
 		return array.indexOf(parseInt(value));
 	},
 
@@ -512,33 +514,45 @@ export default {
 		const self = this;
 
 		var can_choose_sku_item = [];
+		var can_choosed_sku_item = [];
 		var choosed_skuData = {};
-
+		can_choose_sku_item = self.cloneForm(choosed_sku_item);
 		for (var i = 0; i < skuData.length; i++) {
 			if (JSON.stringify(skuData[i].sku_item.sort()) == JSON.stringify(choosed_sku_item.sort())) {
-				choosed_skuData = self.cloneForm(skuData[i]);
-				can_choose_sku_item = choosed_sku_item;
-				break;
+				choosed_skuData = self.cloneForm(skuData[i]);	
+				var finish = true;
+				can_choosed_sku_item = self.cloneForm(skuData[i].sku_item);
+				
 			} else {
 				if (choosed_sku_item.length > 0) {
 					var all = true;
-					for (var c_i = 0; c_i < choosed_sku_item.length; c_i++) {
-						if (skuData[i].sku_item.indexOf(choosed_sku_item[c_i]) == -1) {
-							all = false;
+					
+					var choosedLength = choosed_sku_item.length;
+					if(choosedLength>1){
+						for (var c_i = 0; c_i < choosedLength; c_i++) {
+							if (skuData[i].sku_item.indexOf(choosed_sku_item[c_i]) == -1) {
+								all = false;
+							};
 						};
 					};
+					
 					if (all) {
 						can_choose_sku_item.push.apply(can_choose_sku_item, skuData[i].sku_item);
+						if(!finish){
+							can_choosed_sku_item = self.cloneForm(skuData[i].sku_item);
+						};	
 					};
 				} else {
 					can_choose_sku_item.push.apply(can_choose_sku_item, skuData[i].sku_item);
 				};
+				
 			};
 		};
 
 		return {
 			choosed_skuData: choosed_skuData,
-			can_choose_sku_item: this.uniqueArray(can_choose_sku_item)
+			can_choose_sku_item: this.uniqueArray(can_choose_sku_item),
+			can_choosed_sku_item: can_choosed_sku_item
 		};
 	},
 

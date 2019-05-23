@@ -68,6 +68,10 @@
         "title" : "本地捕手",
         "devServer" : {
             "https" : false
-        }
+        },
+        "router" : {
+            "base" : "/gouxuanweb/"
+        },
+        "domain" : "http://test.solelycloud.com"
     }
 }

@@ -4,6 +4,19 @@ import config from "@/config/index.config.js";
 
 export default {
 
+	SkuDateGet(param, callback) {
+		var allParams = {
+			url: 'Common/SkuDate/get',
+			type: 'post',
+			noToken: true,
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
+	
 	labelGet(param, callback) {
 		var allParams = {
 			url: 'Common/Label/get',

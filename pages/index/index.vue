@@ -7,7 +7,7 @@
 			<view class="logo-right">
 				<view class="logo-right-span ilblock" @click="showCity">{{currentSiteData.title}}</view>
 				<span>
-					<img src="/static/images/home-icon13.png" />
+					<img src="../../static/images/home-icon13.png" />
 				</span>
 			</view>
 		</view>

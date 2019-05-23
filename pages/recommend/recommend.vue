@@ -4,7 +4,7 @@
 			<div class="ilblock color2" @click="menuChange('0')">产<span :class="num==0?'active':''">品详</span>情</div>
 			<div class="ilblock color2" @click="menuChange('1')">使<span :class="num==1?'active':''">用说</span>明</div>
 		</div>
-		<c-swiper :list="swiperData">
+		<c-swiper :list="mainData['bannerImg']">
 			<div class="best-num">分享海报</div>
 		</c-swiper>
 		<!-- <div class="top-imgbox">
@@ -19,7 +19,7 @@
 				{{mainData.title}}
 			</div>
 			<div>
-				<div class="ilblock" style="font-size: 12px; color: rgb(249,138,72); margin-top:5px;">￥<span style="font-size: 20px;">{{mainData.price}}</span></div>
+				<div class="ilblock" style="font-size: 12px; color: rgb(249,138,72); margin-top:5px;">￥<span style="font-size: 20px;">{{cuurentPrice}}</span></div>
 				<div class="ilblock best-money1" style="left: -10px;">
 					<span class="span1">店反</span>
 					<span class="span2">￥{{mainData.shop_reward}}</span>
@@ -47,11 +47,10 @@
 		<div class="choice">
 			<div class="ilblock" style="color: #787878; font-size: 13px; width: 20%; height: 100%; text-align: center;position: relative; top: -30px;">规格选择</div>
 
-			<div class="ilblock" v-for="item in labelData">
+			<div class="ilblock" v-for="item in skuLabelData">
 				<div class="color2" style="margin-top: 10px;">{{item.title}}:</div>
-
-				<div class="chioce-item ilblock" v-for="c_item in item.child" :style="webSelf.$Utils.inArray(c_item.id,merge_can_choose_sku_item)==-1?'color:gray':(webSelf.$Utils.inArray(c_item.id,choosed_sku_item)!=-1?'background: linear-gradient(to right,#FF9B5C,#FF6160);color:#fff':'color:black')"
-				 @click="webSelf.$Utils.inArray(c_item.id,merge_can_choose_sku_item)!=-1?'chooseSku(c_item.id)':''">
+				<div class="chioce-item ilblock" v-for="c_item in item.child" :style="webSelf.$Utils.inArray(c_item.id,can_choose_sku_item)==-1?'color:gray':(webSelf.$Utils.inArray(c_item.id,choosed_sku_item)!=-1?'background: linear-gradient(to right,#FF9B5C,#FF6160);color:#fff':'color:black')"
+				 @click="chooseSku(c_item.id)">
 					{{c_item.title}}元
 				</div>
 			</div>
@@ -64,7 +63,6 @@
 				<div class="color3 ilblock wahct-topleft" @click="goLastMonth">
 					<image src="../../static/images/微信图片_20190520155420.png"></image>
 					上月
-
 				</div>
 				<div class="color2 ilblock wahct-topleft" style="font-size: 16px;">
 					{{dateData.date}}
@@ -100,17 +98,15 @@
 			</div>
 			<view class="bg1" style="padding: 20upx 0upx 70upx;">
 
-
-				<div class="day-item ilblock day-star" style="height:50px" v-for="item in dateData.arrInfoEx">
-
-					<div>{{item.sDay}}</div>
-					<div s v-if="item.hasItem>0">￥{{item.skuDate.price}}</div>
-					<div style="color:#72B784;" v-if="item.hasItem>0">返{{item.skuDate.shop_reward}}</div>
-					<div style="color:#71C3CB; margin-top: 8upx" v-if="item.hasItem>0">{{item.stock>0?'充足':'已售罄'}}</div>
-
-				</div>
-
-
+				<block v-for="item in dateData.finalData" >
+					<div class="day-item ilblock day-star" :style="item.skuDate&&item.skuDate.id==currentSkuDateId?'height:50px;color:red':'height:50px;'"  @click="dateChoose(item)">
+						<div>{{item.sDay}}</div>
+						<div s v-if="item.hasItem>0">￥{{item.skuDate.price}}</div>
+						<div style="color:#72B784;" v-if="item.hasItem>0">返{{item.skuDate.shop_reward}}</div>
+						<div style="color:#71C3CB; margin-top: 8upx" v-if="item.hasItem>0">{{item.stock>0?'充足':'已售罄'}}</div>
+					</div>	
+				</block>
+				
 			</view>
 		</div>
 		<div class="foter1" style="color: #848484; font-size: 15px; padding: 10px 15px;background: #fff;margin: 10px 0;">
@@ -183,20 +179,27 @@
 				dateData: {
 					date: "", //当前日期字符串
 					arrInfoEx: [], //农历节假日等扩展信息
+					finalData:[]
 				},
 				swiperData: [],
 				labelData: [],
 				mainData: [],
 				webSelf: this,
-				choosed_skuData: [],
-				sku_item: [],
-				choose_sku_item: [],
-				merge_can_choose_sku_item: [],
-				num: 0
+				num: 0,
+				choosed_skuData:{
+				},
+				skuDateData:[],
+				choosed_sku_item :  [],
+				can_choose_sku_item :  [],
+				skuLabelData : [],
+				skuIdArray : [],
+				cuurentPrice:0,
+				currentSkuDateId:0
 			}
 		},
 		onLoad(options) {
 			const self = this;
+			
 			self.id = options.id;
 			var todayDate = new Date();
 			self.todayMonth = todayDate.getMonth();
@@ -204,9 +207,55 @@
 			self.todayDay = todayDate.getDate();
 			console.log('self.todayYear', self.todayYear)
 			self.$Utils.loadAll(['calenderInit'], self)
+			
 
 		},
 		methods: {
+			
+			dateMerge(){
+
+				const self = this;
+				self.dateData.finalData = self.$Utils.cloneForm(self.dateData.arrInfoEx);
+				if(self.skuDateData.length>0){
+					for (var o = 0; o < self.skuDateData.length; o++) {
+						for (var p = 0; p < self.dateData.finalData.length; p++) {	
+							if (self.skuDateData[o].lDay == new Date(self.skuDateData[o].time).getDate()) {
+								self.dateData.finalData[p].hasItem++;
+								self.dateData.finalData[p].skuDate = self.skuDateData[o]
+							};
+						};
+					};
+				};
+					
+			},
+			
+			computePrice(){
+				const self = this;
+				if(self.choosed_skuData.skuDate){
+					self.cuurentPrice = self.choosed_skuData.skuDate.price;
+				}else if(self.choosed_skuData.price){
+					self.cuurentPrice = self.choosed_skuData.price;
+				}else{
+					self.cuurentPrice = self.mainData.price;
+				};
+			},
+			
+			dateChoose(item){
+				const self = this;
+				console.log('item',item);
+				if(item.hasItem>0){
+					if(self.choosed_skuData.skuDate){
+						delete self.choosed_skuData.skuDate;
+						self.currentSkuDateId = 0;
+					}else{	
+						self.choosed_skuData.skuDate = item.skuDate;
+						self.currentSkuDateId = item.skuDate.id
+					};	
+					self.computePrice();
+				};
+		
+				console.log('self.choosed_skuData',self.choosed_skuData)
+			},
 
 			calenderInit() {
 				const self = this;
@@ -214,8 +263,9 @@
 				self.curMonth = curDate.getMonth();
 				self.curYear = curDate.getFullYear();
 				self.curDay = curDate.getDate();
-				console.log('calenderInit');
+				
 				self.refreshPageData(self.curYear, self.curMonth, self.curDay);
+				self.getMainData();
 			},
 
 			//刷新全部数据
@@ -224,12 +274,7 @@
 				console.log('self.todayYear', self.todayYear)
 				self.mainData = [];
 				self.signData = [];
-				console.log('refreshPageData', calendarConverter);
-				console.log('getDayCount', getDayCount);
-
-				self.curMonth = month;
-				self.curYear = year;
-				self.curDay = day;
+			
 				self.getOffset(self.curYear, self.curMonth);
 				self.dateData = {
 					date: "",
@@ -238,16 +283,17 @@
 				self.dateData.date = self.curYear + '年' + (self.curMonth + 1) + '月';
 				self.monthArray = [new Date(self.curYear, self.curMonth, 1).getTime(), new Date(self.curYear, self.curMonth + 1, 1)
 					.getTime()
-				]
+				];
+				
 				var offset = self.getOffset(self.curYear, self.curMonth);
-				console.log('offset', offset);
+				
 				for (var i = 0; i < offset; ++i) {
 					self.dateData.arrInfoEx[i] = {
 						isEmpty: true
 					};
 				};
 				var dayCount = getDayCount(self.curYear, self.curMonth);
-				console.log('dayCount', dayCount)
+				
 				for (var i = offset; i < dayCount + offset; ++i) {
 					var d = new Date(year, month, i - offset + 1);
 					var dEx = calendarConverter.solar2lunar(d);
@@ -256,13 +302,13 @@
 					if (self.dateData.arrInfoEx[i].sYear == self.todayYear && self.dateData.arrInfoEx[i].sMonth == self.todayMonth + 1 &&
 						self.dateData.arrInfoEx[i].sDay == self.todayDay) {
 						self.dateData.arrInfoEx[i].isToday = true;
-						console.log('self.todayYear', self.todayYear)
+						
 					};
 
 
 				};
-				self.getMainData()
-				console.log('self.dateData', self.dateData);
+				
+			
 			},
 
 			//获取此月第一天相对视图显示的偏移
@@ -284,6 +330,7 @@
 					--self.curMonth;
 				}
 				self.refreshPageData(self.curYear, self.curMonth, 1);
+				self.getSkuDateData();
 
 			},
 
@@ -296,7 +343,32 @@
 					++self.curMonth;
 				}
 				self.refreshPageData(self.curYear, self.curMonth, 1);
-
+				self.getSkuDateData();
+			},
+			
+			getSkuDateData(){
+				const self = this;
+				if(!self.choosed_skuData.sku_no){
+					self.skuDateData = [];
+					self.currentSkuDateId = 0;
+					self.dateMerge();
+					return;
+				};
+				const postData = {};
+				postData.searchItem = {
+					time:['between',self.monthArray],
+					sku_no: self.choosed_skuData.sku_no
+				};
+				const callback = (res)=>{
+					console.log(res);
+					if (res.info.data.length > 0) {
+						self.skuDateData = self.$Utils.cloneForm(res.data.info);
+					}else{
+						self.skuDateData = [];
+					};
+					self.dateMerge();
+				};
+				self.$apis.SkuDateGet(postData, callback);
 			},
 
 			getMainData() {
@@ -319,146 +391,76 @@
 					},
 					skuDate: {
 						tableName: 'SkuDate',
-						middleKey: 'product_no',
-						key: 'product_no',
+						middleKey: ['sku',0,'sku_no'],
+						key: 'sku_no',
 						condition: '=',
 						searchItem: {
-							status: 1
+							status: 1,
+							time:['between',self.monthArray],
 						}
 					},
 				};
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.mainData = res.info.data[0];
-						self.choosed_skuData = self.$Utils.cloneForm(self.mainData.sku[0]);
-						self.swiperData = res.info.data[0].bannerImg;
-						for (var key in self.mainData.label) {
-							if (self.mainData.sku_array.indexOf(parseInt(key)) != -1) {
-								self.labelData.push(self.mainData.label[key])
-							};
+							
+						
+						for(var key in self.mainData.label){	
+						  if(self.mainData.sku_array.indexOf(parseInt(key))!=-1){
+							self.skuLabelData.push(self.mainData.label[key])
+						  };    
 						};
-						console.log('self.labelData', self.labelData)
-						for (var i = 0; i < self.mainData.sku.length; i++) {
-							if (self.mainData.sku[i].id == self.id) {
-								self.choosed_sku_item = self.$Utils.cloneForm(self.mainData.sku[i].sku_item);
-								var skuRes = self.$Utils.skuChoose(self.mainData.sku, self.choosed_sku_item);
-								self.can_choose_sku_item = skuRes.can_choose_sku_item;
-								for (var j = 0; j < self.choosed_sku_item.length; j++) {
-									var finalRes = self.$Utils.skuChoose(self.mainData.sku, [self.choosed_sku_item[j]]);
-									self.merge_can_choose_sku_item.push.apply(self.merge_can_choose_sku_item, finalRes.can_choose_sku_item);
-								};
 
-								if (self.labelData.length == 1) {
-									for (var k = 0; k < self.labelData.length; k++) {
-										self.merge_can_choose_sku_item = [];
-										for (var m = 0; m < self.labelData[k].child.length; m++) {
-											self.merge_can_choose_sku_item.push(self.labelData[k].child[m].id);
-										};
-									};
-								};
-								console.log('self.merge_can_choose_sku_item', self.merge_can_choose_sku_item)
-							};
-						}
-						//判断哪一天有skuDate存在，把skuDate数据存到那一天的日历数据中
-						for (var o = 0; o < self.mainData.skuDate.length; o++) {
-							for (var p = 0; p < self.dateData.arrInfoEx.length; p++) {
-								if (self.mainData.skuDate[o].title ==
-									self.dateData.arrInfoEx[p].sYear + '年' + self.dateData.arrInfoEx[p].sMonth + '月' + self.dateData.arrInfoEx[p]
-									.sDay + '日') {
-									self.dateData.arrInfoEx[p].hasItem++;
-									self.dateData.arrInfoEx[p].skuDate = self.mainData.skuDate[o]
-								}
-							}
-						}
-					}
+						for (var i = 0; i < self.mainData.sku.length; i++) {
+						  if(i==0){
+							self.choosed_skuData = self.$Utils.cloneForm(self.mainData.sku[0]);
+							self.choosed_sku_item = self.$Utils.cloneForm(self.mainData.sku[0].sku_item);
+							var skuRes = self.$Utils.skuChoose(self.mainData.sku,self.choosed_sku_item);
+							self.can_choose_sku_item = skuRes.can_choose_sku_item;
+						  };
+						  self.skuIdArray.push(self.mainData.sku[i].id);//为了抓所有Sku的评论
+						};
+						if(self.mainData.skuDate){
+							self.skuDateData = self.$Utils.cloneForm(self.mainData.skuDate);
+							//判断哪一天有skuDate存在，把skuDate数据存到那一天的日历数据中	
+						};
+						self.dateMerge();
+						console.log('self.dateData',self.dateData)
+					};
 					self.$Utils.finishFunc('calenderInit');
-					console.log('self.dateData.arrInfoEx', self.dateData.arrInfoEx)
+					self.computePrice();
+					
 				};
 				self.$apis.productGet(postData, callback);
 			},
 
 			chooseSku(id) {
 				const self = this;
-				console.log('self.labelData', self.labelData)
-
-				var id = id;
-				if (self.merge_can_choose_sku_item.indexOf(id) == -1) {
-					//self.choosed_sku_item = [];
-					return;
+			
+				
+				if(self.can_choose_sku_item.indexOf(id)==-1){
+				  return;
 				};
-
-				var index = self.choosed_sku_item.indexOf(id);
-				console.log('index', index)
-				if (index == -1) {
-					var newSkuRes = self.$Utils.skuChoose(self.mainData.sku, [id]);
-					var newchoosed_sku_item = self.$Utils.cloneForm(self.choosed_sku_item);
-					self.choosed_sku_item = [];
-
-					for (var i = 0; i < newchoosed_sku_item.length; i++) {
-						if (newSkuRes.can_choose_sku_item.indexOf(newchoosed_sku_item[i]) != -1) {
-							self.choosed_sku_item.push(newchoosed_sku_item[i]);
-						};
+				var index = self.choosed_sku_item.indexOf(id);	
+				if(index==-1){
+				    self.choosed_sku_item.push(id);
+					var skuResFirst = self.$Utils.skuChoose(self.mainData.sku,[id]);
+					for(var i=0;i<self.choosed_sku_item.length;i++){
+					  if(skuResFirst.can_choosed_sku_item.indexOf(self.choosed_sku_item[i]) == -1){
+						  self.choosed_sku_item.splice(i,1);
+					  };
 					};
-					console.log('newSkuRes.can_choose_sku_item', newSkuRes.can_choose_sku_item)
-
-
-					self.choosed_sku_item.push(id);
-				} else {
-					self.choosed_sku_item.splice(index, 1);
+				}else{
+				  self.choosed_sku_item.splice(index,1);
 				};
-				var skuRes = self.$Utils.skuChoose(self.mainData.sku, self.choosed_sku_item);
+				var skuRes = self.$Utils.skuChoose(self.mainData.sku,self.choosed_sku_item);
 				self.choosed_skuData = skuRes.choosed_skuData;
 				self.can_choose_sku_item = skuRes.can_choose_sku_item;
-				self.merge_can_choose_sku_item = [];
-				if (self.choosed_sku_item.length > 0) {
-					for (var i = 0; i < self.choosed_sku_item.length; i++) {
-						var finalRes = self.$Utils.skuChoose(self.mainData.sku, [self.choosed_sku_item[i]]);
-						self.merge_can_choose_sku_item.push.apply(self.merge_can_choose_sku_item, finalRes.can_choose_sku_item);
-					};
-				} else {
-					self.merge_can_choose_sku_item = self.can_choose_sku_item;
+				self.computePrice();
+				if(self.mainData.type==2){
+					self.getSkuDateData();
 				};
-				if (self.labelData.length > 1) {
-					for (var i = 0; i < self.labelData.length; i++) {
-
-						var hasone = false;
-						for (var j = 0; j < self.labelData[i].child.length; j++) {
-
-							if (self.choosed_sku_item.indexOf(self.labelData[i].child[j].id) != -1) {
-								console.log('self.labelData[i].child[j].id', self.labelData[i].child[j].id)
-								hasone = true
-							};
-						};
-						console.log('hasone', hasone)
-						if (!hasone) {
-							console.log(self.labelData[i]);
-							for (var j = 0; j < self.labelData[i].child.length; j++) {
-								var finalRes = self.$Utils.skuChoose(self.mainData.sku, [self.labelData[i].child[j].id]);
-								var finalIndex = finalRes.can_choose_sku_item.indexOf(self.labelData[i].child[j].id);
-								finalRes.can_choose_sku_item.splice(finalIndex, 1);
-								self.merge_can_choose_sku_item.push.apply(self.merge_can_choose_sku_item, finalRes.can_choose_sku_item);
-							};
-						};
-					};
-				} else {
-					for (var i = 0; i < self.labelData.length; i++) {
-						self.merge_can_choose_sku_item = [];
-						for (var j = 0; j < self.labelData[i].child.length; j++) {
-							self.merge_can_choose_sku_item.push(self.labelData[i].child[j].id);
-						};
-					};
-				};
-
-
 				
-				
-
-				console.log('self.mainData.sku', self.mainData.sku);
-				console.log('self.choosed_sku_item', self.choosed_sku_item);
-				console.log('self.can_choose_sku_item', self.can_choose_sku_item);
-				console.log('self.choosed_skuData', self.choosed_skuData);
-			
-
 			},
 
 			menuChange(num) {
@@ -470,15 +472,14 @@
 				const self = this;
 				console.log('self.choosed_skuDateData',self.choosed_skuDateData)
 				if(self.mainData.type==2){
-					if(self.mainData.skuDate.length>0){
-						if(JSON.stringify(self.choosed_skuDateData) == '{}'){
-							self.$Utils.showToast('请选择预约日期','none')
-						}else{
-							uni.navigateTo({
-								url: '/pages/pay/pay?type='+self.mainData.type+'&id='+self.choosed_skuDateData.id,
-							});
-						}
-					}
+					
+					if(!self.choosed_skuData.skuDate||JSON.stringify(self.choosed_skuData.skuDate) == '{}'){
+						self.$Utils.showToast('请选择预约日期','none')
+					}else{
+						uni.navigateTo({
+							url: '/pages/pay/pay?type='+self.mainData.type+'&id='+self.choosed_skuData.skuDate.id,
+						});
+					};	
 				}else if(self.mainData.type==1){
 					if(JSON.stringify(self.choosed_skuData) == '{}'){
 						self.$Utils.showToast('商品信息错误','none')
