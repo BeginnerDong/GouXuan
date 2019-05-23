@@ -33,10 +33,10 @@
 			<div class="flo-right" style="width: 260px; height: 30px;">
 				<div class="color5 ilblock font10 " style="height: 40px;width: 35px;background: url(/static/images/达人/icon0.png) no-repeat;
 				 background-size: 100%;text-align: center; line-height: 20px;position: relative; top: 10px;
-				 ">0.00</div>
+				 ">{{monthShopCount}}</div>
 			</div>
 			<div style="width: 100%; height: 30px;line-height: 30px;margin-bottom: 15px; ">
-				<div class="color2 ilblock">近30天营业额</div>
+				<div class="color2 ilblock">近30店返</div>
 				<div class="ilblock radiu20 flo-right" style=" margin-top: 10px; background:rgb(226,226,226);width: 243px;height: 10px;"></div>
 			</div>
 
@@ -44,17 +44,17 @@
 			<div class="flo-right" style="width: 260px; height: 30px;">
 				<div class="color5 ilblock font10 " style="height: 40px;width: 35px;background: url(/static/images/达人/icon0.png) no-repeat;
 				 background-size: 100%;text-align: center; line-height: 20px;position: relative;top: 10px;
-				 ">{{monthCount}}</div>
+				 ">{{monthGroupCount}}</div>
 			</div>
 			<div style="width: 100%; height: 30px;line-height: 30px;">
-				<div class="color2 ilblock">近30天返佣</div>
+				<div class="color2 ilblock">近30天团返</div>
 				<div class="ilblock radiu20 flo-right" style=" margin-top: 10px; background:rgb(226,226,226);width: 243px;height: 10px;"></div>
 			</div>
 			<div style="width: 100%; margin-top: 30px;">
 				<div class="color2 font15 ilblock" style="width: 38%;">
-					达人营业额
+					达人店返
 				</div>
-				<div class="ilblock" style="color: rgb(49,160,254); font-size: 20px;">0.00</div>
+				<div class="ilblock" style="color: rgb(49,160,254); font-size: 20px;">{{shopCount}}</div>
 			</div>
 			<div style="width: 100%; margin-top: 10px;">
 				<div class="color2 font15 ilblock" style="width: 38%;">
@@ -133,7 +133,9 @@
 				mainData: [],
 				type: 2,
 				totalCount: '0.00',
-				monthCount: '0.00',
+				shopCount:'0.00',
+				monthShopCount:'0.00',
+				monthGroupCount:'0.00',
 				distriData: [],
 				searchItem: {
 					type: 2
@@ -164,10 +166,20 @@
 							self.mainData.push.apply(self.mainData, res.info.data);
 							for (var i = 0; i < self.mainData.length; i++) {
 								self.totalCount += self.mainData[i].count.toFixed(2)
+								if(self.mainData[i].behavior==1){
+									self.shopCount += self.mainData[i].count.toFixed(2)
+								}
+								if (self.mainData[i].create_time < now && self.mainData[i].create_time < now - 2592000) {
+									if(self.mainData[i].behavior==1){
+										self.monthShopCount += self.mainData[i].count.toFixed(2)
+									}
+									if(self.mainData[i].behavior==1){
+										self.monthGroupCount += self.mainData[i].count.toFixed(2)
+									}	
+									
+								}
 							}
-							if (self.mainData[i].create_time < now && self.mainData[i].create_time < now - 2592000) {
-								self.monthCount += self.mainData[i].count.toFixed(2)
-							}
+							
 
 						}
 

@@ -9,32 +9,37 @@
 				<div class="ilblock">
 					<img src="/static/images/home-icon13.png" style="width: 16px; margin-left: 13px;margin-bottom: 4px;" />
 				</div>
-				<div class="ilblock color1" style="margin-left: 15px;">3541354</div>
+				<input class="ilblock color1" style="margin-left: 15px;height:30px;line-height: 30px;" placeholder="请输入核销码搜索" v-model="check_code"></input>
 			</div>
-			<button class="color5 ilblock flo-left">搜索</button>
+			<button class="color5 ilblock flo-left" @click="search">搜索</button>
 		</div>
 		<div class="storebox bg1" v-for="item in mainData">
 			<div class="storebox-top">
 				<div class="font12 color1 ilblock" style="margin-left: 15px;">
 					交易时间：{{item.create_time}}
 				</div>
-				<div class="ilblock font12 flo-right" style=" color:rgb(225,54,78);margin-right: 15px;">等待核销</div>
+				<div class="ilblock font12 flo-right" style=" color:rgb(225,54,78);margin-right: 15px;" v-if="item.behavior==1">等待核销</div>
+				<div class="ilblock font12 flo-right" style=" color:rgb(225,54,78);margin-right: 15px;" v-if="item.behavior==2">已核销</div>
 			</div>
 			<div class="storebox-btm">
 				<div class="ilblock img-box">
-					<img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
+					<img :src="item.order&&item.order[0].products&&item.order[0].products[0]&&item.order[0].products[0].snap_product&&item.order[0].products[0].snap_product.product&&
+					item.order[0].products[0].snap_product.product.mainImg&&item.order[0].products[0].snap_product.product.mainImg[0]?
+					item.order[0].products[0].snap_product.product.mainImg[0].url:''" />
 				</div>
 				<div class="ilblock imgname">
 					<div class="font15 color2 overflow2" style="line-height: 21px; height: 45px;">
-						{{item.title}}
+						{{item.order&&item.order[0].products&&item.order[0].products[0]&&item.order[0].products[0].snap_product&&item.order[0].products[0].snap_product.product?
+					item.order[0].products[0].snap_product.product.title:''}}
 					</div>
-					<div style="color: rgb(249,138,72); font-size: 11px; margin-top: 16px;">￥<span style="font-size: 20px;">{{item.price}}</span>
+					<div style="color: rgb(249,138,72); font-size: 11px; margin-top: 16px;">￥<span style="font-size: 20px;">{{item.order[0].price}}</span>
 					</div>
 				</div>
 			</div>
-			<div style="line-height: 40px; float: right; margin-right: 15px;">
-				<div class="ilblock color1 font14" style="margin-right: 30px;">核销码：5642</div>
-				<div class="ilblock radiu20 font13" style="border: solid 1px #F98A48; height: 28px; line-height: 28px; width: 75px; text-align: center;">确认核销</div>
+			<div style="line-height: 40px; float: right; margin-right: 15px;" v-if="item.behavior==1">
+				<div class="ilblock color1 font14" style="margin-right: 30px;">核销码：{{item.check_code}}</div>
+				<div class="ilblock radiu20 font13" style="border: solid 1px #F98A48; height: 28px; line-height: 28px; width: 75px; text-align: center;"
+				@click="qrCodeUpdate(item.id)">确认核销</div>
 			</div>
 		</div>
 
@@ -46,8 +51,12 @@
 
 		data() {
 			return {
-
-				mainData:[]
+				check_code:'',
+				mainData:[],
+				searchItem:{
+					thirdapp_id: 2,
+					shop_no:uni.getStorageSync('merchant_no'),
+				}
 			}
 		},
 		onLoad(options) {
@@ -57,26 +66,63 @@
 		},
 		methods: {
 		
+		
+			search(){
+				const self = this;
+				if(self.check_code!=''){
+					self.searchItem.check_code = self.check_code;
+					self.getMainData()
+				}else{
+					self.$Utils.showToast('无效输入','none')
+				}
+			},
 
 			getMainData() {
 				const self = this;
 				const postData = {};
-				postData.tokenFuncName = 'getProjectToken';
+				postData.tokenFuncName = 'getMerchantToken';
 				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-				postData.searchItem = {
-					thirdapp_id: self.$AssetsConfig.thirdapp_id,
-					shop_no:uni.getStorageSync('merchant_no')
+				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
+				postData.getAfter = {
+					order:{
+						tableName:'Order',
+						middleKey:'order_no',
+						key:'order_no',
+						searchItem:{
+							status:1,
+							user_type:0
+						},
+						condition:'='
+					}
 				};
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.mainData.push.apply(self.mainData, res.info.data);
-					};
+					}else{
+						self.$Utils.showToast('未找到订单','none')
+					}
 					self.$Utils.finishFunc('getMainData');
 				};
-				self.$apis.orderGet(postData, callback);
-			},
-
+				self.$apis.qrCodeGet(postData, callback);
+			},	
 			
+			qrCodeUpdate(id) {
+				const self = this;
+				console.log(id)
+				const postData = {};
+				postData.tokenFuncName = 'getMerchantToken';
+				postData.data = {
+					behavior : 2,
+				}
+				postData.searchItem = {};
+				postData.searchItem.id = id;
+				const callback = res => {
+					self.$Utils.showToast('已核销','none')
+					self.mainData = [];
+					self.getMainData(true);
+				};
+				self.$apis.qrCodeUpdate(postData, callback);
+			},
 		}
 	}
 </script>
@@ -84,7 +130,7 @@
 <style>
 	@import "../../assets/style/public.css";
 	@import "../../assets/style/index.css";
-
+	
 	.top {
 		width: 100%;
 		height: 56px;
@@ -106,6 +152,10 @@
 		height: 30px;
 		width: 60px;
 		border: none;
+		padding: 0;
+		margin: 0;
+		line-height: 30px;
+		font-size: 14px;
 	}
 
 	.storebox {
@@ -151,6 +201,6 @@
 		text-align: justify;
 	}
 
-	@import "../../assets/style/bootstrap.css";
+	
 	@import "../../assets/style/basic.css";
 </style>

@@ -1,20 +1,15 @@
 <template>
 	<view class="body">
-		<div class="home color2">
-			<span onclick="backk()">
-				<img src="images/home-icon14.png" />
-			</span>
-			吃喝玩乐推荐
-		</div>
+
 		<div class="color2 font15" style="text-align: center; margin: 25px 0px 20px; font-weight: bolder; ">
 			点击生成专属海报后，长按可保存或发送
 		</div>
-		<a href="code-first.html">
-			<img class="img-one" src="images/达人/img1.png" />
-		</a>
-		<a href="code-second.html">
-			<img class="img-one" src="images/达人/img2.png" style="margin-left: 10px;" />
-		</a>
+		<div  @click="webSelf.$Router.navigateTo({route:{path:'/pages/return/return'}})">
+			<img class="img-one" src="/static/images/达人/img1.png" />
+		</div>
+		<div  @click="webSelf.$Router.navigateTo({route:{path:'/pages/return/return'}})">
+			<img class="img-one" src="/static/images/达人/img2.png" style="margin-left: 10px;" />
+		</div>
 	</view>
 </template>
 
