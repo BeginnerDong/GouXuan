@@ -2,7 +2,7 @@
 	<view>
 		<div class="home color2">
 			<span onclick="backk()">
-				<img src="images/home-icon14.png" />
+				<img src="../../static/images/home-icon14.png" />
 			</span>
 			达人团队
 		</div>
@@ -17,11 +17,11 @@
 		</div>
 		<div class="list-item bg1" style="margin-top: 15px;">
 			<div class="cup ilblock flo-left">
-				<img src="images/达人/icon5.png" />
+				<img src="../../static/images/达人/icon5.png" />
 			</div>
 			<div class="heard ilblock flo-left">
 				<div class="heard-img radiu50">
-					<img src="images/about-img1.png" />
+					<img src="../../static/images/about-img1.png" />
 				</div>
 				<div class="heard-name color2 font14">李四</div>
 			</div>
@@ -39,11 +39,11 @@
 		</div>
 		<div class="list-item bg1">
 			<div class="cup ilblock flo-left">
-				<img src="images/达人/icon6.png" />
+				<img src="../../static/images/达人/icon6.png" />
 			</div>
 			<div class="heard ilblock flo-left">
 				<div class="heard-img radiu50">
-					<img src="images/about-img1.png" />
+					<img src="../../static/images/about-img1.png" />
 				</div>
 				<div class="heard-name color2 font14">李四</div>
 			</div>
@@ -61,11 +61,11 @@
 		</div>
 		<div class="list-item bg1">
 			<div class="cup ilblock flo-left">
-				<img src="images/达人/icon7.png" />
+				<img src="../../static/images/达人/icon7.png" />
 			</div>
 			<div class="heard ilblock flo-left">
 				<div class="heard-img radiu50">
-					<img src="images/about-img1.png" />
+					<img src="../../static/images/about-img1.png" />
 				</div>
 				<div class="heard-name color2 font14">李四</div>
 			</div>

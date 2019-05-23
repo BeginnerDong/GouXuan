@@ -1,22 +1,37 @@
 <template>
 	<view>
-		<div class="home color2">
-			<span onclick="backk()">
-				<img src="images/home-icon14.png" />
-			</span>
-			达人订单
-		</div>
-		<div class="bg1" style="width: 100%; padding: 15px;">
-			<div style="width: 100%;">
-				<div class="font13 color1 ilblock flo-left" style="width: 40%;">2019年04月</div>
-				<div class="font15 color2 ilblock flo-left" style="width: 60%;">全部状态</div>
-			</div>
-			<div style="clear: both; width: 100%; height: 10px;"></div>
-			<div class="list" style="width: 100%;">
-				<input class="color1" placeholder="请输入姓名/手机/产品名称" /><button>搜索</button>
-			</div>
-			<div class="color1 font13" style="width: 100%; text-align: center; margin-top: 25px;">~~没有更多数据了~~</div>
-		</div>
+		<view class="bg1" style="width: 100%; padding: 15px;">
+			<view style="width: 100%;">
+				<view class="font13 color1 ilblock flo-left" style="width: 40%;">2019年04月</view>
+				<view class="font15 color2 ilblock flo-left" style="width: 60%;">全部状态
+				<image src="../../static/images/20190523150314.png" style="width: 10px;height:6px; margin-left: 10px;"></image> </view>
+			</view>
+			<view style="clear: both; width: 100%; height: 10px;"></view>
+			<view class="list" style="width: 100%;">
+				<input class="color1 ilblock" placeholder="请输入姓名/手机/产品名称" />
+				<button class="color5 ilblock search">搜索</button>
+			</view>
+		</view>
+			<view class="list-box bg1">
+				<view class="storebox-top">
+					<view class="font12 color1">
+						<text style="margin-right: 10px;">张三</text>
+						交易时间：2018-08-30
+					</view>
+				</view>
+				<view class="storebox-btm">
+					<view class="ilblock img-box">
+						<image src="../../static/images/focus%20on-img%20.png"></image>
+					</view>
+					<view class="ilblock imgname">
+						<view class="font15 color2 overflow2" style="line-height: 21px; height: 45px;">
+							标题标题标题标题标题标题标题
+						</view>
+						<view style="color: rgb(249,138,72); font-size: 11px; margin-top: 16px;">￥<span style="font-size: 20px;">59.00</span> </view>
+					</view>
+				</view>
+			</view>
+		
 	</view>
 </template>
 
@@ -150,27 +165,69 @@
 <style>
 	@import "../../assets/style/public.css";
 	@import "../../assets/style/index.css";
+	page{
+		background: #F2F2F2;
+	}
 	
-	@import "../../assets/style/bootstrap.css";
-	@import "../../assets/style/basic.css";
-
 	.list input {
 		display: inline-block;
-		color: #AFAFB1;
-		border: solid 1px #D2D2D2;
+		color: #C7C7C7;
+		border: solid 1px #FBFBFB;
 		height: 30px;
-		width: 80%;
+		width: 78%;
 		line-height: 40px;
 		text-indent: 15px;
+		box-sizing: border-box;
+		padding: 0rpx 10px;
 	}
-
-	.list button {
-		display: inline-block;
-		background: #2AA661;
+	
+	.search{
+		background: #2AA561;
 		height: 30px;
-		width: 52px;
-		border-radius: 7px;
-		margin-left: 15px;
+		width: 16%;
+		line-height: 30px;
+		border-radius: 8px;
 		color: #D1E9DB;
+		border: none;
+		padding: 0;
+		margin: 0;
+		font-size:14px
 	}
+	.list-box{
+		width: 92%;
+		margin:15px 4% 0px;
+		border-radius: 13px;
+		box-shadow: 0px 0px 12px #E2E2E2;
+		box-sizing: border-box;
+		padding: 15px;
+		position: relative;
+	}
+	.storebox-top{
+		width: 100%;
+		margin-bottom: 10px;
+	}
+	.storebox-btm{
+		width: 100%;
+		height: 95px;
+		line-height: 40px;
+	}
+	.img-box{
+		width:30%;
+		height: 95px;
+		overflow: hidden;
+		border-radius: 4px;
+	}
+	.img-box img{
+		width:100% ;
+		height: 100%;
+	}
+	.imgname{
+		height: 95px;
+		margin-left: 10px;
+		position: absolute;
+		text-align: justify;
+	}
+	@import "../../assets/style/bootstrap.css";
+	@import "../../assets/style/basic.css";
+	
 </style>

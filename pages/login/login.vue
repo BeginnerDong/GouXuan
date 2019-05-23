@@ -3,7 +3,7 @@
 		<div class="top">
 
 			<div class="top-img">
-				<img src="/static/images/达人/img3.png" style="width: 105px;position: relative; top: 36px; left: 125px;" />
+				<img src="../../static/images/达人/img3.png" style="width: 105px;position: relative; top: 36px; left: 125px;" />
 			</div>
 		</div>
 		<div style="padding-left: 15px; padding-right: 15px;">

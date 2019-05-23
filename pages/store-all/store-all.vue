@@ -42,7 +42,7 @@
 		</div>
 		<div class="box-c" v-if="mainData.length==0">
 			<div style="margin-top: 100px; margin-left: 140px;">
-				<img src="/static/images/达人/img3.png" style="width: 90px;"/>
+				<img src="../../static/images/达人/img3.png" style="width: 90px;"/>
 			</div>
 			<div class="color1 font15" style="text-align: center; margin-top: 30px;">你还没有这个订单状态</div>
 		</div>

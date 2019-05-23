@@ -1,21 +1,33 @@
 <template>
 	<view>
-		<div class="home color2">
-			<span onclick="backk()">
-				<img src="../../static/images/home-icon14.png" />
-			</span>
-			吃喝玩乐推荐
-		</div>
-		<div class="color2 font15" style="text-align: center; margin: 25px 0px 20px;">
-			选择海报模板
-		</div>
-		<a href="code-first.html">
-			<img class="img-one" src="../../static/images/达人/img1.png" />
-		</a>
-		<a href="code-second.html">
-			<img class="img-one" src="../../static/images/达人/img2.png" style="margin-left: 10px;" />
-		</a>
-
+		<view class="buy-box bg1">
+			<view class="list bg1">
+				<view class="ilblock" style="line-height: 40rpx;">
+					<view class="color2 font13">提现</view>
+					<view class="color3 font12">2019-08-09</view>
+				</view>
+				<view class="font14 ilblock flo-right" style="margin-left: 40rpx;color: #FA9567;">-￥56.00</view>
+			</view>
+		</view>
+		<view class="buy-box bg1">
+			<view class="list bg1">
+				<view class="ilblock" style="line-height: 40rpx;">
+					<view class="color2 font13">提现</view>
+					<view class="color3 font12">2019-08-09</view>
+				</view>
+				<view class="font14 ilblock flo-right" style="margin-left: 40rpx;color: #FA9567;">-￥56.00</view>
+			</view>
+		</view>
+		<view class="buy-box bg1">
+			<view class="list bg1">
+				<view class="ilblock" style="line-height: 40rpx;">
+					<view class="color2 font13">提现</view>
+					<view class="color3 font12">2019-08-09</view>
+				</view>
+				<view class="font14 ilblock flo-right" style="margin-left: 40rpx;color: #FA9567;">-￥56.00</view>
+			</view>
+		</view>
+		
 	</view>
 </template>
 
@@ -148,8 +160,27 @@
 
 <style>
 	@import "../../assets/style/public.css";
-	@import "../../assets/style/code.css";
+	@import "../../assets/style/index.css";
+	
+	page{
+		background: #F2F2F2;
+	}
+	.buy-box{
+		width: 100%;
+	}
+	.list{
+		border-bottom: solid 1rpx #F2F2F2;
+		padding-left: 30rpx;
+		padding-right: 30rpx;
+		box-sizing: border-box;
+		padding:10px ;
+	}
+	.list .flo-right{
+		margin-top: 12px;
+	}
+	
 	
 	@import "../../assets/style/bootstrap.css";
 	@import "../../assets/style/basic.css";
+	
 </style>

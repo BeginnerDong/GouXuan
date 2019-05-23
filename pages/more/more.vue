@@ -3,18 +3,18 @@
 		
 		<div class="index-top">
 			<div class="logo ilblock">
-				<img src="/static/images/home-img1.png" /><span>购选</span>
+				<img src="../../static/images/home-img1.png" /><span>购选</span>
 			</div>
 			<div class="logo-right">
 				<div class="logo-right-span ilblock">陕西站</div>
 				<span>
-					<img src="/static/images/home-icon13.png" />
+					<img src="../../static/images/home-icon13.png" />
 				</span>
 			</div>
 		</div>
 		<div class="best-box ilblock" style="margin-left: 15px;" v-for="item in mainData">
 			<div class="best-box-top">
-				<img src="/static/images/home-img2.png"/>
+				<img src="../../static/images/home-img2.png"/>
 				<div class="best-num ilblock">
 					已售1235
 				</div>

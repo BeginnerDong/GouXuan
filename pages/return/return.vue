@@ -29,14 +29,14 @@
 			
 				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/return-first/return-first'}})" class="color2 font14"  style="height: 52px;width: 100%; line-height: 52px;text-indent: 15px;border-bottom: solid 1px #E9E9E9;">
 					<div class="ilblock color2 font14" style="width: 304px;">我的返佣</div>
-					<div class="ilblock color1 font14" style="width: 45px;"><img src="/static/images/home-icon9.png" style="width: 6px;" />
+					<div class="ilblock color1 font14" style="width: 45px;"><img src="../../static/images/home-icon9.png" style="width: 6px;" />
 					</div>
 				</div>
 			
 			
 				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/depositId/depositId'}})" class="color2 font14" style="height: 52px;width: 100%; line-height: 52px;text-indent: 15px;border-bottom: solid 1px #E9E9E9;">
 					<div class="ilblock color2 font14" style="width: 201px;">体现账号</div>
-					<div class="ilblock color1 font14" style="width: 150px; background: url(/static/images/home-icon9.png) no-repeat 118px 18.5px;
+					<div class="ilblock color1 font14" style="width: 150px; background: url(../../static/images/home-icon9.png) no-repeat 118px 18.5px;
 					 background-size: 4.2%;
 					 ">未填提现账号</div>
 				</div>
@@ -44,7 +44,7 @@
 			
 				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/deposit/deposit'}})" class="color2 font14" style="height: 52px;width: 100%; line-height: 52px;text-indent: 15px;">
 					<div class="ilblock color2 font14" style="width: 304px;">提现记录</div>
-					<div class="ilblock color1 font14" style="width: 45px;"><img src="/static/images/home-icon9.png" style="width: 6px;" />
+					<div class="ilblock color1 font14" style="width: 45px;"><img src="../../static/images/home-icon9.png" style="width: 6px;" />
 					</div>
 				</div>
 			
@@ -62,19 +62,19 @@
 			<view style="margin-top: 10px;">
 				<view class="navbar-item ilblock"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/doyen/doyen'}})">
 					<view class="navbar-img">
-						<image src="/static/images/达人/Talent%20show1.png"></image>
+						<image src="../../static/images/达人/Talent%20show1.png"></image>
 					</view>
 					<view>达人</view>
 				</view>
 				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/team/team'}})">
 					<view class="navbar-img">
-						<image src="/static/images/达人/Talent%20show2.png"></image>
+						<image src="../../static/images/达人/Talent%20show2.png"></image>
 					</view>
 					<view >达人团队</view>
 				</view>
 				<view class="navbar-item ilblock">
 					<view class="navbar-img">
-						<image src="/static/images/达人/Talent%20show3-a.png"></image>
+						<image src="../../static/images/达人/Talent%20show3-a.png"></image>
 					</view>
 					<view  class="color8">返佣</view>
 				</view>

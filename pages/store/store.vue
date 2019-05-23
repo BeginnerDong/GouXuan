@@ -3,11 +3,11 @@
 
 		<div class="bg1 top">
 			<div class="ilblock flo-left" style="width:30px ;">
-				<img src="/static/images/服务/service-icon6.png" style="width: 28px;" />
+				<img src="../../static/images/服务/service-icon6.png" style="width: 28px;" />
 			</div>
 			<div class="search flo-left">
 				<div class="ilblock">
-					<img src="/static/images/home-icon13.png" style="width: 16px; margin-left: 13px;margin-bottom: 4px;" />
+					<img src="../../static/images/home-icon13.png" style="width: 16px; margin-left: 13px;margin-bottom: 4px;" />
 				</div>
 				<input class="ilblock color1" style="margin-left: 15px;height:30px;line-height: 30px;" placeholder="请输入核销码搜索" v-model="check_code"></input>
 			</div>

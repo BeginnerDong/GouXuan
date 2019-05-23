@@ -7,7 +7,7 @@
 			<div class="ilblock list-img">
 				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/status/status'}})">
 					<div class="img">
-						<img src="/static/images/服务/service-icon2.png" />
+						<img src="../../static/images/服务/service-icon2.png" />
 					</div>
 					<div class="color2">找回电子码需求</div>
 				</div>
@@ -15,7 +15,7 @@
 			<div class="ilblock list-img">
 				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/panic/panic'}})">
 					<div class="img">
-						<img src="/static/images/服务/service-icon3.png" />
+						<img src="../../static/images/服务/service-icon3.png" />
 					</div>
 					<div class="color2">预约使用</div>
 				</div>
@@ -23,7 +23,7 @@
 			<div class="ilblock list-img">
 				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/store-all/store-all'}})">
 					<div class="img">
-						<img src="/static/images/服务/service-icon4.png" />
+						<img src="../../static/images/服务/service-icon4.png" />
 					</div>
 					<div class="color2">查看订单</div>
 				</div>
@@ -31,7 +31,7 @@
 			<div class="ilblock list-img" style="border: none;">
 				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/login/login'}})">
 					<div class="img">
-						<img src="/static/images/微信图片_20190429164219.png" />
+						<img src="../../static/images/微信图片_20190429164219.png" />
 					</div>
 					<div class="color2">商家入口</div>
 				</div>
@@ -39,7 +39,7 @@
 			<div class="ilblock list-img" style="border: none;">
 				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/follow/follow'}})">
 					<div class="img">
-						<img src="/static/images/服务/service-icon5.png" />
+						<img src="../../static/images/服务/service-icon5.png" />
 					</div>
 					<div class="color2">客服</div>
 				</div>
@@ -52,7 +52,7 @@
 		
 		<div class="bg1">
 			<div class="testlist-on" v-for="(item,index) in mainData">
-				{{item.title}}<img :src="webSelf.$Utils.inArray(item.id,openArray)!=-1?'/static/images/微信图片_20190429170142.png':'/static/images/home-icon10.png'" @click="show(item.id)"/>
+				{{item.title}}<img :src="webSelf.$Utils.inArray(item.id,openArray)!=-1?'../../static/images/微信图片_20190429170142.png':'../../static/images/home-icon10.png'" @click="show(item.id)"/>
 				<div class="color2" style="line-height: 20px;" :style="webSelf.$Utils.inArray(item.id,openArray)!=-1?'':'display:none'">{{item.description}}</div>
 			</div>
 		</div>

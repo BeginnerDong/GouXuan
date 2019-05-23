@@ -5,7 +5,7 @@
 				所在地区：
 			</div>
 			<div class="color1 ilblock flo-right" style="width: 85px; 
-				background: url(/static/images/home-icon9.png) no-repeat 60px center;
+				background: url(../../static/images/home-icon9.png) no-repeat 60px center;
 				background-size: 8%;
 			">请选择</div>
 		</div>

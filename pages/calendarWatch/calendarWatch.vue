@@ -37,11 +37,11 @@
 		</div>
 		<div class="address color2">
 			<div class="ilblock" style="width: 10%;">
-				<img src="/static/images/details-icon1.png" style="width: 12px; height: 14px;margin-left: 15px; position: relative; top: -10px;" />
+				<img src="../../static/images/details-icon1.png" style="width: 12px; height: 14px;margin-left: 15px; position: relative; top: -10px;" />
 			</div>
 			<div class="ilblock" style="width: 80%;margin-top: 10px;">{{mainData.address}}</div>
 			<div class="ilblock">
-				<img src="/static/images/home-icon9.png" style="height: 13px; margin-left: 5px;margin-bottom: 20px;" />
+				<img src="../../static/images/home-icon9.png" style="height: 13px; margin-left: 5px;margin-bottom: 20px;" />
 			</div>
 		</div>
 		<div class="choice">

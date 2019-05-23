@@ -2,7 +2,7 @@
 	<view>
 		<div class="follow-box" v-if="userInfoData.length==0">
 			<div class="follow-logo">
-				<img src="/static/images/达人/Talent%20show-img.png" />
+				<img src="../../static/images/达人/Talent-show-img.png" />
 			</div>
 			<div class="follow-logobotm">
 				<div class="color2">
@@ -11,7 +11,7 @@
 				<div class="color1">
 					这里暂时没有相关内容
 				</div>
-				<button class="buttonB" @click="webSelf.$Router.navigateTo({route:{path:'/pages/follow-content/follow-content'}})">设置关注</button>
+				<button class="buttonB" @click="webSelf.$Router.navigateTo({route:{path:'../../pages/follow-content/follow-content'}})">设置关注</button>
 			</div>
 		</div>
 		<div class="top" v-else>
@@ -24,8 +24,8 @@
 				</div>
 			</div>
 
-			<div class="top-right ilblock"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/follow-content/follow-content'}})">
-				<img src="/static/images/focus%20on-icon1.png" style="width:20%; margin: 8px 6px;" />
+			<div class="top-right ilblock"  @click="webSelf.$Router.navigateTo({route:{path:'../../pages/follow-content/follow-content'}})">
+				<img src="../../static/images/focus-on-icon1.png" style="width:20%; margin: 8px 6px;" />
 				<div class="ilblock" style="color: rgb(249,138,72); font-size: 13px; position: relative; top: -16px;">关注管理</div>
 			</div>
 		</div>
@@ -61,19 +61,19 @@
 			<view style="margin-top: 10px;">
 				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/index/index'}})">
 					<view class="navbar-img">
-						<image src="/static/images/navbar1.png"></image>
+						<image src="../../static/images/navbar1.png"></image>
 					</view>
 					<view>首页</view>
 				</view>
 				<view class="navbar-item ilblock">
 					<view class="navbar-img">
-						<image src="/static/images/navbar2-a.png"></image>
+						<image src="../../static/images/navbar2-a.png"></image>
 					</view>
 					<view  class="color8">关注</view>
 				</view>
 				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/user/user'}})">
 					<view class="navbar-img">
-						<image src="/static/images/navbar3.png"></image>
+						<image src="../../static/images/navbar3.png"></image>
 					</view>
 					<view>我的</view>
 				</view>

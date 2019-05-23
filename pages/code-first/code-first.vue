@@ -13,18 +13,18 @@
 		<div id="poster" style="z-index:0">
 			<div class="img">
 				<!-- <img class="img-one" :src="mainData.mainImg&&mainData.mainImg[0]?mainData.mainImg[0].url:''" style="width:100%;height:100%"/> -->
-				<img class="img-one" src="/static/images/达人/img2.png" />
+				<img class="img-one" src="../../static/images/达人/img2.png" />
 			</div>
 			<div class="ilblock imgb">
 				<!-- <img :src="QrData.url" /> -->
-				<img src="/static/images/达人/img8.png" />
+				<img src="../../static/images/达人/img8.png" />
 			</div>
 			<div class="ilblock">
 				<div class="color2 font14" style="position: relative; top: 3px;">长按二维码看购买详情</div>
 				<div class="color2 font14" style="position: relative; top: 17px;">购选</div>
 			</div>
 			<div class="ilblock" style="position: relative; left: 42px;">
-				<img src="/static/images/达人/Talent%20show-img.png" style="width: 85px;" />
+				<img src="../../static/images/达人/Talent-show-img.png" style="width: 85px;" />
 			</div>
 		</div>
 		<!-- <div style="z-index:1;width:100%;height:100%;background: #fff;position: absolute;top: 0;"></div> -->

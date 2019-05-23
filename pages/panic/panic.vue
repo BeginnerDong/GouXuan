@@ -3,14 +3,14 @@
 
 		<div class="bg1 radiu20 search">
 			<div class="color1 font10 ilblock" style="line-height: 30px; position: relative; left: 140px;">
-				<img src="/static/images/home-icon13.png" style="width: 15px; margin-right: 15px;" />
+				<img src="../../static/images/home-icon13.png" style="width: 15px; margin-right: 15px;" />
 				搜索
 			</div>
 		</div>
 		<div class="list-text">
 			<div class="color2 font14">[预约]郑州黄河谷温泉度假酒店套票 <div class="color1 font13 flo-right" 
 			@click="webSelf.$Router.navigateTo({route:{path:'/pages/panic-second/panic-second'}})">点击查看
-					<img src="/static/images/home-icon9.png" style="width: 6px; margin-left: 6px;" />
+					<img src="../../static/images/home-icon9.png" style="width: 6px; margin-left: 6px;" />
 				</div></div>
 			<div class="color2 font14">B(199抢购)</div>
 		</div>

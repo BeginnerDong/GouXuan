@@ -29,7 +29,7 @@
 
 			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/order-search/order-search'}})" class="color2 font14 bg1" style="height: 52px;width: 100%; line-height: 52px;text-indent: 15px;border-bottom: solid 1px #E9E9E9;">
 				<div class="ilblock color2 font14" style="width: 251px;">团队订单</div>
-				<div class="ilblock color1 font14" style="width: 100px; background: url(/static/images/home-icon9.png) no-repeat 70px 18.5px;
+				<div class="ilblock color1 font14" style="width: 100px; background: url(../../static/images/home-icon9.png) no-repeat 70px 18.5px;
 					 background-size: 6%;
 					 ">共0单</div>
 			</div>
@@ -58,19 +58,19 @@
 			<view style="margin-top: 10px;">
 				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/doyen/doyen'}})">
 					<view class="navbar-img">
-						<image src="/static/images/达人/Talent%20show1.png"></image>
+						<image src="../../static/images/达人/Talent%20show1.png"></image>
 					</view>
 					<view>达人</view>
 				</view>
 				<view class="navbar-item ilblock">
 					<view class="navbar-img">
-						<image src="/static/images/达人/Talent%20show2-a.png"></image>
+						<image src="../../static/images/达人/Talent%20show2-a.png"></image>
 					</view>
 					<view class="color8">达人团队</view>
 				</view>
 				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/return/return'}})">
 					<view class="navbar-img">
-						<image src="/static/images/达人/Talent%20show3.png"></image>
+						<image src="../../static/images/达人/Talent%20show3.png"></image>
 					</view>
 					<view>返佣</view>
 				</view>

@@ -2,7 +2,7 @@
 	<view>
 		<div class="home color2">
 			<span onclick="backk()">
-				<img src="images/home-icon14.png" />
+				<img src="../../static/images/home-icon14.png" />
 			</span>
 			抢购预约
 		</div>

@@ -1,9 +1,8 @@
 <template>
 	<view>
-
 		<div class="top" style="overflow: hidden;">
 			<div class="top-img ilblock">
-				<img src="/static/images/达人/Talent%20show-img.png" width="61px" />
+				<img src="../../static/images/达人/Talent-show-img.png" width="61px" />
 			</div>
 			<div class="ilblock" style="width:180px;height: 100%;margin-left: 100px;">
 				<div class="top-name color5 font15" style="margin-top: 20px;">购选</div>
@@ -11,19 +10,19 @@
 				<div class="bg1 ilblock radiu20 font14" style="color: #FF8954; padding: 3px 10px; margin-top: 5px;">分享达人</div>
 				<a href="regular.html">
 					<div class="ilblock color5 font14" style="margin-left: 10px;width: 80px; 
-					background: url(/static/images/jiantouyou.png) no-repeat 65px center;
+					background: url(../../static/images/jiantouyou.png) no-repeat 65px center;
 					background-size: 9%;
 				">
 						升级规则</div>
 				</a>
 			</div>
 			<div class="ilblock flo-right" style="width: 90px;height: 100%; ">
-				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/install/install'}})">
-					<img src="/static/images/达人/icon.png" style="width: 16px;margin-left: 62px;margin-top: 10px; " />
+				<div @click="webSelf.$Router.navigateTo({route:{path:'./../static/pages/install/install'}})">
+					<img src="../../static/images/达人/icon.png" style="width: 16px;margin-left: 62px;margin-top: 10px; " />
 				</div>
 				<div class="radiu20 font13" style="background: #FCB192;width:80px;height: 23px; text-align: center; 
 					line-height: 23px; position: relative; top: 50px;left: 20px; "
-				 @click="webSelf.$Router.navigateTo({route:{path:'/pages/course/course'}})">
+				 @click="webSelf.$Router.navigateTo({route:{path:'./../static/pages/course/course'}})">
 					<div class="color5">使用教程</div>
 				</div>
 			</div>
@@ -31,7 +30,7 @@
 		<div class="bg1" style="padding: 26px 15px;">
 			<div class="ilblock" style="height: 30px; widows: 100px;"></div>
 			<div class="flo-right" style="width: 260px; height: 30px;">
-				<div class="color5 ilblock font10 " style="height: 40px;width: 35px;background: url(/static/images/达人/icon0.png) no-repeat;
+				<div class="color5 ilblock font10 " style="height: 40px;width: 35px;background: url(../../static/images/达人/icon0.png) no-repeat;
 				 background-size: 100%;text-align: center; line-height: 20px;position: relative; top: 10px;
 				 ">{{monthShopCount}}</div>
 			</div>
@@ -42,7 +41,7 @@
 
 			<div class="ilblock" style="height: 30px; widows: 100px;"></div>
 			<div class="flo-right" style="width: 260px; height: 30px;">
-				<div class="color5 ilblock font10 " style="height: 40px;width: 35px;background: url(/static/images/达人/icon0.png) no-repeat;
+				<div class="color5 ilblock font10 " style="height: 40px;width: 35px;background: url(../../static/images/达人/icon0.png) no-repeat;
 				 background-size: 100%;text-align: center; line-height: 20px;position: relative;top: 10px;
 				 ">{{monthGroupCount}}</div>
 			</div>
@@ -64,32 +63,30 @@
 			</div>
 		</div>
 		<div class="bg1" style="margin-top: 10px;width: 100%;">
-			<div class="color2" @click="webSelf.$Router.navigateTo({route:{path:'/pages/return-first/return-first'}})">
+			<div class="color2" @click="webSelf.$Router.navigateTo({route:{path:'../../static/pages/return-first/return-first'}})">
 				<div class="flo-left color2 font14" style="background: #fff;height: 52px;width: 100%; line-height: 52px;text-indent: 15px;border-bottom: solid 1px #E9E9E9;">
-					<div class="ilblock color2 font14" style="width: 201px;">达人返佣记录</div>
-					<div class="ilblock color1 font14" style="width: 150px; background: url(/static/images/home-icon9.png) no-repeat 120px 18.5px;
+					<div class="ilblock color2 font14" style="width: 50%;">达人返佣记录</div>
+					<div class="ilblock color1 font14 flo-right list" style="width: 40%; background: url(../../static/images/home-icon9.png) no-repeat 85% center;
 					 background-size: 4%;
 					 ">累计总返佣{{totalCount}}</div>
 				</div>
 			</div>
-			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/order/order'}})" class="color2">
+			<div @click="webSelf.$Router.navigateTo({route:{path:'./../static/pages/order/order'}})" class="color2">
 				<div class="flo-left color2 font14" style="height: 52px;width: 100%; line-height: 52px;text-indent: 15px;background: #fff;">
-					<div class="ilblock color2 font14" style="width: 251px;">达人订单记录</div>
-					<div class="ilblock color1 font14" style="width: 100px; background: url(/static/images/home-icon9.png) no-repeat 70px 18.5px;
-					 background-size: 5.6%;
+					<div class="ilblock color2 font14" style="width:50%;">达人订单记录</div>
+					<div class="ilblock color1 font14 flo-right list" style="width:40%; background: url(../../static/images/home-icon9.png) no-repeat 85% center;
+					 background-size:4%;
 					 ">共{{orderData.length}}单</div>
 				</div>
 			</div>
 		</div>
 		<div class="bg1" >
-			<div class="color2" @click="webSelf.$Router.navigateTo({route:{path:'/pages/code-all/code-all'}})">
+			<div class="color2" @click="webSelf.$Router.navigateTo({route:{path:'./../static/pages/code-all/code-all'}})">
 				<div class="flo-left color2 font14" style="background: #fff;height: 52px;width: 100%; line-height: 52px;text-indent: 15px;margin-top: 10px; margin-bottom: 70px">
-					<div class="ilblock color2 font14" style="width: 221px;">达人海报</div>
-					<div class="ilblock color1 font14" style="width: 110px; background: url(/static/images/home-icon9.png) no-repeat 100px 19.5px;
-					 background-size: 5%;">
-						<div class="ilblock flo-left" style=" width: 6px; height: 6px; border: solid 1px red;
-					  margin-top: 25px; 
-					  background: red;border-radius: 50%;"></div>
+					<div class="ilblock color2 font14" style="width:50%;">达人海报</div>
+					<div class="ilblock color1 font14 flo-right list" style="width:40%; background: url(../../static/images/home-icon9.png) no-repeat 85% center;
+					 background-size: 4%;">
+						<div class="ilblock red"></div>
 						查看所有
 					</div>
 				</div>
@@ -102,19 +99,19 @@
 			<view style="margin-top: 10px;">
 				<view class="navbar-item ilblock">
 					<view class="navbar-img">
-						<image src="/static/images/达人/Talent%20show1-a.png"></image>
+						<image src="../../static/images/达人/Talent%20show1-a.png"></image>
 					</view>
 					<view  class="color8">达人</view>
 				</view>
 				<view class="navbar-item ilblock" @click="webSelf.$Router.redirectTo({route:{path:'/pages/team/team'}})">
 					<view class="navbar-img">
-						<image src="/static/images/达人/Talent%20show2.png"></image>
+						<image src="../../static/images/达人/Talent%20show2.png"></image>
 					</view>
 					<view>达人团队</view>
 				</view>
 				<view class="navbar-item ilblock"  @click="webSelf.$Router.redirectTo({route:{path:'/pages/return/return'}})">
 					<view class="navbar-img">
-						<image src="/static/images/达人/Talent%20show3.png"></image>
+						<image src="../../static/images/达人/Talent%20show3.png"></image>
 					</view>
 					<view>返佣</view>
 				</view>

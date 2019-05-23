@@ -2,7 +2,7 @@
 	<view>
 		<view class="index-top">
 			<view class="logo ilblock">
-				<img src="/static/images/home-img1.png" /><span>购选</span>
+				<img src="../../static/images/home-img1.png" /><span>购选</span>
 			</view>
 			<view class="logo-right">
 				<view class="logo-right-span ilblock" @click="showCity">{{currentSiteData.title}}</view>
@@ -36,8 +36,8 @@
 			<view class="recommend">
 				<view class="recommend-top">
 					<span>更多推荐</span>
-					<img src="/static/images/home-icon11.png" style="margin-left: 50px;" />
-					<img src="/static/images/home-icon12.png" style="margin-left: 140px;" />
+					<img src="../../static/images/home-icon11.png" style="margin-left: 50px;" />
+					<img src="../../static/images/home-icon12.png" style="margin-left: 140px;" />
 				</view>
 				<view class="recommend-middle">
 					<view class="recommend-box" style="width: 84px;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=22'}})">
@@ -221,19 +221,19 @@
 			<view style="margin-top: 10px;">
 				<view class="navbar-item ilblock">
 					<view class="navbar-img">
-						<image src="/static/images/navbar1-a.png"></image>
+						<image src="../../static/images/navbar1-a.png"></image>
 					</view>
 					<view class="color8">首页</view>
 				</view>
 				<view class="navbar-item ilblock" @click="webSelf.$Router.redirectTo({route:{path:'/pages/follow/follow'}})">
 					<view class="navbar-img">
-						<image src="/static/images/navbar2.png"></image>
+						<image src="../../static/images/navbar2.png"></image>
 					</view>
 					<view>关注</view>
 				</view>
 				<view class="navbar-item ilblock" @click="webSelf.$Router.redirectTo({route:{path:'/pages/user/user'}})">
 					<view class="navbar-img">
-						<image src="/static/images/navbar3.png"></image>
+						<image src="../../static/images/navbar3.png"></image>
 					</view>
 					<view>我的</view>
 				</view>

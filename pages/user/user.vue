@@ -3,7 +3,7 @@
 		<div class="top">
 			<div class="top-box">
 				<div class="tou-img">
-					<img src="/static/images/about-img1.png" />
+					<img src="../../static/images/about-img1.png" />
 				</div>
 				<div class="color2 user-name"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/serve/serve'}})">名称名称名称</div>
 			</div>
@@ -12,7 +12,7 @@
 			<div class="status-item ilblock">
 				<div  @click="webSelf.$Router.navigateTo({route:{path:'/pages/store-all/store-all?num=1'}})">
 					<div class="status-img">
-						<img src="/static/images/about-icon1.png" style="width: 40px;" />
+						<img src="../../static/images/about-icon1.png" style="width: 40px;" />
 					</div>
 					<div class="status-text color2">
 						待发货
@@ -22,7 +22,7 @@
 			<div class="status-item ilblock">
 				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/store-all/store-all?num=2'}})">
 					<div class="status-img">
-						<img src="/static/images/about-icon2.png" style="width: 40px;" />
+						<img src="../../static/images/about-icon2.png" style="width: 40px;" />
 					</div>
 					<div class="status-text color2">
 						发货中
@@ -32,7 +32,7 @@
 			<div class="status-item ilblock">
 				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/store-all/store-all?num=3'}})">
 					<div class="status-img">
-						<img src="/static/images/about-icon3.png" style="width: 40px;" />
+						<img src="../../static/images/about-icon3.png" style="width: 40px;" />
 					</div>
 					<div class="status-text color2">
 						已发货
@@ -42,7 +42,7 @@
 			<div class="status-item ilblock">
 				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/store-all/store-all?num=4'}})">
 					<div class="status-img">
-						<img src="/static/images/about-icon4.png" style="width: 40px;" />
+						<img src="../../static/images/about-icon4.png" style="width: 40px;" />
 					</div>
 					<div class="status-text color2">
 						其他
@@ -52,7 +52,7 @@
 			<div class="status-item ilblock" style="margin-right: 0px;">
 				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/store-all/store-all'}})">
 					<div class="status-img">
-						<img src="/static/images/about-icon5.png" style="width: 22px; margin-left: 5px;height: 25px;margin-top: 15px; position: relative;top: -5px; " />
+						<img src="../../static/images/about-icon5.png" style="width: 22px; margin-left: 5px;height: 25px;margin-top: 15px; position: relative;top: -5px; " />
 					</div>
 					<div class="status-text color2">
 						我的订单
@@ -65,7 +65,7 @@
 			<ul>
 				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/doyen/doyen'}})" class="color2" style="position: relative;">
 					<div class="ilblock" style="position: absolute;top: 12px;left: 17px;">
-						<img src="/static/images/about-icon6.png" style="width: 14px;" />
+						<img src="../../static/images/about-icon6.png" style="width: 14px;" />
 					</div>
 					<li>达人后台
 						<div class="ilblock flo-right" style=" width: 6px; height: 6px; border: solid 1px #FF7263;
@@ -75,7 +75,7 @@
 				</div>
 				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/coupon/coupon'}})" class="color2" style="position: relative;">
 					<div class="ilblock" style="position: absolute;top: 12px;left: 17px;">
-						<img src="/static/images/about-icon7.png" style="width: 14px;" />
+						<img src="../../static/images/about-icon7.png" style="width: 14px;" />
 					</div>
 					<li>
 						我的优惠券
@@ -83,7 +83,7 @@
 				</div>
 			<!-- 	<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/code/code'}})" class="color2" style="position: relative;">
 					<div class="ilblock" style="position: absolute;top: 12px;left: 17px;">
-						<img src="/static/images/about-icon8.png" style="width: 14px;" />
+						<img src="../../static/images/about-icon8.png" style="width: 14px;" />
 					</div>
 					<li>
 						店铺二维码
@@ -91,7 +91,7 @@
 				</div> -->
 				<div class="color2" @click="webSelf.$Router.navigateTo({route:{path:'/pages/course/course'}})" style="position: relative;">
 					<div class="ilblock" style="position: absolute;top: 12px;left: 17px;">
-						<img src="/static/images/about-icon9.png" style="width: 14px;" />
+						<img src="../../static/images/about-icon9.png" style="width: 14px;" />
 					</div>
 					<li>
 						使用教程
@@ -99,7 +99,7 @@
 				</div>
 				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/address/address'}})" class="color2" style="position: relative;">
 					<div class="ilblock" style="position: absolute;top: 12px;left: 17px;">
-						<img src="/static/images/about-icon10.png" style="width: 14px;" />
+						<img src="../../static/images/about-icon10.png" style="width: 14px;" />
 					</div>
 					<li>
 						地址管理
@@ -119,19 +119,19 @@
 			<view style="margin-top: 10px;">
 				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/index/index'}})">
 					<view class="navbar-img">
-						<image src="/static/images/navbar1.png"></image>
+						<image src="../../static/images/navbar1.png"></image>
 					</view>
 					<view>首页</view>
 				</view>
 				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/follow/follow'}})">
 					<view class="navbar-img">
-						<image src="/static/images/navbar2.png"></image>
+						<image src="../../static/images/navbar2.png"></image>
 					</view>
 					<view>关注</view>
 				</view>
 				<view class="navbar-item ilblock" >
 					<view class="navbar-img">
-						<image src="/static/images/navbar3-a.png"></image>
+						<image src="../../static/images/navbar3-a.png"></image>
 					</view>
 					<view class="color8">我的</view>
 				</view>

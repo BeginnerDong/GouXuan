@@ -1,21 +1,31 @@
 <template>
 	<view>
-		<div class="home color2">
-			<span onclick="backk()">
-				<img src="../../static/images/home-icon14.png" />
-			</span>
-			吃喝玩乐推荐
-		</div>
-		<div class="color2 font15" style="text-align: center; margin: 25px 0px 20px;">
-			选择海报模板
-		</div>
-		<a href="code-first.html">
-			<img class="img-one" src="../../static/images/达人/img1.png" />
-		</a>
-		<a href="code-second.html">
-			<img class="img-one" src="../../static/images/达人/img2.png" style="margin-left: 10px;" />
-		</a>
-
+		<view class="box bg1">
+		  <view class="bank bg1 flex">
+		    <view class="font24 color2 ilblock" style="width: 30%; margin-left: 15rpx;">支付宝账号</view>
+		    <view class="font24 color2 ilblock" style="width: 50%;">156****2356</view>
+		  </view>
+		  <view class="cash">
+		      <view class="case_box">
+		        <view class="cash_tlt color2 font32 bg1">
+		            提现金额
+		        </view>
+		        <view class="cash_input flexRowBetween bg1">
+		            <view class="input_masks color2 ilblock">¥</view>
+		            <input class="ilblock num" value="3233"></input>
+		        </view>
+		        <view class="cash_can font12 color3 bg1 flex ilblock">
+		            本次可提现<text>¥434,</text>
+		            <view class="font28 color2 ilblock">全部提现</view>
+		        </view>
+		        <view class="cash_cont bg1" style="padding-top:70rpx;padding-bottom:30rpx;">
+		            <button class="submit_info color5 font15">提现</button>
+					<!-- bindtap="{{web_buttonCanClick?'submit':''}}" -->
+		        </view>
+		      </view>
+		  </view>
+		</view>
+		
 	</view>
 </template>
 
@@ -148,8 +158,98 @@
 
 <style>
 	@import "../../assets/style/public.css";
-	@import "../../assets/style/code.css";
+	@import "../../assets/style/index.css";
+	page{
+		background:#f2f2f2;
+		overflow:hidden;
+	}
+	.box{
+		width: 92%;
+		margin: 50px auto;
+		box-sizing: border-box;
+		padding: 50rpx 0rpx 30rpx;
+		border-radius: 10px;
+	}
+	.bank{
+		box-sizing: border-box;
+		padding: 10rpx 30rpx 40rpx;
+		}
+	.num{
+		position: relative;
+		top: 10px;
+	}
+	.cash_bank{
+		width:87%;
+		padding:0 6.5%;
+		background:#fcfcfc;
+		padding-bottom:60rpx;
+	}
+	.cash_bank input{
+		border:solid 1px #e0e0e0;
+		height:80rpx;
+		line-height:80rpx;
+		width:92%;
+		padding:0 4%;
+	}
+	.cash_bank text{
+		margin-right:80rpx;
+	}
+	.cash_cont{
+		width:87%;
+		padding:0 6.5%;
+		margin:0 auto;
+	}
+	.cash_tlt{
+		margin: 0 auto;
+		width:87%;
+		height:140rpx;
+		box-sizing: border-box;
+		line-height:140rpx;
+	}
+	.input_masks{
+		width:10%;
+		font-size:60rpx;
+	}
+	.cash_input{
+		width:87%;
+		margin: 0rpx 6.5%;
+		border-bottom:solid 1px #f0f0f0;
+		height:94rpx;
+	}
+	.cash_input input{
+		width:90%;
+		height:80rpx;
+	}
+	.cash_can{
+		width:87%;
+		padding:0 6.5%;
+		height:72rpx;
+		line-height:72rpx;
+	}
+	
+	.submit_info{
+		width:100%;
+		border-radius:0;
+		margin:0 auto;
+		background: #F98A48;
+		height: 80rpx;
+	}
+	.bind_bank{
+		height:110rpx;
+		line-height:140rpx;
+	}
+	.cash_can>view{
+		margin-left:40rpx;
+	}
+	.case_box{
+	}
+	.case_box{
+		border-radius:20rpx;
+	}
+	
+	
 	
 	@import "../../assets/style/bootstrap.css";
 	@import "../../assets/style/basic.css";
+	
 </style>

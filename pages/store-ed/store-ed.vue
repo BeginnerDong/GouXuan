@@ -2,7 +2,7 @@
 	<view>
 		<div class="home color2">
 			<span onclick="backk()">
-				<img src="images/home-icon14.png" />
+				<img src="../../static/images/home-icon14.png" />
 			</span>
 			吃喝玩乐推荐
 		</div>
@@ -32,7 +32,7 @@
 			</div>
 			<div class="storebox-btm">
 				<div class="ilblock img-box">
-					<img src="images/服务/service-img2.png" />
+					<img src="../../static/images/服务/service-img2.png" />
 				</div>
 				<div class="ilblock imgname">
 					<div class="font15 color2 overflow2" style="line-height: 21px; height: 45px;">
@@ -52,7 +52,7 @@
 			</div>
 			<div class="storebox-btm">
 				<div class="ilblock img-box">
-					<img src="images/服务/service-img2.png" />
+					<img src="../../static/images/服务/service-img2.png" />
 				</div>
 				<div class="ilblock imgname">
 					<div class="font15 color2 overflow2" style="line-height: 21px; height: 45px;">
@@ -72,7 +72,7 @@
 			</div>
 			<div class="storebox-btm">
 				<div class="ilblock img-box">
-					<img src="images/服务/service-img2.png" />
+					<img src="../../static/images/服务/service-img2.png" />
 				</div>
 				<div class="ilblock imgname">
 					<div class="font15 color2 overflow2" style="line-height: 21px; height: 45px;">

@@ -234,6 +234,36 @@
 			}
 		},
 		{
+			"path": "pages/order-search/order-search",
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
+		},
+		{
+			"path": "pages/withdrawDepasit/withdrawDepasit",
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
+		},
+		{
+			"path": "pages/register/register",
+			"style": {
+				"navigationBarTitleText": "注册成为达人"//设置页面标题文字
+			}
+		},
+		{
+			"path": "pages/ElectronicCode/ElectronicCode",
+			"style": {
+				"navigationBarTitleText": "注册成为达人"//设置页面标题文字
+			}
+		},
+		{
+			"path": "pages/withdrawalRecord/withdrawalRecord",
+			"style": {
+				"navigationBarTitleText": "注册成为达人"//设置页面标题文字
+			}
+		},
+		{
 			"path": "pages/user/user",
 			"style": {
 				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字

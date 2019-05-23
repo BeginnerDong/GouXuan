@@ -1,31 +1,38 @@
 <template>
 	<view>
-		<div class="home color2">
-			<span onclick="backk()">
-				<img src="images/home-icon14.png" />
-			</span>
-			达人订单
-		</div>
-		<div class="bg1" style="width: 100%; padding: 15px;">
-			<div class="ilblock flo-left" style="width: 41%;">
-				<select>
-					<option value="1">按产品统计</option>
-					<option value="2">2</option>
-					<option value="3">6</option>
-				</select>
+		
+		<div class="bg1" style="width: 100%; padding:15px 15px 0px;">
+			<div class="ilblock list-btm" style="width: 41%;">
+				按产品统计<image src="../../static/images/20190523150314.png" style="width: 10px;height: 6px;"></image>
+
 			</div>
-			<div class="ilblock flo-left" style="width: 35%;">
-				<select style="width: 70px;">
-					<option value="1">本月</option>
-					<option value="2">2</option>
-					<option value="3">6</option>
-				</select>
+			<div class="ilblock list-btm" style="width: 35%;">
+				本月<image src="../../static/images/20190523150314.png" style="width: 10px;height: 6px;"></image>
 			</div>
-			<div class="ilblock flo-left" style="width: 20%;">
+			<div class="ilblock">
 				<button>搜索</button>
 			</div>
 			<div style="clear: both;"></div>
 		</div>
+		<view class="list-box bg1">
+			<view class="storebox-top">
+				<view class="font12 color1">
+					<text style="margin-right: 10px;">张三</text>
+					交易时间：2018-08-30
+				</view>
+			</view>
+			<view class="storebox-btm">
+				<view class="ilblock img-box">
+					<image src="../../static/images/focus%20on-img%20.png"></image>
+				</view>
+				<view class="ilblock imgname">
+					<view class="font15 color2 overflow2" style="line-height: 21px; height: 45px;">
+						标题标题标题标题标题标题标题
+					</view>
+					<view style="color: rgb(249,138,72); font-size: 11px; margin-top: 16px;">￥<span style="font-size: 20px;">59.00</span> </view>
+				</view>
+			</view>
+		</view>
 		<div class="color1 font13" style="width: 100%; text-align: center; margin-top: 50px;">~~没有更多数据了~~</div>
 	</view>
 </template>
@@ -161,24 +168,65 @@
 	@import "../../assets/style/public.css";
 	@import "../../assets/style/index.css";
 	
-	@import "../../assets/style/bootstrap.css";
-	@import "../../assets/style/basic.css";
-
-	select {
+	.list-btm {
 		width: 100px;
 		color: #8C8C8C;
 		font-size: 13px;
 		height: 32px;
-		border: none;
+		position: relative;
+		top: -5px;
+	}
+	.list-btm image{
+		margin-left: 10px;
 	}
 
 	button {
 		display: inline-block;
-		background: #2AA661;
+		background: #2AA561;
 		height: 30px;
-		width: 52px;
-		border-radius: 7px;
-		margin-left: 15px;
+		width: 100%;
+		line-height: 30px;
+		border-radius: 8px;
 		color: #D1E9DB;
+		border: none;
+		font-size:14px
 	}
+	.list-box{
+		width: 92%;
+		margin:15px 4% 0px;
+		border-radius: 13px;
+		box-shadow: 0px 0px 12px #E2E2E2;
+		box-sizing: border-box;
+		padding: 15px;
+		position: relative;
+	}
+	.storebox-top{
+		width: 100%;
+		margin-bottom: 10px;
+	}
+	.storebox-btm{
+		width: 100%;
+		height: 95px;
+		line-height: 40px;
+	}
+	.img-box{
+		width:30%;
+		height: 95px;
+		overflow: hidden;
+		border-radius: 4px;
+	}
+	.img-box img{
+		width:100% ;
+		height: 100%;
+	}
+	.imgname{
+		height: 95px;
+		margin-left: 10px;
+		position: absolute;
+		text-align: justify;
+	}
+	
+	@import "../../assets/style/bootstrap.css";
+	@import "../../assets/style/basic.css";
+	
 </style>
