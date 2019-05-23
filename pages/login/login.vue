@@ -29,11 +29,11 @@
 					验证符：
 				</div>
 				<div class="color1 ilblock top-list">
-					<input class="color1 ilblock" placeholder="请输入验证符" v-model="submitData.passwordByJs"/>	
+					<input class="color1 ilblock" placeholder="请输入验证符" v-model="imgcode"/>	
 				</div>
 			</div>
 			<div style="text-align: center;" @click="refresh()">
-				<imgCode ref="imgcode"></imgCode>{{show()}}
+				<imgCode ref="imgcode"></imgCode>
 				<text >看不清？点击图片刷新</text>
 			</div>
 			<button class=" radiu20 color5" style="width: 80%; margin: 50px auto;height: 40px; line-height: 40px; background: #F8835B;" @click="submit">登录</button>
@@ -50,13 +50,14 @@
 				submitData:{
 					login_name:'',
 					password:''
-				}
-
+				},
+				imgcode:''
 			}
 		},
 		components:{imgCode},
 		onLoad(options) {
 			const self = this;
+			self.show();
 			/* self.$Utils.loadAll(['getMainData', 'getLabelData', 'getCaseData'], self) */
 			if(uni.getStorageSync('merchant_token')){
 				uni.redirectTo({
@@ -80,11 +81,21 @@
 
 			submit() {
 				const self = this;
+				
 				const postData = {
 					login_name: self.submitData.login_name,
 					password: self.submitData.password,
 				};
 				if (self.$Utils.checkComplete(self.submitData)) {
+					if(self.imgcode==''){
+						self.$Utils.showToast('请输入验证符', 'none');
+						return
+					}else{
+						if(self.imgcode!=uni.getStorageSync('imgcode')){
+							self.$Utils.showToast('验证符错误', 'none');
+							return
+						}
+					};
 					const callback = (res) => {
 						if (res.solely_code == 100000) {
 							console.log(res);

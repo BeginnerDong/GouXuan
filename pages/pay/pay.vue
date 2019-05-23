@@ -3,11 +3,11 @@
 		<div class="describe">
 			<div class="color3">订单描述</div>
 			<div class="color2">
-				{{mainData&&mainData.product?mainData.product.title:''}}
+				{{mainData&&mainData.title?mainData.title:''}}
 			</div>
 			<div>
 				<div class="ilblock" style="margin-top: 10px; width: 19%; float: left; color: #858585;background: #EFEFEF; border-radius: 20px; padding: 3px 15px;">规格</div>
-				<div class="ilblock color3" style="width: 78%; float: left; margin-left: 7px;line-height: 20px;"> {{mainData.title}}：{{mainData.price}}元</div>
+				<div class="ilblock color3" style="width: 78%; float: left; margin-left: 7px;line-height: 20px;"> {{mainData&&mainData.sku?mainData.sku[0].title:''}}：{{mainData&&mainData.sku?mainData.sku[0].price:''}}元</div>
 			</div>
 			<div style="clear: both;"></div>
 		</div>
@@ -159,9 +159,9 @@
 				postData.getAfter = self.$Utils.cloneForm(self.getAfter);
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
-						self.mainData = res.info.data[0].sku[0];
+						self.mainData = res.info.data[0];
 						self.count = 1;
-						self.price = self.mainData.price
+						self.price = self.mainData.sku[0].price
 					}
 					self.$Utils.finishFunc('getMainData');
 				};
@@ -184,6 +184,7 @@
 
 			addOrder(e) {
 				const self = this;
+				console.log('self.mainData.type',self.mainData.type);
 				if (self.orderId != '') {
 					
 					self.pay();
@@ -204,7 +205,7 @@
 					orderList.push(
 						{
 							sku: [{
-								id: self.mainData.id,
+								id: self.mainData.sku[0].id,
 								count: self.count,
 							}]
 						}
@@ -213,7 +214,7 @@
 					orderList.push(
 						{
 							date: [{
-								id: self.mainData.id,
+								id: self.mainData.sku[0].id,
 								count: self.count,
 							}]
 						}
@@ -221,13 +222,8 @@
 				}
 				const postData = {
 					tokenFuncName:'getProjectToken',
-					orderList: [{
-						sku: [{
-							id: self.mainData.id,
-							count: self.count,
-						}]
-					}],
-					type: 2,
+					orderList: orderList,
+					type: self.mainData.type,
 					data: {
 						phone:self.submitData.phone,
 						name:self.submitData.name,
@@ -236,11 +232,13 @@
 						province_id:self.mainData.province_id,
 					},
 				};
+				
 				const callback = (res) => {
 					if (res && res.solely_code == 100000) {
 						self.orderId = res.info.id;
 						self.pay(self.orderId)
 					} else {
+						uni.setStorageSync('canClick', true);
 						self.$Utils.showToast(res.msg);
 					};
 				};
@@ -248,72 +246,15 @@
 			},
 
 			pay(order_id) {
-
 				const self = this;
-
 				const postData = {
-
-
-
-					wxPay: {
-						price: self.price
-					}
-
+					score:parseInt(self.mainData.sku[0].price)
 				};
-
 				postData.tokenFuncName='getProjectToken',
-
 				postData.searchItem = {
 					id: self.orderId
 				};
 				postData.payAfter = [];
-				postData.payAfter.push({
-					tableName: 'FlowLog',
-					FuncName: 'add',
-					data: {
-						count: self.mainData.shop_reward,
-						trade_info: '店返',
-						user_no: uni.getStorageSync('user_no'),
-						type: 2,
-						thirdapp_id: 2,
-						relation_id: self.mainData.id
-					}
-				});
-				/* if (self.distriData.length > 0) {
-					var transitionArray = self.distriData;
-					for (var i = 0; i < transitionArray.length; i++) {
-
-						if (transitionArray[i].level == 1) {
-							postData.payAfter.push({
-								tableName: 'FlowLog',
-								FuncName: 'add',
-								data: {
-									count: self.mainData.first_class,
-									trade_info: '下级返佣',
-									user_no: transitionArray[i].parent_no,
-									type: 2,
-									thirdapp_id: 2,
-									relation_user: localStorage.getItem('user_no'),
-									relation_id: self.mainData.id
-								}
-							});
-						} else if (transitionArray[i].level == 2) {
-							postData.payAfter.push({
-								tableName: 'FlowLog',
-								FuncName: 'add',
-								data: {
-									count: self.mainData.second_class,
-									trade_info: '下级返佣',
-									user_no: transitionArray[i].parent_no,
-									type: 2,
-									thirdapp_id: getApp().globalData.thirdapp_id,
-									relation_user: localStorage.getItem('user_no'),
-									relation_id: self.mainData.id
-								}
-							});
-						};
-					};
-				}; */
 				const callback = (res) => {
 					console.log(res)
 					if (res.solely_code == 100000) {
@@ -335,6 +276,7 @@
 
 						};
 					} else {
+						uni.setStorageSync('canClick', true);
 						self.$Utils.showToast(res.msg, 'none');
 					};
 				};

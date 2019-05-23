@@ -150,19 +150,7 @@ class Token {
         
     }
     
-    getEntranceToken(callback,postData) { 
 
-        if((postData&&postData.refreshToken)||!uni.getStorageSync('entrance_token')){
-            var params = {
-                token_name:'entrance_token',
-                info_name:'entrance_info',
-                thirdapp_id:22
-            };
-            this.getUserInfo(params,callback);
-        }else{
-            return uni.getStorageSync('entrance_token');
-        }
-    }
 
     getProjectToken(callback,postData) { 
 
@@ -174,98 +162,19 @@ class Token {
         }
     }
 
-    getMallToken(callback,postData) { 
 
-        if((postData&&postData.refreshToken)||!uni.getStorageSync('mall_token')){
-            var params = {
-                token_name:'mall_token',
-                info_name:'mall_info',
-                thirdapp_id:2
-            };
-            this.getUserInfo(params,callback);
-        }else{
-            return uni.getStorageSync('mall_token');
-        }
-    }    
-
-    getHairToken(callback,postData) { 
-
-        if((postData&&postData.refreshToken)||!uni.getStorageSync('hair_token')){
-            var params = {
-                token_name:'hair_token',
-                info_name:'hair_info',
-                thirdapp_id:24 
-            };
-            this.getUserInfo(params,callback);
-        }else{
-            return uni.getStorageSync('hair_token');
-        }
-    }   
-
-
-    getRestaurantToken(callback,postData) { 
-
-        if((postData&&postData.refreshToken)||!uni.getStorageSync('restaurant_token')){
-            var params = {
-                token_name:'restaurant_token',
-                info_name:'restaurant_info',
-                thirdapp_id:25
-            };
-            this.getUserInfo(params,callback);
-        }else{
-            return uni.getStorageSync('restaurant_token');
-        }
-    } 
-
-    getExhibitionToken(callback,postData) { 
-
-        if((postData&&postData.refreshToken)||!uni.getStorageSync('exhibition_token')){
-            var params = {
-                token_name:'exhibition_token',
-                info_name:'exhibition_info',
-                thirdapp_id:26
-            };
-            this.getUserInfo(params,callback);
-        }else{
-            return uni.getStorageSync('exhibition_token');
-        }
-    } 
-
-    getHotelToken(callback,postData) { 
-
-        if((postData&&postData.refreshToken)||!uni.getStorageSync('hotel_token')){
-            var params = {
-                token_name:'hotel_token',
-                info_name:'hotel_info',
-                thirdapp_id:27
-            };
-            this.getUserInfo(params,callback);
-        }else{
-            return uni.getStorageSync('hotel_token');
-        }
-    } 
-
-
-
-    
-
-    getGymToken(params) { 
-        var gym_token = uni.getStorageSync('gym_token');
-        var params ='gym'
-        this.getUserInfo(params);
-    }    
 
  
-    getEmployeeToken(callback,postData) { 
+    getMerchantToken(callback,postData) { 
 
-        if((postData&&postData.refreshToken)||!uni.getStorageSync('employeeToken')){
-            uni.removeStorageSync('employeeToken');
-            uni.removeStorageSync('employeeInfo');
+        if((postData&&postData.refreshToken)||!uni.getStorageSync('merchant_token')){
+            uni.removeStorageSync('merchant_token');
+            uni.removeStorageSync('merchant_info');
             uni.redirectTo({
-              url: '/pages/entrance/login/login'
+              url: '/pages/login/login'
             });
         }else{
-            return uni.getStorageSync('employeeToken');
+            return uni.getStorageSync('merchant_token');
         }
     }
    

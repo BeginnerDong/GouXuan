@@ -1,20 +1,14 @@
 <template>
 	<view class="body">
-		<div class="home color2">
-			<span onclick="backk()">
-				<img src="images/home-icon14.png" />
-			</span>
-			吃喝玩乐推荐
-		</div>
+
 		<div class="color2 font15" style="text-align: center; margin: 25px 0px 20px; font-weight: bolder; ">
 			点击生成专属海报后，长按可保存或发送
 		</div>
-		<a href="code-first.html">
-			<img class="img-one" src="images/达人/img1.png" />
-		</a>
-		<a href="code-second.html">
-			<img class="img-one" src="images/达人/img2.png" style="margin-left: 10px;" />
-		</a>
+		<div class="bg1" style="width: 100%; padding: 20px 0px; border-radius: 8px;display: flex;">
+			<div class="ilblock" style="width:48%;margin: 0 2%;" v-for="(item,index) in mainData.mainImg"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/code-second/code-second?index='+index}})">
+				<img style="width:100%;height:100%" :src="item.url" />
+			</div>
+		</div>
 	</view>
 </template>
 
@@ -23,123 +17,33 @@
 
 		data() {
 			return {
-
-
+				mainData:[],
+				webSelf:this
 			}
 		},
 		onLoad(options) {
 			const self = this;
-			/* self.$Utils.loadAll(['getMainData', 'getLabelData', 'getCaseData'], self) */
-
+			self.$Utils.loadAll(['getMainData'], self)
+		
 		},
 		methods: {
-			test($event) {
-				var testres = this.getCaseData()
-			},
-
+		
+		
 			getMainData() {
 				const self = this;
 				const postData = {};
-				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 				postData.searchItem = {
-					thirdapp_id: self.$Config.solely_thirdapp_id
-				};
-				postData.getBefore = {
-					caseData: {
-						tableName: 'Label',
-						searchItem: {
-							title: ['=', ['推荐阅读']],
-						},
-						middleKey: 'menu_id',
-						key: 'id',
-						condition: 'in',
-					},
-				};
-				const callback = (res) => {
-					if (res.info.data.length > 0) {
-						self.mainData.push.apply(self.mainData, res.info.data);
-						if (self.mainData.length > 2) {
-							self.mainData = self.mainData.slice(0, 2)
-						}
-					};
-					self.$Utils.finishFunc('getMainData');
-				};
-				self.$apis.articleGet(postData, callback);
-			},
-
-			getLabelData(isNew) {
-				var self = this;
-				if (isNew) {
-					self.$Utils.clearPageIndex(self)
-				};
-				var postData = {};
-				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-				postData.searchItem = {
-					type: 1,
-					thirdapp_id: 21,
-					parentid: 2
-				};
-				var callback = function(res) {
-					if (res.info.data.length > 0) {
-						self.labelData.push.apply(self.labelData, res.info.data)
-					}
-					for (var i = 0; i < res.info.data.length; i++) {
-						self.menu_array.push(res.info.data[i].id)
-					};
-					self.$Utils.finishFunc('getLabelData');
-					//self.getCaseData();
-				};
-				console.log('self.$apis', self.$apis)
-				self.$apis.labelGet(postData, callback);
-			},
-
-
-			getSliderData() {
-				const self = this;
-				const postData = {};
-				postData.searchItem = {
-					title: '首页轮播',
-					thirdapp_id: self.$Config.solely_thirdapp_id
+					title: '达人注册海报',
+					thirdapp_id: self.$AssetsConfig.thirdapp_id,
 				};
 				const callback = (res) => {
 					console.log(1000, res);
 					if (res.info.data.length > 0) {
-						self.swiperData = res.info.data[0]['mainImg'];
+						self.mainData = res.info.data[0];
 					};
-					self.$Utils.finishFunc('getSliderData');
+					self.$Utils.finishFunc('getMainData');
 				};
 				self.$apis.labelGet(postData, callback);
-			},
-			getCaseData() {
-				var self = this;
-				var postData = {};
-				postData.searchItem = {
-					thirdapp_id: getApp().globalData.solely_thirdapp_id
-				}
-				postData.getBefore = {
-					caseData: {
-						tableName: 'Label',
-						searchItem: {
-							parentid: ['in', [146]]
-						},
-						middleKey: 'menu_id',
-						key: 'id',
-						condition: 'in',
-					},
-				};
-				var callback = (res) => {
-					console.log('self.caseData.res', res);
-					if (res.info.data.length > 0) {
-						self.caseData.push.apply(self.caseData, res.info.data)
-						if (res.info.data.length > 4) {
-							self.caseData = self.caseData.slice(0, 4)
-						}
-					};
-					self.$Utils.finishFunc('getCaseData');
-				};
-
-
-				self.$apis.articleGet(postData, callback);
 			},
 		}
 	}

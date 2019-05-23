@@ -116,6 +116,31 @@ export default {
 		http.HTTP(allParams);
 	},
 
+	qrCodeGet(param, callback) {
+		var allParams = {
+			url: 'Common/Qrcode/get',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
+
+	qrCodeUpdate(param, callback) {
+		var allParams = {
+			url: 'Common/Qrcode/update',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
+
+
 	login(param, callback) {
 
 		var allParams = {

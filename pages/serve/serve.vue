@@ -49,16 +49,11 @@
 		<div class="bg1 color2 font15" style="border-bottom: solid 1px #EFEFEF;width: 100%; height: 50px;font-weight: bolder; line-height: 50px; padding-left: 15px;">
 			常见问题
 		</div>
+		
 		<div class="bg1">
-			<div class="testlist">
-				短信丢了/电子吗丢如何找回<img src="/static/images/home-icon10.png" />
-			</div>
-			<div class="testlist">
-				短信丢了/电子吗丢如何找回<img src="/static/images/home-icon10.png" />
-			</div>
-			<div class="testlist-on">
-				短信丢了/电子吗丢如何找回<img src="/static/images/微信图片_20190429170142.png" />
-				<div class="color2" style="line-height: 20px;">点击：<span style="color: #F78D70;">找电子码</span>，随时随地都可以查到哦，输入够吗是的手机号，验证一下就可以查到电子短信了</div>
+			<div class="testlist-on" v-for="(item,index) in mainData">
+				{{item.title}}<img :src="webSelf.$Utils.inArray(item.id,openArray)!=-1?'/static/images/微信图片_20190429170142.png':'/static/images/home-icon10.png'" @click="show(item.id)"/>
+				<div class="color2" style="line-height: 20px;" :style="webSelf.$Utils.inArray(item.id,openArray)!=-1?'':'display:none'">{{item.description}}</div>
 			</div>
 		</div>
 
@@ -70,26 +65,75 @@
 
 		data() {
 			return {
-				webSelf:this
-
+				webSelf: this,
+				mainData:[],
+				openArray:[]
 			}
 		},
 		onLoad(options) {
 			const self = this;
-			/* self.$Utils.loadAll(['getMainData', 'getLabelData', 'getCaseData'], self) */
+			self.$Utils.loadAll(['getMainData'], self)
 
 		},
+		
+		
+		
 		methods: {
 			
+		
+			
+			show(id){
+				const self = this;
+				var position = self.openArray.indexOf(id);
+				if (position >= 0) {
+					self.openArray.splice(position, 1)
+				} else {
+					self.openArray.push(id)
+				};
+			},
+			
+			getMainData() {
+				const self = this;
+				const postData = {};
+				postData.searchItem = {
+					thirdapp_id: self.$AssetsConfig.thirdapp_id
+				};
+				postData.getBefore = {
+					question: {
+						tableName: 'Label',
+						searchItem: {
+							title: ['=', ['常见问题']],
+						},
+						middleKey: 'parentid',
+						key: 'id',
+						condition: 'in',
+					},
+				};
+				postData.order = {
+					listorder: 'desc'
+				};
+				console.log('postData', postData)
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.mainData.push.apply(self.mainData, res.info.data);
+						
+					};
+					console.log('self.mainData', self.mainData)
+					self.$Utils.finishFunc('getMainData');
+				};
+				self.$apis.labelGet(postData, callback);
+			},
 		}
 	}
 </script>
 
 <style>
 	@import "../../assets/style/public.css";
-	page{
+
+	page {
 		background: #fff;
 	}
+
 	.list-img {
 		border-top: solid 1px #EFEFEF;
 		width: 125px;
@@ -132,7 +176,6 @@
 		border-bottom: solid 1px #EFEFEF;
 		font-size: 13px;
 		color: rgb(102, 102, 102);
-		height: 98px;
 		line-height: 44px;
 		padding-left: 15px;
 		padding-right: 15px;
