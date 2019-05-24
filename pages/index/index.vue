@@ -23,8 +23,7 @@
 							<view class="color2">{{item.title}}</view>
 						</view>
 					</view>
-
-					<view class="radionav-item" v-for="(item,index) in cityData" v-if="index<5" :data-id="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?city_id='+$event.currentTarget.dataset.id}})">
+					<view class="radionav-item" v-for="(item,index) in currentSiteData.cityData" v-if="index<5" :data-id="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?city_id='+$event.currentTarget.dataset.id}})">
 						<view>
 							<img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
 							<view class="color2">{{item.title}}</view>
@@ -159,62 +158,7 @@
 			</view>
 		</view>
 
-		<view style="position: fixed; top: 0px; z-index: 50;display: none;">
-
-			<view style="width: 100%; height: 200px; background: rgba(0,0,0,0.5);"></view>
-			<view class="bg1" style="width: 100%; padding: 15px;">
-				<view class="color1 font13 flo-right">跳过</view>
-				<view class="color2" style="text-align: center; line-height: 50px;">选择感兴趣的内容(2/2)</view>
-				<view class="zhan-item ilblock">
-					辽宁站
-				</view>
-				<view class="zhan-item ilblock">
-					黑龙江站
-				</view>
-				<view class="zhan-item ilblock">
-					辽宁站
-				</view>
-				<view class="zhan-item ilblock">
-					辽宁站
-				</view>
-				<view class="zhan-item ilblock">
-					辽宁站
-				</view>
-				<view class="zhan-item ilblock">
-					辽宁站
-				</view>
-				<view class="zhan-item ilblock">
-					辽宁站
-				</view>
-				<view class="zhan-item ilblock">
-					辽宁站
-				</view>
-				<view class="zhan-item ilblock">
-					辽宁站
-				</view>
-				<view class="zhan-item ilblock">
-					辽宁站
-				</view>
-				<view class="zhan-item ilblock">
-					辽宁站
-				</view>
-				<view class="zhan-item ilblock">
-					辽宁站
-				</view>
-				<view class="zhan-item ilblock">
-					辽宁站
-				</view>
-				<view class="zhan-item ilblock">
-					辽宁站
-				</view>
-				<view class="zhan-item ilblock">
-					辽宁站
-				</view>
-			</view>
-			<view class="bg1" style="width: 100%; height: 100px;">
-				<button class="color5 radiu20" type="button" style="width: 90%; height: 40px; margin: 0px auto; background: #F67550;">确定</button>
-			</view>
-		</view>
+		
 
 		<view style="width: 100%; height: 20px;"></view>
 		<view class="navbar-brand">
@@ -257,27 +201,36 @@
 				siteData: [],
 				mainData: [],
 				labelData: [],
-				cityData: [],
-				currentSiteData: [],
+				currentSiteData:{},
 				endTimeList: [],
 				countDownList:[],
 				swiperData: [],
 				webSelf: this,
 				now: '',
-				show_city: false
+				show_city: false,
+				isLoadAll:false
 			}
 		},
 		onLoad() {
-			console.log(this.$Router)
+			
 			const self = this;
 			var options = self.$Utils.getHashParameters();
-			console.log('options', options)
-			/* 	if(options.site_id){
-					self.site_id = options.site_id
-				}; */
+			if(options[0]&&options[0].site_id){
+				self.site_id = options[0].site_id
+			};
 			self.now = new Date().getTime();
-			self.$Utils.loadAll(['getMainData', 'getSiteData', 'getSliderData', 'tokenGet', 'getLabelData', 'getHotData'], self)
-
+			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+			self.$Utils.loadAll(['getSiteData', 'getSliderData', 'getLabelData','wxJsSdk'], self)
+			
+		},
+		
+		onReachBottom(){
+			
+			const self = this;
+			if(!self.isLoadAll){
+				self.paginate.currentPage++;
+				self.getMainData()
+			};	
 		},
 		
 		destroyed () {
@@ -286,45 +239,65 @@
         },
 		
 		methods: {
-
-			tokenGet() {
+			
+			
+			
+			getSiteData() {
 				const self = this;
-				const postData = {
-					searchItem: {
-						user_no: 'U123456'
-					}
+				const postData = {};
+				postData.searchItem = {
+					thirdapp_id: self.$AssetsConfig.thirdapp_id,
+					type: 9
 				};
-				console.log('postData', postData)
+				postData.order = {
+					listorder: 'desc'
+				};
+				postData.getAfter = {
+					cityData: {
+						tableName: 'Label',
+						middleKey: 'id',
+						key: 'parentid',
+						condition: '=',
+						searchItem: {
+							status: 1
+						}
+					}
+				};		
 				const callback = (res) => {
-					if (res.solely_code == 100000) {
-						uni.setStorageSync('user_token', res.token);
-						uni.setStorageSync('user_no', res.info.user_no);
-						uni.setStorageSync('user_info', res.info);
-					}
-					console.log('res', res)
-					self.$Utils.finishFunc('tokenGet');
+					if (res.info.data.length > 0) {
+						self.siteData.push.apply(self.siteData, res.info.data);
+						for (var i = 0; i < self.siteData.length; i++) {
+							self.siteDataId.push(self.siteData[i].id)
+						};
+						if (self.site_id) {
+							for (var i = 0; i < self.siteData.length; i++) {
+								if (self.site_id == self.siteData[i].id) {
+									uni.setStorageSync('siteData', self.siteData[i]);
+									self.currentSiteData = uni.getStorageSync('siteData');
+								};
+							};
+						} else {
+							uni.setStorageSync('siteData', self.siteData[0]);
+							self.currentSiteData = uni.getStorageSync('siteData');
+						};	
+						self.getMainData();
+						self.getHotData();
+						
+					};
 				};
-				self.$apis.tokenGet(postData, callback);
+				self.$apis.labelGet(postData, callback);
 			},
-
-			changeSite(site_id) {
-				const self = this;
-				for (var i = 0; i < self.siteData.length; i++) {
-					if (site_id == self.siteData[i].id) {
-						uni.setStorageSync('siteData', self.siteData[i]);
-						self.currentSiteData = uni.getStorageSync('siteData');
-					}
-				};
-				self.show_city = false;
-				self.$Utils.loadAll(['getMainData', 'getCityData', 'getHotData'], self)
-			},
-
-			getMainData() {
+			
+			
+			
+			getMainData(isNew) {
 				const self = this;
 				var now = new Date().getTime();
-				self.mainData = [];
+				if(isNew){
+					self.mainData = [];
+				};
 				const postData = {};
-				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+				postData.paginate = self.$Utils.cloneForm(self.paginate);
 				postData.searchItem = {
 					thirdapp_id: self.$AssetsConfig.thirdapp_id,
 					province_id: uni.getStorageSync('siteData').id,
@@ -344,7 +317,6 @@
 				postData.order = {
 					listorder: 'desc'
 				};
-				console.log('postData', postData)
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.mainData.push.apply(self.mainData, res.info.data);
@@ -355,12 +327,157 @@
 							self.mainData[i].endTimeList = [];
 						};
 						self.countDown();
+					}else{
+						self.isLoadAll = true;
+						uni.showToast({
+						    title: '没有更多了',
+						    icon: 'fail',
+						    duration: 1000,
+						    mask:true
+						});
 					};
-					console.log('self.mainData', self.mainData)
-					self.$Utils.finishFunc('getMainData');
+					self.$Utils.finishFunc('getSiteData');
+					self.$Utils.finishFunc('getMainData');	
 				};
 				self.$apis.productGet(postData, callback);
 			},
+			
+			getHotData() {
+				const self = this;
+				self.hotData = [];
+				const postData = {};
+				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+				postData.searchItem = {
+					thirdapp_id: self.$AssetsConfig.thirdapp_id,
+					province_id: uni.getStorageSync('siteData').id
+				};
+				postData.order = {
+					false_sale_count: 'desc'
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.hotData.push.apply(self.hotData, res.info.data);
+					};
+					self.$Utils.finishFunc('getHotData');
+				};
+				self.$apis.productGet(postData, callback);
+			},
+			
+			getLabelData() {
+				const self = this;
+				const postData = {};
+				postData.searchItem = {
+					thirdapp_id: self.$AssetsConfig.thirdapp_id
+				};
+				postData.getBefore = {
+					city: {
+						tableName: 'Label',
+						searchItem: {
+							title: ['=', ['商品类别']],
+						},
+						middleKey: 'parentid',
+						key: 'id',
+						condition: 'in',
+					},
+				};
+				postData.order = {
+					listorder: 'desc'
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.labelData.push.apply(self.labelData, res.info.data);
+					};
+					self.$Utils.finishFunc('getLabelData');
+				};
+				self.$apis.labelGet(postData, callback);
+			},
+			
+			getSliderData() {
+				const self = this;
+				const postData = {};
+				postData.searchItem = {
+					thirdapp_id: self.$AssetsConfig.thirdapp_id
+				};
+				postData.getBefore = {
+					city: {
+						tableName: 'Label',
+						searchItem: {
+							title: ['=', ['首页轮播']],
+						},
+						middleKey: 'parentid',
+						key: 'id',
+						condition: 'in',
+					},
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						for (var i = 0; i < res.info.data.length; i++) {
+							self.swiperData.push(res.info.data[i].mainImg[0])
+						}
+					};
+					self.$Utils.finishFunc('getSliderData');
+				};
+				self.$apis.labelGet(postData, callback);
+			},
+			
+			
+
+			wxJsSdk(){
+				const self = this;
+				const postData = {
+					thirdapp_id:2,
+					url:window.location.href
+				};
+				const callback = (res)=>{
+					
+					self.$jweixin.config({
+						debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+						appId:res.appId, // 必填，公众号的唯一标识
+						timestamp:res.timestamp , // 必填，生成签名的时间戳
+						nonceStr:res.nonceStr, // 必填，生成签名的随机串
+						signature:res.signature,// 必填，签名
+						jsApiList: ['updateAppMessageShareData'] // 必填，需要使用的JS接口列表
+					});
+					self.$jweixin.ready(function () {   //需在用户可能点击分享按钮前就先调用
+						
+						
+						self.$jweixin.updateAppMessageShareData({ 
+							title: '本地捕手', // 分享标题
+							desc: '搜寻吃喝玩乐', // 分享描述
+							link: 'http://www.local-scanner.com/wx/', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+							imgUrl: '', // 分享图标
+							success: function () {
+							  // 设置成功
+							}
+						})
+						
+					});
+					self.$jweixin.error(function(res){
+						console.log('error',res)
+					});
+					self.$Utils.finishFunc('wxJsSdk');
+				};
+				self.$apis.WxJssdk(postData,callback);
+			},
+
+			changeSite(site_id) {
+				const self = this;
+				for (var i = 0; i < self.siteData.length; i++) {
+					if (site_id == self.siteData[i].id) {
+						uni.setStorageSync('siteData', self.siteData[i]);
+						self.currentSiteData = uni.getStorageSync('siteData');
+					};
+				};
+				self.show_city = false;
+				self.$Utils.loadAll(['getMainData', 'getHotData'], self)
+			},
+			
+			showCity() {
+				const self = this;
+				self.show_city = !self.show_city
+			},
+
+			
 			
 			timeFormat(param) { //小于10的格式化函数
 				const self = this;
@@ -414,169 +531,12 @@
 				}	
 				setTimeout(this.countDown, 1000);
 			},
-			
-			
-		
-
-			getHotData() {
-				const self = this;
-				self.hotData = [];
-				const postData = {};
-				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-				postData.searchItem = {
-					thirdapp_id: self.$AssetsConfig.thirdapp_id,
-					province_id: uni.getStorageSync('siteData').id
-				};
-				postData.order = {
-					false_sale_count: 'desc'
-				};
-				console.log('postData', postData)
-				const callback = (res) => {
-					if (res.info.data.length > 0) {
-						self.hotData.push.apply(self.hotData, res.info.data);
-					};
-					console.log('self.hotData', self.hotData)
-					self.$Utils.finishFunc('getHotData');
-				};
-				self.$apis.productGet(postData, callback);
-			},
-
-
-			getLabelData() {
-				const self = this;
-				const postData = {};
-				postData.searchItem = {
-					thirdapp_id: self.$AssetsConfig.thirdapp_id
-				};
-				postData.getBefore = {
-					city: {
-						tableName: 'Label',
-						searchItem: {
-							title: ['=', ['商品类别']],
-						},
-						middleKey: 'parentid',
-						key: 'id',
-						condition: 'in',
-					},
-				};
-				postData.order = {
-					listorder: 'desc'
-				};
-				console.log('postData', postData)
-				const callback = (res) => {
-					if (res.info.data.length > 0) {
-						self.labelData.push.apply(self.labelData, res.info.data);
-					};
-					console.log('self.labelData', self.labelData)
-					self.$Utils.finishFunc('getLabelData');
-				};
-				self.$apis.labelGet(postData, callback);
-			},
-
-
-			getSiteData() {
-				const self = this;
-				const postData = {};
-				postData.searchItem = {
-					thirdapp_id: self.$AssetsConfig.thirdapp_id,
-					type: 9
-				};
-				postData.order = {
-					listorder: 'desc'
-				};
-				console.log('postData', postData)
-				const callback = (res) => {
-					if (res.info.data.length > 0) {
-						self.siteData.push.apply(self.siteData, res.info.data);
-						for (var i = 0; i < self.siteData.length; i++) {
-							self.siteDataId.push(self.siteData[i].id)
-						};
-						if (self.site_id) {
-							for (var i = 0; i < self.siteData.length; i++) {
-								if (self.site_id == self.siteData[i].id) {
-									uni.setStorageSync('siteData', self.siteData[i]);
-									self.currentSiteData = uni.getStorageSync('siteData');
-								}
-							}
-						} else {
-							uni.setStorageSync('siteData', self.siteData[0]);
-							self.currentSiteData = uni.getStorageSync('siteData');
-						}
-						self.getCityData()
-					};
-					console.log('self.siteData', self.siteData)
-
-				};
-				self.$apis.labelGet(postData, callback);
-			},
-
-			getCityData() {
-				const self = this;
-				const postData = {};
-				self.cityData = [];
-				postData.searchItem = {
-					parentid: self.currentSiteData.id,
-					thirdapp_id: self.$AssetsConfig.thirdapp_id
-				};
-				postData.order = {
-					listorder: 'desc'
-				};
-				console.log('postData', postData)
-				const callback = (res) => {
-					if (res.info.data.length > 0) {
-						self.cityData.push.apply(self.cityData, res.info.data);
-					};
-					console.log('self.cityData', self.cityData)
-					self.$Utils.finishFunc('getSiteData');
-					self.$Utils.finishFunc('getCityData');
-				};
-				self.$apis.labelGet(postData, callback);
-			},
-
-			getSliderData() {
-				const self = this;
-				const postData = {};
-				postData.searchItem = {
-					thirdapp_id: self.$AssetsConfig.thirdapp_id
-				};
-				postData.getBefore = {
-					city: {
-						tableName: 'Label',
-						searchItem: {
-							title: ['=', ['首页轮播']],
-						},
-						middleKey: 'parentid',
-						key: 'id',
-						condition: 'in',
-					},
-				};
-				const callback = (res) => {
-					console.log(1000, res);
-					if (res.info.data.length > 0) {
-						for (var i = 0; i < res.info.data.length; i++) {
-							self.swiperData.push(res.info.data[i].mainImg[0])
-						}
-						console.log('self.swiperData', self.swiperData)
-					};
-					self.$Utils.finishFunc('getSliderData');
-				};
-				self.$apis.labelGet(postData, callback);
-			},
-
-			showCity() {
-				const self = this;
-				self.show_city = !self.show_city
-			},
-
 
 		}
 	}
 </script>
 
 <style>
-	@import "../../assets/style/public.css";
 	@import "../../assets/style/index.css";
-
-	@import "../../assets/style/bootstrap.css";
 	@import "../../assets/style/basic.css";
 </style>

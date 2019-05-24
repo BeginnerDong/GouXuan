@@ -18,10 +18,8 @@ class Token {
         };
     }
 	
-
-	
 	getProjectToken(callback,postData) { 
-		return '96b6f19a2fa908be68dfeaf925eb9485';
+	
 	    if((postData&&postData.refreshToken)||!uni.getStorageSync('user_token')){
 	        var params = {
 	            thirdapp_id:2,
@@ -42,14 +40,19 @@ class Token {
 		var href =  window.location.origin + window.location.pathname;
 		//var href = 'http://test.solelycloud.com/gouxuanweb/'
         var param = $Utils.getHashParameters()[0];
-        var hash = $Utils.getHashParameters()[1];
-        
+        var hash = $Utils.getHashParameters()[1]; 
+		if(JSON.stringify(param)!='{}'){
+			href = href +'?';
+			for(key in param){
+				if(key!='code'){
+					href = href + key + '=' + param[key] + '&'
+				};
+			};
+			href = href.substr(0, href.length - 1);  
+		};
         if(param.code){
 			if(param.sub_appid&&param.sub_appsecret&&!param.sub_code){
-				//console.log(666235);
-				//return;
-				href = href + '?sub_code=' + param.code + '&sub_appid=' + param.sub_appid + '&sub_appsecret' + param.sub_appsecret + hash; 
-				
+				href = href + '?sub_code=' + param.code  + hash; 	
 				window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7db54ed176405e24&redirect_uri='+
 				encodeURIComponent(href)+'&response_type=code&scope=snsapi_userinfo';
 				return;
@@ -59,14 +62,17 @@ class Token {
                 code:param.code,
             };
 			
+			if(param.parent_no){
+				postData.parent_no = param.parent_no
+			};
+			
 			if(param.sub_appid&&param.sub_code){
 				postData.sub_appid = param.sub_appid;
 				postData.sub_code = param.sub_code;
 			};
 			
             var c_callback = (res)=>{
-                console.log('c_callback-res',res)
-                
+                console.log('c_callback-res',res)    
                 if(res.token){
                     uni.setStorageSync('user_token',res.token);
                     uni.setStorageSync('user_no',res.info.user_no);
@@ -87,7 +93,16 @@ class Token {
 			            if(c_callback){
 			                c_callback && c_callback(res.data);
 			            };      
-			        }else{
+			        }else if(res.data&&res.data.solely_code==300000){
+						href =  href + hash;
+						if(param.sub_appid&&param.sub_appsecret){
+							window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+ param.sub_appid +'&redirect_uri='+
+							encodeURIComponent(href)+'&response_type=code&scope=snsapi_userinfo';
+						}else{
+							window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7db54ed176405e24&redirect_uri='+
+							encodeURIComponent(href)+'&response_type=code&scope=snsapi_userinfo';
+						}; 
+					}else{
 			            uni.showToast({
 			                title: '获取token回调失败',
 			                icon: 'fail',
@@ -104,17 +119,11 @@ class Token {
             callback&&callback();
         }else{
            
-			
+			href =  href + hash;
 			if(param.sub_appid&&param.sub_appsecret){
-				href =  href+'?sub_appid='+param.sub_appid+'&sub_appsecret='+param.sub_appsecret + hash;
-				//console.log('sub-code-one-herf',href);
-				//return;
 				window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+ param.sub_appid +'&redirect_uri='+
 				encodeURIComponent(href)+'&response_type=code&scope=snsapi_userinfo';
 			}else{
-				href =  href + hash;
-				//console.log('code-one-herf',href);
-				//return;
 				window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7db54ed176405e24&redirect_uri='+
 				encodeURIComponent(href)+'&response_type=code&scope=snsapi_userinfo';
 			};   

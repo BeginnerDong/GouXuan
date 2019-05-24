@@ -1,32 +1,26 @@
 <template>
 	<view>
 	
-		<div class="nav-top" style="line-height: 40px;">
-			<div class="ilblock font15 top-list " @click="tab('0')" :class="currentId == 0?'top-list-star':''">
+		<div class="nav-top" style="line-height: 40px;font-size: 11px;">
+			<div class="ilblock top-list " @click="tab('0')" :class="currentId == 0?'top-list-star':''">
 				<div  :class="currentId == 0?'color6':'color1'">全部</div>
 			</div>
-			<div class="ilblock font15 top-list"  @click="tab('1')" :class="currentId == 1?'top-list-star':''">
-				<div  :class="currentId == 1?'color6':'color1'">待发货</div>
+			<div class="ilblock top-list"  @click="tab('1')" :class="currentId == 1?'top-list-star':''">
+				<div  :class="currentId == 1?'color6':'color1'">待使用/待发货</div>
 			</div>
-			<div class="ilblock font15 top-list"  @click="tab('2')" :class="currentId == 2?'top-list-star':''">
-				<div :class="currentId == 2?'color6':'color1'">发货中</div>
+			<div class="ilblock top-list"  @click="tab('2')" :class="currentId == 2?'top-list-star':''">
+				<div :class="currentId == 2?'color6':'color1'">已发货</div>
 			</div>
-			<div class="ilblock font15 top-list"  @click="tab('3')" :class="currentId == 3?'top-list-star':''">
-				<div  :class="currentId == 3?'color6':'color1'">已发货</div>
-			</div>
-			<div class="ilblock font15 top-list"  @click="tab('4')" :class="currentId == 4?'top-list-star':''">
-				<div :class="currentId == 4?'color6':'color1'">其他</div>
+			<div class="ilblock top-list"  @click="tab('3')" :class="currentId == 3?'top-list-star':''">
+				<div  :class="currentId == 3?'color6':'color1'">已完结/已核销</div>
 			</div>
 		</div>
-		<div class="storebox bg1" v-for="item in mainData">
+		<div class="storebox bg1" style="height: auto;" v-for="item in mainData">
 			<div class="storebox-top">
 				<div class="font12 color1 ilblock" style="margin-left: 15px;">
 					交易时间：{{item.create_time}}
 				</div>
-				<div class="ilblock font12 flo-right" style=" color:rgb(225,54,78);margin-right: 15px;">等待发货</div>
-				<div class="ilblock font12 flo-right" style=" color:rgb(225,54,78);margin-right: 15px;">发货中</div>
-				<div class="ilblock font12 flo-right" style=" color:rgb(225,54,78);margin-right: 15px;">发货中</div>
-				<div class="ilblock font12 flo-right" style=" color:rgb(225,54,78);margin-right: 15px;">已发货</div>
+				
 			</div>
 			<div class="storebox-btm">
 				<div class="ilblock img-box">
@@ -38,6 +32,10 @@
 					</div>
 					<div style="color: rgb(249,138,72); font-size: 11px; margin-top: 16px;">￥<span style="font-size: 20px;">{{item.price}}</span> </div>
 				</div>
+				
+			</div>
+			<div style="margin-bottom: 10px;" v-if="item.qrData" v-for="c_item in item.qrData">
+				核销二维码<image style="width: 80px;height: 80px;" :src="c_item.url" mode=""></image>
 			</div>
 		</div>
 		<div class="box-c" v-if="mainData.length==0">
@@ -57,7 +55,9 @@
 			return {
 				currentId: 0,
 				mainData: [],
-				searchItem:{}
+				searchItem:{
+					pay_status:1
+				}
 			}
 		},
 		onLoad(options) {
@@ -75,11 +75,22 @@
 				postData.tokenFuncName = 'getProjectToken';
 				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
 				postData.searchItem.user_no= uni.getStorageSync('user_no');
-				postData.searchItem.type= 1;
+				
 				postData.order = {
 					create_time: 'desc'
 				};
-
+				
+				postData.getAfter = {
+					qrData: {
+						tableName: 'Qrcode',
+						middleKey: 'order_no',
+						key: 'order_no',
+						condition: '=',
+						searchItem: {
+							status: 1
+						}
+					}
+				};	
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
 						if (res.info.data.length > 0) {
@@ -87,11 +98,9 @@
 						} else {
 							self.$Utils.showToast('没有更多了');
 						};
-					
 					} else {
 						self.$Utils.showToast('网络故障')
 					};
-					
 					self.$Utils.finishFunc('getMainData');
 					console.log('getMainData', self.mainData)
 				};
@@ -103,18 +112,28 @@
 			tab(currentId) {
 				const self = this;
 				self.currentId = currentId;
-				self.searchItem = {};
+				
 				if (currentId == '0') {
-					
+					self.searchItem = {
+						pay_status:1
+					};
 				} else if (currentId == '1') {
-					
+					self.searchItem = {
+						pay_status:1,
+						transport_status:0
+					};
 				} else if (currentId == '2') {
-					
+					self.searchItem = {
+						pay_status:1,
+						type:1,
+						transport_status:1
+					};
 				} else if (currentId == '3') {
-					
-				} else if (currentId == '4') {
-					
-				} 
+					self.searchItem = {
+						pay_status:1,
+						transport_status:2
+					};
+				};
 				self.mainData = [];
 				self.getMainData();
 			
@@ -124,9 +143,8 @@
 </script>
 
 <style>
-	@import "../../assets/style/public.css";
+
 	@import "../../assets/style/store.css";
-	
-	@import "../../assets/style/bootstrap.css";
 	@import "../../assets/style/basic.css";
+	
 </style>

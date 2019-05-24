@@ -14,7 +14,7 @@ export default {
         };
 
         if(obj.data.tokenFuncName){
-            console.log('obj.data.token');
+            
             if(obj.data.refreshToken){
                 token[obj.data.tokenFuncName](callback,{refreshToken:true});
             }else{
@@ -23,7 +23,7 @@ export default {
             if(!obj.data.token){
                 return;
             };
-            console.log('obj.data.token',obj.data.token);
+            
         };
 		
 		var custom_header = {'content-type': 'application/json',};
@@ -37,10 +37,10 @@ export default {
 			method:obj.type,
 			header:custom_header,
 			success: (res) => {
-				console.log('resres')
+				
 				var code = res.data.solely_code;
                 if (res.data.solely_code == '200000') {
-                    console.log('params.data.tokenFuncName',obj)
+                   
                     token[obj.data.tokenFuncName](callback,{refreshToken:true});
                 } else {
                     obj.sCallback && obj.sCallback(res.data);

@@ -1,7 +1,7 @@
 <template>
 	<view>
 		
-		<div class="index-top">
+		<!--<div class="index-top">
 			<div class="logo ilblock">
 				<img src="../../static/images/home-img1.png" /><span>购选</span>
 			</div>
@@ -11,7 +11,7 @@
 					<img src="../../static/images/home-icon13.png" />
 				</span>
 			</div>
-		</div>
+		</div>-->
 		<div class="best-box ilblock" style="margin-left: 15px;" v-for="item in mainData">
 			<div class="best-box-top">
 				<img src="../../static/images/home-img2.png"/>
@@ -93,6 +93,7 @@
 			self.$Utils.loadAll(['getMainData'], self)
 		
 		},
+		
 		methods: {
 		
 			
@@ -131,9 +132,10 @@
 </script>
 
 <style>
+	
 	@import "../../assets/style/public.css";
 	@import "../../assets/style/more.css";
-	
 	@import "../../assets/style/bootstrap.css";
 	@import "../../assets/style/basic.css";
+	
 </style>

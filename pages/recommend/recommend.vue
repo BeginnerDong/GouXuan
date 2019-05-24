@@ -8,8 +8,7 @@
 			<div class="best-num">分享海报</div>
 		</c-swiper>
 		<!-- <div class="top-imgbox">
-			<img src="/static/images/服务/service-img2.png" />
-			
+			<img src="../../static/images/服务/service-img2.png" />	
 		</div> -->
 		<div class="img-btm">
 			限时抢购
@@ -35,13 +34,13 @@
 			</div>
 			<div style="clear: both;"></div>
 		</div>
-		<div class="address color2">
+		<div class="address color2" @click="openMap">
 			<div class="ilblock" style="width: 10%;">
-				<img src="/static/images/details-icon1.png" style="width: 12px; height: 14px;margin-left: 15px; position: relative; top: -10px;" />
+				<img src="../../static/images/details-icon1.png" style="width: 12px; height: 14px;margin-left: 15px; position: relative; top: -10px;" />
 			</div>
 			<div class="ilblock" style="width: 80%;margin-top: 10px;">{{mainData.address}}</div>
 			<div class="ilblock">
-				<img src="/static/images/home-icon9.png" style="height: 13px; margin-left: 5px;margin-bottom: 20px;" />
+				<img src="../../static/images/home-icon9.png" style="height: 13px; margin-left: 5px;margin-bottom: 20px;" />
 			</div>
 		</div>
 		<div class="choice">
@@ -65,7 +64,7 @@
 					上月
 				</div>
 				<div class="color2 ilblock wahct-topleft" style="font-size: 16px;">
-					{{dateData.date}}
+					{{curYear}}*{{curMonth+1}}
 				</div>
 				<div class="ilblock wahct-topright" @click="goNextMonth">
 					下月
@@ -98,7 +97,7 @@
 			</div>
 			<view class="bg1" style="padding: 20upx 0upx 70upx;">
 
-				<block v-for="item in dateData.finalData" >
+				<block v-for="item in dateData" >
 					<div class="day-item ilblock day-star" :style="item.skuDate&&item.skuDate.id==currentSkuDateId?'height:50px;color:red':'height:50px;'"  @click="dateChoose(item)">
 						<div>{{item.sDay}}</div>
 						<div s v-if="item.hasItem>0">￥{{item.skuDate.price}}</div>
@@ -137,13 +136,13 @@
 			<div class="foter-fixd">
 				<div class="index ilblock" style="border-right: solid 1px #E9E9E9;" @click="goBuy">
 
-					<img src="/static/images/details-icon2.png" />
+					<img src="../../static/images/details-icon2.png" />
 					<div>首页</div>
 
 				</div>
 				<div class="index ilblock">
 
-					<img src="/static/images/details-icon3.png" />
+					<img src="../../static/images/details-icon3.png" />
 					<div>客服</div>
 
 				</div>
@@ -176,11 +175,8 @@
 
 		data() {
 			return {
-				dateData: {
-					date: "", //当前日期字符串
-					arrInfoEx: [], //农历节假日等扩展信息
-					finalData:[]
-				},
+				dateData:[],
+				arrInfoEx:[],
 				swiperData: [],
 				labelData: [],
 				mainData: [],
@@ -206,22 +202,82 @@
 			self.todayYear = todayDate.getFullYear();
 			self.todayDay = todayDate.getDate();
 			console.log('self.todayYear', self.todayYear)
-			self.$Utils.loadAll(['calenderInit'], self)
+			self.$Utils.loadAll(['calenderInit',], self)
 			
 
 		},
 		methods: {
 			
+			
+			wxJsSdk(){
+				const self = this;
+				const postData = {
+					thirdapp_id:2,
+					url:window.location.href
+				};
+				const callback = (res)=>{	
+					console.log('maindata',self.mainData)
+					self.$jweixin.config({
+						debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+						appId:res.appId, // 必填，公众号的唯一标识
+						timestamp:res.timestamp , // 必填，生成签名的时间戳
+						nonceStr:res.nonceStr, // 必填，生成签名的随机串
+						signature:res.signature,// 必填，签名
+						jsApiList: ['openLocation','updateAppMessageShareData'] // 必填，需要使用的JS接口列表
+					});
+					self.$jweixin.ready(function () {   //需在用户可能点击分享按钮前就先调用		
+							console.log('maindata-ready',self.mainData)
+							if(self.mainData.mainImg[0]){
+								var shareImg = self.mainData.mainImg[0].url;
+							}else{
+								var shareImg = 'empty';
+							};
+							console.log('shareImg',shareImg)
+						self.$jweixin.updateAppMessageShareData({ 
+							title: self.mainData.title, // 分享标题
+							desc: self.mainData.description, // 分享描述
+							link: window.location.href,
+							imgUrl:shareImg, // 分享图标
+							success: function () {
+							  // 设置成功
+							  console.log('updateAppMessageShareData-ok')
+							}
+						})
+					});
+					self.$jweixin.error(function(res){
+						console.log('error',res)
+					});
+					self.$Utils.finishFunc('calenderInit');
+				};
+				self.$apis.WxJssdk(postData,callback);
+			},
+
+			openMap(){
+				const self = this;
+				wx.openLocation({
+					latitude: parseFloat(self.mainData.latitude), // 纬度，浮点数，范围为90 ~ -90
+					longitude: parseFloat(self.mainData.longitude), // 经度，浮点数，范围为180 ~ -180。
+					name: '', // 位置名
+					address: self.mainData.address, // 地址详情说明
+					scale: 1, // 地图缩放级别,整形值,范围从1~28。默认为最大
+					infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
+				});
+			},
+			
 			dateMerge(){
 
 				const self = this;
-				self.dateData.finalData = self.$Utils.cloneForm(self.dateData.arrInfoEx);
+				
 				if(self.skuDateData.length>0){
 					for (var o = 0; o < self.skuDateData.length; o++) {
-						for (var p = 0; p < self.dateData.finalData.length; p++) {	
-							if (self.skuDateData[o].lDay == new Date(self.skuDateData[o].time).getDate()) {
-								self.dateData.finalData[p].hasItem++;
-								self.dateData.finalData[p].skuDate = self.skuDateData[o]
+						for (var p = 0; p < self.dateData.length; p++) {	
+							if (self.dateData[p].sDay == new Date(self.skuDateData[o].time).getDate()) {
+								var newValue = {
+									hasItem:1,
+									skuDate:self.skuDateData[o],
+									sDay:self.dateData[p].sDay
+								};
+								self.dateData.splice(p,1,newValue)
 							};
 						};
 					};
@@ -263,7 +319,6 @@
 				self.curMonth = curDate.getMonth();
 				self.curYear = curDate.getFullYear();
 				self.curDay = curDate.getDate();
-				
 				self.refreshPageData(self.curYear, self.curMonth, self.curDay);
 				self.getMainData();
 			},
@@ -271,43 +326,28 @@
 			//刷新全部数据
 			refreshPageData(year, month, day) {
 				const self = this;
-				console.log('self.todayYear', self.todayYear)
+
 				self.mainData = [];
 				self.signData = [];
-			
+				self.dateData = [];
 				self.getOffset(self.curYear, self.curMonth);
-				self.dateData = {
-					date: "",
-					arrInfoEx: [],
-				};
-				self.dateData.date = self.curYear + '年' + (self.curMonth + 1) + '月';
 				self.monthArray = [new Date(self.curYear, self.curMonth, 1).getTime(), new Date(self.curYear, self.curMonth + 1, 1)
 					.getTime()
 				];
 				
 				var offset = self.getOffset(self.curYear, self.curMonth);
-				
 				for (var i = 0; i < offset; ++i) {
-					self.dateData.arrInfoEx[i] = {
-						isEmpty: true
-					};
+					self.dateData.push({isEmpty: true});
 				};
 				var dayCount = getDayCount(self.curYear, self.curMonth);
-				
-				for (var i = offset; i < dayCount + offset; ++i) {
-					var d = new Date(year, month, i - offset + 1);
-					var dEx = calendarConverter.solar2lunar(d);
-					self.dateData.arrInfoEx[i] = dEx;
-					self.dateData.arrInfoEx[i].hasItem = 0;
-					if (self.dateData.arrInfoEx[i].sYear == self.todayYear && self.dateData.arrInfoEx[i].sMonth == self.todayMonth + 1 &&
-						self.dateData.arrInfoEx[i].sDay == self.todayDay) {
-						self.dateData.arrInfoEx[i].isToday = true;
-						
+				for (var i = 0; i < dayCount; ++i) {
+					if(self.todayDay==i+1){
+						self.dateData.push({sDay:i+1,isToday:true});
+					}else{
+						self.dateData.push({sDay:i+1});
 					};
-
-
 				};
-				
+				console.log('self.dateData',self.dateData)
 			
 			},
 
@@ -325,10 +365,10 @@
 				const self = this;
 				if (0 == self.curMonth) {
 					self.curMonth = 11;
-					--self.curYear
+					self.curYear--;
 				} else {
-					--self.curMonth;
-				}
+					self.curMonth--;
+				};
 				self.refreshPageData(self.curYear, self.curMonth, 1);
 				self.getSkuDateData();
 
@@ -336,13 +376,14 @@
 
 			goNextMonth(e) {
 				const self = this;
-				if (11 == self.curMonth) {
+				if (self.curMonth==11) {
 					self.curMonth = 0;
-					++self.curYear
+					self.curYear++
 				} else {
-					++self.curMonth;
+					self.curMonth++;
 				}
 				self.refreshPageData(self.curYear, self.curMonth, 1);
+				
 				self.getSkuDateData();
 			},
 			
@@ -427,7 +468,8 @@
 						self.dateMerge();
 						console.log('self.dateData',self.dateData)
 					};
-					self.$Utils.finishFunc('calenderInit');
+					self.wxJsSdk();
+					
 					self.computePrice();
 					
 				};
@@ -495,9 +537,8 @@
 </script>
 
 <style>
-	@import "../../assets/style/public.css";
+	
 	@import "../../assets/style/remommend.css";
-
-	@import "../../assets/style/bootstrap.css";
 	@import "../../assets/style/basic.css";
+	
 </style>

@@ -63,7 +63,7 @@
 		</div>
 		<div class="list bg1" style="margin-bottom: 20px;">
 			<ul>
-				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/doyen/doyen'}})" class="color2" style="position: relative;">
+				<div @click="toDaRen" class="color2" style="position: relative;">
 					<div class="ilblock" style="position: absolute;top: 12px;left: 17px;">
 						<img src="../../static/images/about-icon6.png" style="width: 14px;" />
 					</div>
@@ -155,8 +155,19 @@
 
 		},
 		methods: {
-			test($event) {
-				var testres = this.getCaseData()
+			
+			toDaRen() {
+				const self = this;
+				if(uni.getStorageSync('user_info').primary_scope>=30){
+					self.$Router.navigateTo({route:{path:'/pages/doyen/doyen'}})
+				}else{
+					uni.showToast({
+					    title: '您还不是达人',
+					    icon: 'fail',
+					    duration: 1000,
+					    mask:true
+					});
+				};
 			},
 
 			getMainData() {
