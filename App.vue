@@ -3,7 +3,7 @@
 	export default {
 		onLaunch: function() {
 			console.log('App Launch');
-			//token.getWxToken();
+			token.getProjectToken();
 		},
 		onShow: function() {
 			console.log('App Show')

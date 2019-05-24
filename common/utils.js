@@ -101,11 +101,11 @@ export default {
 			var length = loadArray.indexOf(funcName);
 			if (length >= 0) {
 				loadArray.splice(length, 1);
-				console.log('log', funcName)
+				
 				uni.setStorageSync('loadAllArray', loadArray);
 				if (uni.getStorageSync('loadAllArray').length == 0) {
 					uni.hideLoading();
-					console.log('finish')
+					
 				};
 			};
 		};
@@ -433,7 +433,7 @@ export default {
 		if (wx.getStorageSync(objName)) {
 			var history = wx.getStorageSync(objName);
 			var limitSum = self.getJsonLength(history);
-			console.log(limitSum);
+			
 
 			if (history[res[name]]) {
 				history[res[name]] = res;
@@ -465,7 +465,7 @@ export default {
 		const self = this;
 		if (wx.getStorageSync(objName)) {
 			var history = wx.getStorageSync(objName);
-			console.log(history);
+			
 			if (history[name]) {
 				history[name][fieldName] = field;
 				wx.setStorageSync(objName, history);
@@ -480,7 +480,7 @@ export default {
 		const self = this;
 		if (wx.getStorageSync(objName)) {
 			var history = wx.getStorageSync(objName);
-			console.log(history);
+			
 			if (history[name]) {
 				delete history[name];
 				wx.setStorageSync(objName, history);
@@ -656,10 +656,10 @@ export default {
 		var seperator1 = "-";
 		var seperator2 = ":";
 		var date = parseInt(date);
-		console.log('date11',date)
+		
 		
 		var date = new Date(date);
-		console.log('date22',date)
+		
 		var month = date.getMonth() + 1;
 		var strDate = date.getDate();
 		if (month >= 1 && month <= 9) {

@@ -3,6 +3,20 @@ import config from "@/config/index.config.js";
 
 
 export default {
+	
+	
+	WxJssdk(param,callback) {
+  
+        var allParams = {
+            url:'WxJssdk',
+            type:'post',
+            data:param,
+            sCallback: function(data){
+                callback&&callback(data);
+            }
+        };
+        http.HTTP(allParams);
+    },
 
 	SkuDateGet(param, callback) {
 		var allParams = {

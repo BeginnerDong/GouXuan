@@ -70,8 +70,8 @@
             "https" : false
         },
         "router" : {
-            "base" : "/gouxuanweb/"
+            "base" : "/wx/"
         },
-        "domain" : "http://test.solelycloud.com"
+        "domain" : "http://www.local-scanner.com"
     }
 }

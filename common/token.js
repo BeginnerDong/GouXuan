@@ -18,39 +18,38 @@ class Token {
         };
     }
 	
-	getWxToken(callback,postData) { 
-		
-	    if((postData&&postData.refreshToken)||!uni.getStorageSync('entrance_token')){
+
+	
+	getProjectToken(callback,postData) { 
+		return '96b6f19a2fa908be68dfeaf925eb9485';
+	    if((postData&&postData.refreshToken)||!uni.getStorageSync('user_token')){
 	        var params = {
-	            token_name:'entrance_token',
-	            info_name:'entrance_info',
-	            thirdapp_id:22
+	            thirdapp_id:2,
+				refreshToken:true
 	        };
 			if(callback){
 				this.getWeixinToken(params,callback);
 			}else{
 				this.getWeixinToken(params);
-			};
-	        
+			};    
 	    }else{
-	        return uni.getStorageSync('entrance_token');
+	        return uni.getStorageSync('user_token');
 	    }
 	}
 	
 	getWeixinToken(params,callback){
-
-		var href =  window.location.origin;
-		var href =  'http://test.solelycloud.com/gouxuanweb';
+		
+		var href =  window.location.origin + window.location.pathname;
+		//var href = 'http://test.solelycloud.com/gouxuanweb/'
         var param = $Utils.getHashParameters()[0];
         var hash = $Utils.getHashParameters()[1];
-        console.log('param',param);
-		
+        
         if(param.code){
 			if(param.sub_appid&&param.sub_appsecret&&!param.sub_code){
-				
-				href = href + '?sub_code=' + param.code + '&sub_appid=' + param.sub_appid + '&sub_appsecret' + param.sub_appsecret + hash; 
-				console.log('code-hrefs',href);
+				//console.log(666235);
 				//return;
+				href = href + '?sub_code=' + param.code + '&sub_appid=' + param.sub_appid + '&sub_appsecret' + param.sub_appsecret + hash; 
+				
 				window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7db54ed176405e24&redirect_uri='+
 				encodeURIComponent(href)+'&response_type=code&scope=snsapi_userinfo';
 				return;
@@ -66,7 +65,8 @@ class Token {
 			};
 			
             var c_callback = (res)=>{
-                console.log(res)
+                console.log('c_callback-res',res)
+                
                 if(res.token){
                     uni.setStorageSync('user_token',res.token);
                     uni.setStorageSync('user_no',res.info.user_no);
@@ -76,7 +76,7 @@ class Token {
                     alert('获取token失败')
                 };
             };  
-            //this.getWxauthToken(postData,c_callback);
+          
 			uni.request({
 			    url: config.baseUrl+'/Wxauth',
 			    method:'POST',
@@ -85,34 +85,35 @@ class Token {
 			        console.log(res)
 			        if(res.data&&res.data.solely_code==100000){  
 			            if(c_callback){
-			                c_callback && c_callback(res.data.token);
+			                c_callback && c_callback(res.data);
 			            };      
 			        }else{
 			            uni.showToast({
-			                title: '获取token失败',
+			                title: '获取token回调失败',
 			                icon: 'fail',
 			                duration: 1000,
 			                mask:true
 			            });
+						alert(postData.code+'//'+postData.thirdapp_id+'//'+res.data+'//'+res.status)
 			        };
 			        
 			        
 			    }
 			})
-        }else if(uni.getStorageSync('user_token')){
+        }else if(uni.getStorageSync('user_token')&&!params.refreshToken){
             callback&&callback();
         }else{
            
 			
 			if(param.sub_appid&&param.sub_appsecret){
 				href =  href+'?sub_appid='+param.sub_appid+'&sub_appsecret='+param.sub_appsecret + hash;
-				console.log('sub-code-one-herf',href);
-				return;
+				//console.log('sub-code-one-herf',href);
+				//return;
 				window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+ param.sub_appid +'&redirect_uri='+
 				encodeURIComponent(href)+'&response_type=code&scope=snsapi_userinfo';
 			}else{
-				var href =  'http://test.solelycloud.com/gouxuanweb/'+hash;
-				console.log('code-one-herf',href);
+				href =  href + hash;
+				//console.log('code-one-herf',href);
 				//return;
 				window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7db54ed176405e24&redirect_uri='+
 				encodeURIComponent(href)+'&response_type=code&scope=snsapi_userinfo';
@@ -152,15 +153,7 @@ class Token {
     
 
 
-    getProjectToken(callback,postData) { 
-
-        if((postData&&postData.refreshToken)||!uni.getStorageSync('user_token')){
-            console.log('未完成');
-            return;
-        }else{
-            return uni.getStorageSync('user_token');
-        }
-    }
+    
 
 
 
