@@ -6,10 +6,16 @@
 			</view>
 			<view class="logo-right">
 				<view class="logo-right-span ilblock" @click="showCity">{{currentSiteData.title}}</view>
-				<span>
+				<span @click="showSearch">
 					<img src="../../static/images/home-icon13.png" />
 				</span>
 			</view>
+	
+		</view>
+		<view  :style="show_search?'display:block':'display:none'" style="padding: 0 20px;margin-top: 20px;">
+			<input style="width:70%;border: 1px solid #e2e2e2;" placeholder="请输入商品名称搜索" v-model="title" class="ilblock" />
+			<button style="width:20%;height: 23px;line-height: 23px;font-size: 12px;display: inline-block;margin-left: 20px;" 
+			@click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?title='+title}})" class="color8 ilblock">搜索</button>
 		</view>
 		<view style="width: 100%;background: #F8F8F8;">
 			<c-swiper :list="swiperData">
@@ -117,7 +123,7 @@
 				<view class="all-store-img ilblock">
 					<img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
 					<view class="store-num ilblock">
-						已售{{item.false_sale_count }}
+						已售{{item.false_sale_count}}
 					</view>
 				</view>
 				<view class=" ilblock" style="width: 67%;position: absolute; top: 0px;right: 0px;">
@@ -208,7 +214,9 @@
 				webSelf: this,
 				now: '',
 				show_city: false,
-				isLoadAll:false
+				isLoadAll:false,
+				show_search:false,
+				title:''
 			}
 		},
 		onLoad() {
@@ -220,7 +228,7 @@
 			};
 			self.now = new Date().getTime();
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			self.$Utils.loadAll(['getSiteData', 'getSliderData', 'getLabelData','wxJsSdk'], self)
+			self.$Utils.loadAll(['getSiteData', 'getSliderData', 'getLabelData','wxJsSdk','tokenGet'], self)
 			
 		},
 		
@@ -240,7 +248,31 @@
 		
 		methods: {
 			
+			showSearch(){
+				const self = this;
+				self.show_search = !self.show_search
+			},
 			
+			tokenGet() {
+				const self = this;
+				const postData = {
+					searchItem: {
+						user_no: 'U123456'
+					}
+				};
+
+				console.log('postData', postData)
+				const callback = (res) => {
+					if (res.solely_code == 100000) {
+						uni.setStorageSync('user_token', res.token);
+						uni.setStorageSync('user_no', res.info.user_no);
+						uni.setStorageSync('user_info', res.info);
+					}
+					console.log('res', res)
+					self.$Utils.finishFunc('tokenGet');
+				};
+				self.$apis.tokenGet(postData, callback);
+			},
 			
 			getSiteData() {
 				const self = this;

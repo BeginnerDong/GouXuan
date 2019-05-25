@@ -8,13 +8,13 @@
 				<div class="top-name color5 font15" style="margin-top: 20px;">购选</div>
 				<div class="top-id color5 font13 " style="line-height: 30px">ID:29948955</div>
 				<div class="bg1 ilblock radiu20 font14" style="color: #FF8954; padding: 3px 10px; margin-top: 5px;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/register/register?parent_no='+user_no}})">分享达人</div>
-				<a href="regular.html">
+				<div class="ilblock color5 font14" @click="webSelf.$Router.navigateTo({route:{path:'/pages/regular/regular'}})">
 					<div class="ilblock color5 font14" style="margin-left: 10px;width: 80px; 
 					background: url(../../static/images/jiantouyou.png) no-repeat 65px center;
 					background-size: 9%;
 				">
 						升级规则</div>
-				</a>
+				</div>
 			</div>
 			<div class="ilblock flo-right" style="width: 90px;height: 100%; ">
 				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/install/install'}})">
@@ -71,7 +71,7 @@
 					 ">{{totalCount}}总返佣</div>
 				</div>
 			</div>
-			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/order/order'}})" class="color2">
+			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/store-all/store-all'}})" class="color2">
 				<div class="flo-left color2 font14" style="height: 52px;width: 100%; line-height: 52px;text-indent: 15px;background: #fff;">
 					<div class="ilblock color2 font14" style="width:50%;">达人订单记录</div>
 					<div class="ilblock color1 font14 flo-right list" style="width:40%; background: url(../../static/images/home-icon9.png) no-repeat 85% center;

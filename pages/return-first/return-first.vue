@@ -30,7 +30,7 @@
 				订单号：{{item.order&&item.order[0]?item.order[0].order_no:''}}
 			</div>
 			<div class="color1 font14 " style="border-bottom: solid 1px #EDEDED;text-align: justify; margin: 10px 0px ; padding-bottom: 7px;">
-				[西安.牛背梁]国家级深林公园，世界生物圈保护！仅298元=2大人1小抢牛背梁套票~含双持阿玛和发明和1晚+嗯拍哦！
+				{{item.order&&item.order[0].products[0]?item.order[0].products[0].snap_product.product.title:''}}
 			</div>
 			<div class="color2 font14" style="margin-top: 16px;">
 				姓名:<span>{{item.order&&item.order[0]?item.order[0].name:''}}</span>
@@ -63,6 +63,7 @@
 				searchItem: {
 					type: 2
 				},
+				totalCount:''
 			}
 		},
 		onLoad(options) {
@@ -116,18 +117,18 @@
 						}
 						for (var i = 0; i < self.mainData.length; i++) {
 							if(self.mainData[i].count<0){
-								self.hasWithdraw += self.mainData[i].count.toFixed(2);
+								self.hasWithdraw += (self.mainData[i].count)
 							};
 							if(self.mainData[i].behavior==1){
-								self.shopCpunt += self.mainData[i].count.toFixed(2);
+								self.shopCpunt += (self.mainData[i].count)
 							};
 							if(self.mainData[i].behavior==2){
-								self.groupCount += self.mainData[i].count.toFixed(2);
+								self.groupCount += (self.mainData[i].count)
 							}
 						}
 						console.log(parseInt(self.hasWithdraw));
 						console.log(parseInt(self.userInfoData.balance));
-						self.totalCount = parseInt(self.hasWithdraw)+parseInt(self.userInfoData.balance).toFixed(2);
+						self.totalCount = parseInt(self.hasWithdraw+self.userInfoData.balance)
 						console.log(self.totalCount);
 					} else {
 						self.$Utils.showToast(res.msg, 'none')

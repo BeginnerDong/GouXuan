@@ -22,26 +22,6 @@
 
 
 
-		<div class="navbar-brand">
-			<ul>
-				<li>
-					<a href="doyen.html">
-						<div class="navbar-img"><img src="images/达人/Talent%20show1.png" /></div>
-						<div>达人</div>
-					</a>
-				</li>
-				<li>
-					<a href="team.html">
-						<div class="navbar-img"><img src="images/达人/Talent%20show2.png" /> </div>
-						<div>达人团队</div>
-					</a>
-				</li>
-				<li><a href="return.html">
-						<div class="navbar-img"><img src="images/达人/Talent%20show3-a.png" /></div>
-						<div style="color: #FC7C5D;">返佣</div>
-					</a></li>
-			</ul>
-		</div>
 	</view>
 </template>
 
@@ -175,11 +155,7 @@
 <style>
 	@import "../../assets/style/public.css";
 	@import "../../assets/style/index.css";
-	
-	@import "../../assets/style/bootstrap.css";
-	@import "../../assets/style/basic.css";
-
-	input {
+		input {
 		width: 70%;
 		margin-left: 20px;
 		border: none;
@@ -187,7 +163,7 @@
 		margin-bottom: 5px;
 		height: 30px;
 	}
-
+	
 	.box {
 		width: 100%;
 		height: 40px;
@@ -197,4 +173,8 @@
 		padding-left: 15px;
 		padding-right: 15px;
 	}
+	@import "../../assets/style/bootstrap.css";
+	@import "../../assets/style/basic.css";
+
+
 </style>

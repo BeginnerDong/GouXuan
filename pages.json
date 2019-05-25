@@ -73,7 +73,8 @@
 		{
 			"path": "pages/doyen/doyen",
 			"style": {
-				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+				"navigationBarTitleText": "吃喝玩乐推荐",//设置页面标题文字
+				"onReachBottomDistance":100
 			}
 		},
 		{
@@ -116,13 +117,15 @@
 		{
 			"path": "pages/more/more",
 			"style": {
-				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+				"navigationBarTitleText": "吃喝玩乐推荐",//设置页面标题文字
+				"onReachBottomDistance":100
 			}
 		},
 		{
 			"path": "pages/order/order",
 			"style": {
-				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+				"navigationBarTitleText": "吃喝玩乐推荐",//设置页面标题文字
+				"onReachBottomDistance":100
 			}
 		},
 		{

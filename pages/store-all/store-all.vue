@@ -24,7 +24,7 @@
 			</div>
 			<div class="storebox-btm">
 				<div class="ilblock img-box">
-					<img :src="item.products[0]&&item.products[0].snap_product&&item.products[0].snap_product.mainImg&&item.products[0].snap_product.mainImg[0]?item.products[0].snap_product.mainImg[0].url:''" />
+					<img :src="item.products[0]&&item.products[0].snap_product&&item.products[0].snap_product.product.mainImg[0]?item.products[0].snap_product.product.mainImg[0].url:''" />
 				</div>
 				<div class="ilblock imgname">
 					<div class="font15 color2 overflow2" style="line-height: 21px; height: 45px;">
@@ -54,6 +54,7 @@
 		data() {
 			return {
 				currentId: 0,
+				isLoadAll:false,
 				mainData: [],
 				searchItem:{
 					pay_status:1
@@ -62,17 +63,31 @@
 		},
 		onLoad(options) {
 			const self = this;
+			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 			if(options.num){
 				self.tab(options.num)
 			}else{
 				self.$Utils.loadAll(['getMainData'], self)
 			}
 		},
+		
+		onReachBottom() {
+		
+			const self = this;
+			if (!self.isLoadAll) {
+				console.log('11',self.paginate.currentPage);
+				self.paginate.currentPage++;
+				console.log('22',self.paginate.currentPage);
+				self.getMainData()
+			};
+		},
+		
 		methods: {
 			getMainData() {
 				const self = this;			
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
+				postData.paginate = self.$Utils.cloneForm(self.paginate);
 				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
 				postData.searchItem.user_no= uni.getStorageSync('user_no');
 				
@@ -96,10 +111,11 @@
 						if (res.info.data.length > 0) {
 							self.mainData.push.apply(self.mainData, res.info.data);
 						} else {
-							self.$Utils.showToast('没有更多了');
+							self.isLoadAll = true;
+							self.$Utils.showToast('没有更多了','none');
 						};
 					} else {
-						self.$Utils.showToast('网络故障')
+						self.$Utils.showToast('网络故障','none')
 					};
 					self.$Utils.finishFunc('getMainData');
 					console.log('getMainData', self.mainData)
