@@ -14,7 +14,7 @@
 		</div>
 		<div class="font11 color2" style="text-align: center; margin-top: 30px;margin-bottom: 50px;">关于支付宝</div>
 
-		<button class="color5" style="background: #FF824F;width:320px;height: 35px;border-radius: 20px; margin: 20px auto 100px;">
+		<button class="color5">
 			保存修改
 		</button>
 
@@ -156,22 +156,30 @@
 	@import "../../assets/style/public.css";
 	@import "../../assets/style/index.css";
 		input {
-		width: 70%;
-		margin-left: 20px;
+		display: inline-block;
+		width: 80%;
 		border: none;
 		font-size: 12px;
-		margin-bottom: 5px;
-		height: 30px;
+		float: right;
+		position: relative;
+		top: 4px;
 	}
 	
 	.box {
 		width: 100%;
-		height: 40px;
 		border-bottom: solid 1px #F4F4F4;
 		background: #fff;
 		line-height: 40px;
-		padding-left: 15px;
-		padding-right: 15px;
+		box-sizing: border-box;
+		padding: 6px 15px;
+	}
+	button{
+		background: #FF824F;width:80%;
+		height: 35px;
+		border-radius: 20px;
+		margin: 20px auto 100px;
+		line-height: 35px;
+		font-size: 15px;
 	}
 	@import "../../assets/style/bootstrap.css";
 	@import "../../assets/style/basic.css";

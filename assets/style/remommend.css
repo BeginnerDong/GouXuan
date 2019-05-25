@@ -48,49 +48,44 @@
 	text-indent: 15px;
 	color: #F7BDE0;
 }
+
+
 .best-money1{
 	height: 18px;
-	width: 59px;
-	background: url(../../static/images/home-icon15.png) no-repeat;
-	background-size: 100%;
+	width: 18%;
 	margin-left: 15px;
 	position: relative;
-	font-size: 10px;
-	top: -2px;
-	margin-left: 40px;
-	
+	top: -1px;
+	font-size: 11px;
+	line-height:18px ;
+	border-radius: 4px;
+	border: solid 1px #F98A48;
 }
 .best-money2{
 	height: 18px;
-	width: 59px;
+	width:18%;
 	margin-left: 5px;
-	background: url(../../static/images/home-icon16.png) no-repeat;
-	background-size: 100%;
 	position: relative;
-	font-size: 10px;
-	top: -2px;
+	top: -1px;
+	font-size: 11px;
+	line-height:18px ;
+	border-radius: 4px;
+	border: solid 1px #F14667;
 }
-.best-money1 .span1{
+.span1{
+	width: 50%;
+	height: 100%;
 	color: #fff;
-	position: relative;
-	left: 3px;
-	
+	text-align: center;
 }
-.best-money1 .span2{
+.span2{
+	width: 50%;
+	height: 100%;
 	color: #F98A48;
-	position: relative;
-	left: 2px;
+	text-align: center;
 }
-.best-money2 .span1{
-	color: #fff;
-	position: relative;
-	left: 3px;
-}
-.best-money2 .span2{
-	color: #F14667;
-	position: relative;
-	left: 2px;
-}
+
+
 .address{
 	background: #fff;
 	width: 100%;
@@ -163,8 +158,13 @@
 .wahct-top{
 	color: #818181; 
 	font-size: 15px; 
-	padding: 15px 15px; 
+	padding: 15px 25px; 
 	background: #fff;
+}
+.wahct-top-text{
+	position: relative;
+	top: -2px;
+	margin:0px 1px;
 }
 .wahct-top image{
 	width: 6px;
@@ -172,15 +172,15 @@
 	margin: 0upx 7upx;
 }
 .wahct-topleft{
-	font-size: 11upx;
-	margin: 0upx 60upx ;
+	font-size: 14upx;
+	margin: 0upx 11% ;
 	
 	}
 	
 .wahct-topright{
 	color: #8B8B8B;
-	font-size: 11upx;
-	margin: 0upx 60upx;
+	font-size: 14upx;
+	margin: 0upx 11%;
 	}
 .week{
 	width: 100%;

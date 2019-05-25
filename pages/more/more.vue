@@ -29,19 +29,23 @@
 			<div class="best-text">
 				{{item.title}}
 			</div>
+			
 			<div style="margin-left: 15px;">
 				<div class="ilblock" style="font-size: 12px; color: rgb(249,138,72);">￥<span style="font-size: 20px;">{{item.price}}</span></div>
 				<div class="ilblock best-moneyleft" v-if="item.skuDate.length>0">
 					返佣具体以日期为准
 				</div>
-				<div class="ilblock best-money1" v-if="item.skuDate.length==0">
-					<span class="span1">店返</span>
-					<span class="span2">￥{{item.shop_reward}}</span>
-				</div>
-				<div class="ilblock best-money2" v-if="item.skuDate.length==0">
-					<span class="span1">团返</span>
-					<span class="span2">￥{{item.group_reward}}</span>
-				</div>
+				
+				<view class="ilblock" style="margint: 0 5%;width: 77%;">
+					<div class="ilblock best-money1" v-if="item.skuDate.length==0">
+						<view class="span1 ilblock bg3">店返</view>
+						<view class="span2 ilblock color8">￥{{item.shop_reward}}</view>
+					</div>
+					<div class="ilblock best-money2"  v-if="item.skuDate.length==0">
+						<view class="span1 ilblock bg4">团返</view>
+						<view class="span2 ilblock" style="color: #F14667;">￥{{item.group_reward}}</view>
+					</div>
+				</view>
 			</div>
 		</div>
 

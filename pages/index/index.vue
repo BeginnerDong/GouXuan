@@ -2,13 +2,15 @@
 	<view>
 		<view class="index-top">
 			<view class="logo ilblock">
-				<img src="../../static/images/home-img1.png" /><span>购选</span>
+				<img src="../../static/images/home-img1.png" /><view class="ilblock" style="position: relative;top: -17px;">购选</view>
 			</view>
 			<view class="logo-right">
-				<view class="logo-right-span ilblock" @click="showCity">{{currentSiteData.title}}</view>
-				<span @click="showSearch">
-					<img src="../../static/images/home-icon13.png" />
-				</span>
+				<view class="logo-right-span ilblock" style="margin-right: 50rpx;" @click="showCity">{{currentSiteData.title}}
+					<image src="../../static/images/home-icon10.png"></image>
+				</view>
+				<view class="ilblock" style="margin-right: 30rpx;" @click="showSearch">
+					<image class="logo-right-find" src="../../static/images/home-icon13.png"></image>
+				</view>
 			</view>
 	
 		</view>
@@ -41,40 +43,41 @@
 			<view class="recommend">
 				<view class="recommend-top">
 					<span>更多推荐</span>
-					<img src="../../static/images/home-icon11.png" style="margin-left: 50px;" />
-					<img src="../../static/images/home-icon12.png" style="margin-left: 140px;" />
+					<img src="../../static/images/home-icon11.png" style="margin-left: 10%;" />
+					<img src="../../static/images/home-icon12.png" style="margin-left: 30%;" />
 				</view>
 				<view class="recommend-middle">
-					<view class="recommend-box" style="width: 84px;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=22'}})">
+					<view class="recommend-box" style="width: 24%;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=22'}})">
 						<view class="color2" style="font-weight: bold;">省内酒店</view>
 						<view class="color1">省内精选</view>
 					</view>
-					<view class="recommend-box" style="width: 90px;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=22&noSite=true'}})">
+					<view class="recommend-box" style="width: 24.5%;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=22&noSite=true'}})">
 						<view class="color2" style="font-weight: bold;">全国酒店</view>
 						<view class="color1">全国精选</view>
 					</view>
-					<view class="recommend-box" style="width: 106px;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=32'}})">
+					<view class="recommend-box" style="width: 26.5%;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=32'}})">
 						<view class="color2" style="font-weight: bold;">长隆度假区</view>
 						<view class="color1">长隆</view>
 					</view>
-					<view class="recommend-box" style="width: 80px;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=33'}})">
+					<view class="recommend-box" style="width: 23.5%; border-right:solid 1px #EAEAEA;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=33'}})">
 						<view class="color2" style="font-weight: bold;">港澳酒店</view>
 						<view class="color1">动感之都</view>
 					</view>
 				</view>
 				<view class="recommend-middle" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=33'}})">
-					<view class="recommend-box" style="width: 120px;">
+					<view class="recommend-box" style="width: 32.9%;border-bottom: solid 1rpx #EAEAEA;">
 						<view class="color2" style="font-weight: bold;">全球购</view>
 						<view class="color1">全球热卖好货</view>
 					</view>
-					<view class="recommend-box" style="width: 120px;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=34'}})">
+					<view class="recommend-box" style="width: 32.9%;border-bottom: solid 1rpx #EAEAEA;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=34'}})">
 						<view class="color2" style="font-weight: bold;">果蔬百货</view>
 						<view class="color1">果蔬百货</view>
 					</view>
-					<view class="recommend-box" style="width: 120px;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=35'}})">
+					<view class="recommend-box" style="width: 32.9%;border-bottom: solid 1rpx #EAEAEA;border-right: solid 1rpx #EAEAEA;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=35'}})">
 						<view class="color2" style="font-weight: bold;">一日游</view>
 						<view class="color1">周边精选</view>
 					</view>
+					<view style="clear: both;"></view>
 				</view>
 			</view>
 			<view style="width: 100%; height: 15px;"></view>
@@ -83,8 +86,8 @@
 		<view style="width: 100%; background: #F8F8F8; overflow: hidden; 
 		overflow: hidden;white-space: nowrap;">
 			<view class="best-top">
-				<view class="color2 ilblock" style="margin-left: 15px;font-size:14px">最火热买</view>
-				<view class="color1 ilblock besttext" style="font-size:14px" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?order=sale_count'}})">
+				<view class="color2 ilblock font14" style="margin-left: 15px;">最火热买</view>
+				<view class="color1 ilblock besttext font14" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?order=sale_count'}})">
 					查看更多</view>
 			</view>
 			<scroll-view scroll-x="true">
@@ -99,14 +102,14 @@
 						{{item.title}}
 					</view>
 					<view style="margint: 0 4%;">
-						<view class="ilblock" style="font-size: 12px; color: rgb(249,138,72);">￥<span style="font-size: 20px;">{{item.price}}</span></view>
+						<view class="ilblock" style="margin-left: 10rpx; font-size: 12px; color: rgb(249,138,72);">￥<span style="font-size: 20px;">{{item.price}}</span></view>
 						<div class="ilblock best-money1">
 							<view class="span1 ilblock bg3">店返</view>
 							<view class="span2 ilblock color8">￥{{item.shop_reward}}</view>
 						</div>
 						<div class="ilblock best-money2">
 							<view class="span1 ilblock bg4">团返</view>
-							<view class="span2 ilblock color9">￥{{item.group_reward}}</view>
+							<view class="span2 ilblock" style="color: #F14667;">￥{{item.group_reward}}</view>
 						</div>
 					</view>
 				</view>
@@ -138,11 +141,11 @@
 						<view class="ilblock" style="font-size: 12px; color: rgb(249,138,72);margin-bottom: 10pz;">￥<span style="font-size: 20px;">{{item.price}}</span></view>
 
 						<view class="ilblock" style="flex-wrap: nowrap;width: 64%;">
-							<div class="ilblock best-money1" style="width:42%;" v-if="item.skuDate.length==0">
+							<div class="ilblock best-money1" style="width:43%;" v-if="item.skuDate.length==0">
 								<view class="span1 ilblock bg3">店返</view>
 								<view class="span2 ilblock color8">￥{{item.shop_reward}}</view>
 							</div>
-							<div class="ilblock best-money2" style=" width:42%;" v-if="item.skuDate.length==0">
+							<div class="ilblock best-money2" style=" width:43%;" v-if="item.skuDate.length==0">
 								<view class="span1 ilblock bg4">团返</view>
 								<view class="span2 ilblock color9">￥{{item.group_reward}}</view>
 							</div>
@@ -569,6 +572,12 @@
 </script>
 
 <style>
+	
 	@import "../../assets/style/index.css";
 	@import "../../assets/style/basic.css";
+	@media screen and (max-width: 320px){
+		.recommend-middle{
+			font-size: 13px;
+		}
+	}
 </style>

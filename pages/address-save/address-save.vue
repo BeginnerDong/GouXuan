@@ -21,7 +21,7 @@
 			<div class="ilblock color2 font15" style="margin-left: 15px;">
 				详细地址：
 			</div>
-			<input class="color1" placeholder="如街道\门牌号" style="border: none;height: 90%;" v-model="submitData.detail"/>
+			<input class="color1 ilblock" placeholder="如街道\门牌号" style="border: none; height: 60%; position: relative;top: 5px;" v-model="submitData.detail"/>
 
 		</div>
 		<div  @click="webSelf.$Utils.stopMultiClick(submit)">
@@ -164,8 +164,6 @@
 	}
 
 	@import "../../assets/style/public.css";
-
-
 	@import "../../assets/style/bootstrap.css";
 	@import "../../assets/style/basic.css";
 </style>

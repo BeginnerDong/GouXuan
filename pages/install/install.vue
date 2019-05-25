@@ -1,11 +1,5 @@
 <template>
 	<view>
-		<div class="home color2">
-			<span onclick="backk()">
-				<img src="../../static/images/home-icon14.png" />
-			</span>
-			达人后台
-		</div>
 		<div class="bg1 top">
 			<img src="../../static/images/达人/Talent-show-img.png" style="width: 86px; margin-left: 140px;margin-top: 13px;" />
 		</div>
@@ -81,7 +75,7 @@
 				<img src="../../static/images/达人/icon1.png" style="width: 26px;" />
 			</div>
 		</div>
-		<button class="color5" style="background: #FB8448;width:320px;height: 35px;border-radius: 20px; margin: 30px auto 20px;">
+		<button class="color5">
 			保存修改
 		</button>
 	</view>
@@ -218,9 +212,6 @@
 	@import "../../assets/style/public.css";
 	@import "../../assets/style/index.css";
 	
-	@import "../../assets/style/bootstrap.css";
-	@import "../../assets/style/basic.css";
-
 	.top {
 		width: 100%;
 		height: 100px;
@@ -233,4 +224,16 @@
 		padding: 0px 15px;
 		border-bottom: solid 1px #F6F6F6;
 	}
+	button{
+		 background: #FB8448;
+		 width:80%;
+		 height: 35px;
+		 line-height: 35px;
+		 border-radius: 20px;
+		 margin: 30px auto 20px;
+		 border: none;
+		 font-size: 15px;
+	}
+	@import "../../assets/style/bootstrap.css";
+	@import "../../assets/style/basic.css";
 </style>

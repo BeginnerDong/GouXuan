@@ -225,7 +225,7 @@
 	}
 
 	.top-left {
-		width: 150px;
+		width: 70%;
 		background: #FF824F;
 		color: #FFF1ED;
 		font-size: 15px;
@@ -238,7 +238,7 @@
 	}
 
 	.top-right {
-		width: 150px;
+		width: 70%;
 		background: #fff;
 		color: rgb(34, 34, 34);
 		font-size: 15px;
@@ -277,7 +277,7 @@
 	}
 
 	.heard-img img {
-		width: 67px;
+		width: 100%;
 
 	}
 
@@ -287,6 +287,6 @@
 
 	.text-rigt {
 		height: 100%;
-		width: 220px;
+		width: 60%;
 	}
 </style>

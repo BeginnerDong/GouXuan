@@ -45,6 +45,15 @@
 				{{item.title}}
 			</div>
 			<view>
+				<div class="ilblock best-money1" style="width:42%;">
+					<view class="span1 ilblock bg3">店返</view>
+					<view class="span2 ilblock color8">￥{{item.shop_reward}}</view>
+				</div>
+				<div class="ilblock best-money2" style=" width:42%;">
+					<view class="span1 ilblock bg4">团返</view>
+					<view class="span2 ilblock color9">￥{{item.group_reward}}</view>
+				</div>
+				<!-- 
 				<div class="ilblock best-money1">
 					<view class="span1 ilblock" style="background: #F98A48;">店反</view>
 					<view class="span2 ilblock" style="color: #F98A48;">￥{{item.shop_reward}}</view>
@@ -52,7 +61,7 @@
 				<div class="ilblock best-money2">
 					<view class="span1 ilblock" style="background: #F14667;">团反</view>
 					<view class="span2 ilblock" style="color: #F14667;">￥{{item.group_reward}}</view>
-				</div>
+				</div> -->
 				<div class="ilblock" style="font-size: 12px; color: rgb(249,138,72); margin-left: 15px; margin-top: 8px;">￥
 					<span style="font-size: 20px;">{{item.price}}</span>
 				</div>
@@ -214,6 +223,9 @@
 		background: linear-gradient(to right, #FF9B5C, #FF6160) !important;
 		font-size: 14px;
 		line-height: 40px;
+	}
+	.best-box{
+		width: 44%;
 	}
 
 

@@ -16,7 +16,7 @@
 			</div>
 		</div>
 		<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/address-save/address-save'}})">
-			<button class="radiu20 color5">新增地址</button>
+			<button class="radiu20 color5 font15 ">新增地址</button>
 		</div>
 
 	</view>
@@ -107,27 +107,25 @@
 	@import "../../assets/style/public.css";
 	@import "../../assets/style/address.css";
 
-	@import "../../assets/style/bootstrap.css";
-	@import "../../assets/style/basic.css";
-
 	button {
-		width: 344px;
+		width: 92%;
 		height: 40px;
 		background: #F98A48;
-		margin: 200px 15px 60px;
+		margin: 200px auto;
 	}
-
 	.bg1 {
-		width: 345px;
+		width: 92%;
 		height: 83px;
 		border-radius: 5px;
 		margin: 10px auto;
 	}
-
 	.bg1 .color5 {
 		background: #F98A48;
 		padding: 4px 12px;
 		border-radius: 20px;
 		margin: 5px 5px 5px 15px;
 	}
+	@import "../../assets/style/bootstrap.css";
+	@import "../../assets/style/basic.css";
+	
 </style>

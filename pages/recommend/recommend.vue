@@ -19,14 +19,24 @@
 			</div>
 			<div>
 				<div class="ilblock" style="font-size: 12px; color: rgb(249,138,72); margin-top:5px;">￥<span style="font-size: 20px;">{{cuurentPrice}}</span></div>
-				<div class="ilblock best-money1" style="left: -10px;">
+				
+				<div class="ilblock best-money1">
+					<view class="span1 ilblock bg3">店返</view>
+					<view class="span2 ilblock color8">￥{{mainData.shop_reward}}</view>
+				</div>
+				<div class="ilblock best-money2">
+					<view class="span1 ilblock bg4">团返</view>
+					<view class="span2 ilblock" style="color: #F14667;">￥{{mainData.group_reward}}</view>
+				</div>
+				
+				<!-- <div class="ilblock best-money1" style="left: -10px;">
 					<span class="span1">店反</span>
 					<span class="span2">￥{{mainData.shop_reward}}</span>
 				</div>
 				<div class="ilblock best-money2" style="left: -10px;">
 					<span class="span1">团反</span>
 					<span class="span2">￥{{mainData.group_reward}}</span>
-				</div>
+				</div> -->
 			</div>
 			<div style="margin-top: 5px;">
 				<span class="color1" style="float: left; font-size: 13px;">已售：{{mainData.false_sale_count}}</span>
@@ -34,13 +44,13 @@
 			</div>
 			<div style="clear: both;"></div>
 		</div>
-		<div class="address color2" @click="openMap">
+		<div class="address color2" @click="openMap" style=" position: relative;">
 			<div class="ilblock" style="width: 10%;">
-				<img src="../../static/images/details-icon1.png" style="width: 12px; height: 14px;margin-left: 15px; position: relative; top: -10px;" />
+				<img src="../../static/images/details-icon1.png" style="width: 12px; height: 14px;position:absolute; top:22px; left: 15px;" />
 			</div>
 			<div class="ilblock" style="width: 80%;margin-top: 10px;">{{mainData.address}}</div>
-			<div class="ilblock">
-				<img src="../../static/images/home-icon9.png" style="height: 13px; margin-left: 5px;margin-bottom: 20px;" />
+			<div class="ilblock" style="position: absolute;right: 15px; top: 22px;">
+				<img src="../../static/images/home-icon9.png" style="height: 12px;" />
 			</div>
 		</div>
 		<div class="choice">
@@ -61,18 +71,17 @@
 			<div class="wahct-top">
 				<div class="color3 ilblock wahct-topleft" @click="goLastMonth">
 					<image src="../../static/images/微信图片_20190520155420.png"></image>
-					上月
+					<view class="ilblock wahct-top-text">上月</view> 
 				</div>
 				<div class="color2 ilblock wahct-topleft" style="font-size: 16px;">
 					{{curYear}}*{{curMonth+1}}
 				</div>
 				<div class="ilblock wahct-topright" @click="goNextMonth">
-					下月
+					<view class="ilblock wahct-top-text">下月</view>
 					<image src="../../static/images/微信图片_20190520155409.png"></image>
 				</div>
 			</div>
 			<div class="week">
-
 				<div class="week-item ilblock">
 					一
 				</div>
@@ -95,8 +104,7 @@
 					日
 				</div>
 			</div>
-			<view class="bg1" style="padding: 20upx 0upx 70upx;">
-
+			<view class="bg1" style="padding:0upx 0upx 70upx;">
 				<block v-for="item in dateData" >
 					<div class="day-item ilblock day-star" :style="item.skuDate&&item.skuDate.id==currentSkuDateId?'height:50px;color:red':'height:50px;'"  @click="dateChoose(item)">
 						<div>{{item.sDay}}</div>

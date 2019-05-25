@@ -27,23 +27,27 @@
 		</div>
 		<div style="margin-top: 10px;width: 100%;">
 
-			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/order-search/order-search'}})" class="color2 font14 bg1" style="height: 52px;width: 100%; line-height: 52px;text-indent: 15px;border-bottom: solid 1px #E9E9E9;">
-				<div class="ilblock color2 font14" style="width: 251px;">团队订单</div>
-				<div class="ilblock color1 font14" style="width: 100px; background: url(../../static/images/home-icon9.png) no-repeat 70px 18.5px;
-					 background-size: 6%;
-					 ">共0单</div>
-			</div>
-
-
-			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/return-first/return-first'}})" class="color2 font14 bg1" style="height: 52px;width: 100%; line-height: 52px;text-indent: 15px;border-bottom: solid 1px #E9E9E9;">
-				<div class="ilblock color2 font14" style="width: 304px;">达人团队奖励</div>
-				<div class="ilblock color1 font14" style="width: 45px;"><img src="/static/images/home-icon9.png" style="width: 6px;" />
+			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/order-search/order-search'}})" class="color2 font14 bg1" style="height: 52px;width: 100%; line-height: 52px;border-bottom: solid 1px #E9E9E9;">
+				<div class="ilblock color2 font14 btm-list">团队订单</div>
+				<div class="ilblock color1 font14 list">共0单
+					<image src="../../static/images/home-icon9.png"></image>
 				</div>
 			</div>
 
 
-			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/team-team/team-team'}})" class="color2 font14 bg1" style="height: 52px;width: 100%; line-height: 52px;text-indent: 15px;">
-				<div class="ilblock color2 font14">达人团队</div>
+			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/return-first/return-first'}})" class="color2 font14 bg1" style="height: 52px;width: 100%; line-height: 52px;border-bottom: solid 1px #E9E9E9;">
+				<div class="ilblock color2 font14 btm-list">达人团队奖励</div>
+				<div class="ilblock color1 font14 list">
+					<image src="../../static/images/home-icon9.png"></image>
+				</div>
+			</div>
+
+
+			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/team-team/team-team'}})" class="color2 font14 bg1" style="height: 52px;width: 100%; line-height: 52px;">
+				<div class="ilblock color2 font14 btm-list">达人团队</div>
+				<view class="list ilblock">
+					<image src="../../static/images/home-icon9.png"></image>
+				</view>
 			</div>
 
 		</div>
@@ -317,6 +321,18 @@
 		width: 12px;
 		border-radius: 50%;
 		border: solid 1px #B01313;
+	}
+	.btm-list{
+		box-sizing: border-box;
+		padding: 0px 15px;
+	}
+	.list image{
+		 width:6px;
+		 height: 12px;
+		 margin-left: 10px;
+	}
+	.list{
+		 float: right; margin-right: 15px;
 	}
 
 	@import "../../assets/style/bootstrap.css";

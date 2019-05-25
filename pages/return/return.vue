@@ -28,26 +28,26 @@
 		<div class="bg1" style="margin-top: 10px;width: 100%;">
 
 			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/return-first/return-first'}})" class="color2 font14"
-			 style="height: 52px;width: 100%; line-height: 52px;text-indent: 15px;border-bottom: solid 1px #E9E9E9;">
-				<div class="ilblock color2 font14" style="width: 304px;">我的返佣</div>
-				<div class="ilblock color1 font14" style="width: 45px;"><img src="../../static/images/home-icon9.png" style="width: 6px;" />
+			 style="height: 52px;width: 100%; line-height: 52px;border-bottom: solid 1px #E9E9E9;">
+				<div class="ilblock color2 font14 btm-list">我的返佣</div>
+				<div class="ilblock color1 font14 list">
+					<image src="../../static/images/home-icon9.png"></image>
 				</div>
 			</div>
 
 
-			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/depositld/depositld'}})" class="color2 font14" style="height: 52px;width: 100%; line-height: 52px;text-indent: 15px;border-bottom: solid 1px #E9E9E9;">
-				<div class="ilblock color2 font14" style="width: 201px;">体现账号</div>
-				<div class="ilblock color1 font14" style="width: 103px; background: url(../../static/images/home-icon9.png) no-repeat 118px 18.5px;
-					 background-size: 4.2%;
-					 ">未填提现账号</div>
-					<div class="ilblock color1 font14" style="width: 45px;"><img src="../../static/images/home-icon9.png" style="width: 6px;" />
-					</div>
+			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/depositld/depositld'}})" class="color2 font14" style="height: 52px;width: 100%; line-height: 52px;border-bottom: solid 1px #E9E9E9;">
+				<div class="ilblock color2 font14 btm-list">体现账号</div>
+				<div class="ilblock color1 font14 list">未填提现账号
+					<image src="../../static/images/home-icon9.png"></image>
+				</div>
 			</div>
 
 
-			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/deposit/deposit'}})" class="color2 font14" style="height: 52px;width: 100%; line-height: 52px;text-indent: 15px;">
-				<div class="ilblock color2 font14" style="width: 304px;">提现记录</div>
-				<div class="ilblock color1 font14" style="width: 45px;"><img src="../../static/images/home-icon9.png" style="width: 6px;" />
+			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/deposit/deposit'}})" class="color2 font14" style="height: 52px;width: 100%; line-height: 52px;">
+				<div class="ilblock color2 font14 btm-list">提现记录</div>
+				<div class="ilblock color1 font14 list">
+					<image src="../../static/images/home-icon9.png"></image>
 				</div>
 			</div>
 
@@ -215,6 +215,18 @@
 	.retun-item .color2 {
 		margin-top: 15px;
 		color: rgb(34, 34, 34);
+	}
+	.btm-list{
+		box-sizing: border-box;
+		padding: 0px 15px;
+	}
+	.list image{
+		 width:5px;
+		 height: 11px;
+		 margin-left: 10px;
+	}
+	.list{
+		float: right;margin-right: 15px;
 	}
 
 	@import "../../assets/style/bootstrap.css";

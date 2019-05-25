@@ -150,13 +150,13 @@
 	@import "../../assets/style/basic.css";
 
 	.retun-top {
-		width: 375px;
+		width: 100%;
 		height: 152px;
 		background: #FF844D;
 	}
 
 	.retun-middle {
-		width: 345px;
+		width: 88%;
 		height: 83px;
 		margin: -32px auto 30px;
 		border-radius: 5px;
@@ -165,7 +165,7 @@
 
 	.retun-item {
 		float: left;
-		width: 86px;
+		width: 25%;
 		text-align: center;
 		height: 100%;
 	}
@@ -182,11 +182,11 @@
 	}
 
 	.retun-btm {
-		width: 345px;
-		height: 281px;
+		width: 92%;
 		margin: 15px auto;
 		border-radius: 7px;
 		box-shadow: 0px 0px 10px #D5D5D5;
 		padding: 15px;
+		box-sizing: border-box;
 	}
 </style>

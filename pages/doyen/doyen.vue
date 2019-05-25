@@ -64,30 +64,29 @@
 		</div>
 		<div class="bg1" style="margin-top: 10px;width: 100%;">
 			<div class="color2" @click="webSelf.$Router.navigateTo({route:{path:'/pages/return-first/return-first'}})">
-				<div class="flo-left color2 font14" style="background: #fff;height: 52px;width: 100%; line-height: 52px;text-indent: 15px;border-bottom: solid 1px #E9E9E9;">
+				<div class="flo-left color2 font14 btm-list" style="background: #fff;height: 52px;width: 100%; line-height: 52px;;border-bottom: solid 1px #E9E9E9;">
 					<div class="ilblock color2 font14" style="width: 50%;">达人返佣记录</div>
-					<div class="ilblock color1 font14 flo-right list" style="width: 40%; background: url(../../static/images/home-icon9.png) no-repeat 85% center;
-					 background-size: 4%;
-					 ">{{totalCount}}总返佣</div>
+					<div class="ilblock color1 font14 flo-right list" style="width: 40%">{{totalCount}}总返佣
+						<image src="../../static/images/home-icon9.png"></image>
+					</div>
 				</div>
 			</div>
 			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/store-all/store-all'}})" class="color2">
-				<div class="flo-left color2 font14" style="height: 52px;width: 100%; line-height: 52px;text-indent: 15px;background: #fff;">
+				<div class="flo-left color2 font14 btm-list" style="height: 52px;width: 100%; line-height: 52px;;background: #fff;">
 					<div class="ilblock color2 font14" style="width:50%;">达人订单记录</div>
-					<div class="ilblock color1 font14 flo-right list" style="width:40%; background: url(../../static/images/home-icon9.png) no-repeat 85% center;
-					 background-size:4%;
-					 ">共{{orderTotal}}单</div>
+					<div class="ilblock color1 font14 flo-right list">共{{orderTotal}}单
+						<image src="../../static/images/home-icon9.png"></image>
+					</div>
 				</div>
 			</div>
 		</div>
 		<div class="bg1" >
 			<div class="color2" @click="webSelf.$Router.navigateTo({route:{path:'/pages/code-all/code-all'}})">
-				<div class="flo-left color2 font14" style="background: #fff;height: 52px;width: 100%; line-height: 52px;text-indent: 15px;margin-top: 10px; margin-bottom: 70px">
+				<div class="flo-left color2 font14 btm-list " style="background: #fff;height: 52px;width: 100%; line-height: 52px;;margin-top: 10px; margin-bottom: 70px">
 					<div class="ilblock color2 font14" style="width:50%;">达人海报</div>
-					<div class="ilblock color1 font14 flo-right list" style="width:40%; background: url(../../static/images/home-icon9.png) no-repeat 85% center;
-					 background-size: 4%;">
+					<div class="ilblock color1 font14 flo-right list">
 						<div class="ilblock red"></div>
-						查看所有
+						查看所有<image src="../../static/images/home-icon9.png"></image>
 					</div>
 				</div>
 			</div>

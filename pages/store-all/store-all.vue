@@ -30,12 +30,12 @@
 					<div class="font15 color2 overflow2" style="line-height: 21px; height: 45px;">
 						{{item.products[0]&&item.products[0].snap_product?item.products[0].snap_product.title:''}}
 					</div>
-					<div style="color: rgb(249,138,72); font-size: 11px; margin-top: 16px;">￥<span style="font-size: 20px;">{{item.price}}</span> </div>
+					<div class="ilblock" style="color: rgb(249,138,72); font-size: 11px; margin-top: 16px;">￥<span style="font-size: 20px;">{{item.price}}</span> </div>
+					<div class="ilblock hexo" v-if="item.qrData" v-for="c_item in item.qrData">
+						核销二维码<!-- <image style="width: 80px;height: 80px;" :src="c_item.url" mode=""></image> -->
+					</div>
+					<view style="clear: both;"></view>
 				</div>
-				
-			</div>
-			<div style="margin-bottom: 10px;" v-if="item.qrData" v-for="c_item in item.qrData">
-				核销二维码<image style="width: 80px;height: 80px;" :src="c_item.url" mode=""></image>
 			</div>
 		</div>
 		<div class="box-c" v-if="mainData.length==0">
@@ -44,6 +44,14 @@
 			</div>
 			<div class="color1 font15" style="text-align: center; margin-top: 30px;">你还没有这个订单状态</div>
 		</div>
+		<view class="fixd">
+			<view class="fixd-box">
+				<image src="../../static/images/ttq.png" mode=""></image>
+			</view>
+			<view style="text-align: center;">
+				<image src="../../static/images/达人/icon3.png" style="width: 40rpx;height: 40rpx;" bindtap="show"></image>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -159,8 +167,6 @@
 </script>
 
 <style>
-
 	@import "../../assets/style/store.css";
 	@import "../../assets/style/basic.css";
-	
 </style>
