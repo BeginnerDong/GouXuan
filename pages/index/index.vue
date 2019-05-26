@@ -47,7 +47,7 @@
 					<img src="../../static/images/home-icon12.png" style="margin-left: 30%;" />
 				</view>
 				<view class="recommend-middle">
-					<view class="recommend-box" style="width: 24%;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=22'}})">
+					<view class="recommend-box r-type1" style="width: 24%;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=22'}})">
 						<view class="color2" style="font-weight: bold;">省内酒店</view>
 						<view class="color1">省内精选</view>
 					</view>
@@ -138,20 +138,20 @@
 						[{{item.city}}]{{item.title}}
 					</view>
 					<view class="ilblock" style="padding: 0px 5px;width: 100%;">
-						<view class="ilblock" style="font-size: 12px; color: rgb(249,138,72);margin-bottom: 10pz;">￥<span style="font-size: 20px;">{{item.price}}</span></view>
+						<view class="ilblock fsize" style="font-size: 12px; color: rgb(249,138,72);margin-bottom: 10pz;">￥<span style="font-size: 20px;">{{item.price}}</span></view>
 
-						<view class="ilblock" style="flex-wrap: nowrap;width: 64%;">
-							<div class="ilblock best-money1" style="width:43%;" v-if="item.skuDate.length==0">
+						<view class="ilblock wiblock" style="flex-wrap: nowrap;width: 64%;">
+							<div class="ilblock best-money1 wiblock1" style="width:43%;" v-if="item.skuDate.length==0">
 								<view class="span1 ilblock bg3">店返</view>
 								<view class="span2 ilblock color8">￥{{item.shop_reward}}</view>
 							</div>
-							<div class="ilblock best-money2" style=" width:43%;" v-if="item.skuDate.length==0">
+							<div class="ilblock best-money2 wiblock1" style=" width:43%;" v-if="item.skuDate.length==0">
 								<view class="span1 ilblock bg4">团返</view>
 								<view class="span2 ilblock color9">￥{{item.group_reward}}</view>
 							</div>
 						</view>
 
-						<view class="ilblock best-topred" style="position: absolute; bottom: 5px; left: 32%;" v-if="item.skuDate.length>0">
+						<view class="ilblock best-topred wiblock2" style="position: absolute; bottom: 5px; left: 32%;" v-if="item.skuDate.length>0">
 							返佣具体以日期为准
 						</view>
 					</view>
@@ -583,6 +583,24 @@
 	@media screen and (max-width: 320px){
 		.recommend-middle{
 			font-size: 13px;
+		}
+		.r-type1{
+			width: 23.5% !important;
+		}
+		.wiblock{
+			width: 60% !important;
+		}
+		.wiblock1{
+			width: 41% !important;
+		}
+		.wiblock2{
+			left: 29% !important;
+		}
+		.font12{
+			font-size: 10px !important;
+		}
+		.fsize{
+			font-size: 14px !important;
 		}
 	}
 </style>
