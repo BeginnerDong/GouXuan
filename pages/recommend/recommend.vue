@@ -165,14 +165,9 @@
 </template>
 
 <script>
-	import {
-		CalendarConverter,
-		GetDayCount
-	} from '../../common/calendar-converter.js'
+
 	import cSwiper from "@/components/swiper/swiper.vue"
 	import cTabbar from "@/components/tabbar/tabbar.vue"
-	var calendarConverter = new CalendarConverter();
-	var getDayCount = new GetDayCount();
 	export default {
 		components: {
 			cSwiper,
@@ -226,7 +221,7 @@
 				const callback = (res)=>{	
 					console.log('maindata',self.mainData)
 					self.$jweixin.config({
-						debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+						debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
 						appId:res.appId, // 必填，公众号的唯一标识
 						timestamp:res.timestamp , // 必填，生成签名的时间戳
 						nonceStr:res.nonceStr, // 必填，生成签名的随机串
@@ -275,7 +270,7 @@
 			dateMerge(){
 
 				const self = this;
-				
+				console.log('dateMerge-self.dateData',self.dateData)
 				if(self.skuDateData.length>0){
 					for (var o = 0; o < self.skuDateData.length; o++) {
 						for (var p = 0; p < self.dateData.length; p++) {	
@@ -290,7 +285,7 @@
 						};
 					};
 				};
-					
+				
 			},
 			
 			computePrice(){
@@ -335,7 +330,6 @@
 			refreshPageData(year, month, day) {
 				const self = this;
 
-				self.mainData = [];
 				self.signData = [];
 				self.dateData = [];
 				self.getOffset(self.curYear, self.curMonth);
@@ -347,7 +341,7 @@
 				for (var i = 0; i < offset; ++i) {
 					self.dateData.push({isEmpty: true});
 				};
-				var dayCount = getDayCount(self.curYear, self.curMonth);
+				var dayCount = self.getDayCount(self.curYear, self.curMonth);
 				for (var i = 0; i < dayCount; ++i) {
 					if(self.todayDay==i+1){
 						self.dateData.push({sDay:i+1,isToday:true});
@@ -367,6 +361,20 @@
 				//注意这个转换，Date对象的getDay函数返回返回值是 0（周日） 到 6（周六） 
 				console.log('offset', offset)
 				return offset;
+			},
+			isLeapYear(year){
+				if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0))
+				    return 1
+				else
+				    return 0
+			},
+			
+			getDayCount(year, month){
+				var DAY_OF_MONTH = [
+					[31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+					[31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+				];
+				return DAY_OF_MONTH[this.isLeapYear(year)][month];	
 			},
 
 			goLastMonth(e) {
@@ -411,10 +419,11 @@
 				const callback = (res)=>{
 					console.log(res);
 					if (res.info.data.length > 0) {
-						self.skuDateData = self.$Utils.cloneForm(res.data.info);
+						self.skuDateData = self.$Utils.cloneForm(res.info.data);
 					}else{
 						self.skuDateData = [];
 					};
+					self.$Utils.finishFunc('getSkuDateData')
 					self.dateMerge();
 				};
 				self.$apis.SkuDateGet(postData, callback);
@@ -473,6 +482,7 @@
 							self.skuDateData = self.$Utils.cloneForm(self.mainData.skuDate);
 							//判断哪一天有skuDate存在，把skuDate数据存到那一天的日历数据中	
 						};
+						
 						self.dateMerge();
 						console.log('self.dateData',self.dateData)
 					};
@@ -508,6 +518,7 @@
 				self.can_choose_sku_item = skuRes.can_choose_sku_item;
 				self.computePrice();
 				if(self.mainData.type==2){
+					self.refreshPageData(self.curYear, self.curMonth, 1);
 					self.getSkuDateData();
 				};
 				

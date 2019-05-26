@@ -19,8 +19,8 @@ class Token {
     }
 	
 	getProjectToken(callback,postData) { 
-		 return uni.getStorageSync('user_token');
-/* 	    if((postData&&postData.refreshToken)||!uni.getStorageSync('user_token')){
+		 //return uni.getStorageSync('user_token');
+	    if((postData&&postData.refreshToken)||!uni.getStorageSync('user_token')){
 	        var params = {
 	            thirdapp_id:2,
 				refreshToken:true
@@ -32,24 +32,27 @@ class Token {
 			};    
 	    }else{
 	        return uni.getStorageSync('user_token');
-	    } */
+	    }
 	}
 	
 	getWeixinToken(params,callback){
 		
 		var href =  window.location.origin + window.location.pathname;
 		//var href = 'http://test.solelycloud.com/gouxuanweb/'
+	
         var param = $Utils.getHashParameters()[0];
         var hash = $Utils.getHashParameters()[1]; 
+		
 		if(JSON.stringify(param)!='{}'){
 			href = href +'?';
-			for(key in param){
-				if(key!='code'){
-					href = href + key + '=' + param[key] + '&'
-				};
-			};
+			Object.keys(param).forEach(function(key){
+				 if(key!='code'){
+				 	href = href + key + '=' + param[key] + '&'
+				 };
+			});
 			href = href.substr(0, href.length - 1);  
 		};
+
         if(param.code){
 			if(param.sub_appid&&param.sub_appsecret&&!param.sub_code){
 				href = href + '?sub_code=' + param.code  + hash; 	

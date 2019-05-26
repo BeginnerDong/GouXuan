@@ -105,7 +105,6 @@
 						地址管理
 					</li>
 				</div>
-
 			</ul>
 		</div>
 
@@ -117,13 +116,13 @@
 		<div style="width: 100%; height: 65px;"></div>
 		<view class="navbar-brand">
 			<view style="margin-top: 10px;">
-				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/index/index'}})">
+				<view class="navbar-item ilblock" @click="webSelf.$Router.reLaunch({route:{path:'/pages/index/index'}})">
 					<view class="navbar-img">
 						<image src="../../static/images/navbar1.png"></image>
 					</view>
 					<view>首页</view>
 				</view>
-				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/follow/follow'}})">
+				<view class="navbar-item ilblock" @click="webSelf.$Router.reLaunch({route:{path:'/pages/follow/follow'}})">
 					<view class="navbar-img">
 						<image src="../../static/images/navbar2.png"></image>
 					</view>

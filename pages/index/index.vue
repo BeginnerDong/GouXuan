@@ -231,22 +231,22 @@
 			};
 			self.now = new Date().getTime();
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			self.$Utils.loadAll(['getSiteData', 'getSliderData', 'getLabelData','wxJsSdk','tokenGet'], self)
+			self.$Utils.loadAll(['getSiteData', 'getSliderData', 'getLabelData','wxJsSdk'], self)
 			
 		},
 		
 		onReachBottom(){
-			
+			console.log('onReachBottom')
 			const self = this;
-			if(!self.isLoadAll){
+			if(!self.isLoadAll&&uni.getStorageSync('loadAllArray')){
 				self.paginate.currentPage++;
 				self.getMainData()
 			};	
 		},
 		
-		destroyed () {
+		onUnload () {
 			const self = this;
-            clearTimeout(self.countDown);  
+            clearTimeout(self.timeInterval);  
         },
 		
 		methods: {
@@ -353,6 +353,7 @@
 					listorder: 'desc'
 				};
 				const callback = (res) => {
+					
 					if (res.info.data.length > 0) {
 						self.mainData.push.apply(self.mainData, res.info.data);
 						for (var i = 0; i < self.mainData.length; i++) {
@@ -361,18 +362,22 @@
 							});
 							self.mainData[i].endTimeList = [];
 						};
-						self.countDown();
+						self.timeInterval = setInterval(this.countDown, 2000);
+					
+					
 					}else{
 						self.isLoadAll = true;
+						
 						uni.showToast({
 						    title: '没有更多了',
 						    icon: 'fail',
-						    duration: 1000,
+						    duration: 2000,
 						    mask:true
 						});
 					};
 					self.$Utils.finishFunc('getSiteData');
-					self.$Utils.finishFunc('getMainData');	
+					self.$Utils.finishFunc('getMainData');
+						
 				};
 				self.$apis.productGet(postData, callback);
 			},
@@ -466,7 +471,7 @@
 				const callback = (res)=>{
 					
 					self.$jweixin.config({
-						debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+						debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
 						appId:res.appId, // 必填，公众号的唯一标识
 						timestamp:res.timestamp , // 必填，生成签名的时间戳
 						nonceStr:res.nonceStr, // 必填，生成签名的随机串
@@ -479,7 +484,7 @@
 						self.$jweixin.updateAppMessageShareData({ 
 							title: '本地捕手', // 分享标题
 							desc: '搜寻吃喝玩乐', // 分享描述
-							link: 'http://www.local-scanner.com/wx/', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+							link: 'http://www.local-scanner.com/wx/?parent_no='+uni.getStorageSync('user_info').user_no, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
 							imgUrl: '', // 分享图标
 							success: function () {
 							  // 设置成功
@@ -537,7 +542,7 @@
 					if (endTime - newTime > 0) {
 						let time = (endTime - newTime)/1000;
 						// 获取天、时、分、秒
-						/* console.log('time',time) */
+						//console.log('time',time)
 					
 						let day = parseInt(time / (60 * 60 * 24));
 						let hou = parseInt(time % (60 * 60 * 24) / 3600);
@@ -564,7 +569,7 @@
 					self.countDownList.push(obj);
 					/* console.log('self.countDownList',self.countDownList) */
 				}	
-				setTimeout(this.countDown, 1000);
+				
 			},
 
 		}

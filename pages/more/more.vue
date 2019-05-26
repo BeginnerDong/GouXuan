@@ -78,7 +78,7 @@
 				isLoadAll:false
 			}
 		},
-		onLoad() {
+		onShow() {
 			console.log(this.$Router)
 			const self = this;
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
@@ -112,13 +112,19 @@
 		onReachBottom() {
 		
 			const self = this;
-			if (!self.isLoadAll) {
+			if (!self.isLoadAll&&uni.getStorageSync('canClick')) {
 				console.log('11',self.paginate.currentPage);
 				self.paginate.currentPage++;
 				console.log('22',self.paginate.currentPage);
 				self.getMainData()
 			};
 		},
+		
+		onHide () {
+			const self = this;
+		    clearTimeout(self.timeInterval);  
+		},
+
 		
 		
 
@@ -147,6 +153,7 @@
 				};
 				console.log('postData', postData)
 				const callback = (res) => {
+					self.$Utils.finishFunc('getMainData');
 					if (res.info.data.length > 0) {
 						self.mainData.push.apply(self.mainData, res.info.data);
 						for (var i = 0; i < self.mainData.length; i++) {
@@ -155,13 +162,21 @@
 							});
 							self.mainData[i].endTimeList = [];
 						}
-						self.countDown();
+						self.timeInterval = setInterval(this.countDown, 1000);
+						self.$Utils.finishFunc('getMainData');
 					}else{
 						self.isLoadAll = true;
-						self.$Utils.showToast('没有更多了','none');
+						uni.showToast({
+						    title: '没有更多了',
+						    icon: 'fail',
+						    duration: 2000,
+						    mask:true
+						});
+						self.timeInterval = setInterval(function(){
+							self.$Utils.finishFunc('getMainData');
+						}, 2000);
 					};
 					console.log('self.mainData', self.mainData)
-					self.$Utils.finishFunc('getMainData');
 				};
 				self.$apis.productGet(postData, callback);
 			},

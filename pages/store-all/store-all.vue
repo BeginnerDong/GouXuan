@@ -19,10 +19,9 @@
 			<div class="storebox-top">
 				<div class="font12 color1 ilblock" style="margin-left: 15px;">
 					交易时间：{{item.create_time}}
-				</div>
-				
+				</div>	
 			</div>
-			<div class="storebox-btm">
+			<div class="storebox-btm " >
 				<div class="ilblock img-box">
 					<img :src="item.products[0]&&item.products[0].snap_product&&item.products[0].snap_product.product.mainImg[0]?item.products[0].snap_product.product.mainImg[0].url:''" />
 				</div>
@@ -31,12 +30,15 @@
 						{{item.products[0]&&item.products[0].snap_product?item.products[0].snap_product.title:''}}
 					</div>
 					<div class="ilblock" style="color: rgb(249,138,72); font-size: 11px; margin-top: 16px;">￥<span style="font-size: 20px;">{{item.price}}</span> </div>
-					<div class="ilblock hexo" v-if="item.qrData" v-for="c_item in item.qrData">
-						核销二维码<!-- <image style="width: 80px;height: 80px;" :src="c_item.url" mode=""></image> -->
-					</div>
-					<view style="clear: both;"></view>
 				</div>
 			</div>
+			<div>
+				<div  v-if="item.qrData" v-for="c_item in item.qrData">
+					核销二维码 <image style="width: 80px;height: 80px;" :src="c_item.url" mode=""></image>
+				</div>
+				<view style="clear: both;"></view>
+			</div>
+			
 		</div>
 		<div class="box-c" v-if="mainData.length==0">
 			<div style="margin-top: 100px; margin-left: 140px;">
@@ -44,14 +46,14 @@
 			</div>
 			<div class="color1 font15" style="text-align: center; margin-top: 30px;">你还没有这个订单状态</div>
 		</div>
-		<view class="fixd">
+		<!--<view class="fixd">
 			<view class="fixd-box">
 				<image src="../../static/images/ttq.png" mode=""></image>
 			</view>
 			<view style="text-align: center;">
 				<image src="../../static/images/达人/icon3.png" style="width: 40rpx;height: 40rpx;" bindtap="show"></image>
 			</view>
-		</view>
+		</view>-->
 	</view>
 </template>
 

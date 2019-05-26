@@ -41,25 +41,34 @@ export default {
 	},
 	
 	getHashParameters() {
+		
+		
 		if(location.search){
-			var arr = location.search.substr(1).split('&');
-		}else if(location.hash&&location.hash .split('?')[1]){
-			var arr = location.hash .split('?')[1].split('&');
-			var hash = location.hash .split('?')[0]
-		}else{
-			var arr = [];
+			var searchArr = location.search.substr(1).split('&');
 		};
-      
-		var params = {}
+		if(location.hash&&location.hash .split('?')[1]){
+			var hashArr = location.hash .split('?')[1].split('&');
+			var hash = location.hash .split('?')[0]
+		};
+		var arr = [];
+		if(searchArr){
+			arr = arr.concat(searchArr)
+		};
+		if(hashArr){
+			arr = arr.concat(hashArr)
+		};
+		var params = {};
 		for (var i = 0; i < arr.length; i++) {
 			var data = arr[i].split('=')
 			if (data.length === 2) {
 			  params[data[0]] = data[1]
 			};
 		};
+		
 		if(!hash){
 			var hash = location.hash
 		};
+
 		return [params,hash]
     },
 
@@ -97,18 +106,20 @@ export default {
 	finishFunc(funcName) {
 		uni.setStorageSync('canClick', true);
 		var loadArray = uni.getStorageSync('loadAllArray');
+		console.log('loadArray',loadArray)
 		if (loadArray && loadArray.length > 0) {
 			var length = loadArray.indexOf(funcName);
 			if (length >= 0) {
 				loadArray.splice(length, 1);
-				
+				console.log('finishFunc')
 				uni.setStorageSync('loadAllArray', loadArray);
 				if (uni.getStorageSync('loadAllArray').length == 0) {
 					uni.hideLoading();
-					
 				};
 			};
-		};
+		}else{
+			uni.hideLoading();
+		}
 	},
 
 

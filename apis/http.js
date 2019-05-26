@@ -45,9 +45,9 @@ export default {
                 } else {
                     obj.sCallback && obj.sCallback(res.data);
                 };
-				if(uni.getStorageSync('loadAllArray').length==0||!uni.getStorageSync('loadAllArray')){
+				/* if(uni.getStorageSync('loadAllArray').length==0||!uni.getStorageSync('loadAllArray')){
 					uni.hideLoading();
-				};
+				}; */
 				
 			},
             fail: function (err) {

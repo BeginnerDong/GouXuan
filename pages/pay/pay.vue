@@ -49,14 +49,19 @@
 					支付方式：
 				</div>
 				<div class="ilblock color2" style="float: right; line-height: 20px;">
-					微信支付<img src="/static/images/home-icon9.png" style="height: 11px;margin-left: 10px;margin-bottom: 2px; " />
+					微信支付
 				</div>
 			</div>
 			<div style="line-height:30px;margin-top: 15px;" class="ilblock">
 				优惠券：
 			</div>
-			<div class="ilblock color3" style="float: right;line-height: 57px;">
-				暂无优惠券<img src="/static/images/home-icon9.png" style="height: 11px;margin-left: 10px;margin-bottom: 2px; " />
+			<div  class="ilblock color3" style="float: right;line-height: 57px;">
+				{{couponData.length>0?'请选择优惠券':'暂无优惠券'}}<img src="../../static/images/home-icon9.png" style="height: 11px;margin-left: 10px;margin-bottom: 2px; " />
+			</div>
+			<div style="position: relative;margin-bottom: 15px;"  v-for="item in couponData" >
+				<img style="width:300px;height: 90px;" src="../../static/images/微信图片_20190428143903.png" />
+				<span  style="position:absolute;left:130px;top:30px;font-size: 20px;color:red">{{item.discount}}</span>
+				<span  style="margin-top: 10px;font-size: 12px;color:gray">购满{{item.condition}}元即可使用</span>
 			</div>
 		</div>
 		<div class="foter-fixd">
@@ -86,7 +91,8 @@
 				price:'',
 				orderId:'',
 				getBefore:{},
-				getAfter:{}
+				getAfter:{},
+				couponData:[]
 			}
 		},
 		onLoad(options) {
@@ -162,10 +168,64 @@
 						self.mainData = res.info.data[0];
 						self.count = 1;
 						self.price = self.mainData.sku[0].price
-					}
+					};
+					self.getCouponData();
+					if(self.mainData.type==1){
+						self.getAddressData();
+					};
 					self.$Utils.finishFunc('getMainData');
 				};
 				self.$apis.productGet(postData, callback);
+			},
+			
+			getCouponData() {
+				const self = this;
+				const postData = {};
+				postData.tokenFuncName = 'getProjectToken';
+				postData.searchItem = {};
+				postData.searchItem.type = 1;
+				postData.searchItem.use_step = 1;
+				postData.searchItem.condition = ['<',parseFloat(self.mainData.price)];
+				postData.order = {
+					create_time: 'desc'
+				}
+				const callback = (res) => {
+					
+					if (res.solely_code == 100000) {
+						if (res.info.data.length > 0) {
+							self.couponData.push.apply(self.couponData, res.info.data);
+						};
+					} else {
+						self.$Utils.showToast(res.msg, 'none')
+					};
+					self.$Utils.finishFunc('getCouponData')
+				};
+				self.$apis.userCouponGet(postData, callback);
+			},
+			
+			getAddressData() {
+				const self = this;
+				const postData = {};
+				postData.tokenFuncName = 'getProjectToken';
+				postData.searchItem = {};
+				postData.searchItem.type = 1;
+				postData.searchItem.use_step = 1;
+				postData.searchItem.condition = ['<',parseFloat(self.mainData.price)];
+				postData.order = {
+					create_time: 'desc'
+				}
+				const callback = (res) => {
+					
+					if (res.solely_code == 100000) {
+						if (res.info.data.length > 0) {
+							self.couponData.push.apply(self.couponData, res.info.data);
+						};
+					} else {
+						self.$Utils.showToast(res.msg, 'none')
+					};
+					self.$Utils.finishFunc('getCouponData')
+				};
+				self.$apis.userCouponGet(postData, callback);
 			},
 
 			counter(type) {
@@ -207,6 +267,9 @@
 							sku: [{
 								id: self.mainData.sku[0].id,
 								count: self.count,
+								data:{
+									parent_no:uni.getStorageSync('url_parent_no')
+								}
 							}]
 						}
 					)
@@ -216,10 +279,13 @@
 							date: [{
 								id: self.mainData.sku[0].id,
 								count: self.count,
+								data:{
+									parent_no:uni.getStorageSync('url_parent_no')
+								}
 							}]
 						}
 					)
-				}
+				};
 				const postData = {
 					tokenFuncName:'getProjectToken',
 					orderList: orderList,
@@ -248,7 +314,9 @@
 			pay(order_id) {
 				const self = this;
 				const postData = {
-					score:parseInt(self.mainData.sku[0].price)
+					wxPay:{
+						price:parseInt(self.mainData.sku[0].price)
+					}
 				};
 				postData.tokenFuncName='getProjectToken',
 				postData.searchItem = {
@@ -258,16 +326,14 @@
 				const callback = (res) => {
 					console.log(res)
 					if (res.solely_code == 100000) {
-
+						uni.hideLoading();
 
 						if (res.info) {
 							const payCallback = (payData) => {
 								if (payData == 1) {
 									const cc_callback = () => {
 										self.$Utils.showToast('支付成功','none');
-
 									};
-
 								};
 							};
 							self.$Utils.realPay(res.info, payCallback);

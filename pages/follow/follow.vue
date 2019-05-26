@@ -72,7 +72,7 @@
 		<view style="width: 100%; height: 60px;"></view>
 		<view class="navbar-brand">
 			<view style="margin-top: 10px;">
-				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/index/index'}})">
+				<view class="navbar-item ilblock" @click="webSelf.$Router.reLaunch({route:{path:'/pages/index/index'}})">
 					<view class="navbar-img">
 						<image src="../../static/images/navbar1.png"></image>
 					</view>
@@ -84,7 +84,7 @@
 					</view>
 					<view class="color8">关注</view>
 				</view>
-				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/user/user'}})">
+				<view class="navbar-item ilblock" @click="webSelf.$Router.reLaunch({route:{path:'/pages/user/user'}})">
 					<view class="navbar-img">
 						<image src="../../static/images/navbar3.png"></image>
 					</view>
@@ -189,6 +189,7 @@
 
 			changeMenu(id) {
 				const self = this;
+				self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 				if (id == 0) {
 					self.all = true;
 					self.searchItem.category_id = ['in', self.userInfoData.follow]

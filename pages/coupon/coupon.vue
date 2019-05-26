@@ -12,14 +12,14 @@
 			</div>
 		</div>
 		<div class="box bg1" v-for="item in mainData" v-if="mainData.length>0">
-			<img :src="num==0?'/static/images/微信图片_20190428143903.png':'/static/images/微信图片_20190428143848.png'" />
-			<span class="money1">20</span>
-			<span class="money2">购满89元即可使用</span>
+			<img v-if="num==0" src="../../static/images/微信图片_20190428143903.png" />
+			<img v-else src="../../static/images/微信图片_20190428143848.png" />
+			<span class="money1">{{item.discount}}</span>
+			<span class="money2">购满{{item.condition}}元即可使用</span>
 		</div>
-		
 		<div class="box-c" v-if="mainData.length==0">
 			<div style="margin-top: 100px; margin-left: 140px;">
-				<img src="/static/images/达人/img3.png" style="width: 90px;" />
+				<img src="../../static/images/达人/img3.png" style="width: 90px;" />
 			</div>
 			<div class="color1 font15" style="text-align: center; margin-top: 30px;">暂无购选券!</div>
 		</div>
@@ -33,8 +33,7 @@
 			return {
 				num:0,
 				mainData:[],
-				searchItem:{
-					
+				searchItem:{	
 				},
 				webSelf:this
 			}
@@ -53,14 +52,14 @@
 				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 				postData.tokenFuncName = 'getProjectToken';
 				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
-				postData.searchItem.type = ['in', [1, 2]];
+				postData.searchItem.type = 1;
+				postData.searchItem.use_step = 1;
 				postData.order = {
 					create_time: 'desc'
 				}
 				const callback = (res) => {
 					self.$Utils.finishFunc('getMainData')
 					if (res.solely_code == 100000) {
-						
 						if (res.info.data.length > 0) {
 							self.mainData.push.apply(self.mainData, res.info.data);
 							for (var i = 0; i < self.mainData.length; i++) {
@@ -90,12 +89,13 @@
 				const self = this;
 				self.searchItem = {};
 				if (num == '0') {
-
+					self.searchItem.use_step = 1;
 				} else if (num == '1') {
-					self.searchItem.use_step = 2
+					self.searchItem.use_step = 2;
 				} else if (num == '2') {
-					self.searchItem.use_step = -1
-				}
+					self.searchItem.use_step = -1;
+				};
+				self.mainData = [];
 				self.getMainData();
 			},
 
