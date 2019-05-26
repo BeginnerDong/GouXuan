@@ -9,7 +9,7 @@
 			<view class="content ql-editor" v-html="mainData.content">
 			</view>
 		</div>
-		<button class="color5" style="background: #FB8448;width:320px;height: 35px;border-radius: 20px; margin: 30px auto 20px;font-size:14px;line-height: 35px;">
+		<button @click="webSelf.$Router.navigateTo({route:{path:'/pages/team-code/team-code'}})" class="color5" style="background: #FB8448;width:320px;height: 35px;border-radius: 20px; margin: 30px auto 20px;font-size:14px;line-height: 35px;">
 			邀请好友
 		</button>
 	</view>

@@ -12,12 +12,12 @@
 		<button type="primary" @click="drawCanvasBgImg">test</button> -->
 		<div id="poster" style="z-index:0">
 			<div class="img">
-				<!-- <img class="img-one" :src="mainData.mainImg&&mainData.mainImg[0]?mainData.mainImg[0].url:''" style="width:100%;height:100%"/> -->
-				<img class="img-one" src="../../static/images/达人/img2.png" />
+				<img class="img-one" :src="mainData.mainImg&&mainData.mainImg[0]?mainData.mainImg[0].url:''" style="width:100%;height:100%"/>
+				<!-- <img class="img-one" src="../../static/images/达人/img2.png" /> -->
 			</div>
 			<div class="ilblock imgb">
-				<!-- <img :src="QrData.url" /> -->
-				<img src="../../static/images/达人/img8.png" />
+				<img :src="QrData.url" />
+				<!-- <img src="../../static/images/达人/img8.png" /> -->
 			</div>
 			<div class="ilblock">
 				<div class="color2 font14" style="position: relative; top: 3px;">长按二维码看购买详情</div>
@@ -28,7 +28,7 @@
 			</div>
 		</div>
 		<!-- <div style="z-index:1;width:100%;height:100%;background: #fff;position: absolute;top: 0;"></div> -->
-		<div style="z-index:2;width:100%;height:100%;position: absolute;top: 0;">
+		<div style="z-index:2;width:100%;height:100%;position: absolute;top: 0;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/register/register?parent_no=U123456'}})">
 			<img :src="url" style="width:100%;height:100%"/>
 		</div>
 	</div>
@@ -45,7 +45,7 @@
 				QrData: [],
 				index: '',
 				url: '',
-
+				webSelf:this
 			}
 		},
 		onLoad(options) {
@@ -106,7 +106,7 @@
 				const self = this;
 				const postData = {};
 				postData.searchItem = {
-					title: '达人海报',
+					title: '达人注册海报',
 					thirdapp_id: self.$AssetsConfig.thirdapp_id,
 				};
 				const callback = (res) => {
@@ -123,7 +123,7 @@
 				const self = this;
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
-				postData.param = 'http://106.12.155.217/register.html' + '&user_no=' + uni.getStorageSync('info').user_no;
+				postData.param = '/pages/register/register' + '&user_no=' + uni.getStorageSync('info').user_no;
 				postData.ext = 'png';
 				const callback = (res) => {
 					console.log(res);

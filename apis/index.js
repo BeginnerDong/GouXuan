@@ -3,20 +3,33 @@ import config from "@/config/index.config.js";
 
 
 export default {
-	
-	
-	WxJssdk(param,callback) {
-  
-        var allParams = {
-            url:'WxJssdk',
-            type:'post',
-            data:param,
-            sCallback: function(data){
-                callback&&callback(data);
-            }
-        };
-        http.HTTP(allParams);
-    },
+
+
+	WxJssdk(param, callback) {
+
+		var allParams = {
+			url: 'WxJssdk',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
+
+	registerSuper(param, callback) {
+
+		var allParams = {
+			url: 'Project/Solely/registerSuper',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
 
 	SkuDateGet(param, callback) {
 		var allParams = {
@@ -30,7 +43,7 @@ export default {
 		};
 		http.HTTP(allParams);
 	},
-	
+
 	labelGet(param, callback) {
 		var allParams = {
 			url: 'Common/Label/get',

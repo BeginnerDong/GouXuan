@@ -12,12 +12,12 @@
 		<button type="primary" @click="drawCanvasBgImg">test</button> -->
 		<div id="poster" style="z-index:0">
 			<div class="img">
-				<!-- <img class="img-one" :src="mainData.mainImg&&mainData.mainImg[0]?mainData.mainImg[0].url:''" style="width:100%;height:100%"/> -->
-				<img class="img-one" src="../../static/images/达人/img2.png" />
+				<img class="img-one" :src="mainData.mainImg&&mainData.mainImg[index]?mainData.mainImg[index].url:''" style="width:100%;height:100%"/>
+				<!-- <img class="img-one" src="../../static/images/达人/img2.png" /> -->
 			</div>
 			<div class="ilblock imgb">
-				<!-- <img :src="QrData.url" /> -->
-				<img src="../../static/images/达人/img8.png" />
+				<img :src="QrData.url" />
+				<!-- <img src="../../static/images/达人/img8.png" /> -->
 			</div>
 			<div class="ilblock">
 				<div class="color2 font14" style="position: relative; top: 3px;">长按二维码看购买详情</div>
@@ -106,7 +106,7 @@
 				const self = this;
 				const postData = {};
 				postData.searchItem = {
-					title: '达人海报',
+					title: '达人锁粉海报',
 					thirdapp_id: self.$AssetsConfig.thirdapp_id,
 				};
 				const callback = (res) => {
@@ -123,7 +123,7 @@
 				const self = this;
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
-				postData.param = 'http://106.12.155.217/index.html' + '&user_no=' + uni.getStorageSync('info').user_no;
+				postData.param = '/pages/index/index' + '&user_no=' + uni.getStorageSync('info').user_no;
 				postData.ext = 'png';
 				const callback = (res) => {
 					console.log(res);

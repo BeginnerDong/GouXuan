@@ -3,9 +3,9 @@
 		<div class="top">
 			<div class="top-box">
 				<div class="tou-img">
-					<img src="../../static/images/about-img1.png" />
+					<img :src="headImgUrl" />
 				</div>
-				<div class="color2 user-name"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/serve/serve'}})">名称名称名称</div>
+				<div class="color2 user-name"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/serve/serve'}})">{{nickName}}</div>
 			</div>
 		</div>
 		<div class="status bg1">
@@ -151,7 +151,8 @@
 		onLoad(options) {
 			const self = this;
 			/* self.$Utils.loadAll(['getMainData', 'getLabelData', 'getCaseData'], self) */
-
+			self.headImgUrl = uni.getStorageSync('user_info').headImgUrl;
+			self.nickName = uni.getStorageSync('user_info').nickname;
 		},
 		methods: {
 			

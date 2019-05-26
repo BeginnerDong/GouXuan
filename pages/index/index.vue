@@ -91,7 +91,7 @@
 					查看更多</view>
 			</view>
 			<scroll-view scroll-x="true">
-				<view class="best-box ilblock" style="margin-left: 15px;" v-for="item in hotData" :data-id="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/recommend/recommend?id='+$event.currentTarget.dataset.id}})">
+				<view class="best-box ilblock" style="margin-left: 15px;" v-for="(item,index) in hotData" v-if="index<5" :data-id="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/recommend/recommend?id='+$event.currentTarget.dataset.id}})">
 					<view class="best-box-top">
 						<img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
 						<view class="best-num ilblock">

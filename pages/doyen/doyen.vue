@@ -2,11 +2,11 @@
 	<view>
 		<div class="top" style="overflow: hidden;">
 			<div class="top-img ilblock">
-				<img src="../../static/images/达人/Talent-show-img.png" width="61px" />
+				<img :src="headImgUrl" style="width: 60px;heigh:60px;border-radius:50%;" />
 			</div>
 			<div class="ilblock" style="width:180px;height: 100%;margin-left: 100px;">
-				<div class="top-name color5 font15" style="margin-top: 20px;">购选</div>
-				<div class="top-id color5 font13 " style="line-height: 30px">ID:29948955</div>
+				<div class="top-name color5 font15" style="margin-top: 20px;">{{nickName}}</div>
+				<div class="top-id color5 font13 " style="line-height: 30px">ID:{{user_no}}</div>
 				<div class="bg1 ilblock radiu20 font14" style="color: #FF8954; padding: 3px 10px; margin-top: 5px;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/register/register?parent_no='+user_no}})">分享达人</div>
 				<div class="ilblock color5 font14" @click="webSelf.$Router.navigateTo({route:{path:'/pages/regular/regular'}})">
 					<div class="ilblock color5 font14" style="margin-left: 10px;width: 80px; 
@@ -141,12 +141,17 @@
 				},
 				orderData: [],
 				orderTotal:0,
+				user_no:'',
+				headImgUrl:'',
+				nickName:'',
 				user_no:''
 			}
 		},
 		onLoad(options) {
 			const self = this;
-			self.user_no = uni.getStorageSync('user_info').user_no
+			self.user_no = uni.getStorageSync('user_info').user_no;
+			self.headImgUrl = uni.getStorageSync('user_info').headImgUrl;
+			self.nickName = uni.getStorageSync('user_info').info.name;
 			self.$Utils.loadAll(['getMonthGroupCount','getMonthShopCount','getShopCount','getTotalCount','getDistriDataLength','getOrderData'], self)
 		},
 

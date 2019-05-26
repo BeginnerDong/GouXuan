@@ -37,14 +37,14 @@
 
 
 			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/depositld/depositld'}})" class="color2 font14" style="height: 52px;width: 100%; line-height: 52px;border-bottom: solid 1px #E9E9E9;">
-				<div class="ilblock color2 font14 btm-list">体现账号</div>
-				<div class="ilblock color1 font14 list">未填提现账号
+				<div class="ilblock color2 font14 btm-list">提现账号</div>
+				<div class="ilblock color1 font14 list">{{userInfoData.ali_name==null||userInfoData.ali_name==''?'未填提现账号':''}}
 					<image src="../../static/images/home-icon9.png"></image>
 				</div>
 			</div>
 
 
-			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/deposit/deposit'}})" class="color2 font14" style="height: 52px;width: 100%; line-height: 52px;">
+			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/withdrawalRecord/withdrawalRecord'}})" class="color2 font14" style="height: 52px;width: 100%; line-height: 52px;">
 				<div class="ilblock color2 font14 btm-list">提现记录</div>
 				<div class="ilblock color1 font14 list">
 					<image src="../../static/images/home-icon9.png"></image>
@@ -53,8 +53,8 @@
 
 		</div>
 
-		<button class="color5" style="font-size:14px;background: #FBB091;width:320px;height: 35px;line-height: 35px;border-radius: 20px; margin: 30px auto 100px;">
-			申请提现(不足20元不可提现)
+		<button @click="userInfoData.balance>20?webSelf.$Router.navigateTo({route:{path:'/pages/withdrawDepasit/withdrawDepasit'}}):''" class="color5" :style="userInfoData.balance>20?'background:#F98A48':''" style="font-size:14px;background: #FBB091;width:320px;height: 35px;line-height: 35px;border-radius: 20px; margin: 30px auto 100px;">
+			申请提现{{userInfoData.balance>20?'':'(不足20元不可提现)'}}
 		</button>
 
 

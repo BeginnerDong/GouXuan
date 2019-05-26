@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="top bg3 color5 font13">
-			ID:5645866
+			ID:{{parent_no}}
 		</view>
 		<view class="list-box">
 			<view class="list-item">
@@ -25,8 +25,9 @@
 			</view>
 			<view class="list-item">
 				<image src="../../static/images/达人/icon12.png" style="margin-right: 22px;"></image>
-				<view class="list-right ilblock bg2">
-					<view class="ilblock font14" style="height: 100%; line-height:35px;">请选择地区</view>
+				<view class="list-right ilblock bg2"  @click="showMulLinkageThreePicker">
+					<view class="ilblock font14" style="height: 100%; line-height:35px;" >{{submitData.address==''?'请选择地区':submitData.address}}</view>
+					
 					<view class="ilblock flo-right" style="width: 8px; height: 16px;margin-top: 9px;">
 						<image src="../../static/images/home-icon9.png" style="width: 100%;height: 100%;"></image>
 					</view>
@@ -34,20 +35,41 @@
 			</view>
 		</view>
 		<button class="bg3 color5 radiu20 font15" style="width:69%;height:35px;line-height: 35px;" @click="submit">注册</button>
+		
+		<mpvue-city-picker :themeColor="themeColor" ref="mpvueCityPicker" :pickerValueDefault="cityPickerValueDefault"
+		 @onCancel="onCancel" @onConfirm="onConfirm"></mpvue-city-picker>
 	</view>
+	
 </template>
 
 <script>
-
+	import mpvuePicker from '../../components/mpvue-picker/mpvuePicker.vue';
+	// https://github.com/zhetengbiji/mpvue-citypicker
+	import mpvueCityPicker from '../../components/mpvue-citypicker/mpvueCityPicker.vue'
+	import cityData from '../../common/city.data.js';
 	export default {
-
+		components: {
+			mpvuePicker,
+			mpvueCityPicker
+		},
+		
 		data() {
 			return {
 				submitData:{
 					phone:'',
-					name:''
+					name:'',
+					address:''
 				},
-				imgcode:''
+				imgcode:'',
+				
+				mulLinkageTwoPicker: cityData,
+				cityPickerValueDefault: [0, 0, 0],
+				themeColor: '#F98A48',
+				
+				mode: '',
+				deepLength: 1,
+				pickerValueDefault: [0],
+				pickerValueArray:[]
 			}
 		},
 		
@@ -61,6 +83,18 @@
 		},
 		methods: {
 			
+			
+			showMulLinkageThreePicker() {
+				this.$refs.mpvueCityPicker.show()
+			},
+			onConfirm(e) {
+				
+				this.submitData.address = e.label;
+				console.log('e',e)
+			},
+			onCancel(e){
+				console.log('e',e)
+			},
 			
 			refresh:function(){
 				this.$refs.imgcode.refresh();
@@ -79,46 +113,27 @@
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
 				postData.data = {
-					primary_scope: 30,
+					parent_no:self.parent_no,
+					name:self.submitData.name,
+					phone:self.submitData.phone,
+					address:self.submitData.address,
 				};
-				postData.saveAfter = [
-					{
-						tableName:'UserInfo',
-						FuncName:'update',
-						searchItem:{
-							user_no:uni.getStorageSync('user_info').user_no
-						},
-						data:{
-							level:1,
-							name:self.submitData.name,
-							phone:self.submitData.phone,
-						}
-					}	
-				];
-				if(self.parent_no){
-					postData.saveAfter.push({
-						tableName:'Distribution',
-						FuncName:'add',
-						data:{
-							type:1,
-							child_no:uni.getStorageSync('user_info').user_no,
-							parent_no:self.parent_no,
-						}
-					});
-				};
-				console.log('submit',self.submitData)
+				
 				if (self.$Utils.checkComplete(self.submitData)) {
 					const callback = (res) => {
 						if (res.solely_code == 100000) {
-							console.log(res);
+							self.$Utils.showToast('注册成功','none');
+							uni.redirectTo({
+								url: '/pages/index/index'		
+							});
 						} else {
-							self.$Utils.showToast(res.msg)
+							self.$Utils.showToast(res.msg,'none')
 						}
 					};
 					
-					self.$apis.userUpdate(postData, callback);
+					self.$apis.registerSuper(postData, callback);
 				} else {
-					self.$Utils.showToast('信息不全', 'none')
+					self.$Utils.showToast('请补全信息', 'none')
 				};
 			},
 
@@ -172,8 +187,5 @@
 		top: -3px;
 		left: 5px;
 	}
-	
-	
-	@import "../../assets/style/index.css";
-	@import "../../assets/style/basic.css";
+
 </style>

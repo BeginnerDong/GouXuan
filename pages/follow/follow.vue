@@ -38,7 +38,7 @@
 			<div class="best-box-top">
 				<img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
 				<div class="best-num ilblock">
-					美食
+					{{item.label&&item.label[0]?item.label[0].title:''}}
 				</div>
 			</div>
 			<div class="best-text color2">
@@ -172,7 +172,17 @@
 				const postData = {};
 				postData.paginate = self.$Utils.cloneForm(self.paginate);
 				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
-
+				postData.getAfter = {
+					label:{
+						tableName:'label',
+						middleKey:'category_id',
+						key:'id',
+						searchItem:{
+							status:1
+						},
+						consition:'='
+					}
+				};
 				console.log('postData', postData)
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
