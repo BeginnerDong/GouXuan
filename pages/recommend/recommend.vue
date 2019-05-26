@@ -496,8 +496,6 @@
 
 			chooseSku(id) {
 				const self = this;
-			
-				
 				if(self.can_choose_sku_item.indexOf(id)==-1){
 				  return;
 				};
@@ -538,7 +536,7 @@
 						self.$Utils.showToast('请选择预约日期','none')
 					}else{
 						uni.navigateTo({
-							url: '/pages/pay/pay?type='+self.mainData.type+'&id='+self.choosed_skuData.skuDate.id,
+							url: '?type='+self.mainData.type+'&id='+self.choosed_skuData.skuDate.id+'#/pages/pay/pay',
 						});
 					};	
 				}else if(self.mainData.type==1){

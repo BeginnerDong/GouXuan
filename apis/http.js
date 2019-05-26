@@ -37,7 +37,9 @@ export default {
 			method:obj.type,
 			header:custom_header,
 			success: (res) => {
-				
+				if(uni.getStorageSync('loadAllArray').length==0||!uni.getStorageSync('loadAllArray')){
+					uni.hideLoading();
+				};
 				var code = res.data.solely_code;
                 if (res.data.solely_code == '200000') {
                    
@@ -45,10 +47,6 @@ export default {
                 } else {
                     obj.sCallback && obj.sCallback(res.data);
                 };
-				/* if(uni.getStorageSync('loadAllArray').length==0||!uni.getStorageSync('loadAllArray')){
-					uni.hideLoading();
-				}; */
-				
 			},
             fail: function (err) {
                 

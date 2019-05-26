@@ -43,7 +43,7 @@
 			</div>
 			<input style="width: 80%; border: none; " placeholder="请输入备注" v-model="submitData.remark" />
 		</div>
-		<div class="describe" style="margin-bottom: 80px;">
+		<div class="describe" >
 			<div style="line-height: 30px;margin-top: 15px;padding-bottom: 6px; border-bottom: solid 1px #F5F5F5;">
 				<div class="ilblock">
 					支付方式：
@@ -52,17 +52,36 @@
 					微信支付
 				</div>
 			</div>
-			<div style="line-height:30px;margin-top: 15px;" class="ilblock">
-				优惠券：
+			<div>
+				<div v-if="mainData.type==1" style="line-height:30px;margin-top: 15px;" class="ilblock">
+					请选择地址：
+				</div>
+				<div  class="ilblock color3" style="float: right;line-height: 57px;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/address/address'}})">
+					{{addressData.id>0?'地址':'请选择地址'}}<img src="../../static/images/home-icon9.png" style="height: 11px;margin-left: 10px;margin-bottom: 2px; " />
+				</div>
+				<div style="position: relative;margin-bottom: 15px;" >
+					<div  style="font-size: 15px;margin-top: 15px;">{{addressData.name}}  {{addressData.phone}}</div>
+					<div style="margin-top: 15px;">
+						<text  style="font-size: 12px;">{{addressData.city}}  {{addressData.detail}}</text>
+					</div>
+					
+				</div>
 			</div>
-			<div  class="ilblock color3" style="float: right;line-height: 57px;">
-				{{couponData.length>0?'请选择优惠券':'暂无优惠券'}}<img src="../../static/images/home-icon9.png" style="height: 11px;margin-left: 10px;margin-bottom: 2px; " />
+			
+			<div>
+				<div style="line-height:30px;margin-top: 15px;" class="ilblock">
+					优惠券：
+				</div>
+				<div  class="ilblock color3" style="float: right;line-height: 57px;">
+					{{couponData.length>0?'请选择优惠券':'暂无优惠券'}}<img src="../../static/images/home-icon9.png" style="height: 11px;margin-left: 10px;margin-bottom: 2px; " />
+				</div>
+				<div style="position: relative;margin-bottom: 15px;"  v-for="item in couponData" @click="chooseCoupon(item.id)" :style="webSelf.$Utils.inArray(item.id,chooseCouponId)!=-1?'border-right:2px solid red':''">
+					<img style="width:300px;height: 90px;" src="../../static/images/微信图片_20190428143903.png" />
+					<span  style="position:absolute;left:130px;top:30px;font-size: 20px;color:red">{{item.discount}}</span>
+					<span  style="margin-top: 10px;font-size: 12px;color:gray">购满{{item.condition}}元即可使用</span>
+				</div>
 			</div>
-			<div style="position: relative;margin-bottom: 15px;"  v-for="item in couponData" >
-				<img style="width:300px;height: 90px;" src="../../static/images/微信图片_20190428143903.png" />
-				<span  style="position:absolute;left:130px;top:30px;font-size: 20px;color:red">{{item.discount}}</span>
-				<span  style="margin-top: 10px;font-size: 12px;color:gray">购满{{item.condition}}元即可使用</span>
-			</div>
+			
 		</div>
 		<div class="foter-fixd">
 			<div class="ilblock" style="background: #3E3E3E;width: 67%;height: 100%;color: #EDEDED; text-align: center;font-size: 13px;">
@@ -92,7 +111,9 @@
 				orderId:'',
 				getBefore:{},
 				getAfter:{},
-				couponData:[]
+				couponData:[],
+				addressData:{},
+				chooseCouponId:[]
 			}
 		},
 		onLoad(options) {
@@ -153,7 +174,21 @@
 			self.$Utils.loadAll(['getMainData'], self)
 
 		},
+		onShow(){
+			this.addressData = uni.getStorageSync('choosedAddressData');
+		},
 		methods: {
+			
+			
+			chooseCoupon(id){
+				const self = this;
+				var nowLength = self.chooseCouponId.indexOf(id);
+				if(nowLength!=-1){
+					self.chooseCouponId.splice(nowLength,1)
+				}else{
+					self.chooseCouponId.push(id)
+				};
+			},
 
 			getMainData() {
 				const self = this;
@@ -185,10 +220,10 @@
 				postData.searchItem = {};
 				postData.searchItem.type = 1;
 				postData.searchItem.use_step = 1;
-				postData.searchItem.condition = ['<',parseFloat(self.mainData.price)];
+				postData.searchItem.condition = ['<',parseFloat(self.price)];
 				postData.order = {
 					create_time: 'desc'
-				}
+				};
 				const callback = (res) => {
 					
 					if (res.solely_code == 100000) {
@@ -205,27 +240,21 @@
 			
 			getAddressData() {
 				const self = this;
+				
 				const postData = {};
+				postData.searchItem = {isdefault:1};
 				postData.tokenFuncName = 'getProjectToken';
-				postData.searchItem = {};
-				postData.searchItem.type = 1;
-				postData.searchItem.use_step = 1;
-				postData.searchItem.condition = ['<',parseFloat(self.mainData.price)];
-				postData.order = {
-					create_time: 'desc'
-				}
 				const callback = (res) => {
-					
-					if (res.solely_code == 100000) {
-						if (res.info.data.length > 0) {
-							self.couponData.push.apply(self.couponData, res.info.data);
-						};
-					} else {
-						self.$Utils.showToast(res.msg, 'none')
-					};
-					self.$Utils.finishFunc('getCouponData')
+					if (res.info.data.length > 0) {
+						self.addressData = res.info.data[0];
+						uni.setStorageSync('choosedAddressData',res.info.data[0]);
+					}else{
+						self.addressData = {};
+						uni.setStorageSync('choosedAddressData','');
+					}
+					self.$Utils.finishFunc('getAddressData');
 				};
-				self.$apis.userCouponGet(postData, callback);
+				self.$apis.addressGet(postData, callback);
 			},
 
 			counter(type) {
@@ -260,6 +289,13 @@
 					self.$Utils.showToast('请填写电话')
 					return
 				};
+				
+				if(self.mainData.type==1&&!uni.getStorageSync('choosedAddressData')){
+					uni.setStorageSync('canClick', true);
+					self.$Utils.showToast('请选择地址')
+					return
+				};
+			
 				var orderList =  [];
 				if(self.mainData.type==1){
 					orderList.push(
@@ -299,13 +335,21 @@
 					},
 				};
 				
+				if(uni.getStorageSync('url_parent_no')){
+					postData.data.parent_no = uni.getStorageSync('url_parent_no');
+				};
+				
 				const callback = (res) => {
+					
 					if (res && res.solely_code == 100000) {
 						self.orderId = res.info.id;
 						self.pay(self.orderId)
 					} else {
 						uni.setStorageSync('canClick', true);
-						self.$Utils.showToast(res.msg);
+						uni.showToast({
+							title: '下单失败',
+							duration: 2000
+						});
 					};
 				};
 				self.$apis.addOrder(postData, callback);
@@ -313,10 +357,33 @@
 
 			pay(order_id) {
 				const self = this;
-				const postData = {
-					wxPay:{
-						price:parseInt(self.mainData.sku[0].price)
-					}
+				var price = parseFloat(self.price);
+				var wxPay = 0;
+				var couponPay = 0;
+				const postData = {};
+				if(self.chooseCouponId.length>0){
+					postData.coupon = [];
+					for(var i=0;i<self.couponData.length;i++){
+						if(self.chooseCouponId.indexOf(self.couponData[i].id)!=-1){
+							if(price-couponPay<parseFloat(self.couponData[i].discount)){
+								postData.coupon.push({
+									id: self.couponData[i].id,
+									price: price-couponPay,
+								});
+								break;
+							}else{
+								postData.coupon.push({
+									id: self.couponData[i].id,
+									price: self.couponData[i].discount,
+								});
+							};
+						}
+					};
+				};
+				if(price-couponPay>0){
+					postData.wxPay = {
+						price:price-couponPay
+					};
 				};
 				postData.tokenFuncName='getProjectToken',
 				postData.searchItem = {
@@ -324,26 +391,38 @@
 				};
 				postData.payAfter = [];
 				const callback = (res) => {
-					console.log(res)
 					if (res.solely_code == 100000) {
-						uni.hideLoading();
-
 						if (res.info) {
 							const payCallback = (payData) => {
+								console.log('payData',payData)
 								if (payData == 1) {
-									const cc_callback = () => {
-										self.$Utils.showToast('支付成功','none');
-									};
+									uni.showToast({
+										title: '支付成功',
+										duration: 2000,
+										success:function(){
+											self.$Router.reLaunch({route:{path:'/pages/user/user'}})
+										}
+									});
+								}else{
+									uni.showToast({
+										title: '支付失败',
+										duration: 2000
+									});
 								};
 							};
 							self.$Utils.realPay(res.info, payCallback);
 						} else {
-							self.$Utils.showToast('支付成功','none');
-
+							uni.showToast({
+								title: '支付完成',
+								duration: 2000
+							});
 						};
 					} else {
 						uni.setStorageSync('canClick', true);
-						self.$Utils.showToast(res.msg, 'none');
+						uni.showToast({
+							title: '支付参数有误',
+							duration: 2000
+						});
 					};
 				};
 				self.$apis.pay(postData, callback);

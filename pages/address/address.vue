@@ -1,17 +1,17 @@
 <template>
 	<view>
 
-		<div class="bg1" v-for="item in mainData">
+		<div class="bg1" v-for="(item,index) in mainData"  @click="choose(index)" :style="choosedIndex==index?'border-bottom:1px solid #F98A48':''">
 			<div style="height: 41px; border-bottom: solid 1px #EAEAEA;line-height: 41pxx; ">
 				<div class="color5 ilblock">{{item.name}}</div>
 				<div class="ilblock color2 font13">{{item.city+item.detail}}</div>
 			</div>
 			<div style="height: 42px;line-height: 42px; ">
-				<img src="/static/images/icon-3.png" style="width: 15px; margin-left: 18px;" />
+				<img src="../../static/images/icon-3.png" style="width: 15px; margin-left: 18px;" />
 				<div class="color1 font11 ilblock" style="margin-left:6px;">{{item.isdefault==1?'默认地址':'选为默认地址'}}</div>
-				<div :data-id="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/address-save/address-save?id='+$event.currentTarget.dataset.id}})" class="ilblock color1 font11" style="margin-left: 100px;"><img src="/static/images/icon-1.png" style="width: 14px;" />
+				<div :data-id="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/address-save/address-save?id='+$event.currentTarget.dataset.id}})" class="ilblock color1 font11" style="margin-left: 100px;"><img src="../../static/images/icon-1.png" style="width: 14px;" />
 					编辑</div>
-				<div class="ilblock color1 font11" :data-id="item.id" @click="deleteAddress($event.currentTarget.dataset.id)" style="margin-left: 25px;"><img src="/static/images/icon-2.png" style="width: 14px;" />
+				<div class="ilblock color1 font11" :data-id="item.id" @click="deleteAddress($event.currentTarget.dataset.id)" style="margin-left: 25px;"><img src="../../static/images/icon-2.png" style="width: 14px;" />
 					删除</div>
 			</div>
 		</div>
@@ -28,7 +28,8 @@
 		data() {
 			return {
 				mainData:[],
-				webSelf: this
+				webSelf: this,
+				choosedIndex:-1
 			}
 		},
 		onLoad(options) {
@@ -37,7 +38,12 @@
 
 		},
 		methods: {
-			
+			choose(index){
+				const self = this;
+				self.choosedIndex = index;
+				uni.setStorageSync('choosedAddressData',self.mainData[index]);
+				console.log('choosedIndex',self.choosedIndex)
+			},
 			
 			getMainData() {
 				const self = this;

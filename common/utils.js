@@ -23,6 +23,8 @@ export default {
 						//res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
 						callback && callback(1);
 					} else {
+						alert(JSON.stringify(res));
+						alert(res.err_msg);
 						callback && callback(0);
 					}
 				});
@@ -117,9 +119,7 @@ export default {
 					uni.hideLoading();
 				};
 			};
-		}else{
-			uni.hideLoading();
-		}
+		};
 	},
 
 
