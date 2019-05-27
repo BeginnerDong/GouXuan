@@ -19,7 +19,7 @@
 					已售{{item.false_sale_count}}
 				</div>
 				<div class="best-time" v-if="item.timeCount">
-					距结束仅剩  <span>item.hourCount</span> 小时: <span>{{item.minCount}}</span>分钟
+					距结束仅剩  <span>{{item.hourCount}}</span> 小时: <span>{{item.minCount}}</span>分钟
 					: <span>{{item.secCount}}</span>
 				</div>
 				
