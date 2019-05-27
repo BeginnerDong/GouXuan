@@ -536,7 +536,7 @@
 						self.$Utils.showToast('请选择预约日期','none')
 					}else{
 						uni.navigateTo({
-							url: '?type='+self.mainData.type+'&id='+self.choosed_skuData.skuDate.id+'#/pages/pay/pay',
+							url: '/pages/pay/pay?type='+self.mainData.type+'&id='+self.choosed_skuData.skuDate.id,
 						});
 					};	
 				}else if(self.mainData.type==1){
