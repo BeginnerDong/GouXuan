@@ -27,16 +27,16 @@
 		</div>
 		<div class="retun-btm bg1" v-for="item in mainData">
 			<div class="color2">
-				订单号：{{item.order&&item.order[0]?item.order[0].order_no:''}}
+				订单号：{{item.order_no}}
 			</div>
 			<div class="color1 font14 " style="border-bottom: solid 1px #EDEDED;text-align: justify; margin: 10px 0px ; padding-bottom: 7px;">
-				{{item.order&&item.order[0].products[0]?item.order[0].products[0].snap_product.product.title:''}}
+				{{item.Order&&item.Order[0].products[0]?item.Order[0].products[0].snap_product.product.title:''}}
 			</div>
 			<div class="color2 font14" style="margin-top: 16px;">
-				姓名:<span>{{item.order&&item.order[0]?item.order[0].name:''}}</span>
+				姓名:<span>{{item.UserInfo.name}}</span>
 			</div>
 			<div class="color2 font14" style="margin-top: 16px;">
-				联系电话:<span>{{item.order&&item.order[0]?item.order[0].phone:''}}</span>
+				联系电话:<span>{{item.UserInfo.phone}}</span>
 			</div>
 			<div class="font14" style="color: rgb(251,132,72);margin-top: 16px;">
 				佣金:<span>￥{{item.count}}</span>
@@ -54,8 +54,10 @@
 		data() {
 			return {
 				webSelf: this,
+				isLoadAll:false,
 				mainData: [],
 				type: 2,
+				meData:[],
 				hasWithdraw:'',
 				shopCount:'',
 				groupCount:'',
@@ -68,7 +70,17 @@
 		},
 		onLoad(options) {
 			const self = this;
-			self.$Utils.loadAll(['getMainData', 'getUserInfoData'], self)
+			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+			self.$Utils.loadAll(['getMeData', 'getUserInfoData','getMainData'], self)
+		},
+		
+		onReachBottom(){
+			console.log('onReachBottom')
+			const self = this;
+			if(!self.isLoadAll&&uni.getStorageSync('loadAllArray')){
+				self.paginate.currentPage++;
+				self.getMainData()
+			};	
 		},
 
 		methods: {
@@ -88,13 +100,32 @@
 				};
 				self.$apis.userInfoGet(postData, callback);
 			},
-
+			
 			getMainData() {
 				const self = this;
 				
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
+				postData.paginate = self.$Utils.cloneForm(self.paginate);
+				
+				const callback = (res) => {
+					if (res.solely_code == 100000) {
+						self.mainData.push.apply(self.mainData,res.info.data)
+					} else {
+						self.isLoadAll = true;
+						self.$Utils.showToast(res.msg, 'none')
+					};
+					self.$Utils.finishFunc('getMainData');
+				};
+				self.$apis.teamFlow(postData, callback);
+			},
+
+			getMeData() {
+				const self = this;
+				
+				const postData = {};
 				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
+				postData.tokenFuncName = 'getProjectToken';
 				postData.searchItem.user_no = uni.getStorageSync('user_no');
 				postData.order = {
 					create_time: 'desc'
@@ -113,17 +144,17 @@
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
 						if (res.info.data.length > 0) {
-							self.mainData.push.apply(self.mainData, res.info.data);	
+							self.meData.push.apply(self.meData, res.info.data);	
 						}
-						for (var i = 0; i < self.mainData.length; i++) {
-							if(self.mainData[i].count<0){
-								self.hasWithdraw += (self.mainData[i].count)
+						for (var i = 0; i < self.meData.length; i++) {
+							if(self.meData[i].count<0){
+								self.hasWithdraw += (self.meData[i].count)
 							};
-							if(self.mainData[i].behavior==1){
-								self.shopCpunt += (self.mainData[i].count)
+							if(self.meData[i].behavior==1){
+								self.shopCpunt += (self.meData[i].count)
 							};
-							if(self.mainData[i].behavior==2){
-								self.groupCount += (self.mainData[i].count)
+							if(self.meData[i].behavior==2){
+								self.groupCount += (self.meData[i].count)
 							}
 						}
 						console.log(parseInt(self.hasWithdraw));
@@ -133,7 +164,7 @@
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};
-					self.$Utils.finishFunc('getMainData');
+					self.$Utils.finishFunc('getMeData');
 				};
 				self.$apis.flowLogGet(postData, callback);
 			},

@@ -9,7 +9,8 @@
 				<div class="ilblock">
 					<img src="../../static/images/home-icon13.png" style="width: 16px; margin-left: 13px;margin-bottom: 4px;" />
 				</div>
-				<input class="ilblock color1" style="margin-left: 15px;height:30px;line-height: 30px;" placeholder="请输入核销码搜索" v-model="check_code"></input>
+				<input class="ilblock color1" style="margin-left: 15px;height:30px;line-height: 30px;" placeholder="请输入核销码搜索"
+				 v-model="check_code"></input>
 			</div>
 			<button class="color5 ilblock flo-left" @click="search">搜索</button>
 		</div>
@@ -39,7 +40,7 @@
 			<div style="line-height: 40px; float: right; margin-right: 15px;" v-if="item.behavior==1">
 				<div class="ilblock color1 font14" style="margin-right: 30px;">核销码：{{item.check_code}}</div>
 				<div class="ilblock radiu20 font13" style="border: solid 1px #F98A48; height: 28px; line-height: 28px; width: 75px; text-align: center;"
-				@click="qrCodeUpdate(item.id)">确认核销</div>
+				 @click="qrCodeUpdate(item.id)">确认核销</div>
 			</div>
 		</div>
 
@@ -51,111 +52,149 @@
 
 		data() {
 			return {
-				check_code:'',
-				mainData:[],
-				searchItem:{
+				isLoadAll: false,
+				check_code: '',
+				mainData: [],
+				searchItem: {
 					thirdapp_id: 2,
-					shop_no:uni.getStorageSync('merchant_no'),
+					shop_no: uni.getStorageSync('merchant_no'),
 				}
 			}
 		},
 		onLoad(options) {
 			const self = this;
-			self.$Utils.loadAll(['wxJsSdk'], self)
+			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+			self.$Utils.loadAll(['wxJsSdk', 'getMainData'], self)
 		},
+
+		onReachBottom() {
+			console.log('onReachBottom')
+			const self = this;
+			if (!self.isLoadAll && uni.getStorageSync('loadAllArray')) {
+				self.paginate.currentPage++;
+				self.getMainData()
+			};
+		},
+
+		onPullDownRefresh() {
+			console.log('refresh');
+			uni.startPullDownRefresh();
+			delete self.searchItem.check_code;
+			self.getMainData(true);
+		},
+		
+
+
 		methods: {
-			
-			scan(){
+
+			scan() {
 				const self = this;
 				self.$jweixin.scanQRCode({
-					needResult: 0, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-					scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-					success: function (res) {
+					needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+					scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+					success: function(res) {
 						var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-						console.log('result',result)
+						console.log('result', result)
 						alert(JSON.stringify(res));
+						self.searchItem.check_code = self.check_code;
+						self.getMainData(true)
 					}
 				});
 			},
-			wxJsSdk(){
+
+			wxJsSdk() {
 				const self = this;
 				const postData = {
-					thirdapp_id:2,
-					url:window.location.href
+					thirdapp_id: 2,
+					url: window.location.href
 				};
-				const callback = (res)=>{
-					
+				const callback = (res) => {
+
 					self.$jweixin.config({
 						debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-						appId:res.appId, // 必填，公众号的唯一标识
-						timestamp:res.timestamp , // 必填，生成签名的时间戳
-						nonceStr:res.nonceStr, // 必填，生成签名的随机串
-						signature:res.signature,// 必填，签名
+						appId: res.appId, // 必填，公众号的唯一标识
+						timestamp: res.timestamp, // 必填，生成签名的时间戳
+						nonceStr: res.nonceStr, // 必填，生成签名的随机串
+						signature: res.signature, // 必填，签名
 						jsApiList: ['scanQRCode'] // 必填，需要使用的JS接口列表
 					});
-					self.$jweixin.ready(function () {   //需在用户可能点击分享按钮前就先调用
+					self.$jweixin.ready(function() { //需在用户可能点击分享按钮前就先调用
 					});
-					self.$jweixin.error(function(res){
-						console.log('error',res)
+					self.$jweixin.error(function(res) {
+						console.log('error', res)
 					});
 					self.$Utils.finishFunc('wxJsSdk');
 				};
-				self.$apis.WxJssdk(postData,callback);
+				self.$apis.WxJssdk(postData, callback);
 			},
-			
-		
-		
-			search(){
+
+
+
+			search() {
 				const self = this;
-				if(self.check_code!=''){
+				if (self.check_code != '') {
 					self.searchItem.check_code = self.check_code;
-					self.getMainData()
-				}else{
-					self.$Utils.showToast('无效输入','none')
+					self.getMainData(true)
+				} else {
+					self.$Utils.showToast('无效输入', 'none')
 				}
 			},
 
 			getMainData(isNew) {
 				const self = this;
+				if (isNew) {
+					self.mainData = [];
+					self.paginate = {
+						count: 0,
+						currentPage: 1,
+						pagesize: 5,
+						is_page: true,
+					}
+				};
 				const postData = {};
 				postData.tokenFuncName = 'getMerchantToken';
-				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+				postData.paginate = self.$Utils.cloneForm(self.paginate);
 				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
 				postData.getAfter = {
-					order:{
-						tableName:'Order',
-						middleKey:'order_no',
-						key:'order_no',
-						searchItem:{
-							status:1,
-							user_type:0
+					order: {
+						tableName: 'Order',
+						middleKey: 'order_no',
+						key: 'order_no',
+						searchItem: {
+							status: 1,
+
 						},
-						condition:'='
+						condition: '='
 					}
 				};
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.mainData.push.apply(self.mainData, res.info.data);
-					}else{
-						self.$Utils.showToast('未找到订单','none')
+					} else {
+						self.$Utils.showToast('未找到订单', 'none')
+						self.isLoadAll = true;
 					}
+					setTimeout(function()
+					{
+					  uni.stopPullDownRefresh()
+					},300);
 					self.$Utils.finishFunc('getMainData');
 				};
 				self.$apis.qrCodeGet(postData, callback);
-			},	
-			
+			},
+
 			qrCodeUpdate(id) {
 				const self = this;
 				console.log(id)
 				const postData = {};
 				postData.tokenFuncName = 'getMerchantToken';
 				postData.data = {
-					behavior : 2,
+					behavior: 2,
 				}
 				postData.searchItem = {};
 				postData.searchItem.id = id;
 				const callback = res => {
-					self.$Utils.showToast('已核销','none')
+					self.$Utils.showToast('已核销', 'none')
 					self.mainData = [];
 					self.getMainData(true);
 				};
@@ -168,7 +207,7 @@
 <style>
 	@import "../../assets/style/public.css";
 	@import "../../assets/style/index.css";
-	
+
 	.top {
 		width: 100%;
 		height: 56px;
@@ -239,6 +278,6 @@
 		text-align: justify;
 	}
 
-	
+
 	@import "../../assets/style/basic.css";
 </style>

@@ -14,28 +14,30 @@
 
 			<div style="width: 100%; margin-top: 30px;padding-left: 15px;padding-right: 15px;">
 				<div class="color2 font15 ilblock" style="width: 38%;">
-					达人营业额
+					团队总营业额
 				</div>
-				<div class="ilblock" style="color: rgb(49,160,254); font-size: 20px;">0.00</div>
+				<div class="ilblock" style="color: rgb(49,160,254); font-size: 20px;">{{totalTurnover}}</div>
 			</div>
 			<div style="width: 100%; margin-top: 10px;padding-left: 15px;padding-right: 15px;">
 				<div class="color2 font15 ilblock" style="width: 38%;">
-					达人粉丝总人数
+					团队总奖励
 				</div>
-				<div class="ilblock" style="color: rgb(49,160,254); font-size: 20px;">0</div>
+				<div class="ilblock" style="color: rgb(49,160,254); font-size: 20px;">{{totalReward}}</div>
 			</div>
 		</div>
 		<div style="margin-top: 10px;width: 100%;">
 
-			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/order-search/order-search'}})" class="color2 font14 bg1" style="height: 52px;width: 100%; line-height: 52px;border-bottom: solid 1px #E9E9E9;">
+			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/order-search/order-search'}})" class="color2 font14 bg1"
+			 style="height: 52px;width: 100%; line-height: 52px;border-bottom: solid 1px #E9E9E9;">
 				<div class="ilblock color2 font14 btm-list">团队订单</div>
-				<div class="ilblock color1 font14 list">共0单
+				<div class="ilblock color1 font14 list">共{{teamOrderData.length}}单
 					<image src="../../static/images/home-icon9.png"></image>
 				</div>
 			</div>
 
 
-			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/return-first/return-first'}})" class="color2 font14 bg1" style="height: 52px;width: 100%; line-height: 52px;border-bottom: solid 1px #E9E9E9;">
+			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/groupReturn/groupReturn'}})" class="color2 font14 bg1"
+			 style="height: 52px;width: 100%; line-height: 52px;border-bottom: solid 1px #E9E9E9;">
 				<div class="ilblock color2 font14 btm-list">达人团队奖励</div>
 				<div class="ilblock color1 font14 list">
 					<image src="../../static/images/home-icon9.png"></image>
@@ -43,7 +45,8 @@
 			</div>
 
 
-			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/team-team/team-team'}})" class="color2 font14 bg1" style="height: 52px;width: 100%; line-height: 52px;">
+			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/team-team/team-team'}})" class="color2 font14 bg1"
+			 style="height: 52px;width: 100%; line-height: 52px;">
 				<div class="ilblock color2 font14 btm-list">达人团队</div>
 				<view class="list ilblock">
 					<image src="../../static/images/home-icon9.png"></image>
@@ -51,7 +54,7 @@
 			</div>
 
 		</div>
-		<button @click="webSelf.$Router.navigateTo({route:{path:'/pages/team-code/team-code'}})"  class="color5" style="font-size:14px;;background: #FB8448;width:320px;height: 35px;line-height: 35px;border-radius: 20px; margin: 20px auto 100px;">
+		<button @click="webSelf.$Router.navigateTo({route:{path:'/pages/team-code/team-code'}})" class="color5" style="font-size:14px;;background: #FB8448;width:320px;height: 35px;line-height: 35px;border-radius: 20px; margin: 20px auto 100px;">
 			邀请达人
 		</button>
 
@@ -90,21 +93,25 @@
 
 		data() {
 			return {
-
+				teamOrderData:[],
+				mainData:[],
 				webSelf: this,
 				cWidth2: '', //横屏图表
 				cHeight2: '', //横屏图表
 				pixelRatio: 1,
-				"LineB": {
-					"categories": ["2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", ],
-					"series": [{
-						"name": "成交量A",
-						"data": [350, 200, 250, 307, 40, 200, 500, 400, 605]
+				LineB: {
+					categories: ['本月数据'],
+					series: [{
+						name: "团队营业额",
+						data: [0]
 					}, {
-						"name": "奖励金额",
-						"data": [35, 20, 25, 37, 4, 20, 50, 40, 65]
+						name: "团队总奖励",
+						data: [0]
 					}]
-				}
+				},
+				turnoverCount:'',
+				totalTurnover:'',
+				totalReward:''
 			}
 		},
 		onLoad(options) {
@@ -113,7 +120,7 @@
 			this.cWidth2 = parseInt(documentWidth * 0.9);
 			this.cHeight2 = parseInt(documentWidth * 0.9 * 0.7);
 			this.showLineB('canvasLineB', this.LineB)
-			/* self.$Utils.loadAll(['getMainData', 'getLabelData', 'getCaseData'], self) */
+			self.$Utils.loadAll(['getMainData','getTotalTurnover','getTotalReward','teamOrder'], self)
 
 		},
 		methods: {
@@ -133,6 +140,71 @@
 					}
 				});
 			},
+
+			getMainData() {
+				const self = this;
+				const postData = {};
+				postData.tokenFuncName = 'getProjectToken';
+				
+				const callback = (res) => {
+					if (res.length > 0) {
+						self.mainData.push.apply(self.mainData, res);
+						console.log('self.mainData',self.mainData)
+						console.log('self.lineB',self.LineB)
+						for (var i = 0; i < self.mainData.length; i++) {
+							self.LineB.categories.push(self.mainData[i].date);
+							self.LineB.series[0].data.push(self.mainData[i].turnover);
+							self.LineB.series[1].data.push(self.mainData[i].reward);
+						}
+						console.log('self.LineB',self.LineB)
+						console.log('self.LineC',self.LineC)
+					};
+					self.$Utils.finishFunc('getMainData');
+				};
+				self.$apis.monthFlow(postData, callback);
+			},
+						
+			getTotalTurnover() {
+				const self = this;
+				const postData = {};
+				postData.tokenFuncName = 'getProjectToken';
+				postData.data={
+					behavior:1
+				};
+				const callback = (res) => {
+					self.totalTurnover = res;
+					self.$Utils.finishFunc('getTotalTurnover');
+				};
+				self.$apis.teamTotal(postData, callback);
+			},
+			
+			getTotalReward() {
+				const self = this;
+				const postData = {};
+				postData.tokenFuncName = 'getProjectToken';
+				postData.data={
+					behavior:2
+				};
+				const callback = (res) => {
+					self.totalReward = res;
+					self.$Utils.finishFunc('getTotalReward');
+				};
+				self.$apis.teamTotal(postData, callback);
+			},
+			
+			teamOrder() {
+				const self = this;
+				const postData = {};
+				postData.tokenFuncName = 'getProjectToken';
+				const callback = (res) => {
+					if(res.info.data.length>0){
+						self.teamOrderData.push.apply(self.teamOrderData,res.info.data)
+					}
+					self.$Utils.finishFunc('teamOrder');
+				};
+				self.$apis.teamOrder(postData, callback);
+			},
+			
 
 			showLineB(canvasId, chartData) {
 				canvaLineB = new uCharts({
@@ -169,114 +241,7 @@
 
 
 
-			test($event) {
-				var testres = this.getCaseData()
-			},
 
-			getMainData() {
-				const self = this;
-				const postData = {};
-				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-				postData.searchItem = {
-					thirdapp_id: self.$Config.solely_thirdapp_id
-				};
-				postData.getBefore = {
-					caseData: {
-						tableName: 'Label',
-						searchItem: {
-							title: ['=', ['推荐阅读']],
-						},
-						middleKey: 'menu_id',
-						key: 'id',
-						condition: 'in',
-					},
-				};
-				const callback = (res) => {
-					if (res.info.data.length > 0) {
-						self.mainData.push.apply(self.mainData, res.info.data);
-						if (self.mainData.length > 2) {
-							self.mainData = self.mainData.slice(0, 2)
-						}
-					};
-					self.$Utils.finishFunc('getMainData');
-				};
-				self.$apis.articleGet(postData, callback);
-			},
-
-			getLabelData(isNew) {
-				var self = this;
-				if (isNew) {
-					self.$Utils.clearPageIndex(self)
-				};
-				var postData = {};
-				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-				postData.searchItem = {
-					type: 1,
-					thirdapp_id: 21,
-					parentid: 2
-				};
-				var callback = function(res) {
-					if (res.info.data.length > 0) {
-						self.labelData.push.apply(self.labelData, res.info.data)
-					}
-					for (var i = 0; i < res.info.data.length; i++) {
-						self.menu_array.push(res.info.data[i].id)
-					};
-					self.$Utils.finishFunc('getLabelData');
-					//self.getCaseData();
-				};
-				console.log('self.$apis', self.$apis)
-				self.$apis.labelGet(postData, callback);
-			},
-
-
-			getSliderData() {
-				const self = this;
-				const postData = {};
-				postData.searchItem = {
-					title: '首页轮播',
-					thirdapp_id: self.$Config.solely_thirdapp_id
-				};
-				const callback = (res) => {
-					console.log(1000, res);
-					if (res.info.data.length > 0) {
-						self.swiperData = res.info.data[0]['mainImg'];
-					};
-					self.$Utils.finishFunc('getSliderData');
-				};
-				self.$apis.labelGet(postData, callback);
-			},
-			getCaseData() {
-				var self = this;
-				var postData = {};
-				postData.searchItem = {
-					thirdapp_id: getApp().globalData.solely_thirdapp_id
-				}
-				postData.getBefore = {
-					caseData: {
-						tableName: 'Label',
-						searchItem: {
-							parentid: ['in', [146]]
-						},
-						middleKey: 'menu_id',
-						key: 'id',
-						condition: 'in',
-					},
-				};
-				var callback = (res) => {
-					console.log('self.caseData.res', res);
-					if (res.info.data.length > 0) {
-						self.caseData.push.apply(self.caseData, res.info.data)
-						if (res.info.data.length > 4) {
-							self.caseData = self.caseData.slice(0, 4)
-						}
-					};
-					self.$Utils.finishFunc('getCaseData');
-				};
-
-
-				self.$apis.articleGet(postData, callback);
-			},
 		}
 	}
 </script>
@@ -322,17 +287,21 @@
 		border-radius: 50%;
 		border: solid 1px #B01313;
 	}
-	.btm-list{
+
+	.btm-list {
 		box-sizing: border-box;
 		padding: 0px 15px;
 	}
-	.list image{
-		 width:6px;
-		 height: 12px;
-		 margin-left: 10px;
+
+	.list image {
+		width: 6px;
+		height: 12px;
+		margin-left: 10px;
 	}
-	.list{
-		 float: right; margin-right: 15px;
+
+	.list {
+		float: right;
+		margin-right: 15px;
 	}
 
 	@import "../../assets/style/bootstrap.css";

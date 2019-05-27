@@ -17,7 +17,7 @@
 		</div>
 		<div class="storebox bg1" style="height: auto;" v-for="item in mainData">
 			<div class="storebox-top">
-				<div class="font12 color1 ilblock" style="margin-left: 15px;">
+				<div class="font12 color1 ilblock">
 					交易时间：{{item.create_time}}
 				</div>	
 			</div>
@@ -26,8 +26,8 @@
 					<img :src="item.products[0]&&item.products[0].snap_product&&item.products[0].snap_product.product.mainImg[0]?item.products[0].snap_product.product.mainImg[0].url:''" />
 				</div>
 				<div class="ilblock imgname">
-					<div class="font15 color2 overflow2" style="line-height: 21px; height: 45px;">
-						{{item.products[0]&&item.products[0].snap_product?item.products[0].snap_product.title:''}}
+					<div class="font14 color2 overflow2" style="line-height: 21px; height: 45px;">
+						{{item.products[0]&&item.products[0].snap_product&&item.products[0].snap_product.product?item.products[0].snap_product.product.title:''}}
 					</div>
 					<div class="ilblock" style="color: rgb(249,138,72); font-size: 11px; margin-top: 16px;">￥<span style="font-size: 20px;">{{item.price}}</span> </div>
 				</div>
@@ -110,14 +110,17 @@
 				self.tapUrl = '';
 				console.log('closeTap')	
 			},
-			getMainData() {
-				const self = this;			
+			
+			getMainData(isNew) {
+				const self = this;	
+				if(isNew){
+					self.mainData = [];
+				};
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
 				postData.paginate = self.$Utils.cloneForm(self.paginate);
 				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
-				postData.searchItem.user_no= uni.getStorageSync('user_no');
-				
+				postData.searchItem.user_no= uni.getStorageSync('user_no');			
 				postData.order = {
 					create_time: 'desc'
 				};
@@ -139,7 +142,7 @@
 							self.mainData.push.apply(self.mainData, res.info.data);
 						} else {
 							self.isLoadAll = true;
-							self.$Utils.showToast('没有更多了','none');
+						
 						};
 					} else {
 						self.$Utils.showToast('网络故障','none')
@@ -177,8 +180,8 @@
 						transport_status:2
 					};
 				};
-				self.mainData = [];
-				self.getMainData();
+			
+				self.getMainData(true);
 			
 			},
 		}

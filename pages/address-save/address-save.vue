@@ -4,10 +4,10 @@
 			<div class="ilblock color2 font15" style="margin-left: 15px;">
 				所在地区：
 			</div>
-			<div class="color1 ilblock flo-right" style="width: 85px; 
-				background: url(../../static/images/home-icon9.png) no-repeat 60px center;
-				background-size: 8%;
-			">请选择</div>
+			<div class="color1 ilblock flo-right" style="margin-right: 15px;"  @click="showMulLinkageThreePicker">{{submitData.city==''?'请选择地区':submitData.city}}
+				<image src="../../static/images/home-icon9.png" style="width: 10px;height:10px;margin-left: 10px;"></image>
+			</div>
+				
 		</div>
 		<div class="save-box">
 			<div class="ilblock color2 font15" style="margin-left: 15px;">
@@ -21,26 +21,46 @@
 			<div class="ilblock color2 font15" style="margin-left: 15px;">
 				详细地址：
 			</div>
-			<input class="color1 ilblock" placeholder="如街道\门牌号" style="border: none; height: 60%; position: relative;top: 5px;" v-model="submitData.detail"/>
+			<input class="color1 ilblock" placeholder="如街道\门牌号" style="border: none; height: 60%; position: relative;top: 14px;" v-model="submitData.detail"/>
 
 		</div>
 		<div  @click="webSelf.$Utils.stopMultiClick(submit)">
 			<button class="radiu20 color5">保存</button>
 		</div>
+		<mpvue-city-picker :themeColor="themeColor" ref="mpvueCityPicker" :pickerValueDefault="cityPickerValueDefault"
+		 @onCancel="onCancel" @onConfirm="onConfirm"></mpvue-city-picker>
 	</view>
 </template>
 
 <script>
+	import mpvuePicker from '../../components/mpvue-picker/mpvuePicker.vue';
+	// https://github.com/zhetengbiji/mpvue-citypicker
+	import mpvueCityPicker from '../../components/mpvue-citypicker/mpvueCityPicker.vue'
+	import cityData from '../../common/city.data.js';
 	export default {
-
+		components: {
+			mpvuePicker,
+			mpvueCityPicker
+		},
+		
+		
 		data() {
 			return {
 				submitData: {
 					name: '',
-					city: '陕西省西安市雁塔区',
+					city: '',
 					detail: ''
 				},
-				webSelf:this
+				webSelf:this,
+				mulLinkageTwoPicker: cityData,
+				cityPickerValueDefault: [0, 0, 0],
+				themeColor: '#F98A48',
+				
+				mode: '',
+				deepLength: 1,
+				pickerValueDefault: [0],
+				pickerValueArray:[],
+				
 			}
 		},
 		onLoad(options) {
@@ -53,6 +73,18 @@
 
 		},
 		methods: {
+			
+			showMulLinkageThreePicker() {
+				this.$refs.mpvueCityPicker.show()
+			},
+			onConfirm(e) {
+				
+				this.submitData.city = e.label;
+				console.log('e',e)
+			},
+			onCancel(e){
+				console.log('e',e)
+			},
 			
 			choose(type){
 				const self = this;

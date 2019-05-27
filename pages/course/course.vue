@@ -23,6 +23,12 @@
 		
 		onLoad(options) {
 			const self = this;
+			var options = self.$Utils.getHashParameters();
+			if(options[0].type&&options[0].type=='kefu'){
+				self.title = '客服说明'
+			}else{
+				self.title = '使用教程'
+			};
 			self.$Utils.loadAll(['getMainData'], self)
 		},
 		
@@ -39,7 +45,7 @@
 					caseData: {
 						tableName: 'Label',
 						searchItem: {
-							title: ['=', ['使用教程']],
+							title: ['=', [self.title]],
 						},
 						middleKey: 'menu_id',
 						key: 'id',

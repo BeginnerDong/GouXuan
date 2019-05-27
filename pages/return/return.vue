@@ -94,9 +94,9 @@
 				webSelf: this,
 				mainData: [],
 				type: 2,
-				hasWithdraw:0,
-				shopCount:0,
-				groupCount:0,
+				hasWithdraw:'',
+				shopCount:'',
+				groupCount:'',
 				userInfoData:[],
 				searchItem: {
 					type: 2

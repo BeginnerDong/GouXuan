@@ -2,10 +2,10 @@
 	<view>
 		<div class="top">
 			<div class="top-box">
-				<div class="tou-img">
+				<div class="tou-img"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/serve/serve'}})">
 					<img :src="headImgUrl" />
 				</div>
-				<div class="color2 user-name"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/serve/serve'}})">{{nickName}}</div>
+				<div class="color2 user-name" >{{nickName}}</div>
 			</div>
 		</div>
 		<div class="status bg1">

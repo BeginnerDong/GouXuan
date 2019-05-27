@@ -150,7 +150,7 @@
 					<div>首页</div>
 
 				</div>
-				<div class="index ilblock">
+				<div class="index ilblock"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/course/course?type=kefu'}})">
 
 					<img src="../../static/images/details-icon3.png" />
 					<div>客服</div>

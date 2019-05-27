@@ -136,9 +136,9 @@
 			_getLabel() {
 				let pcikerLabel =
 					this.provinceDataList[this.pickerValue[0]].label +
-					'-' +
+					 
 					this.cityDataList[this.pickerValue[1]].label +
-					'-' +
+					 
 					this.areaDataList[this.pickerValue[2]].label;
 				return pcikerLabel;
 			},

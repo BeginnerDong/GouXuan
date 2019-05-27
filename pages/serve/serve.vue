@@ -52,7 +52,7 @@
 		
 		<div class="bg1">
 			<div class="testlist-on" v-for="(item,index) in mainData">
-				{{item.title}}<img :src="webSelf.$Utils.inArray(item.id,openArray)!=-1?'../../static/images/微信图片_20190429170142.png':'../../static/images/home-icon10.png'" @click="show(item.id)"/>
+				{{item.title}}<img :src="webSelf.$Utils.inArray(item.id,openArray)!=-1?'../../static/images/home-icon10.png':'../../static/images/home-icon10.png'" @click="show(item.id)"/>
 				<div class="color2" style="line-height: 20px;" :style="webSelf.$Utils.inArray(item.id,openArray)!=-1?'':'display:none'">{{item.description}}</div>
 			</div>
 		</div>

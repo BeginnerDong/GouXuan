@@ -24,7 +24,8 @@
 
 		data() {
 			return {
-				mainData:[]
+				mainData:[],
+				webSelf:this,
 			}
 		},
 		onLoad(options) {

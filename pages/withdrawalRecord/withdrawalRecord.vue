@@ -10,7 +10,7 @@
 			</view>
 		</view>
 		
-		<div class="color1" style="text-align: center; padding: 60px;" v-else>没有数据~~~</div>
+		<div class="color1" style="text-align: center; padding: 60px;" v-if="mainData.length==0">没有数据~~~</div>
 		
 	</view>
 </template>
@@ -49,6 +49,7 @@
 			getMainData() {
 				const self = this;
 				const postData = {};
+				postData.tokenFuncName = 'getProjectToken';
 				postData.paginate = self.$Utils.cloneForm(self.paginate);
 				postData.searchItem = {
 					thirdapp_id: self.$Config.thirdapp_id,

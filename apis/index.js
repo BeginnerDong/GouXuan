@@ -31,6 +31,85 @@ export default {
 		http.HTTP(allParams);
 	},
 
+	monthFlow(param, callback) {
+
+		var allParams = {
+			url: 'Project/Solely/monthFlow',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
+	
+	teamTotal(param, callback) {
+	
+		var allParams = {
+			url: 'Project/Solely/teamTotal',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
+	
+	teamFlow(param, callback) {
+	
+		var allParams = {
+			url: 'Project/Solely/teamFlow',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
+	
+	teamOrder(param, callback) {
+	
+		var allParams = {
+			url: 'Project/Solely/teamOrder',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
+
+	teamRank(param, callback) {
+	
+		var allParams = {
+			url: 'Project/Solely/teamRank',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
+	
+	
+	getTeam(param, callback) {
+	
+		var allParams = {
+			url: 'Project/Solely/getTeamv',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
+
 	SkuDateGet(param, callback) {
 		var allParams = {
 			url: 'Common/SkuDate/get',

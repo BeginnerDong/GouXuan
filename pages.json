@@ -103,6 +103,12 @@
 			}
 		},
 		{
+			"path": "pages/groupReturn/groupReturn",
+			"style": {
+				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+			}
+		},
+		{
 			"path": "pages/login/login",
 			"style": {
 				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
@@ -191,7 +197,8 @@
 		{
 			"path": "pages/store/store",
 			"style": {
-				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+				"navigationBarTitleText": "吃喝玩乐推荐",//设置页面标题文字
+				"enablePullDownRefresh": true
 			}
 		},
 		{
@@ -264,7 +271,7 @@
 		{
 			"path": "pages/withdrawalRecord/withdrawalRecord",
 			"style": {
-				"navigationBarTitleText": "注册成为达人"//设置页面标题文字
+				"navigationBarTitleText": "提现记录"//设置页面标题文字
 			}
 		},
 		{

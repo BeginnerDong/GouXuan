@@ -2,14 +2,14 @@
 	<view>
 		
 		<div class="bg1" style="width: 100%; padding:15px 15px 0px;">
-			<div class="ilblock list-btm" style="width: 41%;">
+			<!-- <div class="ilblock list-btm" style="width: 41%;">
 				按产品统计<image src="../../static/images/20190523150314.png" style="width: 10px;height: 6px;"></image>
 
-			</div>
-			<div class="ilblock list-btm" style="width: 35%;">
+			</div> -->
+			<div class="ilblock list-btm" style="width: 35%;" @click="showSinglePicker">
 				本月<image src="../../static/images/20190523150314.png" style="width: 10px;height: 6px;"></image>
 			</div>
-			<div class="ilblock">
+			<div class="ilblock" style="float: right;">
 				<button>搜索</button>
 			</div>
 			<div style="clear: both;"></div>
@@ -34,15 +34,52 @@
 			</view>
 		</view>
 		<div class="color1 font13" style="width: 100%; text-align: center; margin-top: 50px;">~~没有更多数据了~~</div>
+		<mpvue-picker :themeColor="themeColor" ref="mpvuePicker" :mode="mode" :deepLength="deepLength" :pickerValueDefault="pickerValueDefault"
+		 @onConfirm="onConfirm" @onCancel="onCancel" :pickerValueArray="pickerValueArray"></mpvue-picker>
+		
 	</view>
 </template>
 
 <script>
+	import mpvuePicker from '../../components/mpvue-picker/mpvuePicker.vue';
+	// https://github.com/zhetengbiji/mpvue-citypicker
+	import mpvueCityPicker from '../../components/mpvue-citypicker/mpvueCityPicker.vue'
+	import cityData from '../../common/city.data.js';
 	export default {
+		components: {
+			mpvuePicker,
+			mpvueCityPicker
+		},
 
 		data() {
 			return {
-
+				
+				
+				 pickerSingleArray: [{
+                        label: '本月',
+                        value: 1
+                    },
+                    {
+                        label: '上个月',
+                        value: 2
+                    },
+                    {
+                        label: '前三个月',
+                        value: 3
+                    },
+                    {
+                        label: '前半年',
+                        value: 4
+                    }
+                ],
+                
+                
+                themeColor: '#F98A48',
+                pickerText: '',
+                mode: '',
+                deepLength: 1,
+                pickerValueDefault: [0],
+                pickerValueArray:[]
 
 			}
 		},
@@ -52,6 +89,20 @@
 
 		},
 		methods: {
+			
+			onConfirm(e) {
+                this.pickerText = JSON.stringify(e)
+				console.log(e)
+            },
+			
+			showSinglePicker() {
+				this.pickerValueArray = this.pickerSingleArray
+				this.mode = 'selector'
+				this.deepLength = 1
+				this.pickerValueDefault = [0]
+				this.$refs.mpvuePicker.show()
+			},
+			
 			test($event) {
 				var testres = this.getCaseData()
 			},
