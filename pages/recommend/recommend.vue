@@ -531,7 +531,6 @@
 				const self = this;
 				console.log('self.choosed_skuDateData',self.choosed_skuDateData)
 				if(self.mainData.type==2){
-					
 					if(!self.choosed_skuData.skuDate||JSON.stringify(self.choosed_skuData.skuDate) == '{}'){
 						self.$Utils.showToast('请选择预约日期','none')
 					}else{
@@ -546,8 +545,8 @@
 						uni.navigateTo({
 							url: '/pages/pay/pay?type='+self.mainData.type+'&id='+self.choosed_skuData.id,
 						});
-					}	
-				}				
+					};	
+				};				
 			}
 		}
 	}
