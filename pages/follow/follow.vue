@@ -71,7 +71,7 @@
 
 		<view style="width: 100%; height: 60px;"></view>
 		<view class="navbar-brand">
-			<view style="margin-top: 10px;">
+			<view class="color1" style="margin-top: 10px;">
 				<view class="navbar-item ilblock" @click="webSelf.$Router.reLaunch({route:{path:'/pages/index/index'}})">
 					<view class="navbar-img">
 						<image src="../../static/images/navbar1.png"></image>

@@ -59,6 +59,7 @@
 	border-radius: 8px 8px 0px 0px;
 	overflow: hidden;
 	margin: 0 auto;
+	/* border: solid 1rpx; */
 }
 .recommend-top{
 	height: 36px;
@@ -77,24 +78,25 @@
 }
 .recommend-middle{
 	width: 100%;
-	height: 50px;
+	height: 60px;
 	flex-wrap: nowrap;
 	box-sizing: border-box;
-	/* border: solid 1px red; */
+	border-right: solid 1px #EAEAEA;
+	border-bottom: solid 1px #EAEAEA;
 }
 .recommend-box{
 	border-left: solid 1px #EAEAEA;
-	border-bottom: solid 1px #EAEAEA;
 	text-align: center;
-	padding-top: 12px;
 	height: 100%;
 	float: left;
+	box-sizing: border-box;
+	padding-top:11px;
 }
 .recommend .color1{
-	font-size: 13px;
+	font-size: 12px;
 }
 .recommend .color2{
-	font-size: 15px;
+	font-size: 14px;
 	
 }
 

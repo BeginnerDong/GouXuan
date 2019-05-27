@@ -59,25 +59,25 @@
 						<view class="color2" style="font-weight: bold;">长隆度假区</view>
 						<view class="color1">长隆</view>
 					</view>
-					<view class="recommend-box" style="width: 23.5%; border-right:solid 1px #EAEAEA;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=33'}})">
+					<view class="recommend-box" style="width: 23.5%;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=33'}})">
 						<view class="color2" style="font-weight: bold;">港澳酒店</view>
 						<view class="color1">动感之都</view>
 					</view>
 				</view>
 				<view class="recommend-middle" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=33'}})">
-					<view class="recommend-box" style="width: 32.9%;border-bottom: solid 1rpx #EAEAEA;">
+					<view class="recommend-box" style="width: 32.8%;">
 						<view class="color2" style="font-weight: bold;">全球购</view>
 						<view class="color1">全球热卖好货</view>
 					</view>
-					<view class="recommend-box" style="width: 32.9%;border-bottom: solid 1rpx #EAEAEA;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=34'}})">
+					<view class="recommend-box" style="width: 32.5%;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=34'}})">
 						<view class="color2" style="font-weight: bold;">果蔬百货</view>
 						<view class="color1">果蔬百货</view>
 					</view>
-					<view class="recommend-box" style="width: 32.9%;border-bottom: solid 1rpx #EAEAEA;border-right: solid 1rpx #EAEAEA;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=35'}})">
+					<view class="recommend-box" style="width: 32.8%;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=35'}})">
 						<view class="color2" style="font-weight: bold;">一日游</view>
 						<view class="color1">周边精选</view>
 					</view>
-					<view style="clear: both;"></view>
+					
 				</view>
 			</view>
 			<view style="width: 100%; height: 15px;"></view>
@@ -171,7 +171,7 @@
 
 		<view style="width: 100%; height: 20px;"></view>
 		<view class="navbar-brand">
-			<view style="margin-top: 10px;">
+			<view class="color1" style="margin-top: 10px;">
 				<view class="navbar-item ilblock">
 					<view class="navbar-img">
 						<image src="../../static/images/navbar1-a.png"></image>
@@ -586,11 +586,10 @@
 <style>
 	
 	@import "../../assets/style/index.css";
-	@import "../../assets/style/basic.css";
-	@media screen and (max-width: 320px){
-		.recommend-middle{
-			font-size: 13px;
-		}
+	@media screen and (max-width: 340px){
+		/* .recommend-middle{
+			font-size: 10px;
+		} */
 		.r-type1{
 			width: 23.5% !important;
 		}

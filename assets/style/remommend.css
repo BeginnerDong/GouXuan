@@ -173,13 +173,13 @@
 }
 .wahct-topleft{
 	font-size: 14upx;
-	margin: 0upx 11% ;
+	margin: 0upx 10.4% ;
 	
 	}
 	
 .wahct-topright{
 	color: #8B8B8B;
-	font-size: 14upx;
+	font-size: 10px;
 	margin: 0upx 11%;
 	}
 .week{
@@ -192,14 +192,14 @@
 	width: 14.2%;
 	text-align: center;
 	/* margin-left: 69upx; */
-	font-size: 14upx;
+	font-size: 10px;
 }
 .day-item{
 	width: 14.2%;
 	height: 30upx;
 	line-height: 140upx;
 	text-align: center;
-	font-size: 15upx;
+	font-size: 10px;
 	color: #C8C8C8;
 }
 .day-star{
