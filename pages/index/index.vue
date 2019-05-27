@@ -140,8 +140,6 @@
 						</view>
 					</view>
 					<view class="ilblock" style="padding: 0px 5px;width: 100%;">
-						<view class="ilblock fsize price_p0" style="color: rgb(249,138,72);margin-bottom: 10pz;">￥<span class="price_p1">{{item.price}}</span></view>
-
 						<view class="ilblock wiblock" style="flex-wrap: nowrap;width: 64%;">
 							<div class="ilblock best-money1 wiblock1" style="width:43%;" v-if="item.skuDate.length==0">
 								<view class="span1 ilblock bg3">店返</view>
@@ -152,6 +150,18 @@
 								<view class="span2 ilblock color9">￥{{item.group_reward}}</view>
 							</div>
 						</view>
+						<view class="ilblock fsize price_p0" style="color: rgb(249,138,72);margin-bottom: 10pz;">￥<span class="price_p1">{{item.price}}</span></view>
+
+						<!-- <view class="ilblock wiblock" style="flex-wrap: nowrap;width: 64%;">
+							<div class="ilblock best-money1 wiblock1" style="width:43%;" v-if="item.skuDate.length==0">
+								<view class="span1 ilblock bg3">店返</view>
+								<view class="span2 ilblock color8">￥{{item.shop_reward}}</view>
+							</div>
+							<div class="ilblock best-money2 wiblock1" style=" width:43%;" v-if="item.skuDate.length==0">
+								<view class="span1 ilblock bg4">团返</view>
+								<view class="span2 ilblock color9">￥{{item.group_reward}}</view>
+							</div>
+						</view> -->
 
 						<view class="ilblock best-topred wiblock2 hinnt_p" style="" v-if="item.skuDate.length>0">
 							返佣具体以日期为准
@@ -600,6 +610,13 @@
 	.price_p1{
 		font-size: 20px;
 	}
+	.wiblock{
+		display: block;min-height: 23px;
+	}
+	.wiblock1{
+		margin-left: 4px !important;
+		
+	}
 	@media screen and (max-width: 360px){
 		/* .recommend-middle{
 			font-size: 10px;
@@ -611,8 +628,8 @@
 			width: 64% !important;
 		}
 		.wiblock1{
-			width: 37% !important;
-			margin-left: 10px !important;
+			width: 46% !important;
+			margin-left: 4px !important;
 		}
 		.wiblock2{
 			left: 29% !important;

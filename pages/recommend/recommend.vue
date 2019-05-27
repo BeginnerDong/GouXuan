@@ -108,9 +108,11 @@
 				<block v-for="item in dateData" >
 					<div class="day-item ilblock day-star" :style="item.skuDate&&item.skuDate.id==currentSkuDateId?'height:50px;color:red':'height:50px;'"  @click="dateChoose(item)">
 						<div>{{item.sDay}}</div>
+						<div style="position: absolute;top:12px">
 						<div s v-if="item.hasItem>0">￥{{item.skuDate.price}}</div>
 						<div style="color:#72B784;" v-if="item.hasItem>0">返{{item.skuDate.shop_reward}}</div>
 						<div style="color:#71C3CB; margin-top: 8upx" v-if="item.hasItem>0">{{item.stock>0?'充足':'已售罄'}}</div>
+						</div>
 					</div>	
 				</block>
 				

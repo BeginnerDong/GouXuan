@@ -174,9 +174,13 @@
 .wahct-topleft{
 	font-size: 14upx;
 	margin: 0upx 10.4% ;
-	
 	}
-	
+	@media screen and (max-width: 360px) {
+		.wahct-topleft{
+			font-size: 14upx;
+			margin: 0upx 9% ;
+			}
+	}
 .wahct-topright{
 	color: #8B8B8B;
 	font-size: 10px;
