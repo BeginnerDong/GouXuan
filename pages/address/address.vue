@@ -9,9 +9,9 @@
 			<div style="height: 42px;line-height: 42px; ">
 				<img src="../../static/images/icon-3.png" style="width: 15px; margin-left: 18px;" />
 				<div class="color1 font11 ilblock" style="margin-left:6px;">{{item.isdefault==1?'默认地址':'选为默认地址'}}</div>
-				<div :data-id="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/address-save/address-save?id='+$event.currentTarget.dataset.id}})" class="ilblock color1 font11" style="margin-left: 100px;"><img src="../../static/images/icon-1.png" style="width: 14px;" />
+				<div :data-id="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/address-save/address-save?id='+$event.currentTarget.dataset.id}})" class="p_bjblock0 ilblock color1 font11"><img src="../../static/images/icon-1.png" style="width: 14px;" />
 					编辑</div>
-				<div class="ilblock color1 font11" :data-id="item.id" @click="deleteAddress($event.currentTarget.dataset.id)" style="margin-left: 25px;"><img src="../../static/images/icon-2.png" style="width: 14px;" />
+				<div class="ilblock color1 font11 p_bjblock1" :data-id="item.id" @click="deleteAddress($event.currentTarget.dataset.id)" style=""><img src="../../static/images/icon-2.png" style="width: 14px;" />
 					删除</div>
 			</div>
 		</div>
@@ -131,7 +131,25 @@
 		border-radius: 20px;
 		margin: 5px 5px 5px 15px;
 	}
+	.p_bjblock0{
+			margin-left: 100px;
+	}
+	.p_bjblock1{
+		margin-left: 25px;
+	}
 	@import "../../assets/style/bootstrap.css";
 	@import "../../assets/style/basic.css";
-	
+	@media screen and (max-width: 360px){
+		.p_bjblock1{
+			margin-left: 12px !important;
+		}
+	}
+	@media screen and (max-width: 320px){
+		.p_bjblock0{
+			margin-left: 65px !important;
+		}
+		.p_bjblock1{
+			margin-left: 12px !important;
+		}
+	}
 </style>

@@ -135,10 +135,12 @@
 						<view class="bg3">{{item.hourCount}}</view>:<view class="bg3">{{item.minCount}}</view>:<view class="bg3">{{item.secCount}}</view>
 					</view>
 					<view class="ilblock color2 all-store-text">
-						[{{item.city}}]{{item.title}}
+						<view class="ilblockxz">
+							[{{item.city}}]{{item.title}}
+						</view>
 					</view>
 					<view class="ilblock" style="padding: 0px 5px;width: 100%;">
-						<view class="ilblock fsize" style="font-size: 12px; color: rgb(249,138,72);margin-bottom: 10pz;">￥<span style="font-size: 20px;">{{item.price}}</span></view>
+						<view class="ilblock fsize price_p0" style="color: rgb(249,138,72);margin-bottom: 10pz;">￥<span class="price_p1">{{item.price}}</span></view>
 
 						<view class="ilblock wiblock" style="flex-wrap: nowrap;width: 64%;">
 							<div class="ilblock best-money1 wiblock1" style="width:43%;" v-if="item.skuDate.length==0">
@@ -151,7 +153,7 @@
 							</div>
 						</view>
 
-						<view class="ilblock best-topred wiblock2" style="position: absolute; bottom: 5px; left: 32%;" v-if="item.skuDate.length>0">
+						<view class="ilblock best-topred wiblock2 hinnt_p" style="" v-if="item.skuDate.length>0">
 							返佣具体以日期为准
 						</view>
 					</view>
@@ -231,7 +233,7 @@
 				self.site_id = options[0].site_id
 			};
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			self.$Utils.loadAll(['getSiteData', 'getSliderData', 'getLabelData','wxJsSdk'], self)
+			self.$Utils.loadAll(['getSiteData', 'getSliderData', 'getLabelData','wxJsSdk','tokenGet'], self)
 			
 		},
 		onShow() {
@@ -586,7 +588,19 @@
 <style>
 	
 	@import "../../assets/style/index.css";
-	@media screen and (max-width: 340px){
+	.ilblockxz{
+		overflow: hidden;
+		text-overflow:ellipsis;
+		white-space: nowrap;
+	}
+	.hinnt_p{
+		font-size: 14px;
+		position: absolute; bottom: 1px; left: 32%;
+	}
+	.price_p1{
+		font-size: 20px;
+	}
+	@media screen and (max-width: 360px){
 		/* .recommend-middle{
 			font-size: 10px;
 		} */
@@ -594,10 +608,11 @@
 			width: 23.5% !important;
 		}
 		.wiblock{
-			width: 60% !important;
+			width: 64% !important;
 		}
 		.wiblock1{
-			width: 41% !important;
+			width: 37% !important;
+			margin-left: 10px !important;
 		}
 		.wiblock2{
 			left: 29% !important;
@@ -607,6 +622,14 @@
 		}
 		.fsize{
 			font-size: 14px !important;
+		}
+		.price_p1,.price_p0{
+			font-size: 15px !important;
+		}
+		.hinnt_p{
+			font-size: 12px !important;
+			bottom: 2px !important;
+			left: 32% !important;
 		}
 	}
 </style>
