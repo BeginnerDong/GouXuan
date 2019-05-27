@@ -32,13 +32,15 @@
 					<div class="ilblock" style="color: rgb(249,138,72); font-size: 11px; margin-top: 16px;">￥<span style="font-size: 20px;">{{item.price}}</span> </div>
 				</div>
 			</div>
-			<div>
-				<div  v-if="item.qrData" v-for="c_item in item.qrData">
-					核销二维码 <image style="width: 80px;height: 80px;" :src="c_item.url" mode=""></image>
+			<div v-if="item.qrData.length>0">
+				<div class="font12 color1 ilblock" style="margin-left: 15px;">
+					核销二维码
+				</div>	
+				<div style="width: 100%;border-top: 1px solid gray;margin-top: 5px;">
+					 <image v-for="c_item in item.qrData" style="width: 80px;height: 80px;" :src="c_item.url" mode="" @click="tapZoom(c_item.url)"></image>
 				</div>
-				<view style="clear: both;"></view>
 			</div>
-			
+			<view style="clear: both;"></view>
 		</div>
 		<div class="box-c" v-if="mainData.length==0">
 			<div style="margin-top: 100px; margin-left: 140px;">
@@ -46,14 +48,14 @@
 			</div>
 			<div class="color1 font15" style="text-align: center; margin-top: 30px;">你还没有这个订单状态</div>
 		</div>
-		<!--<view class="fixd">
-			<view class="fixd-box">
-				<image src="../../static/images/ttq.png" mode=""></image>
+		<view class="fixd" v-if="tapShow">
+			<view class="fixd-box" >
+				<image :src="tapUrl"  mode=""></image>
 			</view>
-			<view style="text-align: center;">
-				<image src="../../static/images/达人/icon3.png" style="width: 40rpx;height: 40rpx;" bindtap="show"></image>
+			<view style="text-align: center;" @click="closeTap">
+				<image src="../../static/images/ttq.png" style="width: 40rpx;height: 40rpx;" ></image>
 			</view>
-		</view>-->
+		</view>
 	</view>
 </template>
 
@@ -68,7 +70,9 @@
 				mainData: [],
 				searchItem:{
 					pay_status:1
-				}
+				},
+				tapShow:false,
+				tapUrl:''
 			}
 		},
 		onLoad(options) {
@@ -93,6 +97,19 @@
 		},
 		
 		methods: {
+			
+			tapZoom(url){
+				const self = this;
+				self.tapShow = true;
+				self.tapUrl = url;
+				console.log('tapZoom')	
+			},	
+			closeTap(){
+				const self = this;
+				self.tapShow = false;
+				self.tapUrl = '';
+				console.log('closeTap')	
+			},
 			getMainData() {
 				const self = this;			
 				const postData = {};

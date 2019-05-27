@@ -75,7 +75,7 @@
 				<div  class="ilblock color3" style="float: right;line-height: 57px;">
 					{{couponData.length>0?'请选择优惠券':'暂无优惠券'}}<img src="../../static/images/home-icon9.png" style="height: 11px;margin-left: 10px;margin-bottom: 2px; " />
 				</div>
-				<div style="position: relative;margin-bottom: 15px;"  v-for="item in couponData" @click="chooseCoupon(item.id)" :style="webSelf.$Utils.inArray(item.id,chooseCouponId)!=-1?'border-right:2px solid red':''">
+				<div style="position: relative;margin-bottom: 15px;"  v-for="(item,index) in couponData" @click="chooseCoupon(index)" :style="webSelf.$Utils.inArray(item.id,chooseCouponId)!=-1?'border-right:2px solid red':''">
 					<img style="width:300px;height: 90px;" src="../../static/images/微信图片_20190428143903.png" />
 					<span  style="position:absolute;left:130px;top:30px;font-size: 20px;color:red">{{item.discount}}</span>
 					<span  style="margin-top: 10px;font-size: 12px;color:gray">购满{{item.condition}}元即可使用</span>
@@ -85,7 +85,7 @@
 		</div>
 		<div class="foter-fixd">
 			<div class="ilblock" style="background: #3E3E3E;width: 67%;height: 100%;color: #EDEDED; text-align: center;font-size: 13px;">
-				<span style="font-size: 12px;">合计：</span>{{price}}
+				<span style="font-size: 12px;">微信支付：</span>{{(price-couponPrice).toFixed(2)}}
 			</div>
 			<div class="ilblock" style="background: #F98A48;width:33%; color: #FDE1D3; text-align: center;" @click="webSelf.$Utils.stopMultiClick(addOrder)">
 				微信支付
@@ -107,13 +107,14 @@
 				},
 				count: 1,
 				webSelf:this,
-				price:'',
+				price:0,
 				orderId:'',
 				getBefore:{},
 				getAfter:{},
 				couponData:[],
 				addressData:{},
-				chooseCouponId:[]
+				chooseCouponId:[],
+				couponPrice:0
 			}
 		},
 		onLoad(options) {
@@ -180,14 +181,40 @@
 		methods: {
 			
 			
-			chooseCoupon(id){
+			chooseCoupon(index){
 				const self = this;
-				var nowLength = self.chooseCouponId.indexOf(id);
+				var priceGap = self.price-self.couponPrice;
+				var nowLength = self.chooseCouponId.indexOf(self.couponData[index].id);
 				if(nowLength!=-1){
-					self.chooseCouponId.splice(nowLength,1)
+					self.chooseCouponId.splice(nowLength,1);
+					self.countCouponPrice();	
 				}else{
-					self.chooseCouponId.push(id)
+					if(priceGap>0){
+						self.chooseCouponId.push(self.couponData[index].id);
+						self.countCouponPrice();	
+					};
+				};	
+				console.log('self.couponPrice',self.couponPrice)
+				console.log('self.price',self.price)
+			},
+			
+			countCouponPrice(){
+				const self = this;
+				var couponCountPrice = 0;
+				if(self.chooseCouponId.length>0){
+				
+					for(var i=0;i<self.couponData.length;i++){
+						if(self.chooseCouponId.indexOf(self.couponData[i].id)!=-1){
+							if(self.price-couponCountPrice<parseFloat(self.couponData[i].discount)){
+								couponCountPrice = self.price;
+								break;
+							}else{
+								couponCountPrice = couponCountPrice + self.couponData[i].discount;	
+							};
+						};
+					};
 				};
+				self.couponPrice = couponCountPrice;	
 			},
 
 			getMainData() {
@@ -202,7 +229,7 @@
 					if (res.info.data.length > 0) {
 						self.mainData = res.info.data[0];
 						self.count = 1;
-						self.price = self.mainData.sku[0].price
+						self.price = parseFloat(self.mainData.sku[0].price);
 					};
 					self.getCouponData();
 					if(self.mainData.type==1){
@@ -267,7 +294,7 @@
 						self.count--;
 					}
 				};
-				self.price = (self.count*self.mainData.price).toFixed(2);
+				self.price = (self.count*self.mainData.sku[0].price).toFixed(2);
 				console.log('self.mainData', self.mainData)
 			},
 
@@ -370,19 +397,22 @@
 									id: self.couponData[i].id,
 									price: price-couponPay,
 								});
+								couponPay = price;
 								break;
 							}else{
 								postData.coupon.push({
 									id: self.couponData[i].id,
-									price: self.couponData[i].discount,
+									price: parseFloat(self.couponData[i].discount).toFixed(2),
 								});
+								couponPay = couponPay + parseFloat(self.couponData[i].discount).toFixed(2);
 							};
 						}
 					};
 				};
+			
 				if(price-couponPay>0){
 					postData.wxPay = {
-						price:price-couponPay
+						price:(price-couponPay).toFixed(2)
 					};
 				};
 				postData.tokenFuncName='getProjectToken',

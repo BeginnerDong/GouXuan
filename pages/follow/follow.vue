@@ -174,13 +174,13 @@
 				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
 				postData.getAfter = {
 					label:{
-						tableName:'label',
+						tableName:'Label',
 						middleKey:'category_id',
 						key:'id',
 						searchItem:{
 							status:1
 						},
-						consition:'='
+						condition:'='
 					}
 				};
 				console.log('postData', postData)

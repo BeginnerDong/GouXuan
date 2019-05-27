@@ -2,7 +2,7 @@
 	<view>
 
 		<div class="bg1 top">
-			<div class="ilblock flo-left" style="width:30px ;">
+			<div class="ilblock flo-left" style="width:30px ;" @click="scan">
 				<img src="../../static/images/服务/service-icon6.png" style="width: 28px;" />
 			</div>
 			<div class="search flo-left">
@@ -61,10 +61,48 @@
 		},
 		onLoad(options) {
 			const self = this;
-			self.$Utils.loadAll(['getMainData'], self)
-
+			self.$Utils.loadAll(['wxJsSdk'], self)
 		},
 		methods: {
+			
+			scan(){
+				const self = this;
+				self.$jweixin.scanQRCode({
+					needResult: 0, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+					scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+					success: function (res) {
+						var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+						console.log('result',result)
+						alert(JSON.stringify(res));
+					}
+				});
+			},
+			wxJsSdk(){
+				const self = this;
+				const postData = {
+					thirdapp_id:2,
+					url:window.location.href
+				};
+				const callback = (res)=>{
+					
+					self.$jweixin.config({
+						debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+						appId:res.appId, // 必填，公众号的唯一标识
+						timestamp:res.timestamp , // 必填，生成签名的时间戳
+						nonceStr:res.nonceStr, // 必填，生成签名的随机串
+						signature:res.signature,// 必填，签名
+						jsApiList: ['scanQRCode'] // 必填，需要使用的JS接口列表
+					});
+					self.$jweixin.ready(function () {   //需在用户可能点击分享按钮前就先调用
+					});
+					self.$jweixin.error(function(res){
+						console.log('error',res)
+					});
+					self.$Utils.finishFunc('wxJsSdk');
+				};
+				self.$apis.WxJssdk(postData,callback);
+			},
+			
 		
 		
 			search(){
@@ -77,7 +115,7 @@
 				}
 			},
 
-			getMainData() {
+			getMainData(isNew) {
 				const self = this;
 				const postData = {};
 				postData.tokenFuncName = 'getMerchantToken';

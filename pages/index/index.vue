@@ -130,9 +130,9 @@
 					</view>
 				</view>
 				<view class=" ilblock" style="width: 67%;position: absolute; top: 0px;right: 0px;">
-					<view class="best-botred" v-if="item.start_time>now">【即将开售】</view>
-					<view class="color1 font12 time" v-if="item.start_time<now&&countDownList[index].day=='00'"> 距结束仅剩
-						<view class="bg3">{{countDownList[index].day}}</view>天<view class="bg3">{{countDownList[index].hou}}</view>:<view class="bg3">{{countDownList[index].min}}</view>:<view class="bg3">{{countDownList[index].sec}}</view>
+					
+					<view class="color1 font12 time" v-if="item.timeCount"> 距结束仅剩
+						<view class="bg3">{{item.hourCount}}</view>:<view class="bg3">{{item.minCount}}</view>:<view class="bg3">{{item.secCount}}</view>
 					</view>
 					<view class="ilblock color2 all-store-text">
 						[{{item.city}}]{{item.title}}
@@ -225,14 +225,19 @@
 		onLoad() {
 			
 			const self = this;
+			self.timestampNow = (new Date()).getTime();
 			var options = self.$Utils.getHashParameters();
 			if(options[0]&&options[0].site_id){
 				self.site_id = options[0].site_id
 			};
-			self.now = new Date().getTime();
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 			self.$Utils.loadAll(['getSiteData', 'getSliderData', 'getLabelData','wxJsSdk'], self)
 			
+		},
+		onShow() {
+			const self = this;
+			console.log('onShow',self.timestampNow)
+			self.countDown();
 		},
 		
 		onReachBottom(){
@@ -246,8 +251,15 @@
 		
 		onUnload () {
 			const self = this;
+			console.log('onUnload')
             clearTimeout(self.timeInterval);  
         },
+		
+		onHide () {
+			const self = this;
+			console.log('onHide')
+		    clearTimeout(self.timeInterval);  
+		},
 		
 		methods: {
 			
@@ -355,14 +367,20 @@
 				const callback = (res) => {
 					
 					if (res.info.data.length > 0) {
-						self.mainData.push.apply(self.mainData, res.info.data);
-						for (var i = 0; i < self.mainData.length; i++) {
-							self.endTimeList.push({
-								actEndTime: self.$Utils.timeto(self.mainData[i].end_time, "ymd-hms")
-							});
-							self.mainData[i].endTimeList = [];
+						for (var i = 0; i < res.info.data.length; i++) {
+							if(res.info.data[i].start_time<self.timestampNow&&res.info.data[i].end_time>self.timestampNow){
+								res.info.data[i].timeCount = true;
+								let time = (res.info.data[i].end_time - self.timestampNow) / 1000;
+								// 获取天、时、分、秒
+								//let day = parseInt(time / (60 * 60 * 24));
+								res.info.data[i].hourCount = parseInt(time/(60 * 60));
+								res.info.data[i].minCount = parseInt(time % (60 * 60)/60);
+								res.info.data[i].secCount = parseInt(time % 60 );
+								console.log('res.info.data[i].timeCount',res.info.data[i])	
+							};
 						};
-						self.timeInterval = setInterval(this.countDown, 2000);
+						self.mainData.push.apply(self.mainData, res.info.data);
+						
 					
 					
 					}else{
@@ -375,7 +393,7 @@
 						    mask:true
 						});
 					};
-					self.$Utils.finishFunc('getSiteData');
+					
 					self.$Utils.finishFunc('getMainData');
 						
 				};
@@ -398,6 +416,7 @@
 					if (res.info.data.length > 0) {
 						self.hotData.push.apply(self.hotData, res.info.data);
 					};
+					self.$Utils.finishFunc('getSiteData');
 					self.$Utils.finishFunc('getHotData');
 				};
 				self.$apis.productGet(postData, callback);
@@ -528,48 +547,36 @@
 				// 获取当前时间，同时得到活动结束时间数组
 				const self = this;
 				self.countDownList = [];
-				let newTime =  Date.parse(new Date());
-				let endTimeList = self.endTimeList;
-				
-				// 对结束时间进行处理渲染到页面
-				for (var i = 0; i < self.endTimeList.length; i++) {
-					let endTime = new Date(self.endTimeList[i].actEndTime).getTime();
-					/* console.log('endTime',endTime)
-					console.log('newTime',newTime) */
-					let obj = null;
-					// 如果活动未结束，对时间进行处理
-					/* console.log(endTime - newTime) */
-					if (endTime - newTime > 0) {
-						let time = (endTime - newTime)/1000;
-						// 获取天、时、分、秒
-						//console.log('time',time)
-					
-						let day = parseInt(time / (60 * 60 * 24));
-						let hou = parseInt(time % (60 * 60 * 24) / 3600);
-						let min = parseInt(time % (60 * 60 * 24) % 3600 / 60);
-						let sec = parseInt(time % (60 * 60 * 24) % 3600 % 60);
-						if (day > 0) {
-							hou = hou + day * 24
-						}
-						obj = {
-							day: self.timeFormat(day),
-							hou: self.timeFormat(hou),
-							min: self.timeFormat(min),
-							sec: self.timeFormat(sec)
-						}
-					} else { //活动已结束，全部设置为'00'
-						obj = {
-							day:'00',
-							hou: '00',
-							min: '00',
-							sec: '00'
-						}
-					}
-
-					self.countDownList.push(obj);
-					/* console.log('self.countDownList',self.countDownList) */
-				}	
-				
+				let newTime = Date.parse(new Date());
+				let time = (newTime - self.timestampNow) / 1000;
+				// 获取天、时、分、秒
+				let hou = parseInt(time/(60 * 60));
+				let min = parseInt(time % (60 * 60)/60);
+				let sec = parseInt(time % 60 );
+				for (var i = 0; i < self.mainData.length; i++) {
+					if(self.mainData[i].timeCount){
+						self.mainData[i].secCount = self.mainData[i].secCount-sec;
+						self.mainData[i].minCount = self.mainData[i].minCount-min;
+						self.mainData[i].hourCount = self.mainData[i].hourCount-hou;
+						if(self.mainData[i].secCount<0){
+							self.mainData[i].secCount = self.mainData[i].secCount+60;
+							self.mainData[i].minCount = self.mainData[i].minCount-1;
+						};
+						if(self.mainData[i].minCount<0){
+							self.mainData[i].minCount = self.mainData[i].minCount+60;
+							self.mainData[i].hourCount = self.mainData[i].hourCount-1;
+						};
+						if(self.mainData[i].hourCount<0){
+							self.mainData[i].hourCount = 0;
+							self.mainData[i].timeCount = true;
+						};
+					};
+				};	
+				self.timestampNow = newTime;
+				console.log('countDown');
+				self.timeInterval = setTimeout(function(){
+					self.countDown()
+				},1000)
 			},
 
 		}

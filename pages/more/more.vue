@@ -18,13 +18,11 @@
 				<div class="best-num ilblock">
 					已售{{item.false_sale_count}}
 				</div>
-				<div class="best-time" v-if="item.start_time<now&&countDownList[index].day=='00'">
-					距结束仅剩 <span>{{countDownList[index].day}}</span> 天 <span>{{countDownList[index].hou}}</span> : <span>{{countDownList[index].min}}</span>
-					: <span>{{countDownList[index].sec}}</span>
+				<div class="best-time" v-if="item.timeCount">
+					距结束仅剩  <span>item.hourCount</span> 小时: <span>{{item.minCount}}</span>分钟
+					: <span>{{item.secCount}}</span>
 				</div>
-				<div class="best-time best-time2" v-if="item.start_time>now">
-					【即将开售】
-				</div>
+				
 			</div>
 			<div class="best-text">
 				{{item.title}}
@@ -63,7 +61,7 @@
 
 		data() {
 			return {
-				
+				webSelf:this,
 				endTimeList: [],
 				countDownList:[],
 				mainData: [],
@@ -78,13 +76,12 @@
 				isLoadAll:false
 			}
 		},
-		onShow() {
-			console.log(this.$Router)
+		onLoad(){
 			const self = this;
+			self.timestampNow = (new Date()).getTime();
+			console.log('onLoad',self.timestampNow);
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			self.now = new Date().getTime();
 			var options = self.$Utils.getHashParameters();
-			console.log('options', options)
 			if (options[0].category_id) {
 				self.searchItem.category_id = options[0].category_id
 			};
@@ -97,17 +94,19 @@
 			if (options[0].noSite && options[0].noSite == 'true') {
 				delete self.searchItem.province_id
 			};
-
 			if (options[0].order && options[0].order == 'sale_count') {
 				self.order = {
 					false_sale_count: 'desc'
 				}
 			};
-			self.now = Date.parse(new Date());
-			self.$Utils.loadAll(['getMainData'], self)
+			self.$Utils.loadAll(['getMainData'], self);
 
 		},
-		
+		onShow() {
+			const self = this;
+			console.log('onShow',self.timestampNow)
+			self.countDown();
+		},
 		
 		onReachBottom() {
 		
@@ -122,11 +121,20 @@
 		
 		onHide () {
 			const self = this;
+			console.log('onHide',self.timeInterval)
+		    clearTimeout(self.timeInterval);  
+		},
+		onUnload () {
+			const self = this;
+			console.log('unLoad')
+		    clearTimeout(self.timeInterval);  
+		},
+		onBackPress() {
+			const self = this;
+			console.log('onBackPress')
 		    clearTimeout(self.timeInterval);  
 		},
 
-		
-		
 
 		methods: {
 
@@ -155,84 +163,73 @@
 				const callback = (res) => {
 					self.$Utils.finishFunc('getMainData');
 					if (res.info.data.length > 0) {
+						
+						for (var i = 0; i < res.info.data.length; i++) {
+							if(res.info.data[i].start_time<self.timestampNow&&res.info.data[i].end_time>self.timestampNow){
+								res.info.data[i].timeCount = true;
+								let time = (res.info.data[i].end_time - self.timestampNow) / 1000;
+								// 获取天、时、分、秒
+								//let day = parseInt(time / (60 * 60 * 24));
+								res.info.data[i].hourCount = parseInt(time/(60 * 60));
+								res.info.data[i].minCount = parseInt(time % (60 * 60)/60);
+								res.info.data[i].secCount = parseInt(time % 60 );
+								console.log('res.info.data[i].timeCount',res.info.data[i])	
+							};
+						};
 						self.mainData.push.apply(self.mainData, res.info.data);
-						for (var i = 0; i < self.mainData.length; i++) {
-							self.endTimeList.push({
-								actEndTime: self.$Utils.timeto(self.mainData[i].end_time, "ymd-hms")
-							});
-							self.mainData[i].endTimeList = [];
-						}
-						self.timeInterval = setInterval(this.countDown, 1000);
+						console.log('self.mainData',self.mainData)
 						self.$Utils.finishFunc('getMainData');
 					}else{
 						self.isLoadAll = true;
+						self.$Utils.finishFunc('getMainData');
 						uni.showToast({
 						    title: '没有更多了',
 						    icon: 'fail',
 						    duration: 2000,
 						    mask:true
 						});
-						self.timeInterval = setInterval(function(){
-							self.$Utils.finishFunc('getMainData');
-						}, 2000);
 					};
 					console.log('self.mainData', self.mainData)
 				};
 				self.$apis.productGet(postData, callback);
 			},
 
-			timeFormat(param) { //小于10的格式化函数
-				const self = this;
-				return param < 10 ? '0' + param : param;
-			},
+			
 
 			countDown() { //倒计时函数
 				// 获取当前时间，同时得到活动结束时间数组
 				const self = this;
 				self.countDownList = [];
 				let newTime = Date.parse(new Date());
-				let endTimeList = self.endTimeList;
-
-				// 对结束时间进行处理渲染到页面
-				for (var i = 0; i < self.endTimeList.length; i++) {
-					let endTime = new Date(self.endTimeList[i].actEndTime).getTime();
-					console.log('endTime',endTime)
-					console.log('newTime',newTime)
-					let obj = null;
-					// 如果活动未结束，对时间进行处理
-					console.log(endTime - newTime)
-					if (endTime - newTime > 0) {
-						let time = (endTime - newTime) / 1000;
-						// 获取天、时、分、秒
-						console.log('time',time)
-
-						let day = parseInt(time / (60 * 60 * 24));
-						let hou = parseInt(time % (60 * 60 * 24) / 3600);
-						let min = parseInt(time % (60 * 60 * 24) % 3600 / 60);
-						let sec = parseInt(time % (60 * 60 * 24) % 3600 % 60);
-						if (day > 0) {
-							hou = hou + day * 24
-						}
-						console.log('day',day)
-						obj = {
-							day: self.timeFormat(day),
-							hou: self.timeFormat(hou),
-							min: self.timeFormat(min),
-							sec: self.timeFormat(sec)
-						}
-					} else { //活动已结束，全部设置为'00'
-						obj = {
-							day: '00',
-							hou: '00',
-							min: '00',
-							sec: '00'
-						}
-					}
-
-					self.countDownList.push(obj);
-					console.log('self.countDownList',self.countDownList)
-				}
-				setTimeout(this.countDown, 1000);
+				let time = (newTime - self.timestampNow) / 1000;
+				// 获取天、时、分、秒
+				let hou = parseInt(time/(60 * 60));
+				let min = parseInt(time % (60 * 60)/60);
+				let sec = parseInt(time % 60 );
+				for (var i = 0; i < self.mainData.length; i++) {
+					if(self.mainData[i].timeCount){
+						self.mainData[i].secCount = self.mainData[i].secCount-sec;
+						self.mainData[i].minCount = self.mainData[i].minCount-min;
+						self.mainData[i].hourCount = self.mainData[i].hourCount-hou;
+						if(self.mainData[i].secCount<0){
+							self.mainData[i].secCount = self.mainData[i].secCount+60;
+							self.mainData[i].minCount = self.mainData[i].minCount-1;
+						};
+						if(self.mainData[i].minCount<0){
+							self.mainData[i].minCount = self.mainData[i].minCount+60;
+							self.mainData[i].hourCount = self.mainData[i].hourCount-1;
+						};
+						if(self.mainData[i].hourCount<0){
+							self.mainData[i].hourCount = 0;
+							self.mainData[i].timeCount = true;
+						};
+					};
+				};	
+				self.timestampNow = newTime;
+				console.log('countDown');
+				self.timeInterval = setTimeout(function(){
+					self.countDown()
+				},1000)
 			},
 
 
