@@ -136,7 +136,7 @@
 
 	.list-img {
 		border-top: solid 1px #EFEFEF;
-		width: 125px;
+		width: 33.33%;
 		float: left;
 		text-align: center;
 		height: 110px;

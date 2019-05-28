@@ -29,25 +29,36 @@
 		</div>
 		<div class="bg1" style="padding: 26px 15px;">
 			<div class="ilblock" style="height: 30px; widows: 100px;"></div>
-			<div class="flo-right" style="width: 260px; height: 30px;">
-				<div class="color2 ilblock font20 " style="height: 40px;width: 35px;background: url(../../static/images/达人/icon0.png) no-repeat;
-				 background-size: 100%;text-align: center; line-height: 20px;position: relative; top: 10px;
+			<!-- <div class="flo-right" style="width: 260px; height: 30px;">
+				<div class="color2 ilblock font20 jt_bg" style="height: 25px;width: 35px;
+				 background-size: 100%;text-align: center; line-height: 20px;position: relative; top: 10px;left: 0%;color: #fff;
 				 ">{{monthShopCount}}</div>
-			</div>
+			</div> -->
 			<div style="width: 100%; height: 30px;line-height: 30px;margin-bottom: 15px; ">
-				<div class="color2 ilblock">近30店返</div>
-				<div class="ilblock radiu20 flo-right" style=" margin-top: 10px; background:rgb(226,226,226);width: 20px;height: 10px;" ></div>
+				<div class="color2 ilblock" style="width: 27%;">近30天店返</div>
+				<div calss="ilblock txt_bg_p0" style="background:rgb(226,226,226);height: 10px;display: inline-block;margin-left: 4px;position: relative;width: 71%;border-radius:4px ;">
+					<div class="color2 ilblock font20 jt_bg" style="height: 25px;width: 35px;
+					 background-size: 100%;text-align: center; line-height: 20px;position: absolute; top: -25px;left: -10px;color: #fff;
+					 ">{{monthShopCount}}</div>
+					<div class="ilblock radiu20 " style="background:rgb(255,133,78);height: 10px;position: absolute;top:0;left: 0;" :style="'width:'+monthShopCountWidth+'px'"></div>
+					</div>
+				
 			</div>
 
 			<div class="ilblock" style="height: 30px; widows: 100px;"></div>
-			<div class="flo-right" style="width: 260px; height: 30px;">
-				<div class="color2 ilblock font20 " style="height: 40px;width: 35px;background: url(../../static/images/达人/icon0.png) no-repeat;
-				 background-size: 100%;text-align: center; line-height: 20px;position: relative;top: 10px;
+			<!-- <div class="flo-right" style="width: 260px; height: 30px;">
+				<div class="color2 ilblock font20 jt_bg" style="height: 25px;width: 35px;
+				 background-size: 100%;text-align: center; line-height: 20px;position: relative;top: 10px;left: 0%;color: #fff;
 				 ">{{monthGroupCount}}</div>
-			</div>
+			</div> -->
 			<div style="width: 100%; height: 30px;line-height: 30px;">
-				<div class="color2 ilblock">近30天团返</div>
-				<div class="ilblock radiu20 flo-right" style=" margin-top: 10px; background:rgb(226,226,226);width: 243px;height: 10px;" :style="'width:'+monthGroupCountWidth+'px'"></div>
+				<div class="color2 ilblock" style="width: 27%;">近30天团返</div>
+				<div calss="ilblock text-bg" style="background:rgb(226,226,226);height: 10px;display: inline-block;margin-left: 4px;position: relative;width: 71%;border-radius:4px ;">
+					<div class="color2 ilblock font20 jt_bg" style="height: 25px;width: 35px;
+					 background-size: 100%;text-align: center; line-height: 20px;position: absolute;top: -25px;left: -10px;color: #fff;
+					 ">{{monthGroupCount}}</div>
+				<div class="ilblock radiu20 " style="background:rgb(255,133,78);height: 10px;position: absolute;top:0;left: 0;" :style="'width:'+monthGroupCountWidth+'px'"></div>
+				</div>
 			</div>
 			<div style="width: 100%; margin-top: 30px;">
 				<div class="color2 font15 ilblock" style="width: 38%;">
@@ -332,6 +343,10 @@
 </script>
 
 <style>
+	
 	@import "../../assets/style/doyen.css";
 	@import "../../assets/style/basic.css";
+	.jt_bg{
+		background: url(../../static/images/icon0.png);
+	}
 </style>

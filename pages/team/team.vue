@@ -54,7 +54,7 @@
 			</div>
 
 		</div>
-		<button @click="webSelf.$Router.navigateTo({route:{path:'/pages/team-code/team-code'}})" class="color5" style="font-size:14px;;background: #FB8448;width:320px;height: 35px;line-height: 35px;border-radius: 20px; margin: 20px auto 100px;">
+		<button @click="webSelf.$Router.navigateTo({route:{path:'/pages/team-code/team-code'}})" class="color5" style="font-size:14px;;background: #FB8448;width:80%;height: 35px;line-height: 35px;border-radius: 20px; margin: 20px auto 100px;">
 			邀请达人
 		</button>
 

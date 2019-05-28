@@ -188,4 +188,10 @@
 		height: 100%;
 		width: 60%;
 	}
+	@media screen and (max-width: 360px){
+		.text-rigt{
+			    width: 50%;
+		}
+	}
+
 </style>

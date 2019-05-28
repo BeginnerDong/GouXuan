@@ -48,7 +48,7 @@
 			<div class="ilblock" style="width: 10%;">
 				<img src="../../static/images/details-icon1.png" style="width: 12px; height: 14px;position:absolute; top:22px; left: 15px;" />
 			</div>
-			<div class="ilblock" style="width: 80%;margin-top: 10px;">{{mainData.address}}</div>
+			<div class="ilblock" style="width: 80%;margin-top: 19px;">{{mainData.address}}</div>
 			<div class="ilblock" style="position: absolute;right: 15px; top: 22px;">
 				<img src="../../static/images/home-icon9.png" style="height: 12px;" />
 			</div>

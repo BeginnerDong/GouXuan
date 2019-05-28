@@ -243,7 +243,7 @@
 				self.site_id = options[0].site_id
 			};
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			self.$Utils.loadAll(['getSiteData', 'getSliderData', 'getLabelData','wxJsSdk'], self)
+			self.$Utils.loadAll(['getSiteData', 'getSliderData', 'getLabelData','wxJsSdk','tokenGet'], self)
 			
 		},
 		onShow() {
@@ -264,7 +264,7 @@
 		onUnload () {
 			const self = this;
 			console.log('onUnload')
-            clearTimeout(self.timeInterval);  
+              clearTimeout(self.timeInterval);  
         },
 		
 		onHide () {

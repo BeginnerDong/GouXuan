@@ -6,8 +6,8 @@
 				{{mainData&&mainData.title?mainData.title:''}}
 			</div>
 			<div>
-				<div class="ilblock" style="margin-top: 10px; width: 19%; float: left; color: #858585;background: #EFEFEF; border-radius: 20px; padding: 3px 15px;">规格</div>
-				<div class="ilblock color3" style="width: 78%; float: left; margin-left: 7px;line-height: 20px;"> {{mainData&&mainData.sku?mainData.sku[0].title:''}}：{{mainData&&mainData.sku?mainData.sku[0].price:''}}元</div>
+				<div class="ilblock" style="margin-top: 10px; width: 21%; float: left; color: #858585;background: #EFEFEF; border-radius: 20px; padding: 3px 15px;">规格</div>
+				<div class="ilblock color3" style="width: 75%; float: left; margin-left: 7px;line-height: 20px;margin-top: 12px;"> {{mainData&&mainData.sku?mainData.sku[0].title:''}}：{{mainData&&mainData.sku?mainData.sku[0].price:''}}元</div>
 			</div>
 			<div style="clear: both;"></div>
 		</div>

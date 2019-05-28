@@ -29,8 +29,8 @@
 			</div>
 
 			<div class="top-right ilblock" @click="webSelf.$Router.navigateTo({route:{path:'../../pages/follow-content/follow-content'}})">
-				<img src="../../static/images/focus-on-icon1.png" style="width:20%; margin: 8px 6px;" />
-				<div class="ilblock" style="color: rgb(249,138,72); font-size: 13px; position: relative; top: -16px;">关注管理</div>
+				<img src="../../static/images/focus-on-icon1.png" style="width:20%; margin: 11px 6px;vertical-align: middle;" />
+				<div class="ilblock" style="color: rgb(249,138,72); font-size: 13px; position: relative; ">关注管理</div>
 			</div>
 		</div>
 
