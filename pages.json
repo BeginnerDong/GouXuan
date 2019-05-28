@@ -22,12 +22,7 @@
 				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
 			}
 		},
-		{
-			"path": "pages/code/code",
-			"style": {
-				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
-			}
-		},
+	
 		{
 			"path": "pages/code-all/code-all",
 			"style": {
@@ -58,12 +53,7 @@
 				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
 			}
 		},
-		{
-			"path": "pages/deposit/deposit",
-			"style": {
-				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
-			}
-		},
+	
 		{
 			"path": "pages/depositld/depositld",
 			"style": {
@@ -85,13 +75,6 @@
 		},
 		{
 			"path": "pages/follow-content/follow-content",
-			"style": {
-				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
-			}
-		},
-
-		{
-			"path": "pages/index-befor/index-befor",
 			"style": {
 				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
 			}
@@ -134,12 +117,7 @@
 				"onReachBottomDistance":100
 			}
 		},
-		{
-			"path": "pages/other/other",
-			"style": {
-				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
-			}
-		},
+		
 		{
 			"path": "pages/panic/panic",
 			"style": {
@@ -152,12 +130,7 @@
 				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
 			}
 		},
-		{
-			"path": "pages/calendarWatch/calendarWatch",
-			"style": {
-				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
-			}
-		},
+		
 		{
 			"path": "pages/pay/pay",
 			"style": {
@@ -207,24 +180,7 @@
 				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
 			}
 		},
-		{
-			"path": "pages/store-ed/store-ed",
-			"style": {
-				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
-			}
-		},
-		{
-			"path": "pages/store-ing/store-ing",
-			"style": {
-				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
-			}
-		},
-		{
-			"path": "pages/store-waie/store-waie",
-			"style": {
-				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
-			}
-		},
+
 
 		{
 			"path": "pages/team/team",

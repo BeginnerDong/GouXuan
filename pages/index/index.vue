@@ -64,16 +64,16 @@
 						<view class="color1">动感之都</view>
 					</view>
 				</view>
-				<view class="recommend-middle" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=33'}})">
-					<view class="recommend-box" style="width: 32.8%;">
+				<view class="recommend-middle" >
+					<view class="recommend-box" style="width: 32.8%;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=34'}})">
 						<view class="color2" style="font-weight: bold;">全球购</view>
 						<view class="color1">全球热卖好货</view>
 					</view>
-					<view class="recommend-box" style="width: 32.5%;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=34'}})">
+					<view class="recommend-box" style="width: 32.5%;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=35'}})">
 						<view class="color2" style="font-weight: bold;">果蔬百货</view>
 						<view class="color1">果蔬百货</view>
 					</view>
-					<view class="recommend-box" style="width: 32.8%;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=35'}})">
+					<view class="recommend-box" style="width: 32.8%;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id=37'}})">
 						<view class="color2" style="font-weight: bold;">一日游</view>
 						<view class="color1">周边精选</view>
 					</view>
@@ -136,7 +136,7 @@
 					</view>
 					<view class="ilblock color2 all-store-text">
 						<view class="ilblockxz">
-							[{{item.city}}]{{item.title}}
+							{{item.title}}
 						</view>
 					</view>
 					<view class="ilblock" style="padding: 0px 5px;width: 100%;">
@@ -243,7 +243,7 @@
 				self.site_id = options[0].site_id
 			};
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			self.$Utils.loadAll(['getSiteData', 'getSliderData', 'getLabelData','wxJsSdk','tokenGet'], self)
+			self.$Utils.loadAll(['getSiteData', 'getSliderData', 'getLabelData','wxJsSdk'], self)
 			
 		},
 		onShow() {
@@ -284,7 +284,7 @@
 				const self = this;
 				const postData = {
 					searchItem: {
-						user_no: 'U123456'
+						user_no: 'U523248663374328'
 					}
 				};
 
@@ -354,6 +354,12 @@
 				var now = new Date().getTime();
 				if(isNew){
 					self.mainData = [];
+					self.paginate = {
+						count: 0,
+						currentPage: 1,
+						pagesize: 5,
+						is_page: true,
+					}
 				};
 				const postData = {};
 				postData.paginate = self.$Utils.cloneForm(self.paginate);
@@ -416,7 +422,6 @@
 				const self = this;
 				self.hotData = [];
 				const postData = {};
-				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 				postData.searchItem = {
 					thirdapp_id: self.$AssetsConfig.thirdapp_id,
 					province_id: uni.getStorageSync('siteData').id
@@ -540,7 +545,8 @@
 					};
 				};
 				self.show_city = false;
-				self.$Utils.loadAll(['getMainData', 'getHotData'], self)
+				self.getMainData(true);
+				self.getHotData()
 			},
 			
 			showCity() {

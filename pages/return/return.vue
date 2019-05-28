@@ -94,14 +94,14 @@
 				webSelf: this,
 				mainData: [],
 				type: 2,
-				hasWithdraw:'',
-				shopCount:'',
-				groupCount:'',
+				hasWithdraw:0,
+				shopCount:0,
+				groupCount:0,
 				userInfoData:[],
 				searchItem: {
 					type: 2
 				},
-				totalCount:''
+				totalCount:0
 			}
 		},
 		onLoad(options) {

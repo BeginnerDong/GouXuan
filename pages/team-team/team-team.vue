@@ -19,9 +19,9 @@
 			</div>
 			<div class="heard ilblock flo-left">
 				<div class="heard-img radiu50">
-					<img :src="item.userInfo.headImgUrl" />
+					<img :src="item.headImgUrl" />
 				</div>
-				<div class="heard-name color2 font14">{{item.userInfo.nickname}}</div>
+				<div class="heard-name color2 font14">{{item.nickname}}</div>
 			</div>
 			<div class="text-rigt ilblock flo-left">
 				<div style="width:100%; margin-top: 22px; ">
@@ -31,8 +31,8 @@
 					<div class="color1 ilblock">订单数:{{item.order_num}}</div>
 				</div>
 				<div class="color1" style="line-height: 24px; height: 24px;">营业额：￥{{item.turnover}}</div>
-				<div class="color1" style="line-height: 24px; height: 24px;">手机号：{{item.userInfo.info.phone}}</div>
-				<div class="color1" style="line-height: 24px; height: 24px;">ID:{{item.userInfo.user_no}}</div>
+				<div class="color1" style="line-height: 24px; height: 24px;">手机号：{{item.phone}}</div>
+				<div class="color1" style="line-height: 24px; height: 24px;">ID:{{item.user_no}}</div>
 			</div>
 		</div>
 	</view>

@@ -109,9 +109,9 @@
 						data: [0]
 					}]
 				},
-				turnoverCount:'',
-				totalTurnover:'',
-				totalReward:''
+				turnoverCount:0,
+				totalTurnover:0,
+				totalReward:0
 			}
 		},
 		onLoad(options) {
