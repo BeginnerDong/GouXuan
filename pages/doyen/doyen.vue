@@ -18,7 +18,7 @@
 			</div>
 			<div class="ilblock flo-right" style="width: 90px;height: 100%; ">
 				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/install/install'}})">
-					<img src="../../static/images/达人/icon.png" style="width: 16px;margin-left: 62px;margin-top: 10px; " />
+					<img src="../../static/images/icon.png" style="width: 16px;margin-left: 62px;margin-top: 10px; " />
 				</div>
 				<div class="radiu20 font13" style="background: #FCB192;width:80px;height: 23px; text-align: center; 
 					line-height: 23px; position: relative; top: 50px;left: 20px; "
@@ -109,7 +109,7 @@
 			<view style="margin-top: 10px;">
 				<view class="navbar-item ilblock">
 					<view class="navbar-img">
-						<image src="../../static/images/达人/Talent%20show1-a.png"></image>
+						<image src="../../static/images/Talent%20show1-a.png"></image>
 					</view>
 					<view  class="color8">达人</view>
 				</view>
@@ -121,7 +121,7 @@
 				</view>
 				<view class="navbar-item ilblock"  @click="webSelf.$Router.redirectTo({route:{path:'/pages/return/return'}})">
 					<view class="navbar-img">
-						<image src="../../static/images/达人/Talent%20show3.png"></image>
+						<image src="../../static/images/Talent%20show3.png"></image>
 					</view>
 					<view>返佣</view>
 				</view>

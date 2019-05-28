@@ -295,7 +295,7 @@
 		border: solid 1px red;
 		width: 81px;
 		height: 60px;
-		background: url(/static/images/微信图片_20190429175644.png) no-repeat;
+		background: url(/static/images/wximg4.png) no-repeat;
 		background-size: 100%;
 		margin-left: 2px;
 		margin-top: 3px;

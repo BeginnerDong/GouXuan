@@ -24,7 +24,7 @@
 				<div class="color2 font14" style="position: relative; top: 17px;">购选</div>
 			</div>
 			<div class="ilblock" style="position: relative; left: 42px;">
-				<img src="../../static/images/达人/Talent-show-img.png" style="width: 85px;" />
+				<img src="../../static/images/Talent-show-img.png" style="width: 85px;" />
 			</div>
 		</div>
 		<!-- <div style="z-index:1;width:100%;height:100%;background: #fff;position: absolute;top: 0;"></div> -->

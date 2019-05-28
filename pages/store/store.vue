@@ -3,7 +3,7 @@
 
 		<div class="bg1 top">
 			<div class="ilblock flo-left" style="width:30px ;" @click="scan">
-				<img src="../../static/images/服务/service-icon6.png" style="width: 28px;" />
+				<img src="../../static/images/service-icon6.png" style="width: 28px;" />
 			</div>
 			<div class="search flo-left">
 				<div class="ilblock">

@@ -39,10 +39,10 @@
 			<div class="ilblock flo-left color2 font15">
 				达人新订单通知{{submitData.notice_new}}
 			</div>
-			<img src="../../static/images/达人/icon1.png"></img>
+			<img src="../../static/images/icon1.png"></img>
 			
 			<div class="ilblock flo-right color1 font15" @click="change('notice_new')">
-				<img :src="submitData.notice_new=='true'?'../../static/images/达人/icon1.png':'../../static/images/达人/icon2.png'" style="width: 26px;" />
+				<img :src="submitData.notice_new=='true'?'../../static/images/icon1.png':'../../static/images/icon2.png'" style="width: 26px;" />
 			</div>
 		</div>
 		<div class="ist-item bg1">
@@ -50,7 +50,7 @@
 				达人退单通知
 			</div>
 			<div class="ilblock flo-right color1 font15" @click="change('notice_return')">
-				<img :src="submitData.notice_return=='true'?'../../static/images/达人/icon1.png':'../../static/images/达人/icon2.png'" style="width: 26px;" />
+				<img :src="submitData.notice_return=='true'?'../../static/images/icon1.png':'../../static/images/icon2.png'" style="width: 26px;" />
 			</div>
 		</div>
 		<div class="ist-item bg1">
@@ -58,7 +58,7 @@
 				团队新订单通知
 			</div>
 			<div class="ilblock flo-right color1 font15" @click="change('notice_group_new')">
-				<img :src="submitData.notice_group_new=='true'?'../../static/images/达人/icon1.png':'../../static/images/达人/icon2.png'" style="width: 26px;" />
+				<img :src="submitData.notice_group_new=='true'?'../../static/images/icon1.png':'../../static/images/icon2.png'" style="width: 26px;" />
 			</div>
 		</div>
 		<div class="ist-item bg1">
@@ -66,7 +66,7 @@
 				团队退单通知
 			</div>
 			<div class="ilblock flo-right color1 font15" @click="change('notice_group_return')">
-				<img :src="submitData.notice_group_return=='true'?'../../static/images/达人/icon1.png':'../../static/images/达人/icon2.png'" style="width: 26px;" />
+				<img :src="submitData.notice_group_return=='true'?'../../static/images/icon1.png':'../../static/images/icon2.png'" style="width: 26px;" />
 			</div>
 		</div>
 		<div class="ist-item bg1">
@@ -74,7 +74,7 @@
 				海报显示购选LOGO
 			</div>
 			<div class="ilblock flo-right color1 font15" @click="change('poster')">
-				<img :src="submitData.poster=='true'?'../../static/images/达人/icon1.png':'../../static/images/达人/icon2.png'" style="width: 26px;" />
+				<img :src="submitData.poster=='true'?'../../static/images/icon1.png':'../../static/images/icon2.png'" style="width: 26px;" />
 			</div>
 		</div>
 		<button class="color5">

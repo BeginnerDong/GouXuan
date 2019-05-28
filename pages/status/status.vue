@@ -18,7 +18,7 @@
 			<input class="color1 font10" style="border: solid 1px #EBEBEB; height: 30px; line-height: 30px; padding: 0px 15px;
 			 box-shadow: 0px 0px 6px #EBEBEB; border-radius: 3px;width: 90%; "
 			 placeholder="输入右边字符">
-			<img src="/static/images/服务/service-img1.png" style="height: 30px; float: right; position: relative; top: -30px;" />
+			<img src="/static/images/service-img1.png" style="height: 30px; float: right; position: relative; top: -30px;" />
 			</input>
 			<div class="list">
 				短信验证

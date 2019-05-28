@@ -70,7 +70,7 @@
 			</div>
 			<div class="wahct-top">
 				<div class="color3 ilblock wahct-topleft" @click="goLastMonth">
-					<image src="../../static/images/微信图片_20190520155420.png"></image>
+					<image src="../../static/images/wximg6.png"></image>
 					<view class="ilblock wahct-top-text">上月</view> 
 				</div>
 				<div class="color2 ilblock wahct-topleft" style="font-size: 16px;">
@@ -78,7 +78,7 @@
 				</div>
 				<div class="ilblock wahct-topright" @click="goNextMonth">
 					<view class="ilblock wahct-top-text">下月</view>
-					<image src="../../static/images/微信图片_20190520155409.png"></image>
+					<image src="../../static/images/wximg5.png"></image>
 				</div>
 			</div>
 			<div class="week">

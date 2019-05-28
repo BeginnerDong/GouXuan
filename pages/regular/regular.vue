@@ -2,7 +2,7 @@
 	<view>
 	
 		<div class="top" style="border-top: solid 1px #E8E8E8; border-bottom: solid 1px #E8E8E8;">
-			<img src="../../static/images/达人/img4.png" style="width: 345px; margin:15px 15px 30px;" />
+			<img src="../../static/images/img4.png" style="width: 345px; margin:15px 15px 30px;" />
 		</div>
 		<div class="text ilblock color1 font15 bg2">当前权益</div>
 		<div class="text-box bg1 color1">

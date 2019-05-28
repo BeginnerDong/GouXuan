@@ -65,19 +65,19 @@
 			<view style="margin-top: 10px;">
 				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/doyen/doyen'}})">
 					<view class="navbar-img">
-						<image src="../../static/images/达人/Talent%20show1.png"></image>
+						<image src="../../static/images/Talent%20show1.png"></image>
 					</view>
 					<view>达人</view>
 				</view>
 				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/team/team'}})">
 					<view class="navbar-img">
-						<image src="../../static/images/达人/Talent%20show2.png"></image>
+						<image src="../../static/images/Talent%20show2.png"></image>
 					</view>
 					<view>达人团队</view>
 				</view>
 				<view class="navbar-item ilblock">
 					<view class="navbar-img">
-						<image src="../../static/images/达人/Talent%20show3-a.png"></image>
+						<image src="../../static/images/Talent%20show3-a.png"></image>
 					</view>
 					<view class="color8">返佣</view>
 				</view>

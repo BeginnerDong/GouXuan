@@ -12,14 +12,14 @@
 			</div>
 		</div>
 		<div class="box bg1" v-for="item in mainData" v-if="mainData.length>0">
-			<img v-if="num==0" src="../../static/images/微信图片_20190428143903.png" />
-			<img v-else src="../../static/images/微信图片_20190428143848.png" />
+			<img v-if="num==0" src="../../static/images/wximg2.png" />
+			<img v-else src="../../static/images/wximg1.png" />
 			<span class="money1">{{item.discount}}</span>
 			<span class="money2">购满{{item.condition}}元即可使用</span>
 		</div>
 		<div class="box-c" v-if="mainData.length==0">
 			<div style="margin-top: 100px; margin-left: 140px;">
-				<img src="../../static/images/达人/img3.png" style="width: 90px;" />
+				<img src="../../static/images/img3.png" style="width: 90px;" />
 			</div>
 			<div class="color1 font15" style="text-align: center; margin-top: 30px;">暂无购选券!</div>
 		</div>

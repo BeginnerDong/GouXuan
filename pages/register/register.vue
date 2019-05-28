@@ -5,26 +5,26 @@
 		</view>
 		<view class="list-box">
 			<view class="list-item">
-				<image src="../../static/images/达人/icon9.png" style="margin-right: 22px;"></image>
+				<image src="../../static/images/icon9.png" style="margin-right: 22px;"></image>
 				<view class="list-right ilblock bg2">
 					<input class="font14" placeholder="请输入手机号(同微信绑定的手机号)" v-model="submitData.phone" />
 				</view>
 			</view>
 			<view class="list-item">
-				<image src="../../static/images/达人/icon10.png" style="width: 19px;"></image>
+				<image src="../../static/images/icon10.png" style="width: 19px;"></image>
 				<view class="list-right ilblock bg2">
 					<input class="font14 ilblock" placeholder="请输入验证码" />
 					<button class="bg3 color5 ilblock radiu20 font13 flo-right">获取验证码</button>
 				</view>
 			</view>
 			<view class="list-item">
-				<image src="../../static/images/达人/icon11.png" style="width: 19px;"></image>
+				<image src="../../static/images/icon11.png" style="width: 19px;"></image>
 				<view class="list-right ilblock bg2">
 					<input class="font14" placeholder="请输入真实姓名" v-model="submitData.name" />
 				</view>
 			</view>
 			<view class="list-item">
-				<image src="../../static/images/达人/icon12.png" style="margin-right: 22px;"></image>
+				<image src="../../static/images/icon12.png" style="margin-right: 22px;"></image>
 				<view class="list-right ilblock bg2" @click="showSinglePicker">
 					<view class="ilblock font14" style="height: 100%; line-height:35px;">{{submitData.province_id==''?'请选择地区':label}}</view>
 

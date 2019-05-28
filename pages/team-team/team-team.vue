@@ -13,9 +13,9 @@
 		
 		<div class="list-item bg1" style="margin-top: 15px;" v-for="(item,index) in mainData">
 			<div class="cup ilblock flo-left">
-				<img src="../../static/images/达人/icon5.png"  v-if="index==0"/>
-				<img src="../../static/images/达人/icon6.png"  v-if="index==1"/>
-				<img src="../../static/images/达人/icon7.png"  v-if="index==2"/>
+				<img src="../../static/images/icon5.png"  v-if="index==0"/>
+				<img src="../../static/images/icon6.png"  v-if="index==1"/>
+				<img src="../../static/images/icon7.png"  v-if="index==2"/>
 			</div>
 			<div class="heard ilblock flo-left">
 				<div class="heard-img radiu50">

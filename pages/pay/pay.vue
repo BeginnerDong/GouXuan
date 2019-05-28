@@ -76,7 +76,7 @@
 					{{couponData.length>0?'请选择优惠券':'暂无优惠券'}}<img src="../../static/images/home-icon9.png" style="height: 11px;margin-left: 10px;margin-bottom: 2px; " />
 				</div>
 				<div style="position: relative;margin-bottom: 15px;"  v-for="(item,index) in couponData" @click="chooseCoupon(index)" :style="webSelf.$Utils.inArray(item.id,chooseCouponId)!=-1?'border-right:2px solid red':''">
-					<img style="width:300px;height: 90px;" src="../../static/images/微信图片_20190428143903.png" />
+					<img style="width:300px;height: 90px;" src="../../static/images/wximg2.png" />
 					<span  style="position:absolute;left:130px;top:30px;font-size: 20px;color:red">{{item.discount}}</span>
 					<span  style="margin-top: 10px;font-size: 12px;color:gray">购满{{item.condition}}元即可使用</span>
 				</div>

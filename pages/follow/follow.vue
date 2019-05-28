@@ -2,7 +2,7 @@
 	<view>
 		<div class="follow-box" v-if="userInfoData.length==0">
 			<div class="follow-logo">
-				<img src="../../static/images/达人/Talent-show-img.png" />
+				<img src="../../static/images/Talent-show-img.png" />
 			</div>
 			<div class="follow-logobotm">
 				<div class="color2">
