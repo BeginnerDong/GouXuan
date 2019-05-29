@@ -6,7 +6,8 @@
 					<view class="color2 font13">{{item.trade_info}}</view>
 					<view class="color3 font12">{{item.create_time}}</view>
 				</view>
-				<view class="font14 ilblock flo-right" style="margin-left: 40rpx;color: #FA9567;">-￥{{item.count}}</view>
+				<view class="font14 ilblock" style="margin-left: 100rpx;color: #FA9567;">{{item.status==0?'审核中':'已通过'}}</view>
+				<view class="font14 ilblock flo-right" style="margin-left: 40rpx;color: #FA9567;">￥{{item.count}}</view>
 			</view>
 		</view>
 		
@@ -54,7 +55,8 @@
 				postData.searchItem = {
 					thirdapp_id: self.$Config.thirdapp_id,
 					count:['<',0],
-					type:2
+					type:2,
+					status:['in',[0,1]]
 				};		
 				const callback = (res) => {
 					if (res.info.data.length > 0) {

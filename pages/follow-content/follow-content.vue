@@ -2,7 +2,7 @@
 	<view class="html bg1">
 		<div class="content-more more-top">
 			<div class="content-top color2">关注内容</div>
-			<div class="ilblock" v-for="item in chooseData">{{item.title}}<img src="../../static/images/focus-on-icon3 .png" /> </div>
+			<div class="ilblock" v-for="item in chooseData">{{item.title}} </div>
 		</div>
 		<div class="content-more">
 			<div class="content-top color2" style="border: none;">更多内容</div>

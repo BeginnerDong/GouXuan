@@ -30,16 +30,16 @@
 			
 			<div style="margin-left: 15px;">
 				<div class="ilblock" style="font-size: 12px; color: rgb(249,138,72);">￥<span style="font-size: 20px;">{{item.price}}</span></div>
-				<div class="ilblock best-moneyleft" v-if="item.skuDate.length>0">
+				<div class="ilblock best-moneyleft" v-if="item.skuDate.length>0&&primary_scope>10">
 					返佣具体以日期为准
 				</div>
 				
-				<view class="ilblock" style="margint: 0 5%;width: 77%;">
-					<div class="ilblock best-money1" v-if="item.skuDate.length==0">
+				<view class="ilblock" style="margint: 0 5%;width: 77%;" v-if="item.skuDate.length==0&&primary_scope>10">
+					<div class="ilblock best-money1">
 						<view class="span1 ilblock bg3">店返</view>
 						<view class="span2 ilblock color8">￥{{item.shop_reward}}</view>
 					</div>
-					<div class="ilblock best-money2"  v-if="item.skuDate.length==0">
+					<div class="ilblock best-money2">
 						<view class="span1 ilblock bg4">团返</view>
 						<view class="span2 ilblock" style="color: #F14667;">￥{{item.group_reward}}</view>
 					</div>
@@ -73,13 +73,15 @@
 					listorder: 'desc'
 				},
 				now:'',
-				isLoadAll:false
+				isLoadAll:false,
+				primary_scope:''
 			}
 		},
 		onLoad(){
 			const self = this;
 			self.timestampNow = (new Date()).getTime();
 			console.log('onLoad',self.timestampNow);
+			self.primary_scope  = uni.getStorageSync('user_info').primary_scope;
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 			var options = self.$Utils.getHashParameters();
 			if (options[0].category_id) {

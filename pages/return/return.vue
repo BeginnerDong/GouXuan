@@ -107,7 +107,7 @@
 		onLoad(options) {
 			const self = this;
 			
-			self.$Utils.loadAll(['getMainData', 'getUserInfoData'], self)
+			self.$Utils.loadAll(['getUserInfoData'], self)
 		},
 
 		methods: {
@@ -123,7 +123,8 @@
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};
-					self.$Utils.finishFunc('getUserInfoData');
+					self.getMainData();
+					
 				};
 				self.$apis.userInfoGet(postData, callback);
 			},
@@ -172,7 +173,7 @@
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};
-					self.$Utils.finishFunc('getMainData');
+					self.$Utils.finishFunc('getUserInfoData');
 				};
 				self.$apis.flowLogGet(postData, callback);
 			},

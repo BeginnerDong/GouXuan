@@ -93,7 +93,7 @@
 				const callback = (res) => {
 
 					if (res.solely_code == 100000) {
-						self.$Utils.showToat('申请成功', 'none');
+						self.$Utils.showToast('申请成功', 'none');
 						uni.navigateBack({
 							delta: 1
 						});
@@ -105,7 +105,7 @@
 			submit() {
 				const self = this;
 
-				const pass = api.$Utils.checkComplete(self.submitData);
+				const pass = self.$Utils.checkComplete(self.submitData);
 				console.log('pass', pass)
 				console.log('parseFloat(self.submitData.count)', parseFloat(self.submitData.count))
 				console.log('parseFloat(self.userData.info.balance)', parseFloat(self.userData.info.balance))

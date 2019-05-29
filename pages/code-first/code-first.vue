@@ -123,7 +123,7 @@
 				const self = this;
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
-				postData.param = 'http://www.local-scanner.com/wx/#/pages/index/index?parent_no='+ uni.getStorageSync('info').user_no;
+				postData.param = 'http://www.local-scanner.com/wx/#/pages/index/index?parent_no='+ uni.getStorageSync('user_no');
 				postData.ext = 'png';
 				const callback = (res) => {
 					console.log(res);

@@ -53,7 +53,7 @@
 				<image :src="tapUrl"  mode=""></image>
 			</view>
 			<view style="text-align: center;" @click="closeTap">
-				<image src="../../static/images/ttq.png" style="width: 40rpx;height: 40rpx;" ></image>
+				<image src="../../static/images/icon3.png" style="width: 40rpx;height: 40rpx;" ></image>
 			</view>
 		</view>
 	</view>

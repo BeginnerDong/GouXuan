@@ -101,7 +101,7 @@
 					<view class="best-text">
 						{{item.title}}
 					</view>
-					<view style="margint: 0 4%;">
+					<view style="margint: 0 4%;" >
 						<view class="ilblock" style="margin-left: 10rpx; font-size: 12px; color: rgb(249,138,72);">￥<span style="font-size: 20px;">{{item.price}}</span></view>
 						<div class="ilblock best-money1" style="width: auto;">
 							<view class="span1 ilblock bg3" style="width: auto;padding: 0 3px;">店返</view>
@@ -153,18 +153,18 @@
 
 						<view class="ilblock fsize price_p0" style="color: rgb(249,138,72);margin-bottom: 10pz;">￥<span class="price_p1">{{item.price}}</span></view>
 
-						<view class="ilblock wiblock" style="flex-wrap: nowrap;width: 100%;">
-							<div class="ilblock best-money1 wiblock1" style="width: auto;" v-if="item.skuDate.length==0">
+						<view class="ilblock wiblock" style="flex-wrap: nowrap;width: 100%;" v-if="item.skuDate.length==0&&primary_scope>10">
+							<div class="ilblock best-money1 wiblock1" style="width: auto;" >
 								<view class="span1 ilblock bg3" style="width: auto;padding: 0 3px;">店返</view>
 								<view class="span2 ilblock color8" style="width: auto;padding-right: 3px;">￥{{item.shop_reward}}</view>
 							</div>
-							<div class="ilblock best-money2 wiblock1" style="width: auto;" v-if="item.skuDate.length==0">
+							<div class="ilblock best-money2 wiblock1" style="width: auto;">
 								<view class="span1 ilblock bg4" style="width: auto;padding: 0 3px;">团返</view>
 								<view class="span2 ilblock color9" style="width: auto;">￥{{item.group_reward}}</view>
 							</div>
 						</view>
 
-						<view class="ilblock best-topred wiblock2 hinnt_p" style="left: 0;margin-left: 8px;" v-if="item.skuDate.length>0">
+						<view class="ilblock best-topred wiblock2 hinnt_p" style="left: 0;margin-left: 8px;" v-if="item.skuDate.length>0&&primary_scope>10">
 							返佣具体以日期为准
 						</view>
 					</view>
@@ -232,7 +232,8 @@
 				show_city: false,
 				isLoadAll:false,
 				show_search:false,
-				title:''
+				title:'',
+				primary_scope:''
 			}
 		},
 		onLoad() {
@@ -240,11 +241,12 @@
 			const self = this;
 			self.timestampNow = (new Date()).getTime();
 			var options = self.$Utils.getHashParameters();
+			self.primary_scope  = uni.getStorageSync('user_info').primary_scope;
 			if(options[0]&&options[0].site_id){
 				self.site_id = options[0].site_id
 			};
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			self.$Utils.loadAll(['getSiteData', 'getSliderData', 'getLabelData','wxJsSdk'], self)
+			self.$Utils.loadAll(['getSiteData', 'getSliderData', 'getLabelData','wxJsSdk','tokenGet'], self)
 			
 		},
 		onShow() {
@@ -285,7 +287,7 @@
 				const self = this;
 				const postData = {
 					searchItem: {
-						user_no: 'U523248663374328'
+						user_no: 'U523131762651748'
 					}
 				};
 

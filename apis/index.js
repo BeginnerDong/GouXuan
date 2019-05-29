@@ -428,7 +428,18 @@ export default {
 		};
 		http.HTTP(allParams);
 	},
-
+	
+	flowLogAdd(param, callback) {
+		var allParams = {
+			url: 'Common/FlowLog/add',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
 
 
 	orderGet(param, callback) {

@@ -22,11 +22,11 @@
 
 				<div class="ilblock best-money1">
 					<view class="span1 ilblock bg3">店返</view>
-					<view class="span2 ilblock color8">￥{{mainData.shop_reward}}</view>
+					<view class="span2 ilblock color8">￥{{currentShopReward}}</view>
 				</div>
 				<div class="ilblock best-money2">
 					<view class="span1 ilblock bg4">团返</view>
-					<view class="span2 ilblock" style="color: #F14667;">￥{{mainData.group_reward}}</view>
+					<view class="span2 ilblock" style="color: #F14667;">￥{{currentGroupReward}}</view>
 				</div>
 
 				<!-- <div class="ilblock best-money1" style="left: -10px;">
@@ -194,13 +194,15 @@
 				skuLabelData: [],
 				skuIdArray: [],
 				cuurentPrice: 0,
-				currentSkuDateId: 0
+				currentSkuDateId: 0,
+				currentShopReward:0,
+				currentGroupReward:0
 			}
 		},
 		onLoad(options) {
 			const self = this;
-
-			self.id = options.id;
+			var options = self.$Utils.getHashParameters();
+			self.id = options[0].id;
 			var todayDate = new Date();
 			self.todayMonth = todayDate.getMonth();
 			self.todayYear = todayDate.getFullYear();
@@ -240,7 +242,7 @@
 						self.$jweixin.updateAppMessageShareData({
 							title: self.mainData.title, // 分享标题
 							desc: self.mainData.description, // 分享描述
-							link: window.location.href,
+							link: 'http://www.local-scanner.com/wx/#/pages/recommend/recommend?parent_no='+ uni.getStorageSync('user_no')+'&id='+self.mainData.id,
 							imgUrl: shareImg, // 分享图标
 							success: function() {
 								// 设置成功
@@ -298,10 +300,16 @@
 				const self = this;
 				if (self.choosed_skuData.skuDate) {
 					self.cuurentPrice = self.choosed_skuData.skuDate.price;
+					self.currentShopReward = self.choosed_skuData.skuDate.shop_reward;
+					self.currentGroupReward = self.choosed_skuData.skuDate.group_reward;
 				} else if (self.choosed_skuData.price) {
 					self.cuurentPrice = self.choosed_skuData.price;
+					self.currentShopReward = self.choosed_skuData.shop_reward;
+					self.currentGroupReward = self.choosed_skuData.group_reward;
 				} else {
 					self.cuurentPrice = self.mainData.price;
+					self.currentShopReward = self.mainData.shop_reward;
+					self.currentGroupReward = self.mainData.group_reward;
 				};
 			},
 

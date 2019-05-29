@@ -63,7 +63,7 @@
 		</div>
 		<div class="list bg1" style="margin-bottom: 20px;">
 			<ul>
-				<div @click="toDaRen" class="color2" style="position: relative;">
+				<div @click="toDaRen" class="color2" style="position: relative;" v-if="primary_scope>10">
 					<div class="ilblock" style="position: absolute;top: 12px;left: 17px;">
 						<img src="../../static/images/about-icon6.png" style="width: 14px;" />
 					</div>
@@ -73,7 +73,7 @@
 						 background: #FF7263;border-radius: 50%;"></div>
 					</li>
 				</div>
-				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/coupon/coupon'}})" class="color2" style="position: relative;">
+				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/coupon/coupon'}})" class="color2" style="position: relative;" v-if="primary_scope>10">
 					<div class="ilblock" style="position: absolute;top: 12px;left: 17px;">
 						<img src="../../static/images/about-icon7.png" style="width: 14px;" />
 					</div>
@@ -145,11 +145,13 @@
 		data() {
 			return {
 				webSelf:this,
-				site_id:''
+				site_id:'',
+				primary_scope:''
 			}
 		},
 		onLoad(options) {
 			const self = this;
+			self.primary_scope  = uni.getStorageSync('user_info').primary_scope;
 			/* self.$Utils.loadAll(['getMainData', 'getLabelData', 'getCaseData'], self) */
 			self.headImgUrl = uni.getStorageSync('user_info').headImgUrl;
 			self.nickName = uni.getStorageSync('user_info').nickname;

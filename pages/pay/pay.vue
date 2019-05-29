@@ -439,6 +439,7 @@
 										}
 									});
 								} else {
+									uni.setStorageSync('canClick', true);
 									uni.showToast({
 										title: '支付失败',
 										duration: 2000
@@ -447,6 +448,7 @@
 							};
 							self.$Utils.realPay(res.info, payCallback);
 						} else {
+							uni.setStorageSync('canClick', true);
 							uni.showToast({
 								title: '支付完成',
 								duration: 2000
