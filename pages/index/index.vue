@@ -103,13 +103,13 @@
 					</view>
 					<view style="margint: 0 4%;">
 						<view class="ilblock" style="margin-left: 10rpx; font-size: 12px; color: rgb(249,138,72);">￥<span style="font-size: 20px;">{{item.price}}</span></view>
-						<div class="ilblock best-money1">
-							<view class="span1 ilblock bg3">店返</view>
-							<view class="span2 ilblock color8">￥{{item.shop_reward}}</view>
+						<div class="ilblock best-money1" style="width: auto;">
+							<view class="span1 ilblock bg3" style="width: auto;padding: 0 3px;">店返</view>
+							<view class="span2 ilblock color8" style="width: auto;padding-right: 8px;">￥{{item.shop_reward}}</view>
 						</div>
-						<div class="ilblock best-money2">
-							<view class="span1 ilblock bg4">团返</view>
-							<view class="span2 ilblock" style="color: #F14667;">￥{{item.group_reward}}</view>
+						<div class="ilblock best-money2" style="width: auto;">
+							<view class="span1 ilblock bg4" style="width: auto;padding: 0 3px;">团返</view>
+							<view class="span2 ilblock" style="color: #F14667;width: auto;padding-right: 8px;">￥{{item.group_reward}}</view>
 						</div>
 					</view>
 				</view>
@@ -134,24 +134,12 @@
 					<view class="color1 font12 time" v-if="item.timeCount"> 距结束仅剩
 						<view class="bg3">{{item.hourCount}}</view>:<view class="bg3">{{item.minCount}}</view>:<view class="bg3">{{item.secCount}}</view>
 					</view>
-					<view class="ilblock color2 all-store-text">
+					<view class="ilblock color2 all-store-text" style="height: 54px;">
 						<view class="ilblockxz">
 							{{item.title}}
 						</view>
 					</view>
 					<view class="ilblock" style="padding: 0px 5px;width: 100%;">
-						<view class="ilblock wiblock" style="flex-wrap: nowrap;width: 64%;">
-							<div class="ilblock best-money1 wiblock1" style="width:43%;" v-if="item.skuDate.length==0">
-								<view class="span1 ilblock bg3">店返</view>
-								<view class="span2 ilblock color8">￥{{item.shop_reward}}</view>
-							</div>
-							<div class="ilblock best-money2 wiblock1" style=" width:43%;" v-if="item.skuDate.length==0">
-								<view class="span1 ilblock bg4">团返</view>
-								<view class="span2 ilblock color9">￥{{item.group_reward}}</view>
-							</div>
-						</view>
-						<view class="ilblock fsize price_p0" style="color: rgb(249,138,72);margin-bottom: 10pz;">￥<span class="price_p1">{{item.price}}</span></view>
-
 						<!-- <view class="ilblock wiblock" style="flex-wrap: nowrap;width: 64%;">
 							<div class="ilblock best-money1 wiblock1" style="width:43%;" v-if="item.skuDate.length==0">
 								<view class="span1 ilblock bg3">店返</view>
@@ -161,9 +149,22 @@
 								<view class="span1 ilblock bg4">团返</view>
 								<view class="span2 ilblock color9">￥{{item.group_reward}}</view>
 							</div>
-						</view> -->
+						</view>-->
 
-						<view class="ilblock best-topred wiblock2 hinnt_p" style="" v-if="item.skuDate.length>0">
+						<view class="ilblock fsize price_p0" style="color: rgb(249,138,72);margin-bottom: 10pz;">￥<span class="price_p1">{{item.price}}</span></view>
+
+						<view class="ilblock wiblock" style="flex-wrap: nowrap;width: 100%;">
+							<div class="ilblock best-money1 wiblock1" style="width: auto;" v-if="item.skuDate.length==0">
+								<view class="span1 ilblock bg3" style="width: auto;padding: 0 3px;">店返</view>
+								<view class="span2 ilblock color8" style="width: auto;padding-right: 3px;">￥{{item.shop_reward}}</view>
+							</div>
+							<div class="ilblock best-money2 wiblock1" style="width: auto;" v-if="item.skuDate.length==0">
+								<view class="span1 ilblock bg4" style="width: auto;padding: 0 3px;">团返</view>
+								<view class="span2 ilblock color9" style="width: auto;">￥{{item.group_reward}}</view>
+							</div>
+						</view>
+
+						<view class="ilblock best-topred wiblock2 hinnt_p" style="left: 0;margin-left: 8px;" v-if="item.skuDate.length>0">
 							返佣具体以日期为准
 						</view>
 					</view>
@@ -611,7 +612,9 @@
 	}
 	.hinnt_p{
 		font-size: 14px;
-		position: absolute; bottom: 1px; left: 32%;
+		position: absolute;
+		bottom: 1px; 
+		/*left: 32%;*/
 	}
 	.price_p1{
 		font-size: 20px;
@@ -637,9 +640,9 @@
 			width: 46% !important;
 			margin-left: 4px !important;
 		}
-		.wiblock2{
+		/*.wiblock2{
 			left: 29% !important;
-		}
+		}*/
 		.font12{
 			font-size: 10px !important;
 		}
@@ -647,12 +650,12 @@
 			font-size: 14px !important;
 		}
 		.price_p1,.price_p0{
-			font-size: 15px !important;
+			font-size: 20px !important;
 		}
 		.hinnt_p{
 			font-size: 12px !important;
 			bottom: 2px !important;
-			left: 32% !important;
+			/*left: 32% !important;*/
 		}
 	}
 </style>

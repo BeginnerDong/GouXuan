@@ -45,14 +45,14 @@
 				{{item.title}}
 			</div>
 			<view>
-				<div class="ilblock best-money1" style="width:42%;">
+				<!--<div class="ilblock best-money1" style="width:42%;">
 					<view class="span1 ilblock bg3">店返</view>
 					<view class="span2 ilblock color8">￥{{item.shop_reward}}</view>
 				</div>
 				<div class="ilblock best-money2" style=" width:42%;">
 					<view class="span1 ilblock bg4">团返</view>
 					<view class="span2 ilblock color9">￥{{item.group_reward}}</view>
-				</div>
+				</div>-->
 				<!-- 
 				<div class="ilblock best-money1">
 					<view class="span1 ilblock" style="background: #F98A48;">店反</view>
@@ -64,6 +64,14 @@
 				</div> -->
 				<div class="ilblock" style="font-size: 12px; color: rgb(249,138,72); margin-left: 15px; margin-top: 8px;">￥
 					<span style="font-size: 20px;">{{item.price}}</span>
+				</div>
+				<div class="ilblock best-money1" style="width:42%;">
+					<view class="span1 ilblock bg3">店返</view>
+					<view class="span2 ilblock color8">￥{{item.shop_reward}}</view>
+				</div>
+				<div class="ilblock best-money2" style=" width:42%;line-height: inherit;">
+					<view class="span1 ilblock bg4">团返</view>
+					<view class="span2 ilblock color9">￥{{item.group_reward}}</view>
 				</div>
 			</view>
 		</div>
