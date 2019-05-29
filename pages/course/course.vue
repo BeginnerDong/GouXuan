@@ -65,6 +65,7 @@
 </script>
 
 <style>
+	@import "../../assets/style/quill.css";
 	page {
 		background: #fff;
 	}

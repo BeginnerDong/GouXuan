@@ -7,7 +7,8 @@
 			</div>
 			<div>
 				<div class="ilblock" style="margin-top: 10px; width: 21%; float: left; color: #858585;background: #EFEFEF; border-radius: 20px; padding: 3px 15px;">规格</div>
-				<div class="ilblock color3" style="width: 75%; float: left; margin-left: 7px;line-height: 20px;margin-top: 12px;"> {{mainData&&mainData.sku?mainData.sku[0].title:''}}：{{mainData&&mainData.sku?mainData.sku[0].price:''}}元</div>
+				<div class="ilblock color3" style="width: 75%; float: left; margin-left: 7px;line-height: 20px;margin-top: 12px;">
+					{{mainData&&mainData.sku?mainData.sku[0].title:''}}：{{mainData&&mainData.sku?mainData.sku[0].price:''}}元</div>
 			</div>
 			<div style="clear: both;"></div>
 		</div>
@@ -43,7 +44,7 @@
 			</div>
 			<input style="width: 80%; border: none; " placeholder="请输入备注" v-model="submitData.remark" />
 		</div>
-		<div class="describe" >
+		<div class="describe">
 			<div style="line-height: 30px;margin-top: 15px;padding-bottom: 6px; border-bottom: solid 1px #F5F5F5;">
 				<div class="ilblock">
 					支付方式：
@@ -56,32 +57,33 @@
 				<div v-if="mainData.type==1" style="line-height:30px;margin-top: 15px;" class="ilblock">
 					请选择地址：
 				</div>
-				<div  class="ilblock color3" style="float: right;line-height: 57px;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/address/address'}})">
+				<div class="ilblock color3" style="float: right;line-height: 57px;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/address/address'}})">
 					{{addressData.id>0?'地址':'请选择地址'}}<img src="../../static/images/home-icon9.png" style="height: 11px;margin-left: 10px;margin-bottom: 2px; " />
 				</div>
-				<div style="position: relative;margin-bottom: 15px;" >
-					<div  style="font-size: 15px;margin-top: 15px;">{{addressData.name}}  {{addressData.phone}}</div>
+				<div style="position: relative;margin-bottom: 15px;">
+					<div style="font-size: 15px;margin-top: 15px;">{{addressData.name}} {{addressData.phone}}</div>
 					<div style="margin-top: 15px;">
-						<text  style="font-size: 12px;">{{addressData.city}}  {{addressData.detail}}</text>
+						<text style="font-size: 12px;">{{addressData.city}} {{addressData.detail}}</text>
 					</div>
-					
+
 				</div>
 			</div>
-			
+
 			<div>
 				<div style="line-height:30px;margin-top: 15px;" class="ilblock">
 					优惠券：
 				</div>
-				<div  class="ilblock color3" style="float: right;line-height: 57px;">
+				<div class="ilblock color3" style="float: right;line-height: 57px;">
 					{{couponData.length>0?'请选择优惠券':'暂无优惠券'}}<img src="../../static/images/home-icon9.png" style="height: 11px;margin-left: 10px;margin-bottom: 2px; " />
 				</div>
-				<div style="position: relative;margin-bottom: 15px;"  v-for="(item,index) in couponData" @click="chooseCoupon(index)" :style="webSelf.$Utils.inArray(item.id,chooseCouponId)!=-1?'border-right:2px solid red':''">
+				<div style="position: relative;margin-bottom: 15px;" v-for="(item,index) in couponData" @click="chooseCoupon(index)"
+				 :style="webSelf.$Utils.inArray(item.id,chooseCouponId)!=-1?'border-right:2px solid red':''">
 					<img style="width:300px;height: 90px;" src="../../static/images/wximg2.png" />
-					<span  style="position:absolute;left:130px;top:30px;font-size: 20px;color:red">{{item.discount}}</span>
-					<span  style="margin-top: 10px;font-size: 12px;color:gray">购满{{item.condition}}元即可使用</span>
+					<span style="position:absolute;left:130px;top:30px;font-size: 20px;color:red">{{item.discount}}</span>
+					<span style="margin-top: 10px;font-size: 12px;color:gray">购满{{item.condition}}元即可使用</span>
 				</div>
 			</div>
-			
+
 		</div>
 		<div class="foter-fixd">
 			<div class="ilblock" style="background: #3E3E3E;width: 67%;height: 100%;color: #EDEDED; text-align: center;font-size: 13px;">
@@ -106,115 +108,116 @@
 					remark: ''
 				},
 				count: 1,
-				webSelf:this,
-				price:0,
-				orderId:'',
-				getBefore:{},
-				getAfter:{},
-				couponData:[],
-				addressData:{},
-				chooseCouponId:[],
-				couponPrice:0
+				webSelf: this,
+				price: 0,
+				orderId: '',
+				getBefore: {},
+				getAfter: {},
+				couponData: [],
+				addressData: {},
+				chooseCouponId: [],
+				couponPrice: 0
 			}
 		},
 		onLoad(options) {
 			const self = this;
 			var options = self.$Utils.getHashParameters();
-			console.log('options',options)
-			self.id = options[0].id;
+			console.log('options', options)
 			self.type = options[0].type;
-			if(self.type==1){
+			if (options[0].sku_id) {
+				self.id = options[0].sku_id;
 				self.getBefore = {
-					sku: {
-						tableName: 'Sku',
-						searchItem: {
-							id:['in',[self.id]]
+						sku: {
+							tableName: 'Sku',
+							searchItem: {
+								id: ['in', [self.id]]
+							},
+							middleKey: 'product_no',
+							key: 'product_no',
+							condition: 'in',
+						}
+					},
+					self.getAfter = {
+						sku: {
+							tableName: 'Sku',
+							searchItem: {
+								status: 1,
+								id: self.id
+							},
+							middleKey: 'product_no',
+							key: 'product_no',
+							condition: 'in',
 						},
-						middleKey: 'product_no',
-						key: 'product_no',
-						condition: 'in',
 					}
-				},
-				self.getAfter = {
-					sku: {
-						tableName: 'Sku',
-						searchItem: {
-							status:1,
-							id:self.id
-						},
-						middleKey: 'product_no',
-						key: 'product_no',
-						condition: 'in',
-					},
-				}
-			}else if(self.type==2){
+			} else if (options[0].skuDate_id) {
+				self.id = options[0].skuDate_id;
 				self.getBefore = {
-					date: {
-						tableName: 'SkuDate',
-						searchItem: {
-							id:['in',[self.id]]
+						date: {
+							tableName: 'SkuDate',
+							searchItem: {
+								id: ['in', [self.id]]
+							},
+							middleKey: 'product_no',
+							key: 'product_no',
+							condition: 'in',
 						},
-						middleKey: 'product_no',
-						key: 'product_no',
-						condition: 'in',
 					},
-				},
-				self.getAfter = {
-					sku: {
-						tableName: 'SkuDate',
-						searchItem: {
-							status:1,
-							id:self.id
+					self.getAfter = {
+						sku: {
+							tableName: 'SkuDate',
+							searchItem: {
+								status: 1,
+								id: self.id
+							},
+							middleKey: 'product_no',
+							key: 'product_no',
+							condition: 'in',
 						},
-						middleKey: 'product_no',
-						key: 'product_no',
-						condition: 'in',
-					},
-				}
+					}
 			}
 			self.$Utils.loadAll(['getMainData'], self)
 
 		},
-		onShow(){
+		onShow() {
 			this.addressData = uni.getStorageSync('choosedAddressData');
 		},
 		methods: {
-			
-			
-			chooseCoupon(index){
+
+
+			chooseCoupon(index) {
 				const self = this;
-				var priceGap = self.price-self.couponPrice;
+				var priceGap = self.price - self.couponPrice;
 				var nowLength = self.chooseCouponId.indexOf(self.couponData[index].id);
-				if(nowLength!=-1){
-					self.chooseCouponId.splice(nowLength,1);
-					self.countCouponPrice();	
-				}else{
-					if(priceGap>0){
+				if (nowLength != -1) {
+					self.chooseCouponId.splice(nowLength, 1);
+					self.countCouponPrice();
+				} else {
+					if (priceGap > 0) {
 						self.chooseCouponId.push(self.couponData[index].id);
-						self.countCouponPrice();	
+						self.countCouponPrice();
 					};
-				};	
-				console.log('self.couponPrice',self.couponPrice)
-				console.log('self.price',self.price)
+				};
+				console.log('self.couponPrice', self.couponPrice)
+				console.log('self.price', self.price)
 			},
-			
-			countCouponPrice(){
+
+			countCouponPrice() {
 				const self = this;
 				var couponCountPrice = 0;
-				if(self.chooseCouponId.length>0){
-				
-					for(var i=0;i<self.couponData.length;i++){
-						if(self.chooseCouponId.indexOf(self.couponData[i].id)!=-1){
-							if(self.price-couponCountPrice<parseFloat(self.couponData[i].discount)){
+				if (self.chooseCouponId.length > 0) {
+
+					for (var i = 0; i < self.couponData.length; i++) {
+						if (self.chooseCouponId.indexOf(self.couponData[i].id) != -1) {
+							if (self.price - couponCountPrice < parseFloat(self.couponData[i].discount)) {
 								couponCountPrice = self.price;
 								break;
-							}else{
-								couponCountPrice = couponCountPrice + self.couponData[i].discount;	
+							} else {
+								couponCountPrice = couponCountPrice + self.couponData[i].discount;
 							};
 						};
 					};
 				};
-				self.couponPrice = couponCountPrice;	
+				self.couponPrice = couponCountPrice;
 			},
 
 			getMainData() {
@@ -232,14 +235,14 @@
 						self.price = parseFloat(self.mainData.sku[0].price);
 					};
 					self.getCouponData();
-					if(self.mainData.type==1){
+					if (self.mainData.type == 1) {
 						self.getAddressData();
 					};
 					self.$Utils.finishFunc('getMainData');
 				};
 				self.$apis.productGet(postData, callback);
 			},
-			
+
 			getCouponData() {
 				const self = this;
 				const postData = {};
@@ -247,12 +250,12 @@
 				postData.searchItem = {};
 				postData.searchItem.type = 1;
 				postData.searchItem.use_step = 1;
-				postData.searchItem.condition = ['<',parseFloat(self.price)];
+				postData.searchItem.condition = ['<', parseFloat(self.price)];
 				postData.order = {
 					create_time: 'desc'
 				};
 				const callback = (res) => {
-					
+
 					if (res.solely_code == 100000) {
 						if (res.info.data.length > 0) {
 							self.couponData.push.apply(self.couponData, res.info.data);
@@ -264,20 +267,22 @@
 				};
 				self.$apis.userCouponGet(postData, callback);
 			},
-			
+
 			getAddressData() {
 				const self = this;
-				
+
 				const postData = {};
-				postData.searchItem = {isdefault:1};
+				postData.searchItem = {
+					isdefault: 1
+				};
 				postData.tokenFuncName = 'getProjectToken';
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.addressData = res.info.data[0];
-						uni.setStorageSync('choosedAddressData',res.info.data[0]);
-					}else{
+						uni.setStorageSync('choosedAddressData', res.info.data[0]);
+					} else {
 						self.addressData = {};
-						uni.setStorageSync('choosedAddressData','');
+						uni.setStorageSync('choosedAddressData', '');
 					}
 					self.$Utils.finishFunc('getAddressData');
 				};
@@ -294,80 +299,76 @@
 						self.count--;
 					}
 				};
-				self.price = (self.count*self.mainData.sku[0].price).toFixed(2);
+				self.price = (self.count * self.mainData.sku[0].price).toFixed(2);
 				console.log('self.mainData', self.mainData)
 			},
 
 			addOrder(e) {
 				const self = this;
-				console.log('self.mainData.type',self.mainData.type);
+				console.log('self.mainData.type', self.mainData.type);
 				if (self.orderId != '') {
-					
+
 					self.pay();
 					return
 				};
-				if(self.submitData.name==''){
+				if (self.submitData.name == '') {
 					uni.setStorageSync('canClick', true);
 					self.$Utils.showToast('请填写姓名')
 					return
 				};
-				if(self.submitData.phone==''){
+				if (self.submitData.phone == '') {
 					uni.setStorageSync('canClick', true);
 					self.$Utils.showToast('请填写电话')
 					return
 				};
-				
-				if(self.mainData.type==1&&!uni.getStorageSync('choosedAddressData')){
+
+				if (self.mainData.type == 1 && !uni.getStorageSync('choosedAddressData')) {
 					uni.setStorageSync('canClick', true);
 					self.$Utils.showToast('请选择地址')
 					return
 				};
-			
-				var orderList =  [];
-				if(self.mainData.type==1){
-					orderList.push(
-						{
-							sku: [{
-								id: self.mainData.sku[0].id,
-								count: self.count,
-								data:{
-									parent_no:uni.getStorageSync('url_parent_no')
-								}
-							}]
-						}
-					)
-				}else if(self.mainData.type==2){
-					orderList.push(
-						{
-							date: [{
-								id: self.mainData.sku[0].id,
-								count: self.count,
-								data:{
-									parent_no:uni.getStorageSync('url_parent_no')
-								}
-							}]
-						}
-					)
+
+				var orderList = [];
+				if (self.mainData.type == 1) {
+					orderList.push({
+						sku: [{
+							id: self.mainData.sku[0].id,
+							count: self.count,
+							data: {
+								parent_no: uni.getStorageSync('url_parent_no')
+							}
+						}]
+					})
+				} else if (self.mainData.type == 2) {
+					orderList.push({
+						date: [{
+							id: self.mainData.sku[0].id,
+							count: self.count,
+							data: {
+								parent_no: uni.getStorageSync('url_parent_no')
+							}
+						}]
+					})
 				};
 				const postData = {
-					tokenFuncName:'getProjectToken',
+					tokenFuncName: 'getProjectToken',
 					orderList: orderList,
 					type: self.mainData.type,
 					data: {
-						phone:self.submitData.phone,
-						name:self.submitData.name,
-						remark:self.submitData.remark,
-						shop_no:self.mainData.user_no,
-						province_id:self.mainData.province_id,
+						phone: self.submitData.phone,
+						name: self.submitData.name,
+						remark: self.submitData.remark,
+						shop_no: self.mainData.user_no,
+						province_id: self.mainData.province_id,
 					},
 				};
-				
-				if(uni.getStorageSync('url_parent_no')){
+
+				if (uni.getStorageSync('url_parent_no')) {
 					postData.data.parent_no = uni.getStorageSync('url_parent_no');
 				};
-				
+
 				const callback = (res) => {
-					
+
 					if (res && res.solely_code == 100000) {
 						self.orderId = res.info.id;
 						self.pay(self.orderId)
@@ -388,18 +389,18 @@
 				var wxPay = 0;
 				var couponPay = 0;
 				const postData = {};
-				if(self.chooseCouponId.length>0){
+				if (self.chooseCouponId.length > 0) {
 					postData.coupon = [];
-					for(var i=0;i<self.couponData.length;i++){
-						if(self.chooseCouponId.indexOf(self.couponData[i].id)!=-1){
-							if(price-couponPay<parseFloat(self.couponData[i].discount)){
+					for (var i = 0; i < self.couponData.length; i++) {
+						if (self.chooseCouponId.indexOf(self.couponData[i].id) != -1) {
+							if (price - couponPay < parseFloat(self.couponData[i].discount)) {
 								postData.coupon.push({
 									id: self.couponData[i].id,
-									price: price-couponPay,
+									price: price - couponPay,
 								});
 								couponPay = price;
 								break;
-							}else{
+							} else {
 								postData.coupon.push({
 									id: self.couponData[i].id,
 									price: parseFloat(self.couponData[i].discount).toFixed(2),
@@ -409,31 +410,35 @@
 						}
 					};
 				};
-			
-				if(price-couponPay>0){
+
+				if (price - couponPay > 0) {
 					postData.wxPay = {
-						price:(price-couponPay).toFixed(2)
+						price: (price - couponPay).toFixed(2)
 					};
 				};
-				postData.tokenFuncName='getProjectToken',
-				postData.searchItem = {
-					id: self.orderId
-				};
+				postData.tokenFuncName = 'getProjectToken',
+					postData.searchItem = {
+						id: self.orderId
+					};
 				postData.payAfter = [];
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
 						if (res.info) {
 							const payCallback = (payData) => {
-								console.log('payData',payData)
+								console.log('payData', payData)
 								if (payData == 1) {
 									uni.showToast({
 										title: '支付成功',
 										duration: 2000,
-										success:function(){
-											self.$Router.reLaunch({route:{path:'/pages/user/user'}})
+										success: function() {
+											self.$Router.reLaunch({
+												route: {
+													path: '/pages/user/user'
+												}
+											})
 										}
 									});
-								}else{
+								} else {
 									uni.showToast({
 										title: '支付失败',
 										duration: 2000

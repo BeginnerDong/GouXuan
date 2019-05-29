@@ -116,7 +116,7 @@
 		<div style="width: 100%; height: 65px;"></div>
 		<view class="navbar-brand">
 			<view style="margin-top: 10px;">
-				<view class="navbar-item ilblock" @click="webSelf.$Router.reLaunch({route:{path:'/pages/index/index'}})">
+				<view class="navbar-item ilblock" @click="webSelf.$Router.reLaunch({route:{path:'/pages/index/index?site_id='+site_id}})">
 					<view class="navbar-img">
 						<image src="../../static/images/navbar1.png"></image>
 					</view>
@@ -144,8 +144,8 @@
 
 		data() {
 			return {
-				webSelf:this
-
+				webSelf:this,
+				site_id:''
 			}
 		},
 		onLoad(options) {
@@ -153,6 +153,7 @@
 			/* self.$Utils.loadAll(['getMainData', 'getLabelData', 'getCaseData'], self) */
 			self.headImgUrl = uni.getStorageSync('user_info').headImgUrl;
 			self.nickName = uni.getStorageSync('user_info').nickname;
+			self.site_id = uni.getStorageSync('siteData').id;
 		},
 		methods: {
 			

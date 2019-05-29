@@ -12,7 +12,7 @@
 		<button type="primary" @click="drawCanvasBgImg">test</button> -->
 		<div id="poster" style="z-index:0">
 			<div class="img">
-				<img class="img-one" :src="mainData.mainImg&&mainData.mainImg[0]?mainData.mainImg[0].url:''" style="width:100%;height:100%"/>
+				<img class="img-one" :src="mainData.mainImg&&mainData.mainImg[index]?mainData.mainImg[index].url:''" style="width:100%;height:100%" />
 				<!-- <img class="img-one" src="../../static/images/达人/img2.png" /> -->
 			</div>
 			<div class="ilblock imgb">
@@ -29,7 +29,7 @@
 		</div>
 		<!-- <div style="z-index:1;width:100%;height:100%;background: #fff;position: absolute;top: 0;"></div> -->
 		<div style="z-index:2;width:100%;height:100%;position: absolute;top: 0;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/register/register?parent_no=U123456'}})">
-			<img :src="url" style="width:100%;height:100%"/>
+			<img :src="url" style="width:100%;height:100%" />
 		</div>
 	</div>
 
@@ -45,7 +45,7 @@
 				QrData: [],
 				index: '',
 				url: '',
-				webSelf:this
+				webSelf: this
 			}
 		},
 		onLoad(options) {
@@ -123,7 +123,8 @@
 				const self = this;
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
-				postData.param = '/pages/register/register' + '&user_no=' + uni.getStorageSync('info').user_no;
+				postData.param = 'http://www.local-scanner.com/wx/#/pages/register/register?parent_no=' + uni.getStorageSync('info')
+					.user_no;
 				postData.ext = 'png';
 				const callback = (res) => {
 					console.log(res);
@@ -132,7 +133,9 @@
 					html2canvas(document.getElementById("poster"), {
 						width: 375,
 						height: 667
-					},{allowTaint: true}).then(function(canvas) {
+					}, {
+						allowTaint: true
+					}).then(function(canvas) {
 						var imgUrl = canvas.toDataURL();
 						self.url = imgUrl;
 						console.log('self.url', self.url)

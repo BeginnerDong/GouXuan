@@ -73,7 +73,8 @@
 				mode: '',
 				deepLength: 1,
 				pickerValueDefault: [0],
-				pickerValueArray: []
+				pickerValueArray: [],
+				parent_no:''
 			}
 		},
 

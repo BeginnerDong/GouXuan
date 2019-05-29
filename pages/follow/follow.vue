@@ -72,7 +72,7 @@
 		<view style="width: 100%; height: 60px;"></view>
 		<view class="navbar-brand">
 			<view class="color1" style="margin-top: 10px;">
-				<view class="navbar-item ilblock" @click="webSelf.$Router.reLaunch({route:{path:'/pages/index/index'}})">
+				<view class="navbar-item ilblock" @click="webSelf.$Router.reLaunch({route:{path:'/pages/index/index?site_id='+site_id}})">
 					<view class="navbar-img">
 						<image src="../../static/images/navbar1.png"></image>
 					</view>
@@ -108,12 +108,14 @@
 				searchItem: {
 					thirdapp_id: 2
 				},
-				all: true
+				all: true,
+				site_id:''
 			}
 		},
 		onLoad(options) {
 			const self = this;
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+			self.site_id = uni.getStorageSync('siteData').id;
 			self.$Utils.loadAll(['getUserData'], self)
 		},
 

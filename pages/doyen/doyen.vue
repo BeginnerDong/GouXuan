@@ -115,7 +115,7 @@
 				</view>
 				<view class="navbar-item ilblock" @click="webSelf.$Router.redirectTo({route:{path:'/pages/team/team'}})">
 					<view class="navbar-img">
-						<image src="../../static/images/达人/Talent%20show2.png"></image>
+						<image src="../../static/images/Talent%20show2.png"></image>
 					</view>
 					<view>达人团队</view>
 				</view>
