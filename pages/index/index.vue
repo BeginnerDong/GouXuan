@@ -103,11 +103,11 @@
 					</view>
 					<view style="margint: 0 4%;" >
 						<view class="ilblock" style="margin-left: 10rpx; font-size: 12px; color: rgb(249,138,72);">￥<span style="font-size: 20px;">{{item.price}}</span></view>
-						<div class="ilblock best-money1" style="width: auto;">
+						<div class="ilblock best-money1" style="width: auto;" v-if="primary_scope>10">
 							<view class="span1 ilblock bg3" style="width: auto;padding: 0 3px;">店返</view>
 							<view class="span2 ilblock color8" style="width: auto;padding-right: 8px;">￥{{item.shop_reward}}</view>
 						</div>
-						<div class="ilblock best-money2" style="width: auto;">
+						<div class="ilblock best-money2" style="width: auto;" v-if="primary_scope>10">
 							<view class="span1 ilblock bg4" style="width: auto;padding: 0 3px;">团返</view>
 							<view class="span2 ilblock" style="color: #F14667;width: auto;padding-right: 8px;">￥{{item.group_reward}}</view>
 						</div>
@@ -237,7 +237,7 @@
 				self.site_id = options[0].site_id
 			};
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			self.$Utils.loadAll(['getSiteData', 'getSliderData', 'getLabelData','wxJsSdk','tokenGet'], self)
+			self.$Utils.loadAll(['getSiteData', 'getSliderData', 'getLabelData','wxJsSdk'], self)
 			
 		},
 		onShow() {
