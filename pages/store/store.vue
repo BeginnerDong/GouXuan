@@ -77,6 +77,7 @@
 		},
 
 		onPullDownRefresh() {
+			const self = this;
 			console.log('refresh');
 			uni.startPullDownRefresh();
 			delete self.searchItem.check_code;

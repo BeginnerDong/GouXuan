@@ -131,25 +131,15 @@
 				</view>
 				<view class=" ilblock" style="width: 67%;position: absolute; top: 0px;right: 0px;">
 					
-					<view class="color1 font12 time" v-if="item.timeCount"> 距结束仅剩
+					<view class="color1 font12 time" v-if="item.timeCount&&item.hourCount<24"> 距结束仅剩
 						<view class="bg3">{{item.hourCount}}</view>:<view class="bg3">{{item.minCount}}</view>:<view class="bg3">{{item.secCount}}</view>
 					</view>
-					<view class="ilblock color2 all-store-text" style="height: 54px;">
+					<view class="ilblock color2 all-store-text">
 						<view class="ilblockxz">
 							{{item.title}}
 						</view>
 					</view>
 					<view class="ilblock" style="padding: 0px 5px;width: 100%;">
-						<!-- <view class="ilblock wiblock" style="flex-wrap: nowrap;width: 64%;">
-							<div class="ilblock best-money1 wiblock1" style="width:43%;" v-if="item.skuDate.length==0">
-								<view class="span1 ilblock bg3">店返</view>
-								<view class="span2 ilblock color8">￥{{item.shop_reward}}</view>
-							</div>
-							<div class="ilblock best-money2 wiblock1" style=" width:43%;" v-if="item.skuDate.length==0">
-								<view class="span1 ilblock bg4">团返</view>
-								<view class="span2 ilblock color9">￥{{item.group_reward}}</view>
-							</div>
-						</view>-->
 
 						<view class="ilblock fsize price_p0" style="color: rgb(249,138,72);margin-bottom: 10pz;">￥<span class="price_p1">{{item.price}}</span></view>
 
@@ -239,6 +229,7 @@
 		onLoad() {
 			
 			const self = this;
+
 			self.timestampNow = (new Date()).getTime();
 			var options = self.$Utils.getHashParameters();
 			self.primary_scope  = uni.getStorageSync('user_info').primary_scope;

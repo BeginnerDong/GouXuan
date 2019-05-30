@@ -2,20 +2,24 @@
 	<view>
 
 		<div class="bg1 radiu20 search">
-			<div class="color1 font10 ilblock" style="line-height: 30px; position: relative; left: 140px;">
-				<img src="../../static/images/home-icon13.png" style="width: 15px; margin-right: 15px;" />
-				搜索
+			<input class="color1 font10 ilblock" style="line-height: 30px;width:80%;height:30px;padding: 0 15px;" placeholder="输入商品名称搜索"
+			 v-model="title">
+			<img src="../../static/images/home-icon13.png" style="width: 15px;height:15px;margin: 7.5px;float: right;" @click="search" />
+
+			</input>
+		</div>
+		<div class="list-text" v-for="item in mainData">
+			<div class="color2 font14">[预约]{{item.products[0]&&item.products[0].snap_product&&item.products[0].snap_product.product?item.products[0].snap_product.product.title:''}}
 			</div>
+			<div class="color1 font13" style="text-align: right;" :data-id="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/panic-second/panic-second?id='+$event.currentTarget.dataset.id}})">点击查看
+				<img src="../../static/images/home-icon9.png" style="width: 6px; margin-left: 6px;" />
+			</div>
+
 		</div>
-		<div class="list-text">
-			<div class="color2 font14">[预约]郑州黄河谷温泉度假酒店套票 <div class="color1 font13 flo-right" 
-			@click="webSelf.$Router.navigateTo({route:{path:'/pages/panic-second/panic-second'}})">点击查看
-					<img src="../../static/images/home-icon9.png" style="width: 6px; margin-left: 6px;" />
-				</div></div>
-			<div class="color2 font14">B(199抢购)</div>
-		</div>
-		
-		<button @click="webSelf.$Router.navigateTo({route:{path:'/pages/status/status'}})"><div class="color5 font13" style="line-height: 50px;">自助查码</div></button>
+
+		<button @click="webSelf.$Router.navigateTo({route:{path:'/pages/status/status'}})">
+			<div class="color5 font13" style="line-height: 50px;">自助查码</div>
+		</button>
 	</view>
 </template>
 
@@ -24,38 +28,88 @@
 
 		data() {
 			return {
-				mainData:[],
-				webSelf:this,
+				isLoadAll: false,
+				mainData: [],
+				webSelf: this,
+				title: '',
+				searchItem: {
+					thirdapp_id: 2,
+					type: 2
+				}
 			}
 		},
 		onLoad(options) {
 			const self = this;
+			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 			self.$Utils.loadAll(['getMainData'], self)
 
 		},
-		methods: {
-			
 
-			getMainData() {
+		onReachBottom() {
+			console.log('onReachBottom')
+			const self = this;
+			if (!self.isLoadAll && uni.getStorageSync('loadAllArray')) {
+				self.paginate.currentPage++;
+				self.getMainData()
+			};
+		},
+
+		onPullDownRefresh() {
+			const self = this;
+			console.log('refresh');
+			uni.startPullDownRefresh();
+			delete self.searchItem.title;
+			self.getMainData(true);
+		},
+
+		methods: {
+
+			search() {
 				const self = this;
+				if (self.title != '') {
+					self.searchItem.title = ['LIKE', ['%' + self.title + '%']]
+					self.getMainData(true);
+					self.title = ''
+				} else {
+					self.$Utils.showToast('请输入商品名称搜索', 'none')
+				}
+			},
+
+
+			getMainData(isNew) {
+				const self = this;
+				
+				if (isNew) {
+					self.mainData = [];
+					self.paginate = {
+						count: 0,
+						currentPage: 1,
+						pagesize: 5,
+						is_page: true,
+					}
+				};
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
-				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-				postData.searchItem = {
-					thirdapp_id: self.$AssetsConfig.thirdapp_id,
-					type:2
-				};
+				postData.paginate = self.$Utils.cloneForm(self.paginate);
+				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
+
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.mainData.push.apply(self.mainData, res.info.data);
-						
+
+					} else {
+						self.isLoadAll = true
 					};
+					setTimeout(function()
+					{
+					  uni.stopPullDownRefresh()
+					},300);
 					self.$Utils.finishFunc('getMainData');
 				};
 				self.$apis.orderGet(postData, callback);
 			},
 
-			
+
 		}
 	}
 </script>
@@ -76,7 +130,7 @@
 
 	.list-text {
 		width: 100%;
-		height: 70px;
+
 		background: #fff;
 		border-bottom: solid 1px #EDEDED;
 		padding: 8px 15px;

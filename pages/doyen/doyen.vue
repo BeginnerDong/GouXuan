@@ -176,6 +176,8 @@
 				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 				postData.searchItem = {
 					type:2,
+					behavior :1,
+					count:['>',0],
 					create_time:['between',[now-86400*30,now]]
 				};
 				postData.compute = {
@@ -206,7 +208,10 @@
 				postData.tokenFuncName = 'getProjectToken';
 				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 				postData.searchItem = {
+					
+					behavior :2,
 					type:2,
+					count:['>',0],
 					create_time:['between',[now-86400*30,now]]
 				};
 				postData.compute = {
@@ -239,7 +244,9 @@
 				postData.tokenFuncName = 'getProjectToken';
 				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 				postData.searchItem = {
+					behavior :2,
 					type:2,
+					count:['>',0],
 				};
 				postData.compute = {
 				  ShopCount:[
@@ -265,9 +272,11 @@
 				var now = Date.parse(new Date()) / 1000;
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
-				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+				/* postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate); */
 				postData.searchItem = {
-					type:['in',[1,2]],
+					behavior :['in',[1,2]],
+					type:2,
+					count:['>',0],
 				};
 				postData.compute = {
 				  TotalCount:[
@@ -320,6 +329,9 @@
 				const self = this;
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
+				postData.searchItem = {
+					pay_status:1
+				};
 				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 				postData.compute = {
 				  OrderTotal:[

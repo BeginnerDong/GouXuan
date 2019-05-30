@@ -87,7 +87,9 @@
 				pickerValueDefault: [0],
 				pickerValueArray: [],
 				MonthFirst:'',
-				searchItem:{}
+				searchItem:{
+					pay_status:1
+				}
 
 			}
 		},

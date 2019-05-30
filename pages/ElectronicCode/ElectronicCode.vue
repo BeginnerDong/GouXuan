@@ -10,20 +10,22 @@
 		</view> -->
 		<view class="info color2 font13">
 			<image src="../../static/images/20190523145822.png"></image>
-			15986457896
+			{{phone}}
 		</view>
 		
-		<view class="text font13 color3">
-			<view class="color2 font15" style="font-weight: bolder;">【电话预约】西安高新二路店青都日料套餐</view>
-			<view class="color2 font15" style="margin-left: 5px;">(118抢购)
+		<view class="text font13 color3" v-for="item in mainData">
+			<view class="color2 font15" style="font-weight: bolder;">【电话预约】{{item.products[0].snap_product&&item.products[0].snap_product.product?item.products[0].snap_product.product.title:''}}</view>
+			<view class="color2 font15" style="margin-left: 5px;">
 				<view class="color3 font15 flo-right ilblock" style="padding: 2rpx 16rpx; background: #E5C4B4; margin-top: 5px;" >未预约</view>
 			</view>
 			<view style="clear: both; margin-top: 50rpx;">
 				<view>
-					姓名：张三<text style="margin-left: 30rpx;">电子码：12545687654</text>
+					姓名：{{item.name}}<text style="margin-left: 30rpx;">电子码：{{item.qr&&item.qr[0]?item.qr[0].check_code:''}}</text>
 				</view>
 				<view>
-					说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明
+					【{{item.products[0].snap_product&&item.products[0].snap_product.product?item.products[0].snap_product.product.title:''}}】尊敬的{{item.name}}，您1份核销二维码链接
+					为{{item.qr&&item.qr[0]?item.qr[0].url:''}}，使用说明使用说明使用说明使用说明使用说明使用说明使用说明使用说明使用说明使用说明使用说明使用说明使用说明使用说明使用说明使用说明
+					使用说明使用说明使用说明使用说明使用说明使用说明。
 				</view>
 			</view>
 			
@@ -38,72 +40,94 @@
 			return {
 				webSelf: this,
 				mainData:[],
-				openArray:[]
+				phone:'',
+				isLoadAll:false
 			}
 		},
 		onLoad(options) {
 			const self = this;
+			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+			var options = self.$Utils.getHashParameters();
+			if(options[0]&&options[0].phone){
+				self.phone = options[0].phone
+			}
 			self.$Utils.loadAll(['getMainData'], self)
-
+			
 		},
 		
+		onReachBottom(){
+			console.log('onReachBottom')
+			const self = this;
+			if(!self.isLoadAll&&uni.getStorageSync('loadAllArray')){
+				self.paginate.currentPage++;
+				self.getMainData()
+			};	
+		},
 		
 		
 		methods: {
 			
 		
+	
 			
-			show(id){
+			getMainData(isNew) {
 				const self = this;
-				var position = self.openArray.indexOf(id);
-				if (position >= 0) {
-					self.openArray.splice(position, 1)
-				} else {
-					self.openArray.push(id)
+				if(isNew){
+					self.mainData = [];
+					self.paginate = {
+						count: 0,
+						currentPage: 1,
+						pagesize: 5,
+						is_page: true,
+					}
 				};
-			},
-			
-			getMainData() {
-				const self = this;
 				const postData = {};
+				postData.paginate = self.$Utils.cloneForm(self.paginate);
+				postData.tokenFuncName = 'getProjectToken';
 				postData.searchItem = {
-					thirdapp_id: self.$AssetsConfig.thirdapp_id
-				};
-				postData.getBefore = {
-					question: {
-						tableName: 'Label',
-						searchItem: {
-							title: ['=', ['常见问题']],
-						},
-						middleKey: 'parentid',
-						key: 'id',
-						condition: 'in',
-					},
+					thirdapp_id: self.$AssetsConfig.thirdapp_id,
+					type:2,
+					phone:self.phone
 				};
 				postData.order = {
-					listorder: 'desc'
+					create_time: 'desc'
+				};
+				postData.getAfter = {
+					qr:{
+						tableName:'Qrcode',
+						middleKey:'order_no',
+						key:'order_no',
+						condition:'=',
+						searchItem:{
+							status:1
+						}
+					}
 				};
 				console.log('postData', postData)
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.mainData.push.apply(self.mainData, res.info.data);
 						
-					};
+					}else{
+						self.isLoadAll = true;
+					}
 					console.log('self.mainData', self.mainData)
 					self.$Utils.finishFunc('getMainData');
 				};
-				self.$apis.labelGet(postData, callback);
+				self.$apis.orderGet(postData, callback);
 			},
 		}
 	}
 </script>
 
 <style>
-	@import "../../assets/style/public.css";
-
 	page {
-		background: #fff;
+		background-color: #ffffff;
 	}
+	
+
+
+	
 	.top-box{
 		width: 100%;
 		height: 50px;
@@ -152,6 +176,5 @@
 	}
 	
 
-	@import "../../assets/style/bootstrap.css";
-	@import "../../assets/style/basic.css";
+
 </style>

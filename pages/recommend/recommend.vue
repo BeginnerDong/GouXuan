@@ -119,9 +119,9 @@
 
 			</view>
 		</div>
-		<div class="foter1" style="color: #848484; font-size: 15px; padding: 10px 15px;background: #fff;margin: 10px 0;">
+		<div class="foter1" style="color: #848484; font-size: 15px; padding: 10px 15px;background: #fff;margin: 10px 0;" v-if="num==0">
 			图文介绍
-			<div v-if="num==0" style="overflow: hidden;" id="test">
+			<div  style="overflow: hidden;" id="test">
 				<view class="content ql-editor" v-html="mainData.content">
 				</view>
 			</div>
@@ -134,7 +134,7 @@
 			<div class="foter2-boxa" v-if="num==1">
 				<div class="color2" style="font-weight: bolder; margin-bottom: 5px;">规格</div>
 				<div style="color:#818181;text-indent: 10px; text-align: justify;">
-					178元
+					{{mainData.standards}}
 				</div>
 			</div>
 			<div class="foter2-boxa" v-if="num==1">

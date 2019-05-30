@@ -121,7 +121,8 @@
 		{
 			"path": "pages/panic/panic",
 			"style": {
-				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
+				"navigationBarTitleText": "吃喝玩乐推荐",//设置页面标题文字
+				"enablePullDownRefresh": true
 			}
 		},
 		{

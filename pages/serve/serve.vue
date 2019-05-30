@@ -37,7 +37,7 @@
 				</div>
 			</div>
 			<div class="ilblock list-img" style="border: none;">
-				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/follow/follow'}})">
+				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/course/course?type=kefu'}})">
 					<div class="img">
 						<img src="../../static/images/service-icon5.png" />
 					</div>
