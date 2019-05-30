@@ -12,15 +12,16 @@
 				</span>
 			</div>
 		</div>-->
-		<div class="best-box ilblock" style="margin-left: 15px;" v-for="(item,index) in mainData" :data-id="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/recommend/recommend?id='+$event.currentTarget.dataset.id}})">
+		<div class="best-box ilblock" style="margin-left: 15px;height: auto;" v-for="(item,index) in mainData" :data-id="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/recommend/recommend?id='+$event.currentTarget.dataset.id}})">
 			<div class="best-box-top">
 				<img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
 				<div class="best-num ilblock">
 					已售{{item.false_sale_count}}
 				</div>
-				<div class="best-time" v-if="item.timeCount">
-					距结束仅剩  <span>{{item.hourCount}}</span> 小时: <span>{{item.minCount}}</span>分钟
-					: <span>{{item.secCount}}</span>
+				<div class="best-time" v-if="item.timeCount" style="line-height: 18px;padding-top: 5px;">
+					距结束仅剩  <span style="width: 24px;height: 20px;display: inline-block;padding: 0;">{{item.hourCount}}</span> 
+					小时: <span style="width: 24px;height: 20px;display: inline-block;padding: 0;">{{item.minCount}}</span>
+					分钟: <span style="width: 24px;height: 20px;display: inline-block;padding: 0;">{{item.secCount}}</span>
 				</div>
 				
 			</div>

@@ -2,7 +2,7 @@
 	<view>
 
 		<div class="bg1 radiu20 search">
-			<input class="color1 font10 ilblock" style="line-height: 30px;width:80%;height:30px;padding: 0 15px;" placeholder="输入商品名称搜索"
+			<input class="color1 font10 ilblock" style="line-height: 30px;width:79%;height:30px;padding: 0 15px;" placeholder="输入商品名称搜索"
 			 v-model="title">
 			<img src="../../static/images/home-icon13.png" style="width: 15px;height:15px;margin: 7.5px;float: right;" @click="search" />
 

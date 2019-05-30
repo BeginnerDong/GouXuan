@@ -141,7 +141,7 @@
 					</view>
 					<view class="ilblock" style="padding: 0px 5px;width: 100%;">
 
-						<view class="ilblock fsize price_p0" style="color: rgb(249,138,72);margin-bottom: 10pz;">￥<span class="price_p1">{{item.price}}</span></view>
+						<view class="ilblock fsize price_p0" style="color: rgb(249,138,72);margin-bottom: 10pz;width: 100%;">￥<span class="price_p1" style="width: 100%;">{{item.price}}</span></view>
 
 						<view class="ilblock wiblock" style="flex-wrap: nowrap;width: 100%;" v-if="item.skuDate.length==0&&primary_scope>10">
 							<div class="ilblock best-money1 wiblock1" style="width: auto;" >
@@ -232,13 +232,12 @@
 
 			self.timestampNow = (new Date()).getTime();
 			var options = self.$Utils.getHashParameters();
-			self.primary_scope  = uni.getStorageSync('user_info').primary_scope;
 			if(options[0]&&options[0].site_id){
 				self.site_id = options[0].site_id
 			};
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			self.$Utils.loadAll(['getSiteData', 'getSliderData', 'getLabelData','wxJsSdk'], self)
-			
+			self.$Utils.loadAll(['getSiteData', 'getSliderData', 'getLabelData','wxJsSdk','tokenGet'], self)
+			self.primary_scope  = uni.getStorageSync('user_info').primary_scope;
 		},
 		onShow() {
 			const self = this;
@@ -599,15 +598,16 @@
 	
 	@import "../../assets/style/index.css";
 	.ilblockxz{
-		overflow: hidden;
-		text-overflow:ellipsis;
-		white-space: nowrap;
+		display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 2;
+overflow: hidden;
 	}
 	.hinnt_p{
 		font-size: 14px;
-		position: absolute;
+		/*position: absolute;
 		bottom: 1px; 
-		/*left: 32%;*/
+		left: 32%;*/
 	}
 	.price_p1{
 		font-size: 20px;

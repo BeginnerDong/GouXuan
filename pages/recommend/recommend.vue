@@ -54,7 +54,7 @@
 			</div>
 		</div>
 		<div class="choice">
-			<div class="ilblock" style="color: #787878; font-size: 13px; width: 20%; height: 100%; text-align: center;position: relative; top: -30px;">规格选择</div>
+			<div class="ilblock" style="color: #787878; font-size: 13px; height: 100%; text-align: center;position: relative;float: left;margin-top: 10px;">规格选择</div>
 
 			<div class="ilblock" v-for="item in skuLabelData">
 				<div class="color2" style="margin-top: 10px;">{{item.title}}:</div>
@@ -69,14 +69,14 @@
 				日历
 			</div>
 			<div class="wahct-top">
-				<div class="color3 ilblock wahct-topleft" @click="goLastMonth">
+				<div class="color3 ilblock wahct-topleft" @click="goLastMonth" style="margin: 0;width: 33%;text-align: center;">
 					<image src="../../static/images/wximg6.png"></image>
 					<view class="ilblock wahct-top-text">上月</view>
 				</div>
-				<div class="color2 ilblock wahct-topleft" style="font-size: 16px;">
+				<div class="color2 ilblock wahct-topleft" style="font-size: 16px;margin: 0;width: 33%;text-align: center;">
 					{{curYear}}*{{curMonth+1}}
 				</div>
-				<div class="ilblock wahct-topright" @click="goNextMonth">
+				<div class="ilblock wahct-topright" @click="goNextMonth" style="margin: 0;width: 33%;text-align: center;">
 					<view class="ilblock wahct-top-text">下月</view>
 					<image src="../../static/images/wximg5.png"></image>
 				</div>
