@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<div class="follow-box" v-if="userInfoData.length==0">
+		<div class="follow-box" v-if="labelData.length==0">
 			<div class="follow-logo">
 				<img src="../../static/images/Talent-show-img.png" />
 			</div>
@@ -34,7 +34,7 @@
 			</div>
 		</div>
 
-		<div class="best-box ilblock" style="margin-left: 15px;" v-for="item in mainData" :data-id="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/recommend/recommend?id='+$event.currentTarget.dataset.id}})">
+		<div class="best-box ilblock" style="margin-left: 15px;" v-if="labelData.length>0" v-for="item in mainData" :data-id="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/recommend/recommend?id='+$event.currentTarget.dataset.id}})">
 			<div class="best-box-top">
 				<img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
 				<div class="best-num ilblock">
@@ -65,7 +65,7 @@
 				<div class="ilblock" style="font-size: 12px; color: rgb(249,138,72); margin-left: 15px; margin-top: 8px;">￥
 					<span style="font-size: 20px;">{{item.price}}</span>
 				</div>
-				<div v-if="primary_scope>10">
+				<div v-if="userData.primary_scope>10">
 				<div class="ilblock best-money1" style="width:42%;">
 					<view class="span1 ilblock bg3">店返</view>
 					<view class="span2 ilblock color8">￥{{item.shop_reward}}</view>
@@ -114,6 +114,7 @@
 				userInfoData: [],
 				mainData: [],
 				labelData: [],
+				userData:[],
 				isLoadAll:false,
 				searchItem: {
 					thirdapp_id: 2
@@ -128,7 +129,7 @@
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 			self.primary_scope  = uni.getStorageSync('user_info').primary_scope;
 			self.site_id = uni.getStorageSync('siteData').id;
-			self.$Utils.loadAll(['getUserData'], self)
+			self.$Utils.loadAll(['getUserInfoData','getUserData'], self)
 		},
 
 		onReachBottom() {
@@ -141,9 +142,25 @@
 		},
 
 		methods: {
-
-
+			
 			getUserData() {
+				const self = this;
+				
+				const postData = {};
+				postData.tokenFuncName = 'getProjectToken';
+				const callback = (res) => {
+					if (res.solely_code == 100000) {
+						self.userData = res.info.data[0]
+					} else {
+						self.$Utils.showToast(res.msg, 'none')
+					};
+					self.$Utils.finishFunc('getUserData');
+					
+				};
+				self.$apis.userGet(postData, callback);
+			},
+
+			getUserInfoData() {
 				const self = this;
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
@@ -160,7 +177,7 @@
 			getLabelData() {
 				const self = this;
 				const postData = {};
-				postData.paginate = self.$Utils.cloneForm(self.paginate);
+
 				postData.searchItem = {
 					thirdapp_id: self.$AssetsConfig.thirdapp_id,
 					id: ['in', self.userInfoData.follow]
@@ -203,10 +220,10 @@
 						self.mainData.push.apply(self.mainData, res.info.data);
 					}else{
 						self.isLoadAll = true;
-						self.$Utils.showToast('没有更多了','none');
+						
 					}
 					console.log('self.mainData', self.mainData)
-					self.$Utils.finishFunc('getUserData');
+					self.$Utils.finishFunc('getUserInfoData');
 				};
 				self.$apis.productGet(postData, callback);
 			},

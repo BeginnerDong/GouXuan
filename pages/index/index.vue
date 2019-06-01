@@ -103,11 +103,11 @@
 					</view>
 					<view style="margint: 0 4%;" >
 						<view class="ilblock" style="margin-left: 10rpx; font-size: 12px; color: rgb(249,138,72);">￥<span style="font-size: 20px;">{{item.price}}</span></view>
-						<div class="ilblock best-money1" style="width: auto;" v-if="primary_scope>10">
+						<div class="ilblock best-money1" style="width: auto;" v-if="userData.primary_scope>10">
 							<view class="span1 ilblock bg3" style="width: auto;padding: 0 3px;">店返</view>
 							<view class="span2 ilblock color8" style="width: auto;padding-right: 8px;">￥{{item.shop_reward}}</view>
 						</div>
-						<div class="ilblock best-money2" style="width: auto;" v-if="primary_scope>10">
+						<div class="ilblock best-money2" style="width: auto;" v-if="userData.primary_scope>10">
 							<view class="span1 ilblock bg4" style="width: auto;padding: 0 3px;">团返</view>
 							<view class="span2 ilblock" style="color: #F14667;width: auto;padding-right: 8px;">￥{{item.group_reward}}</view>
 						</div>
@@ -143,7 +143,7 @@
 
 						<view class="ilblock fsize price_p0" style="color: rgb(249,138,72);margin-bottom: 10pz;width: 100%;">￥<span class="price_p1" style="width: 100%;">{{item.price}}</span></view>
 
-						<view class="ilblock wiblock" style="flex-wrap: nowrap;width: 100%;" v-if="item.skuDate.length==0&&primary_scope>10">
+						<view class="ilblock wiblock" style="flex-wrap: nowrap;width: 100%;" v-if="item.skuDate.length==0&&userData.primary_scope>10">
 							<div class="ilblock best-money1 wiblock1" style="width: auto;" >
 								<view class="span1 ilblock bg3" style="width: auto;padding: 0 3px;">店返</view>
 								<view class="span2 ilblock color8" style="width: auto;padding-right: 3px;">￥{{item.shop_reward}}</view>
@@ -154,7 +154,7 @@
 							</div>
 						</view>
 
-						<view class="ilblock best-topred wiblock2 hinnt_p" style="left: 0;margin-left: 8px;" v-if="item.skuDate.length>0&&primary_scope>10">
+						<view class="ilblock best-topred wiblock2 hinnt_p" style="left: 0;margin-left: 8px;" v-if="item.skuDate.length>0&&userData.primary_scope>10">
 							返佣具体以日期为准
 						</view>
 					</view>
@@ -216,6 +216,7 @@
 				currentSiteData:{},
 				endTimeList: [],
 				countDownList:[],
+				userData:[],
 				swiperData: [],
 				webSelf: this,
 				now: '',
@@ -236,7 +237,8 @@
 				self.site_id = options[0].site_id
 			};
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			self.$Utils.loadAll(['getSiteData', 'getSliderData', 'getLabelData','wxJsSdk','tokenGet'], self)
+			self.paginateTwo = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+			self.$Utils.loadAll(['getSiteData', 'getSliderData', 'getLabelData','wxJsSdk','getUserData'], self)
 			self.primary_scope  = uni.getStorageSync('user_info').primary_scope;
 		},
 		onShow() {
@@ -248,7 +250,7 @@
 		onReachBottom(){
 			console.log('onReachBottom')
 			const self = this;
-			if(!self.isLoadAll&&uni.getStorageSync('loadAllArray')){
+			if(!self.isLoadAll&&uni.getStorageSync('canClick')){
 				self.paginate.currentPage++;
 				self.getMainData()
 			};	
@@ -273,11 +275,28 @@
 				self.show_search = !self.show_search
 			},
 			
+			getUserData() {
+				const self = this;
+				
+				const postData = {};
+				postData.tokenFuncName = 'getProjectToken';
+				const callback = (res) => {
+					if (res.solely_code == 100000) {
+						self.userData = res.info.data[0]
+					} else {
+						self.$Utils.showToast(res.msg, 'none')
+					};
+					self.$Utils.finishFunc('getUserData');
+					
+				};
+				self.$apis.userGet(postData, callback);
+			},
+			
 			tokenGet() {
 				const self = this;
 				const postData = {
 					searchItem: {
-						user_no: 'U523131762651748'
+						user_no: 'U601538520402659'
 					}
 				};
 

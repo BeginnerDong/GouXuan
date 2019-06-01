@@ -180,7 +180,7 @@
 			
 			toDaRen() {
 				const self = this;
-				if(uni.getStorageSync('user_info').primary_scope>=30){
+				if(self.userData.primary_scope>=30){
 					self.$Router.navigateTo({route:{path:'/pages/doyen/doyen'}})
 				}else{
 					uni.showToast({

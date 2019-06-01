@@ -30,7 +30,7 @@
 				订单号：{{item.order&&item.order[0]?item.order[0].order_no:''}}
 			</div>
 			<div class="color1 font14 " style="border-bottom: solid 1px #EDEDED;text-align: justify; margin: 10px 0px ; padding-bottom: 7px;">
-				{{item.order&&item.order[0].products[0]?item.order[0].products[0].snap_product.product.title:''}}
+				{{item.order&&item.order[0]&&item.order[0].products&&item.order[0].products[0]?item.order[0].products[0].snap_product.product.title:''}}
 			</div>
 			<div class="color2 font14" style="margin-top: 16px;">
 				姓名:<span>{{item.order&&item.order[0]?item.order[0].name:''}}</span>
@@ -56,14 +56,14 @@
 				webSelf: this,
 				mainData: [],
 				type: 2,
-				hasWithdraw:0,
-				shopCount:0,
-				groupCount:0,
-				userInfoData:[],
+				hasWithdraw: '0.00',
+				shopCount: '0.00',
+				groupCount: '0.00',
+				userInfoData: [],
 				searchItem: {
 					type: 2
 				},
-				totalCount:0
+				totalCount: '0.00'
 			}
 		},
 		onLoad(options) {
@@ -72,10 +72,11 @@
 		},
 
 		methods: {
-			
+
+
 			getUserInfoData() {
 				const self = this;
-				
+
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
 				const callback = (res) => {
@@ -84,14 +85,109 @@
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};
-					self.$Utils.finishFunc('getUserInfoData');
+					self.gethasWithdraw();
+
 				};
 				self.$apis.userInfoGet(postData, callback);
 			},
 
+			gethasWithdraw() {
+				const self = this;
+
+				const postData = {};
+				postData.tokenFuncName = 'getProjectToken';
+				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+				postData.searchItem = {
+					type: 2,
+					count: ['<', 0],
+					status: ['in', [0, 1]]
+				};
+				postData.compute = {
+					TotalCount: [
+						'sum',
+						'count',
+					],
+				};
+				const callback = (res) => {
+					if (res.solely_code == 100000) {
+						console.log('now', res)
+						self.hasWithdraw = res.info.compute.TotalCount
+					} else {
+						self.$Utils.showToast(res.msg, 'none')
+					};
+					console.log(self.hasWithdraw)
+					self.getshopCount()
+
+				};
+				self.$apis.flowLogGet(postData, callback);
+			},
+
+			getshopCount() {
+				const self = this;
+
+				const postData = {};
+				postData.tokenFuncName = 'getProjectToken';
+				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+				postData.searchItem = {
+					type: 2,
+					behavior: 1,
+					count: ['>', 0],
+				};
+				postData.compute = {
+					TotalCount: [
+						'sum',
+						'count',
+					],
+				};
+				const callback = (res) => {
+					if (res.solely_code == 100000) {
+						console.log('now', res)
+						self.shopCount = res.info.compute.TotalCount
+					} else {
+						self.$Utils.showToast(res.msg, 'none')
+					};
+					self.getgroupCount()
+					console.log(self.shopCount)
+				};
+				self.$apis.flowLogGet(postData, callback);
+			},
+
+			getgroupCount() {
+				const self = this;
+
+				const postData = {};
+				postData.tokenFuncName = 'getProjectToken';
+				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+				postData.searchItem = {
+					type: 2,
+					behavior: 2,
+					count: ['>', 0],
+				};
+				postData.compute = {
+					TotalCount: [
+						'sum',
+						'count',
+					],
+				};
+				const callback = (res) => {
+					if (res.solely_code == 100000) {
+
+						self.groupCount = res.info.compute.TotalCount;
+						console.log(self.hasWithdraw)
+						console.log(self.userInfoData.balance)
+						self.totalCount = (-parseInt(self.hasWithdraw) + parseInt(self.userInfoData.balance)).toFixed(2)
+					} else {
+						self.$Utils.showToast(res.msg, 'none')
+					};
+					console.log(self.groupCount)
+					self.$Utils.finishFunc('getUserInfoData');
+				};
+				self.$apis.flowLogGet(postData, callback);
+			},
+
 			getMainData() {
 				const self = this;
-				
+
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
 				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
@@ -100,35 +196,21 @@
 					create_time: 'desc'
 				};
 				postData.getAfter = {
-					order:{
-						tableName:'Order',
-						middleKey:'order_no',
-						key:'order_no',
-						searchItem:{
-							status:1
+					order: {
+						tableName: 'Order',
+						middleKey: 'order_no',
+						key: 'order_no',
+						searchItem: {
+							status: 1
 						},
-						condition:'='
+						condition: '='
 					}
 				};
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
 						if (res.info.data.length > 0) {
-							self.mainData.push.apply(self.mainData, res.info.data);	
+							self.mainData.push.apply(self.mainData, res.info.data);
 						}
-						for (var i = 0; i < self.mainData.length; i++) {
-							if(self.mainData[i].count<0){
-								self.hasWithdraw += (self.mainData[i].count)
-							};
-							if(self.mainData[i].behavior==1){
-								self.shopCpunt += (self.mainData[i].count)
-							};
-							if(self.mainData[i].behavior==2){
-								self.groupCount += (self.mainData[i].count)
-							}
-						}
-						console.log(parseInt(self.hasWithdraw));
-						console.log(parseInt(self.userInfoData.balance));
-						self.totalCount = parseInt(self.hasWithdraw+self.userInfoData.balance)
 						console.log(self.totalCount);
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
@@ -145,7 +227,7 @@
 <style>
 	@import "../../assets/style/public.css";
 	@import "../../assets/style/index.css";
-	
+
 	@import "../../assets/style/bootstrap.css";
 	@import "../../assets/style/basic.css";
 

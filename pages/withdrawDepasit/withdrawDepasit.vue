@@ -94,9 +94,12 @@
 
 					if (res.solely_code == 100000) {
 						self.$Utils.showToast('申请成功', 'none');
-						uni.navigateBack({
-							delta: 1
-						});
+						setTimeout(function(){
+						   uni.navigateBack({
+						   	delta: 1
+						   });
+						},1000);
+						
 					}
 				};
 				self.$apis.flowLogAdd(postData, callback)

@@ -55,7 +55,7 @@
 						self.submitData.ali_account =  res.info.data[0].info.ali_account;
 						self.submitData.ali_name =  res.info.data[0].info.ali_name;
 					} else {
-						self.$Utils.showToat('数据错误')
+						self.$Utils.showToast('数据错误')
 					}
 					self.$Utils.finishFunc('getMainData');
 				}
@@ -70,7 +70,7 @@
 				if (pass) {
 					self.userInfoUpdate()	
 				} else {
-					self.$Utils.showToat('请完善信息', 'none')
+					self.$Utils.showToast('请完善信息', 'none')
 				};
 			},
 			
@@ -86,9 +86,12 @@
 				const callback = (res) => {
 					if(res.solely_code==100000){
 						self.$Utils.showToast('修改成功','none');
-						uni.redirectTo({
-							url:'/pages/return/return'
-						})
+						setTimeout(function(){
+						   uni.redirectTo({
+						   	url:'/pages/return/return'
+						   })
+						},1000);
+						
 					}else{
 						self.$Utils.showToast(res.msg,'none');
 					}

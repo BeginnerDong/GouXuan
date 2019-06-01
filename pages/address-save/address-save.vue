@@ -126,7 +126,7 @@
 					uni.setStorageSync('canClick', true);
 					if (data && data.solely_code == 100000) {
 						self.$Utils.showToast('修改成功','success');
-						self.$Router.navigateTo({route:{path:'/pages/address/address'}})
+						self.$Router.redirectTo({route:{path:'/pages/address/address'}})
 					} else {
 						self.$Utils.showToast(data.msg,'error')
 					};
@@ -149,7 +149,7 @@
 					uni.setStorageSync('canClick', true);
 					if (data && data.solely_code == 100000) {
 						self.$Utils.showToast('添加成功','success');
-						self.$Router.navigateTo({route:{path:'/pages/address/address'}})
+						self.$Router.redirectTo({route:{path:'/pages/address/address'}})
 					} else {
 						self.$Utils.showToast(data.msg,'success')
 					}

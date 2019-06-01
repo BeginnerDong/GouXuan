@@ -53,7 +53,7 @@
 				postData.tokenFuncName = 'getProjectToken';
 				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
 				postData.searchItem.type = 1;
-				postData.searchItem.use_step = 1;
+
 				postData.order = {
 					create_time: 'desc'
 				}
@@ -64,7 +64,7 @@
 							self.mainData.push.apply(self.mainData, res.info.data);
 							for (var i = 0; i < self.mainData.length; i++) {
 								self.mainData[i].create_time = self.mainData[i].create_time.substring(0, 10);
-								self.mainData[i].invalid_time = self.$Utils.timestampToTime(self.mainData[i].invalid_time);
+					
 							}
 						}
 					} else {
@@ -82,11 +82,13 @@
 				const self = this;
 				console.log(e)
 				self.num = e.currentTarget.dataset.num;
+				console.log(self.num )
 				self.changeSearch(self.num);
 			},
 
 			changeSearch(num) {
 				const self = this;
+				console.log('num',num)
 				self.searchItem = {};
 				if (num == '0') {
 					self.searchItem.use_step = 1;

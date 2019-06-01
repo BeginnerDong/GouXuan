@@ -58,6 +58,7 @@
 				searchItem: {
 					thirdapp_id: 2,
 					shop_no: uni.getStorageSync('merchant_no'),
+					type:1
 				}
 			}
 		},
@@ -96,7 +97,7 @@
 					success: function(res) {
 						var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
 						console.log('result', result)
-						
+						self.searchItem.type = ['in',[1,2]];
 						self.searchItem.check_code = result;
 						self.getMainData(true)
 					}

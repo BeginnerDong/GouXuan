@@ -42,13 +42,13 @@
 	}
 
 	.swiper {
-		width: 690upx;
+		width: 100%;
 		height: 300upx;
-		margin: 25upx auto 0;
+		
 	}
 
 	.swiper-item {
-		width: 690upx;
+		width: 100%;
 		height: 300upx;
 	}
 

@@ -32,12 +32,15 @@
 					<div class="ilblock" style="color: rgb(249,138,72); font-size: 11px; margin-top: 16px;">￥<span style="font-size: 20px;">{{item.price}}</span> </div>
 				</div>
 			</div>
-			<div v-if="item.qrData.length>0">
-				<div class="font12 color1 ilblock" style="margin-left: 15px;">
-					核销二维码
-				</div>	
-				<div style="width: 100%;border-top: 1px solid gray;margin-top: 5px;">
-					 <image v-for="c_item in item.qrData" style="width: 80px;height: 80px;" :src="c_item.url" mode="" @click="tapZoom(c_item.url)"></image>
+			<div v-if="item.qrData.length>0" style="margin-top: 20px;border-top: 1px solid gray;">
+				
+				<div style="width: 100%;margin-top: 5px;">
+					<div  v-for="c_item in item.qrData" style="width:25%;text-align: center;"> 
+						<image  style="width: 80px;height: 80px;" :src="c_item.url" mode="" @click="tapZoom(c_item.url)"></image>
+						<div class="font12 color1" v-if="c_item.message!=''">
+							{{c_item.message}}
+						</div>	
+					</div>
 				</div>
 			</div>
 			<view style="clear: both;"></view>

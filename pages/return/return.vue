@@ -44,7 +44,8 @@
 			</div>
 
 
-			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/withdrawalRecord/withdrawalRecord'}})" class="color2 font14" style="height: 52px;width: 100%; line-height: 52px;">
+			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/withdrawalRecord/withdrawalRecord'}})" class="color2 font14"
+			 style="height: 52px;width: 100%; line-height: 52px;">
 				<div class="ilblock color2 font14 btm-list">提现记录</div>
 				<div class="ilblock color1 font14 list">
 					<image src="../../static/images/home-icon9.png"></image>
@@ -53,7 +54,8 @@
 
 		</div>
 
-		<button @click="userInfoData.balance>20?webSelf.$Router.navigateTo({route:{path:'/pages/withdrawDepasit/withdrawDepasit'}}):''" class="color5" :style="userInfoData.balance>20?'background:#F98A48':''" style="font-size:14px;background: #FBB091;width:70%;height: 35px;line-height: 35px;border-radius: 20px; margin: 30px auto 100px;">
+		<button @click="userInfoData.balance>20?webSelf.$Router.navigateTo({route:{path:'/pages/withdrawDepasit/withdrawDepasit'}}):''"
+		 class="color5" :style="userInfoData.balance>20?'background:#F98A48':''" style="font-size:14px;background: #FBB091;width:70%;height: 35px;line-height: 35px;border-radius: 20px; margin: 30px auto 100px;">
 			申请提现{{userInfoData.balance>20?'':'(不足20元不可提现)'}}
 		</button>
 
@@ -63,13 +65,13 @@
 
 		<view class="navbar-brand">
 			<view style="margin-top: 10px;">
-				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/doyen/doyen'}})">
+				<view class="navbar-item ilblock" @click="webSelf.$Router.redirectTo({route:{path:'/pages/doyen/doyen'}})">
 					<view class="navbar-img">
 						<image src="../../static/images/Talent%20show1.png"></image>
 					</view>
 					<view>达人</view>
 				</view>
-				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/team/team'}})">
+				<view class="navbar-item ilblock" @click="webSelf.$Router.redirectTo({route:{path:'/pages/team/team'}})">
 					<view class="navbar-img">
 						<image src="../../static/images/Talent%20show2.png"></image>
 					</view>
@@ -94,27 +96,25 @@
 				webSelf: this,
 				mainData: [],
 				type: 2,
-				hasWithdraw:0,
-				shopCount:0,
-				groupCount:0,
-				userInfoData:[],
-				searchItem: {
-					type: 2
-				},
-				totalCount:0
+				hasWithdraw: '0.00',
+				shopCount: '0.00',
+				groupCount: '0.00',
+				userInfoData: [],
+	
+				totalCount: '0.00'
 			}
 		},
 		onLoad(options) {
 			const self = this;
-			
+
 			self.$Utils.loadAll(['getUserInfoData'], self)
 		},
 
 		methods: {
-			
+
 			getUserInfoData() {
 				const self = this;
-				
+
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
 				const callback = (res) => {
@@ -123,53 +123,96 @@
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};
-					self.getMainData();
+					self.gethasWithdraw();
 					
 				};
 				self.$apis.userInfoGet(postData, callback);
 			},
 
-			getMainData() {
+			gethasWithdraw() {
 				const self = this;
-				
+
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
-				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
-				postData.searchItem.user_no = uni.getStorageSync('user_no');
-				postData.order = {
-					create_time: 'desc'
+				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+				postData.searchItem = {
+					type: 2,
+					count: ['<', 0],
+					status:['in',[0,1]]
 				};
-				postData.getAfter = {
-					order:{
-						tableName:'Order',
-						middleKey:'order_no',
-						key:'order_no',
-						searchItem:{
-							status:1
-						},
-						condition:'='
-					}
+				postData.compute = {
+					TotalCount: [
+						'sum',
+						'count',
+					],
 				};
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
-						if (res.info.data.length > 0) {
-							self.mainData.push.apply(self.mainData, res.info.data);	
-						}
-						for (var i = 0; i < self.mainData.length; i++) {
-							if(self.mainData[i].count<0){
-								self.hasWithdraw += (self.mainData[i].count)
-							};
-							if(self.mainData[i].behavior==1){
-								self.shopCpunt += (self.mainData[i].count)
-							};
-							if(self.mainData[i].behavior==2){
-								self.groupCount += (self.mainData[i].count)
-							}
-						}
-						console.log(parseInt(self.hasWithdraw));
-						console.log(parseInt(self.userInfoData.balance));
-						self.totalCount = parseInt(self.hasWithdraw+self.userInfoData.balance)
-						console.log(self.totalCount);
+						console.log('now', res)
+						self.hasWithdraw = res.info.compute.TotalCount
+					} else {
+						self.$Utils.showToast(res.msg, 'none')
+					};
+					self.getshopCount()
+				
+				};
+				self.$apis.flowLogGet(postData, callback);
+			},
+
+			getshopCount() {
+				const self = this;
+
+				const postData = {};
+				postData.tokenFuncName = 'getProjectToken';
+				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+				postData.searchItem = {
+					type: 2,
+					behavior: 1,
+					count: ['>', 0],
+				};
+				postData.compute = {
+					TotalCount: [
+						'sum',
+						'count',
+					],
+				};
+				const callback = (res) => {
+					if (res.solely_code == 100000) {
+						console.log('now', res)
+						self.shopCount = res.info.compute.TotalCount
+					} else {
+						self.$Utils.showToast(res.msg, 'none')
+					};
+					self.getgroupCount()
+						
+				};
+				self.$apis.flowLogGet(postData, callback);
+			},
+
+			getgroupCount() {
+				const self = this;
+
+				const postData = {};
+				postData.tokenFuncName = 'getProjectToken';
+				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+				postData.searchItem = {
+					type: 2,
+					behavior: 2,
+					count: ['>', 0],
+				};
+				postData.compute = {
+					TotalCount: [
+						'sum',
+						'count',
+					],
+				};
+				const callback = (res) => {
+					if (res.solely_code == 100000) {
+					
+						self.groupCount = res.info.compute.TotalCount;
+						console.log(self.hasWithdraw)
+						console.log(self.userInfoData.balance)
+						self.totalCount = (-parseInt(self.hasWithdraw) + parseInt(self.userInfoData.balance)).toFixed(2)
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};
@@ -177,6 +220,8 @@
 				};
 				self.$apis.flowLogGet(postData, callback);
 			},
+
+
 
 		}
 	}
@@ -217,17 +262,21 @@
 		margin-top: 15px;
 		color: rgb(34, 34, 34);
 	}
-	.btm-list{
+
+	.btm-list {
 		box-sizing: border-box;
 		padding: 0px 15px;
 	}
-	.list image{
-		 width:5px;
-		 height: 11px;
-		 margin-left: 10px;
+
+	.list image {
+		width: 5px;
+		height: 11px;
+		margin-left: 10px;
 	}
-	.list{
-		float: right;margin-right: 15px;
+
+	.list {
+		float: right;
+		margin-right: 15px;
 	}
 
 	@import "../../assets/style/bootstrap.css";

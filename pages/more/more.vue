@@ -31,11 +31,11 @@
 			
 			<div style="margin-left: 15px;">
 				<div class="ilblock" style="font-size: 12px; color: rgb(249,138,72);">￥<span style="font-size: 20px;">{{item.price}}</span></div>
-				<div class="ilblock best-moneyleft" v-if="item.skuDate.length>0&&primary_scope>10">
+				<div class="ilblock best-moneyleft" v-if="item.skuDate.length>0&&userData.primary_scope>10">
 					返佣具体以日期为准
 				</div>
 				
-				<view class="ilblock" style="margint: 0 5%;width: 77%;" v-if="item.skuDate.length==0&&primary_scope>10">
+				<view class="ilblock" style="margint: 0 5%;width: 77%;" v-if="item.skuDate.length==0&&userData.primary_scope>10">
 					<div class="ilblock best-money1">
 						<view class="span1 ilblock bg3">店返</view>
 						<view class="span2 ilblock color8">￥{{item.shop_reward}}</view>
@@ -66,6 +66,7 @@
 				endTimeList: [],
 				countDownList:[],
 				mainData: [],
+				userData:[],
 				searchItem: {
 					thirdapp_id: 2,
 					province_id: uni.getStorageSync('siteData').id
@@ -78,31 +79,32 @@
 				primary_scope:''
 			}
 		},
-		onLoad(){
+		onLoad(options){
 			const self = this;
+			console.log(options)
 			self.timestampNow = (new Date()).getTime();
 			console.log('onLoad',self.timestampNow);
 			self.primary_scope  = uni.getStorageSync('user_info').primary_scope;
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			var options = self.$Utils.getHashParameters();
-			if (options[0].category_id) {
-				self.searchItem.category_id = options[0].category_id
+			var optionsTwo = self.$Utils.getHashParameters();
+			if (optionsTwo[0].category_id) {
+				self.searchItem.category_id = optionsTwo[0].category_id
 			};
-			if (options[0].city_id) {
-				self.searchItem.city_id = options[0].city_id
+			if (optionsTwo[0].city_id) {
+				self.searchItem.city_id = optionsTwo[0].city_id
 			};
-			if (options[0].title) {
-				self.searchItem.title = ['LIKE', ['%' + options[0].title + '%']]
+			if (options.title) {
+				self.searchItem.title = ['LIKE', ['%' + options.title + '%']]
 			};
-			if (options[0].noSite && options[0].noSite == 'true') {
+			if (optionsTwo[0].noSite && optionsTwo[0].noSite == 'true') {
 				delete self.searchItem.province_id
 			};
-			if (options[0].order && options[0].order == 'sale_count') {
+			if (optionsTwo[0].order && optionsTwo[0].order == 'sale_count') {
 				self.order = {
 					false_sale_count: 'desc'
 				}
 			};
-			self.$Utils.loadAll(['getMainData'], self);
+			self.$Utils.loadAll(['getMainData','getUserData'], self);
 
 		},
 		onShow() {
@@ -140,7 +142,24 @@
 
 
 		methods: {
-
+			
+			getUserData() {
+				const self = this;
+				
+				const postData = {};
+				postData.tokenFuncName = 'getProjectToken';
+				const callback = (res) => {
+					if (res.solely_code == 100000) {
+						self.userData = res.info.data[0]
+					} else {
+						self.$Utils.showToast(res.msg, 'none')
+					};
+					self.$Utils.finishFunc('getUserData');
+					
+				};
+				self.$apis.userGet(postData, callback);
+			},
+			
 			
 			getMainData(isNew) {
 				const self = this;
@@ -229,7 +248,7 @@
 					};
 				};	
 				self.timestampNow = newTime;
-				console.log('countDown');
+				
 				self.timeInterval = setTimeout(function(){
 					self.countDown()
 				},1000)

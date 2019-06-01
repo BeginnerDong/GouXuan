@@ -41,6 +41,7 @@ export default {
 					uni.hideLoading();
 				};
 				var code = res.data.solely_code;
+			
                 if (res.data.solely_code == '200000') {
                    
                     token[obj.data.tokenFuncName](callback,{refreshToken:true});

@@ -69,7 +69,7 @@
 					},
 				};
 				postData.order = {
-					listorder: 'desc'
+					id: 'asc'
 				};
 				console.log('postData', postData)
 				const callback = (res) => {
@@ -86,6 +86,9 @@
 				const postData = {};
 				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
 				postData.searchItem.type =3;
+				postData.order = {
+					id:'asc'
+				};
 				console.log('postData', postData)
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
@@ -124,16 +127,17 @@
 				var id = self.mainData[index].id;
 				var position = self.follow.indexOf(id);
 				if (position >= 0) {
-					self.follow.splice(position, 1)
+					self.follow.splice(position, 1);
+					self.chooseData.splice(position,1)
 				} else {
-					self.follow.push(id)
+					self.follow.push(id);
+					self.chooseData.push(self.mainData[index])
 				};
 				self.searchItem.id = ['in', self.follow];
 				/* if (self.follow.length == 0) {
 					delete self.searchItem.id
 				}; */
-				self.chooseData = [];
-				self.getChooseData()
+				
 			},
 
 		}

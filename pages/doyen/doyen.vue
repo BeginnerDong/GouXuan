@@ -2,12 +2,23 @@
 	<view>
 		<div class="top" style="overflow: hidden;">
 			<div class="top-img ilblock">
-				<img :src="headImgUrl" style="width: 60px;heigh:60px;border-radius:50%;" />
+				<img :src="userData.headImgUrl" style="width: 60px;heigh:60px;border-radius:50%;" />
 			</div>
 			<div class="ilblock" style="width:180px;height: 100%;margin-left: 100px;">
-				<div class="top-name color5 font15" style="margin-top: 20px;">{{nickName}}</div>
-				<div class="top-id color5 font13 " style="line-height: 30px">ID:{{user_no}}</div>
-				<div class="bg1 ilblock radiu20 font14" style="color: #FF8954; padding: 3px 10px; margin-top: 5px;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/register/register?parent_no='+user_no}})">分享达人</div>
+				<div class="top-name color5 font15" style="margin-top: 20px;">{{userData.nickName}}</div>
+				<div class="top-id color5 font13 " style="line-height: 30px">ID:{{userData.user_no}}</div>
+				<div class="bg1 ilblock radiu20 font14" style="color: #FF8954; padding: 3px 10px; margin-top: 5px;" v-if="userData.info&&userData.info.level==1">
+					达人
+				</div>
+				<div class="bg1 ilblock radiu20 font14" style="color: #FF8954; padding: 3px 10px; margin-top: 5px;" v-if="userData.info&&userData.info.level==2">
+					超级达人
+				</div>
+				<div class="bg1 ilblock radiu20 font14" style="color: #FF8954; padding: 3px 10px; margin-top: 5px;" v-if="userData.info&&userData.info.level==3">
+					导师
+				</div>
+				<div class="bg1 ilblock radiu20 font14" style="color: #FF8954; padding: 3px 10px; margin-top: 5px;" v-if="userData.info&&userData.info.level==4">
+					超级总监
+				</div>
 				<div class="ilblock color5 font14" @click="webSelf.$Router.navigateTo({route:{path:'/pages/regular/regular'}})">
 					<div class="ilblock color5 font14" style="margin-left: 10px;width: 80px; 
 					background: url(../../static/images/jiantouyou.png) no-repeat 65px center;
@@ -151,22 +162,35 @@
 					type: 2
 				},
 				orderData: [],
+				userData:[],
 				orderTotal:0,
-				user_no:'',
-				headImgUrl:'',
-				nickName:'',
-				user_no:''
+		
 			}
 		},
 		onLoad(options) {
 			const self = this;
-			self.user_no = uni.getStorageSync('user_info').user_no;
-			self.headImgUrl = uni.getStorageSync('user_info').headImgUrl;
-			self.nickName = uni.getStorageSync('user_info').info.name;
-			self.$Utils.loadAll(['getMonthGroupCount','getMonthShopCount','getShopCount','getTotalCount','getDistriDataLength','getOrderData'], self)
+
+			self.$Utils.loadAll(['getMonthGroupCount','getMonthShopCount','getShopCount','getTotalCount','getDistriDataLength','getOrderData','getUserData'], self)
 		},
 
 		methods: {
+			
+			getUserData() {
+				const self = this;
+				
+				const postData = {};
+				postData.tokenFuncName = 'getProjectToken';
+				const callback = (res) => {
+					if (res.solely_code == 100000) {
+						self.userData = res.info.data[0]
+					} else {
+						self.$Utils.showToast(res.msg, 'none')
+					};
+					self.$Utils.finishFunc('getUserData');
+					
+				};
+				self.$apis.userGet(postData, callback);
+			},
 
 			getMonthGroupCount() {
 				const self = this;
@@ -176,7 +200,7 @@
 				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 				postData.searchItem = {
 					type:2,
-					behavior :1,
+					behavior :2,
 					count:['>',0],
 					create_time:['between',[now-86400*30,now]]
 				};
@@ -209,7 +233,7 @@
 				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 				postData.searchItem = {
 					
-					behavior :2,
+					behavior :1,
 					type:2,
 					count:['>',0],
 					create_time:['between',[now-86400*30,now]]
@@ -314,7 +338,7 @@
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
 						if (res.info.data.length > 0) {
-							self.distriDataLength = res.info.compute.TotalCount
+							self.distriDataLength = res.info.compute.DistriDataLength
 						};
 
 					} else {

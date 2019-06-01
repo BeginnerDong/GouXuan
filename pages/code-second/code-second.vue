@@ -26,9 +26,10 @@
 			<div class="ilblock" style="position: relative; left: 42px;">
 				<img src="../../static/images/Talent-show-img.png" style="width: 85px;" />
 			</div>
+			
 		</div>
 		<!-- <div style="z-index:1;width:100%;height:100%;background: #fff;position: absolute;top: 0;"></div> -->
-		<div style="z-index:2;width:100%;height:100%;position: absolute;top: 0;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/register/register?parent_no=U123456'}})">
+		<div style="z-index:2;width:100%;height:100%;position: absolute;top: 0;">
 			<img :src="url" style="width:100%;height:100%" />
 		</div>
 	</div>
@@ -123,7 +124,7 @@
 				const self = this;
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
-				postData.param = 'http://www.local-scanner.com/wx/?parent_no='+uni.getStorageSync('user_no')+'/#/pages/register/register';
+				postData.param = 'http://www.local-scanner.com/wx/?parent_no='+uni.getStorageSync('user_no')+'#/pages/register/register';
 				postData.ext = 'png';
 				const callback = (res) => {
 					console.log(res);
@@ -148,9 +149,9 @@
 </script>
 
 <style>
-	@import "../../assets/style/public.css";
+
 	@import "../../assets/style/code-first.css";
 
-	@import "../../assets/style/bootstrap.css";
+
 	@import "../../assets/style/basic.css";
 </style>

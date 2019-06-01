@@ -19,8 +19,8 @@ class Token {
     }
 	
 	getProjectToken(callback,postData) { 
-		return uni.getStorageSync('user_token');
-/* 	   if((postData&&postData.refreshToken)||!uni.getStorageSync('user_token')){
+	
+	   if((postData&&postData.refreshToken)||!uni.getStorageSync('user_token')){
 	        var params = {
 	            thirdapp_id:2,
 				refreshToken:true
@@ -32,7 +32,7 @@ class Token {
 			};    
 	    }else{
 	        return uni.getStorageSync('user_token');
-	    } */
+	    }
 	}
 	
 	getWeixinToken(params,callback){
@@ -92,6 +92,7 @@ class Token {
 			    data:postData,
 			    success:function(res){
 			        console.log(res)
+					
 			        if(res.data&&res.data.solely_code==100000){  
 			            if(c_callback){
 			                c_callback && c_callback(res.data);

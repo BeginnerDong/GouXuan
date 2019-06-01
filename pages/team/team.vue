@@ -63,7 +63,7 @@
 
 		<view class="navbar-brand">
 			<view style="margin-top: 10px;">
-				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/doyen/doyen'}})">
+				<view class="navbar-item ilblock" @click="webSelf.$Router.redirectTo({route:{path:'/pages/doyen/doyen'}})">
 					<view class="navbar-img">
 						<image src="../../static/images/Talent%20show1.png"></image>
 					</view>
@@ -75,7 +75,7 @@
 					</view>
 					<view class="color8">达人团队</view>
 				</view>
-				<view class="navbar-item ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/return/return'}})">
+				<view class="navbar-item ilblock" @click="webSelf.$Router.redirectTo({route:{path:'/pages/return/return'}})">
 					<view class="navbar-img">
 						<image src="../../static/images/Talent%20show3.png"></image>
 					</view>
@@ -100,13 +100,13 @@
 				cHeight2: '', //横屏图表
 				pixelRatio: 1,
 				LineB: {
-					categories: ['本月数据'],
+					categories: [],
 					series: [{
 						name: "团队营业额",
-						data: [0]
+						data: []
 					}, {
 						name: "团队总奖励",
-						data: [0]
+						data: []
 					}]
 				},
 				turnoverCount:0,
@@ -119,7 +119,7 @@
 			var documentWidth = document.body.clientWidth;
 			this.cWidth2 = parseInt(documentWidth * 0.9);
 			this.cHeight2 = parseInt(documentWidth * 0.9 * 0.7);
-			this.showLineB('canvasLineB', this.LineB)
+			
 			self.$Utils.loadAll(['getMainData','getTotalTurnover','getTotalReward','teamOrder'], self)
 
 		},
@@ -152,12 +152,16 @@
 						console.log('self.mainData',self.mainData)
 						console.log('self.lineB',self.LineB)
 						for (var i = 0; i < self.mainData.length; i++) {
+							/* self.$set(self.LineB.categories,i,self.mainData[i].date);
+							self.$set(self.LineB.series[0].data,i,self.mainData[i].turnover);
+							self.$set(self.LineB.series[1].data,i,self.mainData[i].reward); */
 							self.LineB.categories.push(self.mainData[i].date);
 							self.LineB.series[0].data.push(self.mainData[i].turnover);
 							self.LineB.series[1].data.push(self.mainData[i].reward);
 						}
+						this.showLineB('canvasLineB', this.LineB)
 						console.log('self.LineB',self.LineB)
-						console.log('self.LineC',self.LineC)
+						
 					};
 					self.$Utils.finishFunc('getMainData');
 				};
@@ -172,6 +176,9 @@
 					behavior:1
 				};
 				const callback = (res) => {
+					if(res.solely_code){
+						return
+					};
 					self.totalTurnover = res;
 					self.$Utils.finishFunc('getTotalTurnover');
 				};
@@ -186,6 +193,9 @@
 					behavior:2
 				};
 				const callback = (res) => {
+					if(res.solely_code){
+						return
+					};
 					self.totalReward = res;
 					self.$Utils.finishFunc('getTotalReward');
 				};

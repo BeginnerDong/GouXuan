@@ -1,15 +1,38 @@
 <template>
 	<view>
+		<div id="poster" style="z-index:-999;position: absolute;">
+			<div class="img">
+				<img class="img-one"  :src="mainData.posterImg&&mainData.posterImg[0]?mainData.posterImg[0].url:''"
+				 style="width:100%;height:100%" />
+				<!-- <img class="img-one" src="../../static/images/达人/img2.png" /> -->
+			</div>
+			<div class="ilblock imgb">
+				<img :src="QrData&&QrData.url?QrData.url:''" />
+				<!-- <img src="../../static/images/达人/img8.png" /> -->
+			</div>
+			<div class="ilblock">
+				<div class="color2 font14" style="position: relative; top: -9px;">长按二维码看购买详情</div>
+			</div>
+			<div class="ilblock" style="position: relative; left: 42px;">
+				<img src="../../static/images/Talent-show-img.png" style="width: 85px;" />
+			</div>
+		</div>
+
+		<div style="width:100%;height:100%;position:fixed;top:0;background:black;opacity:0.6;z-index:666" v-if="showPoster"></div>
+		<div style="z-index:999;width:80%;height:80%;position: fixed;top: 10%;left:10%" v-if="showPoster">
+			<img :src="url" style="width:100%;height:100%" @click="ifShowPoster" />
+		</div>
 		<div class="nav-top">
 			<div class="ilblock color2" @click="menuChange('0')">产<span :class="num==0?'active':''">品详</span>情</div>
 			<div class="ilblock color2" @click="menuChange('1')">使<span :class="num==1?'active':''">用说</span>明</div>
 		</div>
 		<c-swiper :list="mainData['bannerImg']">
-			<div class="best-num">分享海报</div>
+
 		</c-swiper>
 		<!-- <div class="top-imgbox">
 			<img src="../../static/images/服务/service-img2.png" />	
 		</div> -->
+		<div class="best-num" @click="url==''?getQrData():ifShowPoster()">分享海报</div>
 		<div class="img-btm">
 			限时抢购
 		</div>
@@ -20,11 +43,11 @@
 			<div>
 				<div class="ilblock" style="font-size: 12px; color: rgb(249,138,72); margin-top:5px;">￥<span style="font-size: 20px;">{{cuurentPrice}}</span></div>
 
-				<div class="ilblock best-money1">
+				<div class="ilblock best-money1" v-if="userData.primary_scope>10">
 					<view class="span1 ilblock bg3">店返</view>
 					<view class="span2 ilblock color8">￥{{currentShopReward}}</view>
 				</div>
-				<div class="ilblock best-money2">
+				<div class="ilblock best-money2" v-if="userData.primary_scope>10">
 					<view class="span1 ilblock bg4">团返</view>
 					<view class="span2 ilblock" style="color: #F14667;">￥{{currentGroupReward}}</view>
 				</div>
@@ -44,6 +67,7 @@
 			</div>
 			<div style="clear: both;"></div>
 		</div>
+		<div style="height:10px;width: 100%;background: #f2f2f2;"></div>
 		<div class="address color2" @click="openMap" style=" position: relative;">
 			<div class="ilblock" style="width: 10%;">
 				<img src="../../static/images/details-icon1.png" style="width: 12px; height: 14px;position:absolute; top:22px; left: 15px;" />
@@ -53,6 +77,7 @@
 				<img src="../../static/images/home-icon9.png" style="height: 12px;" />
 			</div>
 		</div>
+		<div style="height:10px;width: 100%;background: #f2f2f2;"></div>
 		<div class="choice">
 			<div class="ilblock" style="color: #787878; font-size: 13px; height: 100%; text-align: center;position: relative;float: left;margin-top: 10px;">规格选择</div>
 
@@ -60,7 +85,7 @@
 				<div class="color2" style="margin-top: 10px;">{{item.title}}:</div>
 				<div class="chioce-item ilblock" v-for="c_item in item.child" :style="webSelf.$Utils.inArray(c_item.id,can_choose_sku_item)==-1?'color:gray':(webSelf.$Utils.inArray(c_item.id,choosed_sku_item)!=-1?'background: linear-gradient(to right,#FF9B5C,#FF6160);color:#fff':'color:black')"
 				 @click="chooseSku(c_item.id)">
-					{{c_item.title}}元
+					{{c_item.title}}
 				</div>
 			</div>
 		</div>
@@ -109,7 +134,7 @@
 					<div class="day-item ilblock day-star" :style="item.skuDate&&item.skuDate.id==currentSkuDateId?'height:50px;color:red':'height:50px;'"
 					 @click="dateChoose(item)">
 						<div>{{item.sDay}}</div>
-						<div style="position: absolute;top:12px;text-align: center;left: 46%;transform: translateX(-50%);">
+						<div style="position: absolute;top:12px;text-align: center;left: 46%;transform: translateX(-50%);" v-if="userData.primary_scope>10">
 							<div s v-if="item.hasItem>0">￥{{item.skuDate.price}}</div>
 							<div style="color:#72B784;" v-if="item.hasItem>0">返{{item.skuDate.shop_reward}}</div>
 							<div style="color:#71C3CB; margin-top: 8upx" v-if="item.hasItem>0">{{item.skuDate.stock&&item.skuDate.stock>0?'充足':'已售罄'}}</div>
@@ -119,14 +144,17 @@
 
 			</view>
 		</div>
-		<div class="foter1" style="color: #848484; font-size: 15px; padding: 10px 15px;background: #fff;margin: 10px 0;" v-if="num==0">
+		<div style="height:10px;width: 100%;background: #f2f2f2;"></div>
+		<div class="foter1" style="color: #848484; font-size: 15px; padding: 10px 15px;background: #fff;" v-if="num==0">
 			图文介绍
-			<div  style="overflow: hidden;" id="test">
+			<div style="overflow: hidden;" id="test">
 				<view class="content ql-editor" v-html="mainData.content">
 				</view>
 			</div>
 		</div>
+
 		<div class="foter2">
+			<div style="height:10px;width: 100%;background: #f2f2f2;"></div>
 			<div class="foter2-boxa" v-if="num==1">
 				<div class="color2" style="font-weight: bolder; margin-bottom: 5px;">产品</div>
 				<div style="color:#818181;text-indent: 10px; text-align: justify;">{{mainData.information}}</div>
@@ -168,6 +196,7 @@
 </template>
 
 <script>
+	import html2canvas from '@/common/html2canvas.js'
 	import cSwiper from "@/components/swiper/swiper.vue"
 	import cTabbar from "@/components/tabbar/tabbar.vue"
 	export default {
@@ -184,6 +213,8 @@
 				arrInfoEx: [],
 				swiperData: [],
 				labelData: [],
+				QrData: [],
+				userData: [],
 				mainData: [],
 				webSelf: this,
 				num: 0,
@@ -195,8 +226,10 @@
 				skuIdArray: [],
 				cuurentPrice: 0,
 				currentSkuDateId: 0,
-				currentShopReward:0,
-				currentGroupReward:0
+				currentShopReward: 0,
+				currentGroupReward: 0,
+				showPoster: false,
+				url: ''
 			}
 		},
 		onLoad(options) {
@@ -208,12 +241,117 @@
 			self.todayYear = todayDate.getFullYear();
 			self.todayDay = todayDate.getDate();
 			console.log('self.todayYear', self.todayYear)
-			self.$Utils.loadAll(['calenderInit', ], self)
+			self.$Utils.loadAll(['calenderInit', 'getUserData'], self)
 
 
 		},
 		methods: {
 
+			ifShowPoster() {
+				const self = this;
+				self.showPoster = !self.showPoster
+			},
+
+			getQrData() {
+				const self = this;
+				const postData = {};
+				postData.tokenFuncName = 'getProjectToken';
+				postData.param = 'http://www.local-scanner.com/wx/#/pages/recommend/recommend?parent_no=' + uni.getStorageSync(
+						'user_no') + '&id=' + self.mainData.id,
+					postData.ext = 'png';
+				const callback = (res) => {
+					console.log(res);
+					self.QrData = res.info;
+					console.log(9990, self.QrData)
+					html2canvas(document.getElementById("poster"), {
+						width: 375,
+						height: 667,
+						useCORS:true,
+						allowTaint: false,
+						taintTest: true,
+					}).then(function(canvas) {
+						var imgUrl = canvas.toDataURL();
+						self.url = imgUrl;
+						console.log('self.url', self.url)
+
+
+					});
+					self.showPoster = true
+
+				};
+				self.$apis.getQrCommonCode(postData, callback);
+			},
+			
+			getBase64Image(img, width, height) { //width、height调用时传入具体像素值，控制大小 ,不传则默认图像大小
+				var canvas = document.createElement("canvas");
+				canvas.width = width ? width : img.width;
+				canvas.height = height ? height : img.height;
+				return;
+				var ctx = canvas.getContext("2d");
+				ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+				var dataURL = canvas.toDataURL();
+				console.log('getBase64Image',dataURL)
+				return dataURL;
+				
+			},
+			
+			
+
+			test(url) {
+				const self = this;
+				//这是网上的一张图片链接
+				//var url = "http://p1.pstatp.com/large/435d000085555bd8de10";
+				self.getBase64(url)
+					.then(function(base64) {
+						console.log(base64); //处理成功打印在控制台
+					}, function(err) {
+						console.log(err); //打印异常信息
+					});
+			},
+
+			//传入图片路径，返回base64
+			getBase64(img) {
+				function getBase64Image(img, width, height) { //width、height调用时传入具体像素值，控制大小 ,不传则默认图像大小
+					var canvas = document.createElement("canvas");
+					canvas.width = width ? width : img.width;
+					canvas.height = height ? height : img.height;
+
+					var ctx = canvas.getContext("2d");
+					ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+					var dataURL = canvas.toDataURL();
+					return dataURL;
+				}
+				var image = new Image();
+				image.crossOrigin = '';
+				image.src = img;
+				var deferred = $.Deferred();
+				if (img) {
+					image.onload = function() {
+						deferred.resolve(getBase64Image(image)); //将base64传给done上传处理
+					}
+					return deferred.promise(); //问题要让onload完成后再return sessionStorage['imgTest']
+				}
+			},
+			
+			
+
+
+			getUserData() {
+				const self = this;
+
+				const postData = {};
+				postData.tokenFuncName = 'getProjectToken';
+				const callback = (res) => {
+					if (res.solely_code == 100000) {
+						self.userData = res.info.data[0]
+					} else {
+						self.$Utils.showToast(res.msg, 'none')
+					};
+					self.$Utils.finishFunc('getUserData');
+
+				};
+				self.$apis.userGet(postData, callback);
+			},
 
 			wxJsSdk() {
 				const self = this;
@@ -242,7 +380,8 @@
 						self.$jweixin.updateAppMessageShareData({
 							title: self.mainData.title, // 分享标题
 							desc: self.mainData.description, // 分享描述
-							link: 'http://www.local-scanner.com/wx/#/pages/recommend/recommend?parent_no='+ uni.getStorageSync('user_no')+'&id='+self.mainData.id,
+							link: 'http://www.local-scanner.com/wx/#/pages/recommend/recommend?parent_no=' + uni.getStorageSync(
+								'user_no') + '&id=' + self.mainData.id,
 							imgUrl: shareImg, // 分享图标
 							success: function() {
 								// 设置成功
@@ -260,7 +399,8 @@
 
 			openMap() {
 				const self = this;
-				if (parseFloat(self.mainData.latitude)>-90 &&parseFloat(self.mainData.latitude)<90&&parseFloat(self.mainData.longitude) > -180&&parseFloat(self.mainData.longitude)<180) {
+				if (parseFloat(self.mainData.latitude) > -90 && parseFloat(self.mainData.latitude) < 90 && parseFloat(self.mainData
+						.longitude) > -180 && parseFloat(self.mainData.longitude) < 180) {
 					wx.openLocation({
 						latitude: parseFloat(self.mainData.latitude), // 纬度，浮点数，范围为90 ~ -90
 						longitude: parseFloat(self.mainData.longitude), // 经度，浮点数，范围为180 ~ -180。
@@ -269,7 +409,7 @@
 						scale: 1, // 地图缩放级别,整形值,范围从1~28。默认为最大
 						infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
 					});
-				}else{
+				} else {
 					self.$Utils.showToast('经纬度设置错误', 'none')
 				}
 
@@ -512,7 +652,7 @@
 							self.skuDateData = self.$Utils.cloneForm(self.mainData.skuDate);
 							//判断哪一天有skuDate存在，把skuDate数据存到那一天的日历数据中	
 						};
-
+						/* self.getBase64Image(self.mainData.posterImg[0].url); */
 						self.dateMerge();
 						console.log('self.dateData', self.dateData)
 					};
@@ -565,7 +705,7 @@
 						self.$Utils.showToast('请选择预约日期', 'none')
 					} else {
 						uni.navigateTo({
-							url: '/pages/pay/pay?type=' + self.mainData.type + '&skuDate_id=' + self.choosed_skuData.skuDate.id,
+							url: '/pages/pay/pay?type=date' + '&skuDate_id=' + self.choosed_skuData.skuDate.id,
 						});
 					};
 				} else if (self.mainData.skuDateAll.length == 0) {
@@ -573,7 +713,7 @@
 						self.$Utils.showToast('商品信息错误', 'none')
 					} else {
 						uni.navigateTo({
-							url: '/pages/pay/pay?type=' + self.mainData.type + '&sku_id=' + self.choosed_skuData.id,
+							url: '/pages/pay/pay?type=sku' + '&sku_id=' + self.choosed_skuData.id,
 						});
 					};
 				};
@@ -584,6 +724,7 @@
 
 <style>
 	@import "../../assets/style/remommend.css";
+	@import "../../assets/style/code-first.css";
 
 	#test img {
 		width: 100%;

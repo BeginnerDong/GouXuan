@@ -31,12 +31,11 @@
 					购买数量：
 				</div>
 				<div class="ilblock" style="color: #B2B2B2;">
-					<button style="border: solid 1px #E3E3E3; background: #fff; width: 30px;font-size: 30px; position: relative;
-					top: 6px;"
-					 class="ilblock" type="button" @click="counter('-')">-</button>
-					<span style="display: inline-block; border: solid 1px #E3E3E3;width: 50px;position: relative;left: -5px;top: -1px;text-align: center;color:#FF9E71 ; ">{{count}}</span>
-					<button @click="counter('+')" style="border: solid 1px #E3E3E3;position: relative;top: 4px;left: -10px; background: #fff; width: 30px;font-size: 26px;"
-					 class="ilblock" type="button">+</button>
+					<div style="border: solid 1px #E3E3E3; background: #fff; width: 30px;font-size: 14px;height:30px;text-align: center;line-height: 30px"
+					 class="ilblock"  @click="counter('-')">-</div>
+					<div style="display: inline-block; border-bottom: solid 1px #E3E3E3; border-top: solid 1px #E3E3E3;width: 50px;text-align: center;color:#FF9E71 ;height:30px;line-height: 30px;">{{count}}</div>
+					<div @click="counter('+')" style="border: solid 1px #E3E3E3; background: #fff; width: 30px;font-size: 14px;;height:30px;text-align: center;line-height: 30px"
+					 class="ilblock">+</div>
 				</div>
 			</div>
 			<div style="line-height:30px;margin-top: 15px;" class="ilblock">
@@ -53,14 +52,14 @@
 					微信支付
 				</div>
 			</div>
-			<div>
+			<div  @click="webSelf.$Router.navigateTo({route:{path:'/pages/address/address'}})">
 				<div v-if="mainData.type==1" style="line-height:30px;margin-top: 15px;" class="ilblock">
 					请选择地址：
 				</div>
-				<div class="ilblock color3" style="float: right;line-height: 57px;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/address/address'}})">
-					{{addressData.id>0?'地址':'请选择地址'}}<img src="../../static/images/home-icon9.png" style="height: 11px;margin-left: 10px;margin-bottom: 2px; " />
+				<div class="ilblock color3" style="line-height: 57px;margin-left: 100px;" >
+					{{addressData.id>0?'更换地址':'请选择地址'}}<img src="../../static/images/home-icon9.png" style="height: 11px;margin-left: 10px;margin-bottom: 2px; " />
 				</div>
-				<div style="position: relative;margin-bottom: 15px;">
+				<div style="position: relative;margin-bottom: 15px;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/address/address'}})">
 					<div style="font-size: 15px;margin-top: 15px;">{{addressData.name}} {{addressData.phone}}</div>
 					<div style="margin-top: 15px;">
 						<text style="font-size: 12px;">{{addressData.city}} {{addressData.detail}}</text>
@@ -73,7 +72,7 @@
 				<div style="line-height:30px;margin-top: 15px;" class="ilblock">
 					优惠券：
 				</div>
-				<div class="ilblock color3" style="float: right;line-height: 57px;">
+				<div class="ilblock color3" style="line-height: 57px;margin-left: 100px;">
 					{{couponData.length>0?'请选择优惠券':'暂无优惠券'}}<img src="../../static/images/home-icon9.png" style="height: 11px;margin-left: 10px;margin-bottom: 2px; " />
 				</div>
 				<div style="position: relative;margin-bottom: 15px;" v-for="(item,index) in couponData" @click="chooseCoupon(index)"
@@ -329,7 +328,7 @@
 				};
 
 				var orderList = [];
-				if (self.mainData.type == 1) {
+				if (self.type == 'sku') {
 					orderList.push({
 						sku: [{
 							id: self.mainData.sku[0].id,
@@ -339,7 +338,7 @@
 							}
 						}]
 					})
-				} else if (self.mainData.type == 2) {
+				} else if (self.type == 'date') {
 					orderList.push({
 						date: [{
 							id: self.mainData.sku[0].id,
