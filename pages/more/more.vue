@@ -66,7 +66,7 @@
 				endTimeList: [],
 				countDownList:[],
 				mainData: [],
-				userData:[],
+				userData:{},
 				searchItem: {
 					thirdapp_id: 2,
 					province_id: uni.getStorageSync('siteData').id
@@ -149,7 +149,7 @@
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
 				const callback = (res) => {
-					if (res.solely_code == 100000) {
+					if (res.solely_code == 100000&&res.info.data[0]) {
 						self.userData = res.info.data[0]
 					} else {
 						self.$Utils.showToast(res.msg, 'none')

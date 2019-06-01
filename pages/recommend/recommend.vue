@@ -2,7 +2,7 @@
 	<view>
 		<div id="poster" style="z-index:-999;position: absolute;">
 			<div class="img">
-				<img class="img-one"  :src="mainData.posterImg&&mainData.posterImg[0]?mainData.posterImg[0].url:''"
+				<img class="img-one" crossOrigin="anonymous"  :src="mainData.posterImg&&mainData.posterImg[0]?mainData.posterImg[0].url+'?'+new Date().getTime():''"
 				 style="width:100%;height:100%" />
 				<!-- <img class="img-one" src="../../static/images/达人/img2.png" /> -->
 			</div>
@@ -11,7 +11,7 @@
 				<!-- <img src="../../static/images/达人/img8.png" /> -->
 			</div>
 			<div class="ilblock">
-				<div class="color2 font14" style="position: relative; top: -9px;">长按二维码看购买详情</div>
+				<div class="color2 font14" style="position: relative; top: -9px;">长按二维码购买</div>
 			</div>
 			<div class="ilblock" style="position: relative; left: 42px;">
 				<img src="../../static/images/Talent-show-img.png" style="width: 85px;" />
@@ -214,7 +214,7 @@
 				swiperData: [],
 				labelData: [],
 				QrData: [],
-				userData: [],
+				userData: {},
 				mainData: [],
 				webSelf: this,
 				num: 0,
@@ -342,7 +342,7 @@
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
 				const callback = (res) => {
-					if (res.solely_code == 100000) {
+					if (res.solely_code == 100000&&res.info.data[0]) {
 						self.userData = res.info.data[0]
 					} else {
 						self.$Utils.showToast(res.msg, 'none')

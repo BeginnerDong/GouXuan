@@ -216,7 +216,7 @@
 				currentSiteData:{},
 				endTimeList: [],
 				countDownList:[],
-				userData:[],
+				userData:{},
 				swiperData: [],
 				webSelf: this,
 				now: '',
@@ -238,8 +238,11 @@
 			};
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 			self.paginateTwo = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			self.$Utils.loadAll(['getSiteData', 'getSliderData', 'getLabelData','wxJsSdk','getUserData'], self)
-			self.primary_scope  = uni.getStorageSync('user_info').primary_scope;
+			self.$Utils.loadAll(['getSiteData', 'getSliderData', 'getLabelData','wxJsSdk','getUserData'], self);
+			if(uni.getStorageSync('user_info').primary_scope){
+				self.primary_scope  = uni.getStorageSync('user_info').primary_scope;
+			};
+			
 		},
 		onShow() {
 			const self = this;
@@ -281,7 +284,7 @@
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
 				const callback = (res) => {
-					if (res.solely_code == 100000) {
+					if (res.solely_code == 100000&&res.info.data[0]) {
 						self.userData = res.info.data[0]
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
