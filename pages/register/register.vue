@@ -100,7 +100,8 @@
 				console.log('e', e)
 				this.submitData.province_id = e.value[0];
 				this.label = e.label;
-				this.index = e.index[0]
+				this.index = e.index[0];
+				console.log(this.submitData.province_id)
 			},
 			onCancel(e) {
 				console.log('e', e)
@@ -149,7 +150,7 @@
 					parent_no: self.parent_no,
 					name: self.submitData.name,
 					phone: self.submitData.phone,
-					address: self.submitData.address,
+					province_id: self.submitData.province_id,
 				};
 
 				if (self.$Utils.checkComplete(self.submitData)) {

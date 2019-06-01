@@ -1,22 +1,14 @@
 <template>
 	<div>
 
-		<!-- 		<img style="width: 300px;height:500px;" :src="url" />
-		<div class="ilblock">
-			<div class="color2 font14" style="position: relative; top: 3px;">长按二维码看购买详情</div>
-			<div class="color2 font14" style="position: relative; top: 17px;">购选</div>
-		</div>
-		<div class="ilblock" style="position: relative; left: 42px;">
-			<img src="/static/images/达人/Talent%20show-img.png" style="width: 85px;" />
-		</div>
-		<button type="primary" @click="drawCanvasBgImg">test</button> -->
+		
 		<div id="poster" style="z-index:0">
 			<div class="img">
-				<img class="img-one" :src="mainData.mainImg&&mainData.mainImg[index]?mainData.mainImg[index].url:''" style="width:100%;height:100%"/>
+				<img class="img-one" crossOrigin="anonymous" :src="mainData.mainImg&&mainData.mainImg[index]?mainData.mainImg[index].url+'?'+new Date().getTime():''" style="width:100%;height:100%"/>
 				<!-- <img class="img-one" src="../../static/images/达人/img2.png" /> -->
 			</div>
 			<div class="ilblock imgb">
-				<img :src="QrData.url" />
+				<img :src="QrData&&QrData.url?QrData.url+'?'+new Date().getTime():''" crossOrigin="anonymous"/>
 				<!-- <img src="../../static/images/达人/img8.png" /> -->
 			</div>
 			<div class="ilblock">
@@ -131,8 +123,11 @@
 					console.log(9990, self.QrData)
 					html2canvas(document.getElementById("poster"), {
 						width: 375,
-						height: 667
-					},{allowTaint: true}).then(function(canvas) {
+						height: 667,
+						useCORS:true,
+						allowTaint: false,
+						taintTest: true,
+					}).then(function(canvas) {
 						var imgUrl = canvas.toDataURL();
 						self.url = imgUrl;
 						console.log('self.url', self.url)

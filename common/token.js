@@ -19,7 +19,7 @@ class Token {
     }
 	
 	getProjectToken(callback,postData) { 
-	
+		
 	   if((postData&&postData.refreshToken)||!uni.getStorageSync('user_token')){
 	        var params = {
 	            thirdapp_id:2,

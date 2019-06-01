@@ -1,3 +1,4 @@
+
 <script>
 	import token from "./common/token.js"
 	export default {

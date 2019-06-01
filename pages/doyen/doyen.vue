@@ -268,7 +268,7 @@
 				postData.tokenFuncName = 'getProjectToken';
 				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 				postData.searchItem = {
-					behavior :2,
+					behavior :1,
 					type:2,
 					count:['>',0],
 				};

@@ -7,7 +7,7 @@
 				<!-- <img class="img-one" src="../../static/images/达人/img2.png" /> -->
 			</div>
 			<div class="ilblock imgb">
-				<img :src="QrData&&QrData.url?QrData.url:''" />
+				<img :src="QrData&&QrData.url?QrData.url+'?'+new Date().getTime():''" crossOrigin="anonymous"/>
 				<!-- <img src="../../static/images/达人/img8.png" /> -->
 			</div>
 			<div class="ilblock">
@@ -280,57 +280,6 @@
 
 				};
 				self.$apis.getQrCommonCode(postData, callback);
-			},
-			
-			getBase64Image(img, width, height) { //width、height调用时传入具体像素值，控制大小 ,不传则默认图像大小
-				var canvas = document.createElement("canvas");
-				canvas.width = width ? width : img.width;
-				canvas.height = height ? height : img.height;
-				return;
-				var ctx = canvas.getContext("2d");
-				ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-				var dataURL = canvas.toDataURL();
-				console.log('getBase64Image',dataURL)
-				return dataURL;
-				
-			},
-			
-			
-
-			test(url) {
-				const self = this;
-				//这是网上的一张图片链接
-				//var url = "http://p1.pstatp.com/large/435d000085555bd8de10";
-				self.getBase64(url)
-					.then(function(base64) {
-						console.log(base64); //处理成功打印在控制台
-					}, function(err) {
-						console.log(err); //打印异常信息
-					});
-			},
-
-			//传入图片路径，返回base64
-			getBase64(img) {
-				function getBase64Image(img, width, height) { //width、height调用时传入具体像素值，控制大小 ,不传则默认图像大小
-					var canvas = document.createElement("canvas");
-					canvas.width = width ? width : img.width;
-					canvas.height = height ? height : img.height;
-
-					var ctx = canvas.getContext("2d");
-					ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-					var dataURL = canvas.toDataURL();
-					return dataURL;
-				}
-				var image = new Image();
-				image.crossOrigin = '';
-				image.src = img;
-				var deferred = $.Deferred();
-				if (img) {
-					image.onload = function() {
-						deferred.resolve(getBase64Image(image)); //将base64传给done上传处理
-					}
-					return deferred.promise(); //问题要让onload完成后再return sessionStorage['imgTest']
-				}
 			},
 			
 			

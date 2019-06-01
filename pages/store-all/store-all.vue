@@ -34,7 +34,7 @@
 			</div>
 			<div v-if="item.qrData.length>0" style="margin-top: 20px;border-top: 1px solid gray;">
 				
-				<div style="width: 100%;margin-top: 5px;">
+				<div style="width: 100%;margin-top: 5px;display: flex;flex-wrap: wrap;">
 					<div  v-for="c_item in item.qrData" style="width:25%;text-align: center;"> 
 						<image  style="width: 80px;height: 80px;" :src="c_item.url" mode="" @click="tapZoom(c_item.url)"></image>
 						<div class="font12 color1" v-if="c_item.message!=''">
@@ -174,7 +174,7 @@
 				} else if (currentId == '2') {
 					self.searchItem = {
 						pay_status:1,
-						type:1,
+			
 						transport_status:1
 					};
 				} else if (currentId == '3') {

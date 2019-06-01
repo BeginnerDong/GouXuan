@@ -12,11 +12,12 @@
 		<button type="primary" @click="drawCanvasBgImg">test</button> -->
 		<div id="poster" style="z-index:0">
 			<div class="img">
-				<img class="img-one" :src="mainData.mainImg&&mainData.mainImg[index]?mainData.mainImg[index].url:''" style="width:100%;height:100%" />
+				<img class="img-one" crossOrigin="anonymous" :src="mainData.mainImg&&mainData.mainImg[index]?mainData.mainImg[index].url+'?'+new Date().getTime():''"
+				 style="width:100%;height:100%" />
 				<!-- <img class="img-one" src="../../static/images/达人/img2.png" /> -->
 			</div>
 			<div class="ilblock imgb">
-				<img :src="QrData.url" />
+				<img :src="QrData&&QrData.url?QrData.url+'?'+new Date().getTime():''" crossOrigin="anonymous" />
 				<!-- <img src="../../static/images/达人/img8.png" /> -->
 			</div>
 			<div class="ilblock">
@@ -26,7 +27,6 @@
 			<div class="ilblock" style="position: relative; left: 42px;">
 				<img src="../../static/images/Talent-show-img.png" style="width: 85px;" />
 			</div>
-			
 		</div>
 		<!-- <div style="z-index:1;width:100%;height:100%;background: #fff;position: absolute;top: 0;"></div> -->
 		<div style="z-index:2;width:100%;height:100%;position: absolute;top: 0;">
@@ -120,11 +120,14 @@
 				self.$apis.labelGet(postData, callback);
 			},
 
+
+
 			getQrData() {
 				const self = this;
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
-				postData.param = 'http://www.local-scanner.com/wx/?parent_no='+uni.getStorageSync('user_no')+'#/pages/register/register';
+				postData.param = 'http://www.local-scanner.com/wx/?parent_no=' + uni.getStorageSync('user_no') +
+					'#/pages/register/register';
 				postData.ext = 'png';
 				const callback = (res) => {
 					console.log(res);
@@ -132,9 +135,10 @@
 					console.log(9990, self.QrData)
 					html2canvas(document.getElementById("poster"), {
 						width: 375,
-						height: 667
-					}, {
-						allowTaint: true
+						height: 667,
+						useCORS: true,
+						allowTaint: false,
+						taintTest: true,
 					}).then(function(canvas) {
 						var imgUrl = canvas.toDataURL();
 						self.url = imgUrl;
@@ -149,7 +153,6 @@
 </script>
 
 <style>
-
 	@import "../../assets/style/code-first.css";
 
 

@@ -2,14 +2,11 @@
 	<view>
 
 		<div class="bg1 top">
-			<div class="ilblock flo-left" style="width:30px ;" @click="scan">
+			<div class="ilblock flo-left" style="width:10% ;" @click="scan">
 				<img src="../../static/images/service-icon6.png" style="width: 28px;" />
 			</div>
 			<div class="search flo-left">
-				<div class="ilblock">
-					<img src="../../static/images/home-icon13.png" style="width: 16px; margin-left: 13px;margin-bottom: 4px;" />
-				</div>
-				<input class="ilblock color1" style="margin-left: 15px;height:30px;line-height: 30px;" placeholder="请输入核销码搜索"
+				<input class="ilblock color1" style="margin-left: 15px;height:30px;line-height: 30px;" 
 				 v-model="check_code"></input>
 			</div>
 			<button class="color5 ilblock flo-left" @click="search">搜索</button>
@@ -37,7 +34,7 @@
 					</div>
 				</div>
 			</div>
-			<div style="line-height: 40px; float: right; margin-right: 15px;" v-if="item.behavior==1">
+			<div style="line-height: 40px; margin-left: 15px;" v-if="item.behavior==1">
 				<div class="ilblock color1 font14" style="margin-right: 30px;">核销码：{{item.check_code}}</div>
 				<div class="ilblock radiu20 font13" style="border: solid 1px #F98A48; height: 28px; line-height: 28px; width: 75px; text-align: center;"
 				 @click="qrCodeUpdate(item.id)">确认核销</div>
@@ -164,7 +161,7 @@
 						key: 'order_no',
 						searchItem: {
 							status: 1,
-
+							user_type:0
 						},
 						condition: '='
 					}
@@ -217,7 +214,7 @@
 	}
 
 	.search {
-		width: 230px;
+		width: 60%;
 		height: 30px;
 		border: solid 1px #ECEBEC;
 		margin-left: 24px;
@@ -238,9 +235,9 @@
 	}
 
 	.storebox {
-		width: 345px;
+		width: 94%;
 		height: 185px;
-		margin: 15px auto 0px;
+		margin: 3% auto 0px;
 		border-radius: 13px;
 		box-shadow: 0px 0px 12px #E2E2E2;
 		position: relative;

@@ -52,8 +52,16 @@
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.userData = res.info.data[0];
+						
 						self.submitData.ali_account =  res.info.data[0].info.ali_account;
 						self.submitData.ali_name =  res.info.data[0].info.ali_name;
+						if(res.info.data[0].info.ali_account==null){
+							self.submitData.ali_account =  ''
+						};
+						if(res.info.data[0].info.ali_name==null){
+						
+							self.submitData.ali_name =  ''
+						};
 					} else {
 						self.$Utils.showToast('数据错误')
 					}
