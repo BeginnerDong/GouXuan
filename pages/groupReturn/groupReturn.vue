@@ -142,7 +142,7 @@
 				postData.searchItem = {
 					type: 2,
 					behavior: 1,
-					count: ['>', 0],
+					
 				};
 				postData.compute = {
 					TotalCount: [
@@ -172,7 +172,7 @@
 				postData.searchItem = {
 					type: 2,
 					behavior: 2,
-					count: ['>', 0],
+					
 				};
 				postData.compute = {
 					TotalCount: [
@@ -186,7 +186,7 @@
 						self.groupCount = res.info.compute.TotalCount;
 						console.log(self.hasWithdraw)
 						console.log(self.userInfoData.balance)
-						self.totalCount = (-parseInt(self.hasWithdraw) + parseInt(self.userInfoData.balance)).toFixed(2)
+						self.totalCount = (-parseFloat(self.hasWithdraw) + parseFloat(self.userInfoData.balance)).toFixed(2)
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};
