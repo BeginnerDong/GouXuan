@@ -6,7 +6,7 @@
 			</div>
 			<div class="ilblock" style="width:180px;height: 100%;margin-left: 100px;">
 				<div class="top-name color5 font15" style="margin-top: 20px;">{{userData.nickName}}</div>
-				<div class="top-id color5 font13 " style="line-height: 30px">ID:{{userData.user_no}}</div>
+				<!--<div class="top-id color5 font13 " style="line-height: 30px">ID:{{userData.user_no}}</div>-->
 				<div class="bg1 ilblock radiu20 font14" style="color: #FF8954; padding: 3px 10px; margin-top: 5px;" v-if="userData.info&&userData.info.level==1">
 					达人
 				</div>
@@ -48,12 +48,11 @@
 			<div style="width: 100%; height: 30px;line-height: 30px;margin-bottom: 15px; ">
 				<div class="color2 ilblock" style="width: 27%;">近30天店返</div>
 				<div calss="ilblock txt_bg_p0" style="background:rgb(226,226,226);height: 10px;display: inline-block;margin-left: 4px;position: relative;width: 71%;border-radius:4px ;">
-					<div class="color2 ilblock font20 jt_bg" style="height: 25px;width: 35px;
+					<div class="color2 ilblock font20 jt_bg" style="height: 21px;width: 46px;border-radius: 15%;
 					 background-size: 100%;text-align: center; line-height: 20px;position: absolute; top: -25px;left: -10px;color: #fff;
 					 ">{{monthShopCount}}</div>
 					<div class="ilblock radiu20 " style="background:rgb(255,133,78);height: 10px;position: absolute;top:0;left: 0;" :style="'width:'+monthShopCountWidth+'px'"></div>
 					</div>
-				
 			</div>
 
 			<div class="ilblock" style="height: 30px; widows: 100px;"></div>
@@ -65,7 +64,7 @@
 			<div style="width: 100%; height: 30px;line-height: 30px;">
 				<div class="color2 ilblock" style="width: 27%;">近30天团返</div>
 				<div calss="ilblock text-bg" style="background:rgb(226,226,226);height: 10px;display: inline-block;margin-left: 4px;position: relative;width: 71%;border-radius:4px ;">
-					<div class="color2 ilblock font20 jt_bg" style="height: 25px;width: 35px;
+					<div class="color2 ilblock font20 jt_bg" style="height: 21px;width: 46px;border-radius: 15%;
 					 background-size: 100%;text-align: center; line-height: 20px;position: absolute;top: -25px;left: -10px;color: #fff;
 					 ">{{monthGroupCount}}</div>
 				<div class="ilblock radiu20 " style="background:rgb(255,133,78);height: 10px;position: absolute;top:0;left: 0;" :style="'width:'+monthGroupCountWidth+'px'"></div>
@@ -93,7 +92,7 @@
 					</div>
 				</div>
 			</div>
-			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/store-all/store-all'}})" class="color2">
+			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/store-all/store-all?num=1'}})" class="color2">
 				<div class="flo-left color2 font14 btm-list" style="height: 52px;width: 100%; line-height: 52px;;background: #fff;">
 					<div class="ilblock color2 font14" style="width:50%;">达人订单记录</div>
 					<div class="ilblock color1 font14 flo-right list">共{{orderTotal}}单
@@ -213,9 +212,9 @@
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
 						console.log('now',res)
-						self.monthGroupCount = res.info.compute.GroupCount;
+						self.monthGroupCount = parseFloat(res.info.compute.GroupCount).toFixed(2);
 						if(self.monthGroupCount>100){
-							self.monthGroupCountWidth += self.monthGroupCount/100;
+							self.monthGroupCountWidth += parseFloat(self.monthGroupCount/100).toFixed(2);
 						};
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
@@ -247,9 +246,9 @@
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
 						console.log('now',res)
-						self.monthShopCount = res.info.compute.ShopCount;
+						self.monthShopCount = parseFloat(res.info.compute.ShopCount).toFixed(2);
 						if(self.monthShopCount>100){
-							self.monthShopCountWidth += self.monthGroupCount/100;
+							self.monthShopCountWidth += parseFloat(self.monthGroupCount/100).toFixed(2);
 						};
 						
 					} else {
@@ -281,7 +280,7 @@
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
 						console.log('now',res)
-						self.shopCount = res.info.compute.ShopCount
+						self.shopCount =  parseFloat(res.info.compute.ShopCount).toFixed(2);
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};
@@ -311,7 +310,7 @@
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
 						console.log('now',res)
-						self.totalCount = res.info.compute.TotalCount
+						self.totalCount =  parseFloat(res.info.compute.TotalCount).toFixed(2);
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};
@@ -354,7 +353,8 @@
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
 				postData.searchItem = {
-					pay_status:1
+					pay_status:1,
+					user_no:uni.getStorageSync('user_info').user_no
 				};
 				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 				postData.compute = {

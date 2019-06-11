@@ -43,23 +43,21 @@
 
 	.swiper {
 		width: 100%;
-		height: 300upx;
+		height: 383upx;
 		
 	}
 
 	.swiper-item {
 		width: 100%;
-		height: 300upx;
+		height: 383upx;
 	}
 
 	.dtos {
 		display: flex;
 		justify-content: center;
-		margin-top: 22upx;
-
-		
-
-		
+		margin-top: -10upx;
+		width: 100%;
+		position: absolute;
 	}
 	
 	.dto {

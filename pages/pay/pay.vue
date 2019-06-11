@@ -52,8 +52,8 @@
 					微信支付
 				</div>
 			</div>
-			<div  @click="webSelf.$Router.navigateTo({route:{path:'/pages/address/address'}})">
-				<div v-if="mainData.type==1" style="line-height:30px;margin-top: 15px;" class="ilblock">
+			<div v-if="mainData.type==1" @click="webSelf.$Router.navigateTo({route:{path:'/pages/address/address'}})">
+				<div  style="line-height:30px;margin-top: 15px;" class="ilblock">
 					请选择地址：
 				</div>
 				<div class="ilblock color3" style="line-height: 57px;margin-left: 100px;" >

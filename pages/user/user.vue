@@ -15,7 +15,7 @@
 						<img src="../../static/images/about-icon1.png" style="width: 40px;" />
 					</div>
 					<div class="status-text color2">
-						待发货
+						待发货/待核销
 					</div>
 				</div>
 			</div>
@@ -35,12 +35,12 @@
 						<img src="../../static/images/about-icon3.png" style="width: 40px;" />
 					</div>
 					<div class="status-text color2">
-						已发货
+						已发货/已核销
 					</div>
 				</div>
 			</div>
 			<div class="status-item ilblock">
-				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/store-all/store-all?num=4'}})">
+				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/store-all/store-all?num=0'}})">
 					<div class="status-img">
 						<img src="../../static/images/about-icon4.png" style="width: 40px;" />
 					</div>
@@ -50,7 +50,7 @@
 				</div>
 			</div>
 			<div class="status-item ilblock" style="margin-right: 0px;">
-				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/store-all/store-all'}})">
+				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/store-all/store-all?num=1'}})">
 					<div class="status-img">
 						<img src="../../static/images/about-icon5.png" style="width: 22px; margin-left: 5px;height: 25px;margin-top: 15px; position: relative;top: -5px; " />
 					</div>

@@ -1,12 +1,13 @@
 <template>
 	<view>
 		<view class="box bg1">
-			<view class="bank bg1 flex" v-if="userData.info.ali_account">
+			<view class="bank bg1 flex" v-if="userData.info&&userData.info.ali_account">
 				<view class="font24 color2 ilblock" style="width: 30%; margin-left: 15rpx;">支付宝账号</view>
-				<view class="font24 color2 ilblock" style="width: 50%;">{{userData.info?userData.info.ali_account:''}}</view>
+				<view class="font24 color2 ilblock" style="width: 50%;">{{userData.info&&userData.info.ali_account}}</view>
 			</view>
-			<view class="bank bg1 flex" v-else>
-				<view class="font24 color2 ilblock" style=" margin-left: 15rpx;"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/depositld/depositld'}})">请完善提现账户信息</view>
+			<view class="bank bg1 flex" >
+				<view v-if="userData.info&&!userData.info.ali_account" class="font24 color2 ilblock" style=" margin-left: 15rpx;"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/depositld/depositld'}})">请完善提现账户信息</view>
+				<view class="font12 color1 ilblock" style=" margin-left: 15rpx;" >{{description}}</view>
 				
 			</view>
 			<view class="cash">
@@ -23,7 +24,8 @@
 						<view class="font28 color2 ilblock" @click="all">全部提现</view>
 					</view>
 					<view class="cash_cont bg1" style="padding-top:70rpx;padding-bottom:30rpx;">
-						<button class="submit_info color5 font15" @click="submit">提现</button>
+						<button v-if="userData.info&&userData.info.ali_account" class="submit_info color5 font15" @click="webSelf.$Utils.stopMultiClick(submit)">提现</button>
+						<button v-else class="submit_info color5 font15" style="background: gray;">提现</button>
 						<!-- bindtap="{{web_buttonCanClick?'submit':''}}" -->
 					</view>
 				</view>
@@ -39,7 +41,7 @@
 		data() {
 			return {
 				webSelf:this,
-				userData:[],
+				userData:{},
 			
 			
 				searchItem:{
@@ -47,13 +49,14 @@
 				},
 				submitData:{
 					count:''
-				}
+				},
+				description:''
 
 			}
 		},
 		onLoad(options) {
 			const self = this;
-			self.$Utils.loadAll(['userGet'], self)
+			self.$Utils.loadAll(['userGet','getArticleData'], self)
 
 		},
 		methods: {
@@ -74,6 +77,22 @@
 				}
 				self.$apis.userGet(postData, callback);
 			},
+			
+			getArticleData() {
+				const self = this;
+				const postData = {};
+				postData.searchItem = {
+					thirdapp_id: self.$AssetsConfig.thirdapp_id,
+					title:'提现说明'
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.description = res.info.data[0].description
+					};
+					self.$Utils.finishFunc('getArticleData');
+				};
+				self.$apis.articleGet(postData, callback);
+			},	
 
 			flowLogAdd() {
 				const self = this
@@ -100,7 +119,8 @@
 						   });
 						},1000);
 						
-					}
+					};
+					self.$Utils.finishFunc('submit');
 				};
 				self.$apis.flowLogAdd(postData, callback)
 			},
@@ -113,14 +133,16 @@
 				console.log('parseFloat(self.submitData.count)', parseFloat(self.submitData.count))
 				console.log('parseFloat(self.userData.info.balance)', parseFloat(self.userData.info.balance))
 				if (pass) {
-					if (parseFloat(self.submitData.count) <= parseFloat(self.userData.info.balance)) {
+					if (parseFloat(self.submitData.count) <= parseFloat(self.userData.info.balance)&&parseFloat(self.submitData.count)>0) {
 						self.flowLogAdd()
 					} else {
-						self.$Utils.showToat('佣金不足', 'none')
+						self.$Utils.showToast('佣金不足', 'none');
+						self.$Utils.finishFunc('submit');
 					}
-
+					
 				} else {
-					self.$Utils.showToat('请输入提现金额', 'none')
+					self.$Utils.showToast('请输入提现金额', 'none');
+					self.$Utils.finishFunc('submit');
 				};
 			},
 

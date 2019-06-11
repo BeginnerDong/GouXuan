@@ -5,12 +5,25 @@
 			<div class="ilblock flo-left" style="width:10% ;" @click="scan">
 				<img src="../../static/images/service-icon6.png" style="width: 28px;" />
 			</div>
+			
 			<div class="search flo-left">
 				<input class="ilblock color1" style="margin-left: 15px;height:30px;line-height: 30px;" 
 				 v-model="check_code"></input>
 			</div>
 			<button class="color5 ilblock flo-left" @click="search">搜索</button>
+			
+			<div class="ilblock flo-left" style="width:100%;font-size: 9px;text-align: center;margin-top: 3px;" >
+				
+				<div class="flo-left"  style="width:30px;border-radius:20%;background: #F67550;color:white" @click="bindWechat">
+					绑定
+				</div>
+				<div class="flo-left" style="margin-left: 25px;">
+					关联微信昵称为
+				</div>
+			</div>
 		</div>
+		
+		
 		<div class="storebox bg1" v-for="item in mainData">
 			<div class="storebox-top">
 				<div class="font12 color1 ilblock" style="margin-left: 15px;">
@@ -62,7 +75,7 @@
 		onLoad(options) {
 			const self = this;
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			self.$Utils.loadAll(['wxJsSdk', 'getMainData'], self)
+			self.$Utils.loadAll(['wxJsSdk'], self)
 		},
 
 		onReachBottom() {
@@ -79,12 +92,18 @@
 			console.log('refresh');
 			uni.startPullDownRefresh();
 			delete self.searchItem.check_code;
-			self.getMainData(true);
+			self.mainData = [];
+			//self.getMainData(true);
 		},
 		
 
 
 		methods: {
+			
+			
+			bindWechat(){
+				console.log('bindWechat','bindWechat')
+			},
 
 			scan() {
 				const self = this;
@@ -209,7 +228,7 @@
 
 	.top {
 		width: 100%;
-		height: 56px;
+		height: 80px;
 		padding: 15px;
 	}
 

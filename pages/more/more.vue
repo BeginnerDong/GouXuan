@@ -69,7 +69,8 @@
 				userData:{},
 				searchItem: {
 					thirdapp_id: 2,
-					province_id: uni.getStorageSync('siteData').id
+					province_id: uni.getStorageSync('siteData').id,
+					onShelf:1
 				},
 				order: {
 					listorder: 'desc'
@@ -187,7 +188,7 @@
 					if (res.info.data.length > 0) {
 						
 						for (var i = 0; i < res.info.data.length; i++) {
-							if(res.info.data[i].start_time<self.timestampNow&&res.info.data[i].end_time>self.timestampNow){
+							if(res.info.data[i].start_time<self.timestampNow&&res.info.data[i].end_time>self.timestampNow&&res.info.data[i].end_time-self.timestampNow<24*60*60*1000){
 								res.info.data[i].timeCount = true;
 								let time = (res.info.data[i].end_time - self.timestampNow) / 1000;
 								// 获取天、时、分、秒

@@ -21,54 +21,37 @@
 			</div>
 		</div>
 		<div v-if="num==1">
-			<div v-if="mainData.passage1==''&&mainData.products[0].date_id==0">
-				<div class="wahct-top">
-					<div class="color3 ilblock wahct-topleft" @click="goLastMonth">
-						<image src="../../static/images/wximg6.png"></image>
-						<view class="ilblock wahct-top-text">上月</view>
-					</div>
-					<div class="color2 ilblock wahct-topleft" style="font-size: 16px;">
-						{{curYear}}*{{curMonth+1}}
-					</div>
-					<div class="ilblock wahct-topright" @click="goNextMonth">
-						<view class="ilblock wahct-top-text">下月</view>
-						<image src="../../static/images/wximg5.png"></image>
-					</div>
+			<div v-for="(item,index) in mainData.qrData" style="display: flex;width: 100%;height:120px">
+				<div style="width: 50%;text-align: center;">
+					<image :src="item.url" style="width: 100px;height: 100px;"></image>
 				</div>
-				<div class="week">
-					<div class="week-item ilblock">
-						一
+				<div>
+					<div style="height: 33px;line-height: 33px;">{{item.message}}</div>
+					<div style="height: 33px;" v-if="item.book_time">
+						<div style="height: 33px;">您预约的时间</div>
+						<div style="height: 33px;">{{item.book_time}}</div>
 					</div>
-					<div class="week-item ilblock">
-						二
-					</div>
-					<div class="week-item ilblock">
-						三
-					</div>
-					<div class="week-item ilblock">
-						四
-					</div>
-					<div class="week-item ilblock">
-						五
-					</div>
-					<div class="week-item ilblock">
-						六
-					</div>
-					<div class="week-item ilblock">
-						日
-					</div>
-				</div>
-				<view class="bg1" style="padding:0upx 0upx 70upx;">
-					<block v-for="item in dateData">
-						<div class="day-item ilblock day-star" style="top:0;line-height: 50px;" :style="chooseDay==item?'color:#FF895A':''" @click="dateChoose(item)">
-							<div>{{item.sDay}}</div>
+					<div style="display: flex;height: 33px;" v-if="!item.book_time">
+						<div style="height: 33px;margin-right: 5px;">请选时间</div>
+						<div style="height: 33px;">
+							<ruiDatePicker
+								fields="day"
+								start="2010-00-00"
+								end="2030-12-30"
+								:otherData="{'index':index}"
+								:value="item.book_time"
+								@change="bindChange"
+								@cancel="bindCancel"
+								
+							></ruiDatePicker>
 						</div>
-					</block>
-
-				</view>
-				<button @click="submit" style="border-radius:0;font-size: 14px;color: #fff;line-height: 40px;height:40px">选择</button>
+						
+					</div>
+					<div v-if="!item.book_time" :data-index="index" @click="book($event.currentTarget.dataset.index)" style="width: 57px;line-height: 16px;height: 18px;font-size: 12px;text-align: -webkit-center;border-radius: 15%;color: white;background: #FF895A;">
+						立即预约
+					</div>
+				</div>
 			</div>
-			<div class="color1" style="text-align: center; padding: 60px;" v-if="mainData.passage1!=''">您已预约过</div>
 		</div>
 	</view>
 </template>
@@ -76,14 +59,18 @@
 <script>
 	import cSwiper from "@/components/swiper/swiper.vue"
 	import cTabbar from "@/components/tabbar/tabbar.vue"
+	import ruiDatePicker from '@/components/rattenking-dtpicker/rattenking-dtpicker.vue';
 	export default {
 		components: {
 			cSwiper,
-			cTabbar
+			cTabbar,
+			ruiDatePicker
 		},
 
 		data() {
+			
 			return {
+				
 				dateData: [],
 				arrInfoEx: [],
 				mainData: [],
@@ -98,22 +85,51 @@
 			if (options[0] && options[0].id) {
 				self.id = options[0].id
 			};
-			self.$Utils.loadAll(['getMainData', 'calenderInit'], self)
+			self.$Utils.loadAll(['getMainData'], self)
 		},
 		methods: {
+			book(index){
+				const self = this;
+				if(self.mainData.qrData[index].book_time){
+					return;
+				};
+				if(self.mainData.qrData[index].newBookTime==''){
+					self.$Utils.showToast('请选择预约日期','none');
+					return;
+				};
+				const postData = {
+					tokenFuncName:'getProjectToken',
+					searchItem:{
+						id:self.mainData.qrData[index].id
+					},
+					data:{
+						book_time:self.mainData.qrData[index].newBookTime
+					}
+				};
+				const callback = (res) => {
+					if (res.solely_code==100000) {
+						self.$Utils.showToast('选择成功','none');
+						self.mainData.qrData[index].book_time = self.mainData.qrData[index].newBookTime;	
+					}else{
+						self.$Utils.showToast(res.msg,'none');
+					};
+				};
+				self.$apis.qrCodeUpdate(postData, callback);	
+				
+				console.log('book',index)
+			},
 			
+			bindChange(e){
+				const self = this;
+				self.mainData.qrData[e[1].index].newBookTime = e[0];
+				console.log('bindChange',e)
+			},
 			
-			
+			bindCancel(e){
+				console.log('bindCancel',e)
+			},
 	
 			
-			dateChoose(day){
-				const self = this;
-				if(day==self.chooseDay){
-					self.chooseDay = ''
-				}else{
-					self.chooseDay = day
-				}
-			},
 			
 			changeMenu(num){
 				const self = this;
@@ -129,126 +145,7 @@
 				}
 			},
 
-			calenderInit() {
-				const self = this;
-				var curDate = new Date();
-				self.curMonth = curDate.getMonth();
-				self.curYear = curDate.getFullYear();
-				self.curDay = curDate.getDate();
-				self.refreshPageData(self.curYear, self.curMonth, self.curDay);
 
-			},
-
-			//刷新全部数据
-			refreshPageData(year, month, day) {
-				const self = this;
-
-				self.signData = [];
-				self.dateData = [];
-				self.getOffset(self.curYear, self.curMonth);
-				self.monthArray = [new Date(self.curYear, self.curMonth, 1).getTime(), new Date(self.curYear, self.curMonth + 1, 1)
-					.getTime()
-				];
-
-				var offset = self.getOffset(self.curYear, self.curMonth);
-				for (var i = 0; i < offset; ++i) {
-					self.dateData.push({
-						isEmpty: true
-					});
-				};
-				var dayCount = self.getDayCount(self.curYear, self.curMonth);
-				for (var i = 0; i < dayCount; ++i) {
-					if (self.todayDay == i + 1) {
-						self.dateData.push({
-							sDay: i + 1,
-							isToday: true
-						});
-					} else {
-						self.dateData.push({
-							sDay: i + 1
-						});
-					};
-				};
-				console.log('self.dateData', self.dateData)
-				self.$Utils.finishFunc('calenderInit');
-			},
-
-			//获取此月第一天相对视图显示的偏移
-			getOffset(curYear, curMonth) {
-				const self = this;
-				var offset = new Date(curYear, curMonth, 1).getDay();
-				offset = offset == 0 ? 6 : offset - 1;
-				//注意这个转换，Date对象的getDay函数返回返回值是 0（周日） 到 6（周六） 
-				console.log('offset', offset)
-				return offset;
-			},
-			isLeapYear(year) {
-				if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0))
-					return 1
-				else
-					return 0
-			},
-
-			getDayCount(year, month) {
-				var DAY_OF_MONTH = [
-					[31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
-					[31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-				];
-				return DAY_OF_MONTH[this.isLeapYear(year)][month];
-			},
-
-			goLastMonth(e) {
-				const self = this;
-				if (0 == self.curMonth) {
-					self.curMonth = 11;
-					self.curYear--;
-				} else {
-					self.curMonth--;
-				};
-				self.refreshPageData(self.curYear, self.curMonth, 1);
-
-
-			},
-
-			goNextMonth(e) {
-				const self = this;
-				if (self.curMonth == 11) {
-					self.curMonth = 0;
-					self.curYear++
-				} else {
-					self.curMonth++;
-				}
-				self.refreshPageData(self.curYear, self.curMonth, 1);
-			},
-			
-			submit(){
-				const self = this;
-				if(self.chooseDay==''){
-					self.$Utils.showToast('请选择预约日期','none');
-					return
-				};
-				const postData = {
-					tokenFuncName:'getProjectToken',
-					searchItem:{
-						id:self.mainData.id
-					},
-					data:{
-						passage1:self.curYear+'-'+self.curMonth+'='+self.chooseDay
-					}
-				};
-				const callback = (res) => {
-					if (res.solely_code==100000) {
-						self.$Utils.showToast('选择成功','none');
-						setTimeout(function(){
-						   self.getMainData();
-						},2000);
-						
-					}else{
-						self.$Utils.showToast(res.msg,'none');
-					}
-				};
-				self.$apis.orderUpdate(postData, callback);		
-			},
 
 			getMainData() {
 				const self = this;
@@ -269,11 +166,25 @@
 							status:1
 						},
 						info:['address']
+					},
+					qrData: {
+						tableName: 'Qrcode',
+						middleKey: 'order_no',
+						key: 'order_no',
+						condition: '=',
+						searchItem: {
+							status: 1
+						}
 					}
 				};
+
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
-						self.mainData=res.info.data[0]
+						self.mainData=res.info.data[0];
+						if(self.mainData.products[0].date_id!=0){
+							var time = new Date(self.mainData.products[0].snap_product.time);
+							self.mainData.products[0].dateFormat = time.getFullYear() + '-' + (time.getMonth()+1) + '-' + time.getDate();
+						};	
 					};
 					self.$Utils.finishFunc('getMainData');
 				};

@@ -5,7 +5,7 @@
 				<ol style="list-style-type:decimal;">
 					<li>选择海报后，长按海报</li>
 					<li>发送还给微信好友或保存海报分享到朋友圈</li>
-					<li>内容内容内容内容内容内容内容内容</li>
+					<li>用户识别二维码进入您的店铺，即可绑定</li>
 				</ol>
 			</div>
 			<div style="color: #FE986F; text-align: center;">

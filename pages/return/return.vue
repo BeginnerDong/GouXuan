@@ -54,9 +54,9 @@
 
 		</div>
 
-		<button @click="userInfoData.balance>20?webSelf.$Router.navigateTo({route:{path:'/pages/withdrawDepasit/withdrawDepasit'}}):''"
-		 class="color5" :style="userInfoData.balance>20?'background:#F98A48':''" style="font-size:14px;background: #FBB091;width:70%;height: 35px;line-height: 35px;border-radius: 20px; margin: 30px auto 100px;">
-			申请提现{{userInfoData.balance>20?'':'(不足20元不可提现)'}}
+		<button @click="totalCount>20?webSelf.$Router.navigateTo({route:{path:'/pages/withdrawDepasit/withdrawDepasit'}}):''"
+		 class="color5" :style="totalCount>20?'background:#F98A48':''" style="font-size:14px;background: #FBB091;width:70%;height: 35px;line-height: 35px;border-radius: 20px; margin: 30px auto 100px;">
+			申请提现{{totalCount>20?'':'(不足20元不可提现)'}}
 		</button>
 
 
@@ -149,7 +149,7 @@
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
 						console.log('now', res)
-						self.hasWithdraw = res.info.compute.TotalCount
+						self.hasWithdraw = parseFloat(res.info.compute.TotalCount).toFixed(2); 
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};
@@ -179,7 +179,7 @@
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
 						console.log('now', res)
-						self.shopCount = res.info.compute.TotalCount
+						self.shopCount = parseFloat(res.info.compute.TotalCount).toFixed(2); 
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};
@@ -209,10 +209,11 @@
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
 					
-						self.groupCount = res.info.compute.TotalCount;
-						console.log(self.hasWithdraw)
-						console.log(self.userInfoData.balance)
-						self.totalCount = (-parseFloat(self.hasWithdraw) + parseFloat(self.userInfoData.balance)).toFixed(2)
+						self.groupCount =  parseFloat(res.info.compute.TotalCount).toFixed(2);
+						console.log(self.shopCount)
+						console.log(self.groupCount)
+						self.totalCount = (parseFloat(self.shopCount) + parseFloat(self.groupCount)).toFixed(2);
+						console.log(self.totalCount)
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};

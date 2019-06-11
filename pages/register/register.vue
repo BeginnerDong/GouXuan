@@ -1,8 +1,8 @@
 <template>
 	<view>
-		<view class="top bg3 color5 font13">
+		<!--<view class="top bg3 color5 font13">
 			分享人ID:{{parent_no}}
-		</view>
+		</view>-->
 		<view class="list-box">
 			<view class="list-item">
 				<image src="../../static/images/icon9.png" style="margin-right: 22px;"></image>

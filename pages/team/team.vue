@@ -109,9 +109,9 @@
 						data: []
 					}]
 				},
-				turnoverCount:0,
-				totalTurnover:0,
-				totalReward:0
+				turnoverCount:0.00,
+				totalTurnover:0.00,
+				totalReward:0.00
 			}
 		},
 		onLoad(options) {
@@ -179,7 +179,7 @@
 					if(res.solely_code){
 						return
 					};
-					self.totalTurnover = res;
+					self.totalTurnover =  parseFloat(res).toFixed(2);
 					self.$Utils.finishFunc('getTotalTurnover');
 				};
 				self.$apis.teamTotal(postData, callback);
@@ -196,7 +196,7 @@
 					if(res.solely_code){
 						return
 					};
-					self.totalReward = res;
+					self.totalReward =  parseFloat(res).toFixed(2);
 					self.$Utils.finishFunc('getTotalReward');
 				};
 				self.$apis.teamTotal(postData, callback);
@@ -234,7 +234,7 @@
 					enableScroll: true,
 					xAxis: {
 						disableGrid: true,
-						itemCount: 5,
+						itemCount: 3,
 						scrollShow: true,
 						scrollAlign: 'right'
 					},

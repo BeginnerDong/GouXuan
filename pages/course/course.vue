@@ -4,6 +4,7 @@
 			{{mainData.title}}
 		</div>
 		<div class="color1 font13" style="text-align: right;margin-right: 20px;margin-bottom: 20px;">{{mainData.create_time}}</div>
+		<div><a target="_blank" href="mqqwpa://im/chat?chat_type=wpa&uin=524061853&version=1&src_type=web">点击qq联系</a> </div>
 		<div style="width: 100%;">
 			<view class="content ql-editor" v-html="mainData.content">
 			</view>

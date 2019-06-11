@@ -27,7 +27,6 @@
 			<div class="ilblock color2" @click="menuChange('1')">使<span :class="num==1?'active':''">用说</span>明</div>
 		</div>
 		<c-swiper :list="mainData['bannerImg']">
-
 		</c-swiper>
 		<!-- <div class="top-imgbox">
 			<img src="../../static/images/服务/service-img2.png" />	
@@ -67,27 +66,37 @@
 			</div>
 			<div style="clear: both;"></div>
 		</div>
-		<div style="height:10px;width: 100%;background: #f2f2f2;"></div>
+		<div style="height:2px;width: 100%;background: #f2f2f2;"></div>
 		<div class="address color2" @click="openMap" style=" position: relative;">
-			<div class="ilblock" style="width: 10%;">
-				<img src="../../static/images/details-icon1.png" style="width: 12px; height: 14px;position:absolute; top:22px; left: 15px;" />
+			<div class="ilblock" style="width: 10%;height: 100%;line-height: 48px;text-align: center;">
+				<img src="../../static/images/details-icon1.png" style="width: 12px; height: 14px;" />
 			</div>
-			<div class="ilblock" style="width: 80%;margin-top: 19px;">{{mainData.address}}</div>
-			<div class="ilblock" style="position: absolute;right: 15px; top: 22px;">
+			<div class="ilblock" style="width: 80%;height: 100%;line-height: 48px;">{{mainData.address}}</div>
+			<div class="ilblock" style="position: absolute;right: 15px; top: 16px;">
 				<img src="../../static/images/home-icon9.png" style="height: 12px;" />
 			</div>
 		</div>
-		<div style="height:10px;width: 100%;background: #f2f2f2;"></div>
+		<div style="height:2px;width: 100%;background: #f2f2f2;"></div>
+		
 		<div class="choice">
-			<div class="ilblock" style="color: #787878; font-size: 13px; height: 100%; text-align: center;position: relative;float: left;margin-top: 10px;">规格选择</div>
-
-			<div class="ilblock" v-for="item in skuLabelData">
+			<div  style="color: #787878; font-size: 13px; height: 100%; text-align: center;position: relative;margin-top: 10px;">规格选择</div>
+			<div>
+				<div class="ilblock" >
+					<div class="chioce-item ilblock" v-for="(c_item,index) in webSelf.mainData.sku" :style="webSelf.choosed_sku_id==c_item.id?'background: linear-gradient(to right,#FF9B5C,#FF6160);color:#fff':'color:black'"
+					 @click="chooseSku(index)">
+						{{c_item.title}}
+					</div>
+				</div>
+			</div>
+			<!--<div class="ilblock" v-for="item in skuLabelData">
 				<div class="color2" style="margin-top: 10px;">{{item.title}}:</div>
 				<div class="chioce-item ilblock" v-for="c_item in item.child" :style="webSelf.$Utils.inArray(c_item.id,can_choose_sku_item)==-1?'color:gray':(webSelf.$Utils.inArray(c_item.id,choosed_sku_item)!=-1?'background: linear-gradient(to right,#FF9B5C,#FF6160);color:#fff':'color:black')"
 				 @click="chooseSku(c_item.id)">
 					{{c_item.title}}
 				</div>
-			</div>
+			</div>-->
+			
+			
 		</div>
 		<div v-if="mainData.skuDateAll&&mainData.skuDateAll.length>0">
 			<div style="color: #818181; font-size: 15px; padding: 10px 15px; background: #F2F2F2;">
@@ -144,11 +153,11 @@
 
 			</view>
 		</div>
-		<div style="height:10px;width: 100%;background: #f2f2f2;"></div>
-		<div class="foter1" style="color: #848484; font-size: 15px; padding: 10px 15px;background: #fff;" v-if="num==0">
+		<div id="country" style="height:10px;width: 100%;background: #f2f2f2;"></div>
+		<div class="foter1" style="color: #848484; font-size: 15px; padding: 10px 8px;background: #fff;" v-if="num==0">
 			图文介绍
 			<div style="overflow: hidden;" id="test">
-				<view class="content ql-editor" v-html="mainData.content">
+				<view class="content ql-editor" style="padding: 12px 0;" v-html="mainData.content">
 				</view>
 			</div>
 		</div>
@@ -185,9 +194,14 @@
 					<div>客服</div>
 
 				</div>
-				<div class="ilblock panic" @click="goBuy">
+				<div v-if="buyStatus=='canBuy'" class="ilblock panic" @click="goBuy">
 					<div style="color: #FEE4D1;">
 						立即抢购
+					</div>
+				</div>
+				<div v-if="buyStatus=='noStock'" class="ilblock panic" style="background: gray;">
+					<div style="color: #FEE4D1;">
+						已售完
 					</div>
 				</div>
 			</div>
@@ -229,7 +243,10 @@
 				currentShopReward: 0,
 				currentGroupReward: 0,
 				showPoster: false,
-				url: ''
+				url: '',
+				choosed_sku_id:0,
+				buyStatus:'canBuy',
+				skuType:'sku'
 			}
 		},
 		onLoad(options) {
@@ -256,8 +273,8 @@
 				const self = this;
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
-				postData.param = 'http://www.local-scanner.com/wx/#/pages/recommend/recommend?parent_no=' + uni.getStorageSync(
-						'user_no') + '&id=' + self.mainData.id,
+				postData.param = 'http://www.local-scanner.com/wx/?parent_no=' + uni.getStorageSync(
+						'user_no') + '&id=' + self.mainData.id+'#/pages/recommend/recommend',
 					postData.ext = 'png';
 				const callback = (res) => {
 					console.log(res);
@@ -348,8 +365,8 @@
 
 			openMap() {
 				const self = this;
-				if (parseFloat(self.mainData.latitude) > -90 && parseFloat(self.mainData.latitude) < 90 && parseFloat(self.mainData
-						.longitude) > -180 && parseFloat(self.mainData.longitude) < 180) {
+				if ((parseFloat(self.mainData.latitude) > -90 || parseFloat(self.mainData.latitude) < 90) && (parseFloat(self.mainData
+						.longitude) > -180 || parseFloat(self.mainData.longitude) < 180)) {
 					wx.openLocation({
 						latitude: parseFloat(self.mainData.latitude), // 纬度，浮点数，范围为90 ~ -90
 						longitude: parseFloat(self.mainData.longitude), // 经度，浮点数，范围为180 ~ -180。
@@ -405,13 +422,22 @@
 			dateChoose(item) {
 				const self = this;
 				console.log('item', item);
+				if(self.mainData.end_time<(new Date()).getTime()){
+					return;
+				};
 				if (item.hasItem > 0) {
 					if (self.choosed_skuData.skuDate) {
 						delete self.choosed_skuData.skuDate;
 						self.currentSkuDateId = 0;
+						self.buyStatus = 'canBuy'
 					} else {
 						self.choosed_skuData.skuDate = item.skuDate;
-						self.currentSkuDateId = item.skuDate.id
+						self.currentSkuDateId = item.skuDate.id;
+						if(self.choosed_skuData.skuDate.stock>0){
+							self.buyStatus = 'canBuy';
+						}else{
+							self.buyStatus = 'noStock';
+						};
 					};
 					self.computePrice();
 				};
@@ -580,23 +606,39 @@
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.mainData = res.info.data[0];
-
-
+						if(self.mainData.skuDateAll.length>0){
+							self.skuType = 'skuDate';
+						};
+						if(self.mainData.latitude&&self.mainData.longitude){
+							var finalG = self.bd09togcj02(self.mainData.longitude,self.mainData.latitude);
+							self.mainData.longitude = finalG[0];
+							self.mainData.latitude = finalG[1];
+						};
 						for (var key in self.mainData.label) {
 							if (self.mainData.sku_array.indexOf(parseInt(key)) != -1) {
 								self.skuLabelData.push(self.mainData.label[key])
 							};
 						};
-
 						for (var i = 0; i < self.mainData.sku.length; i++) {
 							if (i == 0) {
 								self.choosed_skuData = self.$Utils.cloneForm(self.mainData.sku[0]);
-								self.choosed_sku_item = self.$Utils.cloneForm(self.mainData.sku[0].sku_item);
-								var skuRes = self.$Utils.skuChoose(self.mainData.sku, self.choosed_sku_item);
-								self.can_choose_sku_item = skuRes.can_choose_sku_item;
+								self.choosed_sku_id = self.mainData.sku[0].id;
+								//self.choosed_sku_item = self.$Utils.cloneForm(self.mainData.sku[0].sku_item);
+								//var skuRes = self.$Utils.skuChoose(self.mainData.sku, self.choosed_sku_item);
+								//self.can_choose_sku_item = skuRes.can_choose_sku_item;
 							};
 							self.skuIdArray.push(self.mainData.sku[i].id); //为了抓所有Sku的评论
 						};
+						if(self.mainData.end_time<(new Date()).getTime()){
+							self.buyStatus = 'noStock'
+						};
+						if(self.mainData.onShelf==-1){
+							self.buyStatus = 'noStock'
+						};
+						if(self.skuType=='sku'&&self.choosed_skuData.stock<0){
+							self.buyStatus = 'noStock'
+						};
+						
 						if (self.mainData.skuDate) {
 							self.skuDateData = self.$Utils.cloneForm(self.mainData.skuDate);
 							//判断哪一天有skuDate存在，把skuDate数据存到那一天的日历数据中	
@@ -606,16 +648,52 @@
 						console.log('self.dateData', self.dateData)
 					};
 					self.wxJsSdk();
-
 					self.computePrice();
 
 				};
 				self.$apis.productGet(postData, callback);
 			},
+			
+			
+			bd09togcj02(bd_lon, bd_lat) {
+				var x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+				var x = bd_lon - 0.0065;
+				var y = bd_lat - 0.006;
+				var z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * x_pi);
+				var theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * x_pi);
+				var gg_lng = z * Math.cos(theta);
+				var gg_lat = z * Math.sin(theta);
+				return [gg_lng, gg_lat]
+			},
 
-			chooseSku(id) {
+			chooseSku(index) {
 				const self = this;
-				if (self.can_choose_sku_item.indexOf(id) == -1) {
+				if(self.mainData.end_time<(new Date()).getTime()){
+					return;
+				};
+				if(self.mainData.onShelf==-1){
+					return;
+				};
+				if(self.choosed_sku_id==self.mainData.sku[index].id){
+					return;
+				}else{
+					self.choosed_sku_id = self.mainData.sku[index].id;
+					self.choosed_skuData = self.mainData.sku[index];
+					self.computePrice();
+					if (self.skuType == 'skuDate') {
+						self.refreshPageData(self.curYear, self.curMonth, 1);
+						self.getSkuDateData();
+					}else{
+						if(self.choosed_skuData.stock>0){
+							self.buyStatus = 'canBuy';
+						}else{
+							self.buyStatus = 'noStock';
+						};
+					};
+				};
+				
+				
+				/* if (self.can_choose_sku_item.indexOf(id) == -1) {
 					return;
 				};
 				var index = self.choosed_sku_item.indexOf(id);
@@ -637,12 +715,12 @@
 				if (self.mainData.type == 2) {
 					self.refreshPageData(self.curYear, self.curMonth, 1);
 					self.getSkuDateData();
-				};
-
+				}; */
 			},
 
 			menuChange(num) {
 				const self = this;
+				document.documentElement.scrollTop = document.getElementById('country').offsetTop+50;
 				self.num = num;
 			},
 

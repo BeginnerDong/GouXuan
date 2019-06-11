@@ -1,8 +1,8 @@
 <template>
 	<view>
 	
-		<div class="top" style="border-top: solid 1px #E8E8E8; border-bottom: solid 1px #E8E8E8;">
-			<img src="../../static/images/img4.png" style="width: 345px; margin:15px 15px 30px;" />
+		<div class="top" style="border-top: solid 1px #E8E8E8; border-bottom: solid 1px #E8E8E8;text-align: center;">
+			<img src="../../static/images/img4.png" style="width: 345px;" />
 		</div>
 		<div class="text ilblock color1 font15 bg2">当前权益</div>
 		<div class="text-box bg1 color1">
@@ -65,13 +65,13 @@
 <style>
 	@import "../../assets/style/public.css";
 	@import "../../assets/style/index.css";
-		.text {
-		width: 150px;
+	.text {
+		width: 100%;
 		height: 25px;
 		text-align: center;
-		margin-left: 120px;
-		position: relative;
-		top: -13px;
+		margin-top: 12px;
+		margin-bottom: 12px;
+		
 	
 	}
 	
@@ -80,7 +80,7 @@
 		height: 260px;
 		padding: 15px;
 		text-align: justify;
-		margin-left: 15px;
+		margin: 0 auto;
 		border-radius: 8px;
 		box-shadow: 0px 0px 10px #E6E6E6;
 	}

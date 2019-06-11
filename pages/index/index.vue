@@ -2,7 +2,7 @@
 	<view>
 		<view class="index-top">
 			<view class="logo ilblock">
-				<img src="../../static/images/home-img1.png" /><view class="ilblock" style="position: relative;top: -17px;">购选</view>
+				<img src="../../static/images/home-img1.png" /><view class="ilblock" style="position: relative;top: -17px;">本地捕手</view>
 			</view>
 			<view class="logo-right">
 				<view class="logo-right-span ilblock" style="margin-right: 50rpx;" @click="showCity">{{currentSiteData.title}}
@@ -40,7 +40,7 @@
 
 				</view>
 			</view>
-			<view class="recommend">
+			<view class="recommend" v-if="currentSiteData.description!='0'">
 				<view class="recommend-top">
 					<span>更多推荐</span>
 					<img src="../../static/images/home-icon11.png" style="margin-left: 10%;" />
@@ -238,7 +238,7 @@
 			};
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 			self.paginateTwo = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			self.$Utils.loadAll(['getSiteData', 'getSliderData', 'getLabelData','wxJsSdk','getUserData'], self);
+			self.$Utils.loadAll(['getSiteData', 'getLabelData','wxJsSdk','getUserData'], self);
 			if(uni.getStorageSync('user_info').primary_scope){
 				self.primary_scope  = uni.getStorageSync('user_info').primary_scope;
 			};
@@ -302,7 +302,6 @@
 						user_no: 'U601781637774017'
 					}
 				};
-
 				console.log('postData', postData)
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
@@ -354,6 +353,7 @@
 							uni.setStorageSync('siteData', self.siteData[0]);
 							self.currentSiteData = uni.getStorageSync('siteData');
 						};	
+						self.getSliderData();
 						self.getMainData();
 						self.getHotData();
 						
@@ -381,7 +381,8 @@
 				postData.searchItem = {
 					thirdapp_id: self.$AssetsConfig.thirdapp_id,
 					province_id: uni.getStorageSync('siteData').id,
-					end_time: ['>', now]
+					end_time: ['>', now],
+					onShelf:1
 				};
 				postData.getAfter = {
 					skuDate: {
@@ -401,7 +402,7 @@
 					
 					if (res.info.data.length > 0) {
 						for (var i = 0; i < res.info.data.length; i++) {
-							if(res.info.data[i].start_time<self.timestampNow&&res.info.data[i].end_time>self.timestampNow){
+							if(res.info.data[i].start_time<self.timestampNow&&res.info.data[i].end_time>self.timestampNow&&res.info.data[i].end_time-self.timestampNow<24*60*60*1000){
 								res.info.data[i].timeCount = true;
 								let time = (res.info.data[i].end_time - self.timestampNow) / 1000;
 								// 获取天、时、分、秒
@@ -485,6 +486,7 @@
 			
 			getSliderData() {
 				const self = this;
+				self.swiperData = [];
 				const postData = {};
 				postData.searchItem = {
 					thirdapp_id: self.$AssetsConfig.thirdapp_id
@@ -493,7 +495,7 @@
 					city: {
 						tableName: 'Label',
 						searchItem: {
-							title: ['=', ['首页轮播']],
+							title: ['=', [uni.getStorageSync('siteData').title+'轮播']],
 						},
 						middleKey: 'parentid',
 						key: 'id',
@@ -503,8 +505,8 @@
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						for (var i = 0; i < res.info.data.length; i++) {
-							self.swiperData.push(res.info.data[i].mainImg[0])
-						}
+							self.swiperData.push(res.info.data[i].mainImg[0]);
+						};
 					};
 					self.$Utils.finishFunc('getSliderData');
 				};
@@ -560,6 +562,7 @@
 					};
 				};
 				self.show_city = false;
+				self.getSliderData();
 				self.getMainData(true);
 				self.getHotData()
 			},
