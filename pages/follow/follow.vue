@@ -1,8 +1,8 @@
 <template>
 	<view>
 		<div class="follow-box" v-if="labelData.length==0">
-			<div class="follow-logo">
-				<img src="../../static/images/Talent-show-img.png" />
+			<div class="follow-logo" style="margin-left: 0;text-align: center;">
+				<img src="../../static/images/logo1.png" style="width:190px"/>
 			</div>
 			<div class="follow-logobotm">
 				<div class="color2">

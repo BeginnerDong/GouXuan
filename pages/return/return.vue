@@ -3,7 +3,7 @@
 
 		<div class="retun-top">
 			<div class="color5" style="font-size: 35px;text-align: center; position: relative;top: 20px;">￥{{totalCount}}</div>
-			<div class="color5 font14" style="text-align: center; position: relative;top: 25px;">我在购选平台总收益</div>
+			<div class="color5 font14" style="text-align: center; position: relative;top: 25px;">我在本地捕手平台总收益</div>
 		</div>
 		<div class="retun-middle bg1">
 			<div class="ilblock retun-item">

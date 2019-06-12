@@ -9,13 +9,7 @@
 			<div class="ilblock imgb">
 				<img :src="QrData&&QrData.url?QrData.url+'?'+new Date().getTime():''" crossOrigin="anonymous"/>
 				<!-- <img src="../../static/images/达人/img8.png" /> -->
-			</div>
-			<div class="ilblock">
-				<div class="color2 font14" style="position: relative; top: -9px;">长按二维码购买</div>
-			</div>
-			<div class="ilblock" style="position: relative; left: 42px;">
-				<img src="../../static/images/Talent-show-img.png" style="width: 85px;" />
-			</div>
+			</div>		
 		</div>
 
 		<div style="width:100%;height:100%;position:fixed;top:0;background:black;opacity:0.6;z-index:666" v-if="showPoster"></div>
@@ -282,7 +276,7 @@
 					console.log(9990, self.QrData)
 					html2canvas(document.getElementById("poster"), {
 						width: 375,
-						height: 667,
+						height: 665,
 						useCORS:true,
 						allowTaint: false,
 						taintTest: true,

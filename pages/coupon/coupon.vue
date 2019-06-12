@@ -21,7 +21,7 @@
 			<div style="margin-top: 100px; margin-left: 140px;">
 				<img src="../../static/images/img3.png" style="width: 90px;" />
 			</div>
-			<div class="color1 font15" style="text-align: center; margin-top: 30px;">暂无购选券!</div>
+			<div class="color1 font15" style="text-align: center; margin-top: 30px;">暂无本地捕手券!</div>
 		</div>
 	</view>
 </template>

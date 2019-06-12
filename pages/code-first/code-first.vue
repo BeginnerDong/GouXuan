@@ -11,13 +11,7 @@
 				<img :src="QrData&&QrData.url?QrData.url+'?'+new Date().getTime():''" crossOrigin="anonymous"/>
 				<!-- <img src="../../static/images/达人/img8.png" /> -->
 			</div>
-			<div class="ilblock">
-				<div class="color2 font14" style="position: relative; top: 3px;">长按二维码看购买详情</div>
-				<div class="color2 font14" style="position: relative; top: 17px;">购选</div>
-			</div>
-			<div class="ilblock" style="position: relative; left: 42px;">
-				<img src="../../static/images/Talent-show-img.png" style="width: 85px;" />
-			</div>
+			
 		</div>
 		<!-- <div style="z-index:1;width:100%;height:100%;background: #fff;position: absolute;top: 0;"></div> -->
 		<div style="z-index:2;width:100%;height:100%;position: absolute;top: 0;">

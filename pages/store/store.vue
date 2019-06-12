@@ -5,25 +5,24 @@
 			<div class="ilblock flo-left" style="width:10% ;" @click="scan">
 				<img src="../../static/images/service-icon6.png" style="width: 28px;" />
 			</div>
-			
+
 			<div class="search flo-left">
-				<input class="ilblock color1" style="margin-left: 15px;height:30px;line-height: 30px;" 
-				 v-model="check_code"></input>
+				<input class="ilblock color1" style="margin-left: 15px;height:30px;line-height: 30px;" v-model="check_code"></input>
 			</div>
 			<button class="color5 ilblock flo-left" @click="search">搜索</button>
-			
-			<div class="ilblock flo-left" style="width:100%;font-size: 9px;text-align: center;margin-top: 3px;" >
-				
-				<div class="flo-left"  style="width:30px;border-radius:20%;background: #F67550;color:white" @click="bindWechat">
-					绑定
+
+			<div class="ilblock flo-left" style="width:100%;font-size: 9px;text-align: center;margin-top: 3px;">
+
+				<div class="flo-left" style="padding:2px;border-radius:20%;background: #F67550;color:white" @click="bindWechat">
+					{{userData.openid!=''?'已绑定':'绑定'}}
 				</div>
 				<div class="flo-left" style="margin-left: 25px;">
 					关联微信昵称为
 				</div>
 			</div>
 		</div>
-		
-		
+
+
 		<div class="storebox bg1" v-for="item in mainData">
 			<div class="storebox-top">
 				<div class="font12 color1 ilblock" style="margin-left: 15px;">
@@ -65,17 +64,18 @@
 				isLoadAll: false,
 				check_code: '',
 				mainData: [],
+				userData:[],
 				searchItem: {
 					thirdapp_id: 2,
 					shop_no: uni.getStorageSync('merchant_no'),
-					type:1
+					type: 1
 				}
 			}
 		},
 		onLoad(options) {
 			const self = this;
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			self.$Utils.loadAll(['wxJsSdk'], self)
+			self.$Utils.loadAll(['wxJsSdk','getUserData'], self)
 		},
 
 		onReachBottom() {
@@ -95,14 +95,46 @@
 			self.mainData = [];
 			//self.getMainData(true);
 		},
-		
+
 
 
 		methods: {
-			
-			
-			bindWechat(){
-				console.log('bindWechat','bindWechat')
+
+
+			bindWechat() {
+				const self = this;
+				const postData = {
+					tokenFuncName: 'getProjectToken',
+					data: {
+						shop_no: uni.getStorageSync('merchant_no')
+					}
+				};
+				const callback = (res) => {
+					if (res.solely_code == 100000) {
+						self.$Utils.showToast('绑定成功', 'none')
+						self.getUserData()
+					} else {
+						self.$Utils.showToast(res.msg, 'none')
+					}
+				}
+				self.$apis.bindShop(postData, callback)
+			},
+
+			getUserData() {
+				const self = this;
+
+				const postData = {};
+				postData.tokenFuncName = 'getMerchantToken';
+				const callback = (res) => {
+					if (res.solely_code == 100000) {
+						self.userData = res.info.data[0]
+					} else {
+						self.$Utils.showToast(res.msg, 'none')
+					};
+					self.$Utils.finishFunc('getUserData');
+					
+				};
+				self.$apis.userGet(postData, callback);
 			},
 
 			scan() {
@@ -113,7 +145,7 @@
 					success: function(res) {
 						var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
 						console.log('result', result)
-						self.searchItem.type = ['in',[1,2]];
+						self.searchItem.type = ['in', [1, 2]];
 						self.searchItem.check_code = result;
 						self.getMainData(true)
 					}
@@ -180,7 +212,7 @@
 						key: 'order_no',
 						searchItem: {
 							status: 1,
-							user_type:0
+							user_type: 0
 						},
 						condition: '='
 					}
@@ -192,10 +224,9 @@
 						self.$Utils.showToast('未找到订单', 'none')
 						self.isLoadAll = true;
 					}
-					setTimeout(function()
-					{
-					  uni.stopPullDownRefresh()
-					},300);
+					setTimeout(function() {
+						uni.stopPullDownRefresh()
+					}, 300);
 					self.$Utils.finishFunc('getMainData');
 				};
 				self.$apis.qrCodeGet(postData, callback);

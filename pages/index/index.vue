@@ -2,7 +2,7 @@
 	<view>
 		<view class="index-top">
 			<view class="logo ilblock">
-				<img src="../../static/images/home-img1.png" /><view class="ilblock" style="position: relative;top: -17px;">本地捕手</view>
+				<img src="../../static/images/logo1.png" /><view class="ilblock" style="position: relative;top: -17px;">本地捕手</view>
 			</view>
 			<view class="logo-right">
 				<view class="logo-right-span ilblock" style="margin-right: 50rpx;" @click="showCity">{{currentSiteData.title}}
@@ -24,7 +24,7 @@
 			</c-swiper>
 			<view class="radionav">
 				<view class="radionav-box ilblock" style="width:100%">
-					<view class="radionav-item" style="margin-left: 0px;" v-for="(item,index) in labelData" v-if="index<5" :data-id="item.id"
+					<view class="radionav-item" style="margin-left: 0px;" v-for="(item,index) in labelData"  :data-id="item.id"
 					 @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?category_id='+$event.currentTarget.dataset.id}})">
 						<view>
 							<img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
@@ -436,14 +436,18 @@
 			
 			getHotData() {
 				const self = this;
+				var now = new Date().getTime();
 				self.hotData = [];
 				const postData = {};
 				postData.searchItem = {
 					thirdapp_id: self.$AssetsConfig.thirdapp_id,
-					province_id: uni.getStorageSync('siteData').id
+					province_id: uni.getStorageSync('siteData').id,
+					onShelf:1,
+					end_time: ['>', now],
 				};
 				postData.order = {
-					false_sale_count: 'desc'
+					false_sale_count: 'desc',
+					
 				};
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
@@ -459,7 +463,8 @@
 				const self = this;
 				const postData = {};
 				postData.searchItem = {
-					thirdapp_id: self.$AssetsConfig.thirdapp_id
+					thirdapp_id: self.$AssetsConfig.thirdapp_id,
+					id:['not in',[22,32,33,34,35,37]]
 				};
 				postData.getBefore = {
 					city: {

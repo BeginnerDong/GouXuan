@@ -30,6 +30,20 @@ export default {
 		};
 		http.HTTP(allParams);
 	},
+	
+	
+	bindShop(param, callback) {
+	
+		var allParams = {
+			url: 'Project/Solely/bindShop',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
 
 	monthFlow(param, callback) {
 

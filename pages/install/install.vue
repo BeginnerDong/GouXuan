@@ -71,7 +71,7 @@
 		</div>
 		<div class="ist-item bg1">
 			<div class="ilblock flo-left color2 font15">
-				海报显示购选LOGO
+				海报显示本地捕手LOGO
 			</div>
 			<div class="ilblock flo-right color1 font15" @click="change('poster')">
 				<img :src="submitData.poster=='true'?'../../static/images/icon1.png':'../../static/images/icon2.png'" style="width: 26px;" />

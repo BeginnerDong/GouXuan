@@ -14,8 +14,8 @@
 			</div>
 			<div style="clear: both;"></div>
 		</div>
-		<div class="bg1" style="width: 100%; padding: 20px 0px; border-radius: 8px;display: flex;">
-			<div class="ilblock" style="width:48%;margin: 0 2%;" v-for="(item,index) in mainData.mainImg"  @click="webSelf.$Router.navigateTo({route:{path:'../../pages/code-first/code-first?index='+index}})">
+		<div class="bg1" style="width: 100%; padding: 20px 0px; border-radius: 8px;display: flex;flex-wrap: wrap;">
+			<div  style="width:46%;margin: 5px 1%;" v-for="(item,index) in mainData.mainImg"  @click="webSelf.$Router.navigateTo({route:{path:'../../pages/code-first/code-first?index='+index}})">
 				<img style="width:100%;height:100%" :src="item.url" />
 			</div>
 		</div>
