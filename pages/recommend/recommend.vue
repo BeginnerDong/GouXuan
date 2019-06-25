@@ -2,32 +2,36 @@
 	<view>
 		<div id="poster" style="z-index:-999;position: absolute;">
 			<div class="img">
-				<img class="img-one" crossOrigin="anonymous"  :src="mainData.posterImg&&mainData.posterImg[0]?mainData.posterImg[0].url+'?'+new Date().getTime():''"
+				<img class="img-one" crossOrigin="anonymous" :src="mainData.posterImg&&mainData.posterImg[0]?mainData.posterImg[0].url+'?'+new Date().getTime():''"
 				 style="width:100%;height:100%" />
 				<!-- <img class="img-one" src="../../static/images/达人/img2.png" /> -->
 			</div>
 			<div class="ilblock imgb">
-				<img :src="QrData&&QrData.url?QrData.url+'?'+new Date().getTime():''" crossOrigin="anonymous"/>
+				<img :src="QrData&&QrData.url?QrData.url+'?'+new Date().getTime():''" crossOrigin="anonymous" />
 				<!-- <img src="../../static/images/达人/img8.png" /> -->
-			</div>		
+			</div>
 		</div>
 
 		<div style="width:100%;height:100%;position:fixed;top:0;background:black;opacity:0.6;z-index:666" v-if="showPoster"></div>
 		<div style="z-index:999;width:80%;height:80%;position: fixed;top: 10%;left:10%" v-if="showPoster">
 			<img :src="url" style="width:100%;height:100%" @click="ifShowPoster" />
 		</div>
-		<div class="nav-top">
-			<div class="ilblock color2" @click="menuChange('0')">产<span :class="num==0?'active':''">品详</span>情</div>
-			<div class="ilblock color2" @click="menuChange('1')">使<span :class="num==1?'active':''">用说</span>明</div>
-		</div>
+		
 		<c-swiper :list="mainData['bannerImg']">
 		</c-swiper>
 		<!-- <div class="top-imgbox">
 			<img src="../../static/images/服务/service-img2.png" />	
 		</div> -->
 		<div class="best-num" @click="url==''?getQrData():ifShowPoster()">分享海报</div>
-		<div class="img-btm">
-			限时抢购
+
+		<div class="img-btm" style="display: flex;text-indent:0" v-if="mainData.timeCount&&mainData.hourCount<24">
+			<view style="margin-left: 5%;">限时抢购</view>
+			<view style="display: flex;margin-left:25%;align-items: center;">
+				<view style="width:50%;font-size:13px">距结束仅剩</view>
+				<view  style="text-align: center;margin:0 1%;font-size:13px;width:25px;background: #fff;height:20px;line-height:20px;border-radius:5px;display:flex;align-item:center;justify-content:center">{{mainData.hourCount}}</view>时
+				<view  style="text-align: center;margin:0 1%;font-size:13px;width:25px;background: #fff;height:20px;line-height:20px;border-radius:5px;display:flex;align-item:center;justify-content:center">{{mainData.minCount}}</view>分
+				<view  style="text-align: center;margin:0 1%;font-size:13px;width:25px;background: #fff;height:20px;line-height:20px;border-radius:5px;display:flex;align-item:center;justify-content:center">{{mainData.secCount}}</view>秒
+			</view>
 		</div>
 		<div style="width: 100%; background: #fff;padding: 15px;">
 			<div class="color2" style="font-size: 15px; text-align: justify;">
@@ -71,11 +75,11 @@
 			</div>
 		</div>
 		<div style="height:2px;width: 100%;background: #f2f2f2;"></div>
-		
+
 		<div class="choice">
-			<div  style="color: #787878; font-size: 13px; height: 100%; text-align: center;position: relative;margin-top: 10px;">规格选择</div>
+			<div style="color: #787878; font-size: 13px; height: 100%; text-align: center;position: relative;margin-top: 10px;">规格选择</div>
 			<div>
-				<div class="ilblock" >
+				<div class="ilblock">
 					<div class="chioce-item ilblock" v-for="(c_item,index) in webSelf.mainData.sku" :style="webSelf.choosed_sku_id==c_item.id?'background: linear-gradient(to right,#FF9B5C,#FF6160);color:#fff':'color:black'"
 					 @click="chooseSku(index)">
 						{{c_item.title}}
@@ -89,8 +93,8 @@
 					{{c_item.title}}
 				</div>
 			</div>-->
-			
-			
+
+
 		</div>
 		<div v-if="mainData.skuDateAll&&mainData.skuDateAll.length>0">
 			<div style="color: #818181; font-size: 15px; padding: 10px 15px; background: #F2F2F2;">
@@ -137,9 +141,9 @@
 					<div class="day-item ilblock day-star" :style="item.skuDate&&item.skuDate.id==currentSkuDateId?'height:50px;color:red':'height:50px;'"
 					 @click="dateChoose(item)">
 						<div>{{item.sDay}}</div>
-						<div style="position: absolute;top:12px;text-align: center;left: 46%;transform: translateX(-50%);" v-if="userData.primary_scope>10">
+						<div style="position: absolute;top:12px;text-align: center;left: 46%;transform: translateX(-50%);">
 							<div s v-if="item.hasItem>0">￥{{item.skuDate.price}}</div>
-							<div style="color:#72B784;" v-if="item.hasItem>0">返{{item.skuDate.shop_reward}}</div>
+							<div style="color:#72B784;" v-if="item.hasItem>0&&userData.primary_scope>10">返{{item.skuDate.shop_reward}}</div>
 							<div style="color:#71C3CB; margin-top: 8upx" v-if="item.hasItem>0">{{item.skuDate.stock&&item.skuDate.stock>0?'充足':'已售罄'}}</div>
 						</div>
 					</div>
@@ -147,9 +151,13 @@
 
 			</view>
 		</div>
+		
 		<div id="country" style="height:10px;width: 100%;background: #f2f2f2;"></div>
-		<div class="foter1" style="color: #848484; font-size: 15px; padding: 10px 8px;background: #fff;" v-if="num==0">
-			图文介绍
+		<div class="nav-top" style="border-bottom: 1px solid #f2f2f2;">
+			<div class="ilblock color2" @click="menuChange('0')">产<span :class="num==0?'active':''">品详</span>情</div>
+			<div class="ilblock color2" @click="menuChange('1')">使<span :class="num==1?'active':''">用说</span>明</div>
+		</div>
+		<div class="foter1" style="color: #848484; font-size: 15px; padding: 10px 8px;background: #fff;min-height:195px" v-if="num==0">
 			<div style="overflow: hidden;" id="test">
 				<view class="content ql-editor" style="padding: 12px 0;" v-html="mainData.content">
 				</view>
@@ -160,7 +168,10 @@
 			<div style="height:10px;width: 100%;background: #f2f2f2;"></div>
 			<div class="foter2-boxa" v-if="num==1">
 				<div class="color2" style="font-weight: bolder; margin-bottom: 5px;">产品</div>
-				<div style="color:#818181;text-indent: 10px; text-align: justify;">{{mainData.information}}</div>
+				<div style="color:#818181;text-indent: 10px; text-align: justify;">
+					<view class="content ql-editor" v-html="mainData.information">
+					</view>
+				</div>
 			</div>
 			<div class="foter2-boxa" v-if="num==1">
 				<div class="color2" style="font-weight: bolder; margin-bottom: 5px;">规格</div>
@@ -174,6 +185,59 @@
 					{{mainData.tips}}
 				</div>
 			</div>
+			<div class="foter2-boxa" v-if="mainData.productOne.length>0||mainData.productTwo.length>0">
+				<div class="color2" style="font-weight: bolder; margin-bottom: 5px;">相关商品</div>
+				<div style="display: flex;">
+					<div class="best-box" style="margin-left:0;width:48%" v-if="mainData.productOne.length>0" @click="webSelf.$Router.navigateTo({route:{path:'/pages/recommend/recommend?id='+mainData.productOne[0].id}})">
+						<div class="best-box-top">
+							<img :src="mainData.productOne[0].mainImg&&mainData.productOne[0].mainImg[0]?mainData.productOne[0].mainImg[0].url:''" />
+						</div>
+						<div class="best-text color2">
+							{{mainData.productOne[0].title}}
+						</div>
+						<view>
+							<div class="ilblock" style="font-size: 12px; color: rgb(249,138,72); margin-left: 15px; margin-top: 8px;">￥
+								<span style="font-size: 20px;">{{mainData.productOne[0].price}}</span>
+							</div>
+							<div v-if="userData.primary_scope>10">
+								<div class="ilblock best-money1" style="width:42%;">
+									<view class="span1 ilblock bg3">店返</view>
+									<view class="span2 ilblock color8">￥{{mainData.productOne[0].shop_reward}}</view>
+								</div>
+								<div class="ilblock best-money2" style=" width:42%;line-height: inherit;">
+									<view class="span1 ilblock bg4">团返</view>
+									<view class="span2 ilblock color9">￥{{mainData.productOne[0].group_reward}}</view>
+								</div>
+							</div>
+						</view>
+					</div>
+					<div class="best-box" style="margin-left:4%;width:48%" v-if="mainData.productTwo.length>0" @click="webSelf.$Router.navigateTo({route:{path:'/pages/recommend/recommend?id='+mainData.productTwo[0].id}})">
+						<div class="best-box-top">
+							<img :src="mainData.productTwo[0].mainImg&&mainData.productTwo[0].mainImg[0]?mainData.productTwo[0].mainImg[0].url:''" />
+						</div>
+						<div class="best-text color2">
+							{{mainData.productTwo[0].title}}
+						</div>
+						<view>
+							<div style="font-size: 12px; color: rgb(249,138,72); margin-left: 15px; margin-top: 8px;">￥
+								<span style="font-size: 20px;">{{mainData.productTwo[0].price}}</span>
+							</div>
+							<div v-if="userData.primary_scope>10">
+								<div class="ilblock best-money1" style="width:42%;">
+									<view class="span1 ilblock bg3">店返</view>
+									<view class="span2 ilblock color8">￥{{mainData.productTwo[0].shop_reward}}</view>
+								</div>
+								<div class="ilblock best-money2" style=" width:42%;line-height: inherit;">
+									<view class="span1 ilblock bg4">团返</view>
+									<view class="span2 ilblock color9">￥{{mainData.productTwo[0].group_reward}}</view>
+								</div>
+							</div>
+						</view>
+					</div>
+				</div>
+			</div>
+
+
 			<div style="height:55px"></div>
 			<div class="foter-fixd">
 				<div class="index ilblock" style="border-right: solid 1px #E9E9E9;" @click="webSelf.$Router.redirectTo({route:{path:'/pages/index/index'}})">
@@ -182,12 +246,12 @@
 					<div>首页</div>
 
 				</div>
-				<div class="index ilblock" @click="webSelf.$Router.navigateTo({route:{path:'/pages/course/course?type=kefu'}})">
+				<a class="index ilblock" href="https://cschat-ccs.aliyun.com/index.htm?tntInstId=_1MeqO5o&scene=SCE00004749">
 
 					<img src="../../static/images/details-icon3.png" />
-					<div>客服</div>
+					<div style="color:#000 ;">客服</div>
 
-				</div>
+				</a>
 				<div v-if="buyStatus=='canBuy'" class="ilblock panic" @click="goBuy">
 					<div style="color: #FEE4D1;">
 						立即抢购
@@ -205,7 +269,7 @@
 
 <script>
 	import html2canvas from '@/common/html2canvas.js'
-	import cSwiper from "@/components/swiper/swiper.vue"
+	import cSwiper from "@/components/swiperTwo/swiperTwo.vue"
 	import cTabbar from "@/components/tabbar/tabbar.vue"
 	export default {
 		components: {
@@ -238,25 +302,79 @@
 				currentGroupReward: 0,
 				showPoster: false,
 				url: '',
-				choosed_sku_id:0,
-				buyStatus:'canBuy',
-				skuType:'sku'
+				choosed_sku_id: 0,
+				buyStatus: 'canBuy',
+				skuType: 'sku'
 			}
 		},
 		onLoad(options) {
 			const self = this;
 			var options = self.$Utils.getHashParameters();
 			self.id = options[0].id;
+			self.timestampNow = (new Date()).getTime();
 			var todayDate = new Date();
 			self.todayMonth = todayDate.getMonth();
 			self.todayYear = todayDate.getFullYear();
 			self.todayDay = todayDate.getDate();
 			console.log('self.todayYear', self.todayYear)
 			self.$Utils.loadAll(['calenderInit', 'getUserData'], self)
-
-
 		},
+
+		onShow() {
+			const self = this;
+			console.log('onShow', self.timestampNow)
+			self.countDown();
+		},
+		onUnload() {
+			const self = this;
+			console.log('onUnload')
+			clearTimeout(self.timeInterval);
+		},
+
+		onHide() {
+			const self = this;
+			console.log('onHide')
+			clearTimeout(self.timeInterval);
+		},
+
+
 		methods: {
+
+			countDown() { //倒计时函数
+				// 获取当前时间，同时得到活动结束时间数组
+				const self = this;
+				self.countDownList = [];
+				let newTime = Date.parse(new Date());
+				let time = (newTime - self.timestampNow) / 1000;
+				// 获取天、时、分、秒
+				let hou = parseInt(time / (60 * 60));
+				let min = parseInt(time % (60 * 60) / 60);
+				let sec = parseInt(time % 60);
+
+				if (self.mainData.timeCount) {
+					self.mainData.secCount = self.mainData.secCount - sec;
+					self.mainData.minCount = self.mainData.minCount - min;
+					self.mainData.hourCount = self.mainData.hourCount - hou;
+					if (self.mainData.secCount < 0) {
+						self.mainData.secCount = self.mainData.secCount + 60;
+						self.mainData.minCount = self.mainData.minCount - 1;
+					};
+					if (self.mainData.minCount < 0) {
+						self.mainData.minCount = self.mainData.minCount + 60;
+						self.mainData.hourCount = self.mainData.hourCount - 1;
+					};
+					if (self.mainData.hourCount < 0) {
+						self.mainData.hourCount = 0;
+						self.mainData.timeCount = true;
+					};
+				};
+
+				self.timestampNow = newTime;
+				console.log('countDown');
+				self.timeInterval = setTimeout(function() {
+					self.countDown()
+				}, 1000)
+			},
 
 			ifShowPoster() {
 				const self = this;
@@ -267,8 +385,8 @@
 				const self = this;
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
-				postData.param = 'http://www.local-scanner.com/wx/?parent_no=' + uni.getStorageSync(
-						'user_no') + '&id=' + self.mainData.id+'#/pages/recommend/recommend',
+				postData.param = 'https://www.local-scanner.com/wx/?parent_no=' + uni.getStorageSync(
+						'user_no') + '&id=' + self.mainData.id + '#/pages/recommend/recommend',
 					postData.ext = 'png';
 				const callback = (res) => {
 					console.log(res);
@@ -277,7 +395,7 @@
 					html2canvas(document.getElementById("poster"), {
 						width: 375,
 						height: 665,
-						useCORS:true,
+						useCORS: true,
 						allowTaint: false,
 						taintTest: true,
 					}).then(function(canvas) {
@@ -292,8 +410,8 @@
 				};
 				self.$apis.getQrCommonCode(postData, callback);
 			},
-			
-			
+
+
 
 
 			getUserData() {
@@ -302,7 +420,7 @@
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
 				const callback = (res) => {
-					if (res.solely_code == 100000&&res.info.data[0]) {
+					if (res.solely_code == 100000 && res.info.data[0]) {
 						self.userData = res.info.data[0]
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
@@ -340,7 +458,7 @@
 						self.$jweixin.updateAppMessageShareData({
 							title: self.mainData.title, // 分享标题
 							desc: self.mainData.description, // 分享描述
-							link: 'http://www.local-scanner.com/wx/#/pages/recommend/recommend?parent_no=' + uni.getStorageSync(
+							link: 'https://www.local-scanner.com/wx/#/pages/recommend/recommend?parent_no=' + uni.getStorageSync(
 								'user_no') + '&id=' + self.mainData.id,
 							imgUrl: shareImg, // 分享图标
 							success: function() {
@@ -416,7 +534,7 @@
 			dateChoose(item) {
 				const self = this;
 				console.log('item', item);
-				if(self.mainData.end_time<(new Date()).getTime()){
+				if (self.mainData.end_time < (new Date()).getTime()) {
 					return;
 				};
 				if (item.hasItem > 0) {
@@ -427,9 +545,9 @@
 					} else {
 						self.choosed_skuData.skuDate = item.skuDate;
 						self.currentSkuDateId = item.skuDate.id;
-						if(self.choosed_skuData.skuDate.stock>0){
+						if (self.choosed_skuData.skuDate.stock > 0) {
 							self.buyStatus = 'canBuy';
-						}else{
+						} else {
 							self.buyStatus = 'noStock';
 						};
 					};
@@ -596,15 +714,46 @@
 							time: ['between', self.monthArray],
 						}
 					},
+					productOne: {
+						tableName: 'Product',
+						middleKey: 'relation_one',
+						key: 'product_no',
+						condition: '=',
+						searchItem: {
+							status: 1,
+						}
+					},
+					productTwo: {
+						tableName: 'Product',
+						middleKey: 'relation_two',
+						key: 'product_no',
+						condition: '=',
+						searchItem: {
+							status: 1,
+						}
+					},
 				};
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
+
+						if (res.info.data[0].start_time < self.timestampNow && res.info.data[0].end_time > self.timestampNow && res.info
+							.data[0].end_time - self.timestampNow < 24 * 60 * 60 * 1000) {
+							res.info.data[0].timeCount = true;
+							let time = (res.info.data[0].end_time - self.timestampNow) / 1000;
+							// 获取天、时、分、秒
+							//let day = parseInt(time / (60 * 60 * 24));
+							res.info.data[0].hourCount = parseInt(time / (60 * 60));
+							res.info.data[0].minCount = parseInt(time % (60 * 60) / 60);
+							res.info.data[0].secCount = parseInt(time % 60);
+							console.log('res.info.data[0].timeCount', res.info.data[0])
+						};
+
 						self.mainData = res.info.data[0];
-						if(self.mainData.skuDateAll.length>0){
+						if (self.mainData.skuDateAll.length > 0) {
 							self.skuType = 'skuDate';
 						};
-						if(self.mainData.latitude&&self.mainData.longitude){
-							var finalG = self.bd09togcj02(self.mainData.longitude,self.mainData.latitude);
+						if (self.mainData.latitude && self.mainData.longitude) {
+							var finalG = self.bd09togcj02(self.mainData.longitude, self.mainData.latitude);
 							self.mainData.longitude = finalG[0];
 							self.mainData.latitude = finalG[1];
 						};
@@ -623,16 +772,16 @@
 							};
 							self.skuIdArray.push(self.mainData.sku[i].id); //为了抓所有Sku的评论
 						};
-						if(self.mainData.end_time<(new Date()).getTime()){
+						if (self.mainData.end_time < (new Date()).getTime()) {
 							self.buyStatus = 'noStock'
 						};
-						if(self.mainData.onShelf==-1){
+						if (self.mainData.onShelf == -1) {
 							self.buyStatus = 'noStock'
 						};
-						if(self.skuType=='sku'&&self.choosed_skuData.stock<0){
+						if (self.skuType == 'sku' && self.choosed_skuData.stock < 0) {
 							self.buyStatus = 'noStock'
 						};
-						
+
 						if (self.mainData.skuDate) {
 							self.skuDateData = self.$Utils.cloneForm(self.mainData.skuDate);
 							//判断哪一天有skuDate存在，把skuDate数据存到那一天的日历数据中	
@@ -647,8 +796,8 @@
 				};
 				self.$apis.productGet(postData, callback);
 			},
-			
-			
+
+
 			bd09togcj02(bd_lon, bd_lat) {
 				var x_pi = 3.14159265358979324 * 3000.0 / 180.0;
 				var x = bd_lon - 0.0065;
@@ -662,31 +811,31 @@
 
 			chooseSku(index) {
 				const self = this;
-				if(self.mainData.end_time<(new Date()).getTime()){
+				if (self.mainData.end_time < (new Date()).getTime()) {
 					return;
 				};
-				if(self.mainData.onShelf==-1){
+				if (self.mainData.onShelf == -1) {
 					return;
 				};
-				if(self.choosed_sku_id==self.mainData.sku[index].id){
+				if (self.choosed_sku_id == self.mainData.sku[index].id) {
 					return;
-				}else{
+				} else {
 					self.choosed_sku_id = self.mainData.sku[index].id;
 					self.choosed_skuData = self.mainData.sku[index];
 					self.computePrice();
 					if (self.skuType == 'skuDate') {
 						self.refreshPageData(self.curYear, self.curMonth, 1);
 						self.getSkuDateData();
-					}else{
-						if(self.choosed_skuData.stock>0){
+					} else {
+						if (self.choosed_skuData.stock > 0) {
 							self.buyStatus = 'canBuy';
-						}else{
+						} else {
 							self.buyStatus = 'noStock';
 						};
 					};
 				};
-				
-				
+
+
 				/* if (self.can_choose_sku_item.indexOf(id) == -1) {
 					return;
 				};
@@ -714,7 +863,7 @@
 
 			menuChange(num) {
 				const self = this;
-				document.documentElement.scrollTop = document.getElementById('country').offsetTop+50;
+				document.documentElement.scrollTop = document.getElementById('country').offsetTop + 50;
 				self.num = num;
 			},
 
@@ -726,7 +875,8 @@
 						self.$Utils.showToast('请选择预约日期', 'none')
 					} else {
 						uni.navigateTo({
-							url: '/pages/pay/pay?type=date' + '&skuDate_id=' + self.choosed_skuData.skuDate.id,
+							url: '/pages/pay/pay?type=date' + '&skuDate_id=' + self.choosed_skuData.skuDate.id + '&title=' + self.choosed_skuData
+								.title,
 						});
 					};
 				} else if (self.mainData.skuDateAll.length == 0) {
@@ -734,7 +884,7 @@
 						self.$Utils.showToast('商品信息错误', 'none')
 					} else {
 						uni.navigateTo({
-							url: '/pages/pay/pay?type=sku' + '&sku_id=' + self.choosed_skuData.id,
+							url: '/pages/pay/pay?type=sku' + '&sku_id=' + self.choosed_skuData.id + '&title=' + self.choosed_skuData.title,
 						});
 					};
 				};
@@ -744,9 +894,11 @@
 </script>
 
 <style>
+	@import "../../assets/style/follow.css";
+	@import "../../assets/style/cusseed.css";
 	@import "../../assets/style/remommend.css";
 	@import "../../assets/style/code-first.css";
-
+	a {text-decoration:none;out-line: none}
 	#test img {
 		width: 100%;
 	}

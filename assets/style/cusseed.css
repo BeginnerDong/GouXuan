@@ -22,7 +22,7 @@
 .best-box{
 	border:solid 1px #EEEEEE;
 	width: 42%;
-	height:316px;
+	height:301px;
 	border-radius:10px;
 	position: relative;
 	overflow: hidden;
@@ -33,7 +33,7 @@
 }
 .best-box-top{
 	width: 100%;
-	height: 188px;
+	height: 165px;
 	
 }
 .best-box-top img{
@@ -47,7 +47,7 @@
 	border-radius: 18px;
 	position: absolute;
 	padding: 3px 12px;
-	top: 150px;
+	top: 130px;
 	left: 6px;
 	}
 .best-text{

@@ -30,7 +30,7 @@
 			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/order-search/order-search'}})" class="color2 font14 bg1"
 			 style="height: 52px;width: 100%; line-height: 52px;border-bottom: solid 1px #E9E9E9;">
 				<div class="ilblock color2 font14 btm-list">团队订单</div>
-				<div class="ilblock color1 font14 list">共{{teamOrderData.length}}单
+				<div class="ilblock color1 font14 list">共{{teamOrderTotal}}单
 					<image src="../../static/images/home-icon9.png"></image>
 				</div>
 			</div>
@@ -93,7 +93,7 @@
 
 		data() {
 			return {
-				teamOrderData:[],
+				
 				mainData:[],
 				webSelf: this,
 				cWidth2: '', //横屏图表
@@ -111,7 +111,9 @@
 				},
 				turnoverCount:0.00,
 				totalTurnover:0.00,
-				totalReward:0.00
+				totalReward:0.00,
+				teamOrderData:{},
+				teamOrderTotal:''
 			}
 		},
 		onLoad(options) {
@@ -176,10 +178,11 @@
 					behavior:1
 				};
 				const callback = (res) => {
-					if(res.solely_code){
-						return
-					};
-					self.totalTurnover =  parseFloat(res).toFixed(2);
+					if(res.solely_code==100000){
+						self.totalTurnover =  parseFloat(res.info.total).toFixed(2);
+					}else{
+						self.$Utils.showToast(res.msg,'none')
+					}
 					self.$Utils.finishFunc('getTotalTurnover');
 				};
 				self.$apis.teamTotal(postData, callback);
@@ -193,10 +196,12 @@
 					behavior:2
 				};
 				const callback = (res) => {
-					if(res.solely_code){
-						return
-					};
-					self.totalReward =  parseFloat(res).toFixed(2);
+					if(res.solely_code==100000){
+						self.totalReward =  parseFloat(res.info.total).toFixed(2);
+					}else{
+						self.$Utils.showToast(res.msg,'none')
+					}
+					
 					self.$Utils.finishFunc('getTotalReward');
 				};
 				self.$apis.teamTotal(postData, callback);
@@ -205,11 +210,19 @@
 			teamOrder() {
 				const self = this;
 				const postData = {};
+				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 				postData.tokenFuncName = 'getProjectToken';
+/* 				postData.compute = {
+					TotalCount: [
+						'sum',
+						'count',
+					],
+				}; */
 				const callback = (res) => {
-					if(res.info.data.length>0){
-						self.teamOrderData.push.apply(self.teamOrderData,res.info.data)
+					if(res){
+						self.teamOrderTotal = res.info.total
 					}
+					console.log(self.teamOrderData)
 					self.$Utils.finishFunc('teamOrder');
 				};
 				self.$apis.teamOrder(postData, callback);

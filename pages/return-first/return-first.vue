@@ -15,7 +15,7 @@
 			</div>
 			<div class="ilblock retun-item">
 				<div class="color2">￥{{shopCount}}</div>
-				<div>直接受益</div>
+				<div>直接收益</div>
 			</div>
 			<div class="ilblock retun-item">
 				<div class="color2">￥{{groupCount}}</div>
@@ -68,7 +68,19 @@
 		},
 		onLoad(options) {
 			const self = this;
+			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 			self.$Utils.loadAll(['getMainData', 'getUserInfoData'], self)
+		},
+
+		onReachBottom() {
+
+			const self = this;
+			if (!self.isLoadAll && uni.getStorageSync('canClick')) {
+				console.log('11', self.paginate.currentPage);
+				self.paginate.currentPage++;
+				console.log('22', self.paginate.currentPage);
+				self.getMainData()
+			};
 		},
 
 		methods: {
@@ -111,11 +123,10 @@
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
 						console.log('now', res)
-						self.hasWithdraw = res.info.compute.TotalCount
+						self.hasWithdraw = parseFloat(res.info.compute.TotalCount).toFixed(2);
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};
-					console.log(self.hasWithdraw)
 					self.getshopCount()
 
 				};
@@ -131,7 +142,7 @@
 				postData.searchItem = {
 					type: 2,
 					behavior: 1,
-					
+
 				};
 				postData.compute = {
 					TotalCount: [
@@ -142,12 +153,12 @@
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
 						console.log('now', res)
-						self.shopCount = res.info.compute.TotalCount
+						self.shopCount = parseFloat(res.info.compute.TotalCount).toFixed(2);
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};
 					self.getgroupCount()
-					console.log(self.shopCount)
+
 				};
 				self.$apis.flowLogGet(postData, callback);
 			},
@@ -156,12 +167,13 @@
 				const self = this;
 
 				const postData = {};
+
 				postData.tokenFuncName = 'getProjectToken';
 				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 				postData.searchItem = {
 					type: 2,
 					behavior: 2,
-					
+
 				};
 				postData.compute = {
 					TotalCount: [
@@ -172,14 +184,14 @@
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
 
-						self.groupCount = res.info.compute.TotalCount;
-						console.log(self.hasWithdraw)
-						console.log(self.userInfoData.balance)
-						self.totalCount = (-parseFloat(self.hasWithdraw) + parseFloat(self.userInfoData.balance)).toFixed(2)
+						self.groupCount = parseFloat(res.info.compute.TotalCount).toFixed(2);
+						console.log(self.shopCount)
+						console.log(self.groupCount)
+						self.totalCount = (parseFloat(self.shopCount) + parseFloat(self.groupCount)).toFixed(2);
+						console.log(self.totalCount)
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};
-					console.log(self.groupCount)
 					self.$Utils.finishFunc('getUserInfoData');
 				};
 				self.$apis.flowLogGet(postData, callback);
@@ -189,6 +201,7 @@
 				const self = this;
 
 				const postData = {};
+				postData.paginate = self.$Utils.cloneForm(self.paginate);
 				postData.tokenFuncName = 'getProjectToken';
 				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
 				postData.searchItem.user_no = uni.getStorageSync('user_no');

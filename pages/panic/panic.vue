@@ -16,10 +16,10 @@
 			</div>
 
 		</div>
-
-		<button @click="webSelf.$Router.navigateTo({route:{path:'/pages/status/status'}})">
+		<div style="width:100%;height:50px"></div>
+	<!-- 	<button @click="webSelf.$Router.navigateTo({route:{path:'/pages/status/status'}})">
 			<div class="color5 font13" style="line-height: 50px;">自助查码</div>
-		</button>
+		</button> -->
 	</view>
 </template>
 
@@ -34,13 +34,20 @@
 				title: '',
 				searchItem: {
 					thirdapp_id: 2,
-					type: 2
+					type: 2,
+					pay_status:1,
+					order_step:['in',[0,3]]
 				}
 			}
 		},
 		onLoad(options) {
 			const self = this;
-			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+			self.paginate = {
+						count: 0,
+						currentPage: 1,
+						pagesize: 10,
+						is_page: true,
+					};
 			self.$Utils.loadAll(['getMainData'], self)
 
 		},
@@ -58,7 +65,7 @@
 			const self = this;
 			console.log('refresh');
 			uni.startPullDownRefresh();
-			delete self.searchItem.title;
+			delete self.searchItem.product;
 			self.getMainData(true);
 		},
 
@@ -67,7 +74,7 @@
 			search() {
 				const self = this;
 				if (self.title != '') {
-					self.searchItem.title = ['LIKE', ['%' + self.title + '%']]
+					self.searchItem.product = self.title ;
 					self.getMainData(true);
 					self.title = ''
 				} else {
@@ -84,7 +91,7 @@
 					self.paginate = {
 						count: 0,
 						currentPage: 1,
-						pagesize: 5,
+						pagesize: 10,
 						is_page: true,
 					}
 				};
@@ -98,6 +105,7 @@
 						self.mainData.push.apply(self.mainData, res.info.data);
 
 					} else {
+						
 						self.isLoadAll = true
 					};
 					setTimeout(function()

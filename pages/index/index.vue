@@ -1,15 +1,15 @@
 <template>
 	<view>
-		<view class="index-top">
-			<view class="logo ilblock">
-				<img src="../../static/images/logo1.png" /><view class="ilblock" style="position: relative;top: -17px;">本地捕手</view>
+		<view class="index-top" style="display: flex">
+			<view class="logo ">
+				<img src="../../static/images/logo2.png" />
 			</view>
-			<view class="logo-right">
-				<view class="logo-right-span ilblock" style="margin-right: 50rpx;" @click="showCity">{{currentSiteData.title}}
+			<view class="logo-right" style="display: flex;justify-content: flex-end;align-items: center;">
+				<view class="logo-right-span" style="width:50%;margin-right: 50rpx;display: flex;align-items: center;justify-content: flex-end;" @click="showCity">{{currentSiteData.title}}
 					<image src="../../static/images/home-icon10.png"></image>
 				</view>
-				<view class="ilblock" style="margin-right: 30rpx;" @click="showSearch">
-					<image class="logo-right-find" src="../../static/images/home-icon13.png"></image>
+				<view  style="margin-right: 20rpx;display: flex;align-items: center;" @click="showSearch">
+					<image style="width:18px;height:18px" src="../../static/images/home-icon13.png"></image>
 				</view>
 			</view>
 	
@@ -80,25 +80,25 @@
 					
 				</view>
 			</view>
-			<view style="width: 100%; height: 15px;"></view>
+			<view style="width: 100%; height: 15px;" v-if="currentSiteData.description!='0'"></view>
 		</view>
 		<view style="width: 100%; height: 10px;"></view>
 		<view style="width: 100%; background: #F8F8F8; overflow: hidden; 
 		overflow: hidden;white-space: nowrap;">
 			<view class="best-top">
-				<view class="color2 ilblock font14" style="margin-left: 15px;">最火热买</view>
+				<view class="color2 ilblock font14" style="margin-left: 15px;">最火热卖</view>
 				<view class="color1 ilblock besttext font14" @click="webSelf.$Router.navigateTo({route:{path:'/pages/more/more?order=sale_count'}})">
 					查看更多</view>
 			</view>
 			<scroll-view scroll-x="true">
 				<view class="best-box ilblock" style="margin-left: 15px;" v-for="(item,index) in hotData" v-if="index<5" :data-id="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/recommend/recommend?id='+$event.currentTarget.dataset.id}})">
 					<view class="best-box-top">
-						<img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
+						<img :src="item.hotImg&&item.hotImg[0]?item.hotImg[0].url:''" />
 						<view class="best-num ilblock">
 							已售{{item.false_sale_count }}
 						</view>
 					</view>
-					<view class="best-text">
+					<view class="best-text ilblockxz" style="white-space: normal;">
 						{{item.title}}
 					</view>
 					<view style="margint: 0 4%;" >
@@ -133,6 +133,9 @@
 					
 					<view class="color1 font12 time" v-if="item.timeCount&&item.hourCount<24"> 距结束仅剩
 						<view class="bg3">{{item.hourCount}}</view>:<view class="bg3">{{item.minCount}}</view>:<view class="bg3">{{item.secCount}}</view>
+					</view>
+					<view class="color1 font12 time" style="color: #F98A48;" v-else> 
+						抢购中
 					</view>
 					<view class="ilblock color2 all-store-text">
 						<view class="ilblockxz">
@@ -201,6 +204,7 @@
 <script>
 	import cSwiper from "@/components/swiper/swiper.vue"
 	import cTabbar from "@/components/tabbar/tabbar.vue"
+	import token from "@/common/token.js"
 	export default {
 		components: {
 			cSwiper,
@@ -238,12 +242,19 @@
 			};
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 			self.paginateTwo = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			self.$Utils.loadAll(['getSiteData', 'getLabelData','wxJsSdk','getUserData'], self);
+			if(uni.getStorageSync('user_token')){
+				self.$Utils.loadAll(['getSiteData', 'getLabelData','wxJsSdk','getUserData'], self);
+			}else{
+				token.getProjectToken(function(){
+					self.$Utils.loadAll(['getSiteData', 'getLabelData','wxJsSdk','getUserData'], self);
+				});
+			}
+			
 			if(uni.getStorageSync('user_info').primary_scope){
 				self.primary_scope  = uni.getStorageSync('user_info').primary_scope;
-			};
-			
+			};		
 		},
+		
 		onShow() {
 			const self = this;
 			console.log('onShow',self.timestampNow)
@@ -299,7 +310,7 @@
 				const self = this;
 				const postData = {
 					searchItem: {
-						user_no: 'U601781637774017'
+						user_no: 'U622669701559571'
 					}
 				};
 				console.log('postData', postData)
@@ -510,8 +521,10 @@
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						for (var i = 0; i < res.info.data.length; i++) {
+							res.info.data[i].mainImg[0].src=res.info.data[i].url;
 							self.swiperData.push(res.info.data[i].mainImg[0]);
 						};
+						console.log('swiperData',self.swiperData)
 					};
 					self.$Utils.finishFunc('getSliderData');
 				};

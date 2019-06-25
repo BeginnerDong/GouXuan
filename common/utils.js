@@ -590,9 +590,9 @@ export default {
 
 
 	clearPageIndex(self) {
-		self.data.paginate.currentPage = 1;
-		self.data.isLoadAll = false;
-		self.data.mainData = [];
+		self.paginate.currentPage = 1;
+		self.isLoadAll = false;
+		self.mainData = [];
 
 	},
 

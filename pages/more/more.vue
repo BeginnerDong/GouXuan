@@ -12,9 +12,9 @@
 				</span>
 			</div>
 		</div>-->
-		<div class="best-box ilblock" style="margin-left: 15px;height: auto;" v-for="(item,index) in mainData" :data-id="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/recommend/recommend?id='+$event.currentTarget.dataset.id}})">
+		<div class="best-box ilblock" style="margin-left: 15px;" v-for="(item,index) in mainData" :data-id="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/recommend/recommend?id='+$event.currentTarget.dataset.id}})">
 			<div class="best-box-top">
-				<img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
+				<img :src="item.hotImg&&item.hotImg[0]?item.hotImg[0].url:''" />
 				<div class="best-num ilblock">
 					已售{{item.false_sale_count}}
 				</div>
@@ -47,7 +47,12 @@
 				</view>
 			</div>
 		</div>
-
+		<div class="box-c" v-if="mainData.length==0">
+			<div style="margin-top: 100px;text-align: center;">
+				<img src="../../static/images/logo1.png" style="width: 195px;"/>
+			</div>
+			<div class="color1 font15" style="text-align: center; margin-top: 30px;">该类商品暂未上架</div>
+		</div>
 
 
 
@@ -164,6 +169,7 @@
 			
 			getMainData(isNew) {
 				const self = this;
+				var now = new Date().getTime();
 				if(isNew){
 					self.mainData = [];
 				};
@@ -171,6 +177,8 @@
 				postData.paginate = self.$Utils.cloneForm(self.paginate);
 				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
 				postData.order = self.$Utils.cloneForm(self.order);
+				postData.searchItem.province_id=uni.getStorageSync('siteData').id;
+				postData.searchItem.end_time = ['>', now];
 				postData.getAfter = {
 					skuDate: {
 						tableName: 'SkuDate',
@@ -205,12 +213,12 @@
 					}else{
 						self.isLoadAll = true;
 						self.$Utils.finishFunc('getMainData');
-						uni.showToast({
+					/* 	uni.showToast({
 						    title: '没有更多了',
 						    icon: 'fail',
 						    duration: 2000,
 						    mask:true
-						});
+						}); */
 					};
 					console.log('self.mainData', self.mainData)
 				};

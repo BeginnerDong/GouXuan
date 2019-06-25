@@ -16,20 +16,21 @@
 				<div class="flo-left" style="padding:2px;border-radius:20%;background: #F67550;color:white" @click="bindWechat">
 					{{userData.openid!=''?'已绑定':'绑定'}}
 				</div>
-				<div class="flo-left" style="margin-left: 25px;">
+				<!-- <div class="flo-left" style="margin-left: 25px;">
 					关联微信昵称为
-				</div>
+				</div> -->
 			</div>
 		</div>
 
 
-		<div class="storebox bg1" v-for="item in mainData">
+		<div class="storebox bg1" v-for="item in mainData" v-if="item.order.length>0">
 			<div class="storebox-top">
 				<div class="font12 color1 ilblock" style="margin-left: 15px;">
 					交易时间：{{item.create_time}}
 				</div>
-				<div class="ilblock font12 flo-right" style=" color:rgb(225,54,78);margin-right: 15px;" v-if="item.behavior==1">等待核销</div>
-				<div class="ilblock font12 flo-right" style=" color:rgb(225,54,78);margin-right: 15px;" v-if="item.behavior==2">已核销</div>
+				<div class="ilblock font12 flo-right" style=" color:rgb(225,54,78);margin-right: 15px;" v-if="item.behavior==1&&item.order[0].order_step==0">等待核销</div>
+				<div class="ilblock font12 flo-right" style=" color:rgb(225,54,78);margin-right: 15px;" v-if="item.behavior==2&&item.order[0].order_step==0">已核销</div>
+				<div class="ilblock font12 flo-right" style=" color:rgb(225,54,78);margin-right: 15px;" v-if="item.order_step==2">已退单</div>
 			</div>
 			<div class="storebox-btm">
 				<div class="ilblock img-box">
@@ -42,17 +43,55 @@
 						{{item.order&&item.order[0].products&&item.order[0].products[0]&&item.order[0].products[0].snap_product&&item.order[0].products[0].snap_product.product?
 					item.order[0].products[0].snap_product.product.title:''}}
 					</div>
-					<div style="color: rgb(249,138,72); font-size: 11px; margin-top: 16px;">￥<span style="font-size: 20px;">{{item.order[0].price}}</span>
+					
+					<div style="color: rgb(249,138,72); font-size: 11px; margin-top: 16px;">￥<span style="font-size: 20px;">{{item.order[0].price}}<text style="font-size: 15px" class="color2" v-if="item.message">({{item.message}})</text></span>
 					</div>
 				</div>
 			</div>
-			<div style="line-height: 40px; margin-left: 15px;" v-if="item.behavior==1">
+			<div style="line-height: 40px; margin-left: 15px;" >
 				<div class="ilblock color1 font14" style="margin-right: 30px;">核销码：{{item.check_code}}</div>
 				<div class="ilblock radiu20 font13" style="border: solid 1px #F98A48; height: 28px; line-height: 28px; width: 75px; text-align: center;"
-				 @click="qrCodeUpdate(item.id)">确认核销</div>
+				 @click="qrCodeUpdate(item.id)" v-if="item.behavior==1">确认核销</div>
+				  <div class="ilblock radiu20 font13" style="border: solid 1px #F98A48; height: 28px; line-height: 28px; width: 75px; text-align: center;"
+				  v-if="item.behavior==2">已核销</div>
 			</div>
 		</div>
 
+		<div class="storebox bg1" v-for="item in mainData" v-else>
+			<div class="storebox-top">
+				<div class="font12 color1 ilblock" style="margin-left: 15px;">
+					交易时间：{{item.create_time}}
+				</div>
+				<div class="ilblock font12 flo-right" style=" color:rgb(225,54,78);margin-right: 15px;" v-if="item.behavior==1">等待核销</div>
+				<div class="ilblock font12 flo-right" style=" color:rgb(225,54,78);margin-right: 15px;" v-if="item.behavior==2">已核销</div>
+			</div>
+			<div class="storebox-btm">
+				<div class="ilblock img-box">
+					<img :src="item.product&&item.product[0]&&item.product[0].mainImg&&item.product[0].mainImg[0]?item.product[0].mainImg[0].url:''" />
+				</div>
+				<div class="ilblock imgname">
+					<div class="font15 color2 overflow2" style="line-height: 21px; height: 45px;">
+						{{item.product&&item.product[0]?item.product[0].title:''}}
+					</div>
+
+					<div style="color: rgb(249,138,72); font-size: 11px; margin-top: 16px;">￥<span style="font-size: 20px;">{{item.product&&item.product[0]?item.product[0].price:''}}<text style="font-size: 15px" class="color2" v-if="item.message">({{item.message}})</text></span>
+					</div>
+				</div>
+			</div>
+			<div style="line-height: 40px; margin-left: 15px;">
+				<div class="ilblock color1 font14" style="margin-right: 30px;">核销码：{{item.check_code}}</div>
+				<div class="ilblock radiu20 font13" style="border: solid 1px #F98A48; height: 28px; line-height: 28px; width: 75px; text-align: center;"
+				 @click="qrCodeUpdate(item.id)" v-if="item.behavior==1">确认核销</div>
+				 <div class="ilblock radiu20 font13" style="border: solid 1px #F98A48; height: 28px; line-height: 28px; width: 75px; text-align: center;"
+				  v-if="item.behavior==2">已核销</div>
+			</div>
+		</div>
+		<div class="box-c" v-if="mainData.length==0">
+			<div style="margin-top: 100px;text-align: center;">
+				<img src="../../static/images/logo1.png" style="width: 195px;"/>
+			</div>
+			<div class="color1 font15" style="text-align: center; margin-top: 30px;">未搜索到数据</div>
+		</div>
 	</view>
 </template>
 
@@ -64,18 +103,19 @@
 				isLoadAll: false,
 				check_code: '',
 				mainData: [],
-				userData:[],
+				userData: [],
 				searchItem: {
 					thirdapp_id: 2,
 					shop_no: uni.getStorageSync('merchant_no'),
-					type: 1
+					type: ['in', [1, 2]],
+					behavior:2
 				}
 			}
 		},
 		onLoad(options) {
 			const self = this;
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			self.$Utils.loadAll(['wxJsSdk','getUserData'], self)
+			self.$Utils.loadAll(['wxJsSdk', 'getUserData','getMainData'], self)
 		},
 
 		onReachBottom() {
@@ -92,8 +132,9 @@
 			console.log('refresh');
 			uni.startPullDownRefresh();
 			delete self.searchItem.check_code;
+			self.searchItem.behavior = 2;
 			self.mainData = [];
-			//self.getMainData(true);
+			self.getMainData(true);
 		},
 
 
@@ -132,7 +173,7 @@
 						self.$Utils.showToast(res.msg, 'none')
 					};
 					self.$Utils.finishFunc('getUserData');
-					
+
 				};
 				self.$apis.userGet(postData, callback);
 			},
@@ -145,7 +186,7 @@
 					success: function(res) {
 						var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
 						console.log('result', result)
-						self.searchItem.type = ['in', [1, 2]];
+						self.searchItem.behavior = 1;
 						self.searchItem.check_code = result;
 						self.getMainData(true)
 					}
@@ -184,6 +225,7 @@
 				const self = this;
 				if (self.check_code != '') {
 					self.searchItem.check_code = self.check_code;
+					self.searchItem.behavior = 1;
 					self.getMainData(true)
 				} else {
 					self.$Utils.showToast('无效输入', 'none')
@@ -215,13 +257,22 @@
 							user_type: 0
 						},
 						condition: '='
+					},
+					product: {
+						tableName: 'Product',
+						middleKey: 'product_no',
+						key: 'product_no',
+						searchItem: {
+							status: 1,
+						},
+						condition: '='
 					}
 				};
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.mainData.push.apply(self.mainData, res.info.data);
 					} else {
-						self.$Utils.showToast('未找到订单', 'none')
+					
 						self.isLoadAll = true;
 					}
 					setTimeout(function() {
@@ -234,20 +285,31 @@
 
 			qrCodeUpdate(id) {
 				const self = this;
-				console.log(id)
-				const postData = {};
-				postData.tokenFuncName = 'getMerchantToken';
-				postData.data = {
-					behavior: 2,
-				}
-				postData.searchItem = {};
-				postData.searchItem.id = id;
-				const callback = res => {
-					self.$Utils.showToast('已核销', 'none')
-					self.mainData = [];
-					self.getMainData(true);
-				};
-				self.$apis.qrCodeUpdate(postData, callback);
+				uni.showModal({
+					title: '核销确认',
+					content: '确认要核销此订单吗',
+					success: function (res) {
+						if (res.confirm) {
+							const postData = {};
+							postData.tokenFuncName = 'getMerchantToken';
+							postData.data = {
+								behavior: 2,
+							}
+							postData.searchItem = {};
+							postData.searchItem.id = id;
+							const callback = res => {
+								self.$Utils.showToast('已核销', 'none')
+								self.mainData = [];
+								self.getMainData(true);
+							};
+							self.$apis.qrCodeUpdate(postData, callback);
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+					}
+				});
+				
+				
 			},
 		}
 	}

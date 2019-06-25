@@ -9,7 +9,7 @@
 					<div class="img">
 						<img src="../../static/images/service-icon2.png" />
 					</div>
-					<div class="color2">找回电子码需求</div>
+					<div class="color2">找回电子码</div>
 				</div>
 			</div>
 			<div class="ilblock list-img">
@@ -37,12 +37,12 @@
 				</div>
 			</div>
 			<div class="ilblock list-img" style="border: none;">
-				<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/course/course?type=kefu'}})">
+				<a href="https://cschat-ccs.aliyun.com/index.htm?tntInstId=_1MeqO5o&scene=SCE00004749">
 					<div class="img">
 						<img src="../../static/images/service-icon5.png" />
 					</div>
 					<div class="color2">客服</div>
-				</div>
+				</a>
 			</div>
 			<div style="clear: both;"></div>
 		</div>
@@ -52,7 +52,10 @@
 		
 		<div class="bg1">
 			<div class="testlist-on" v-for="(item,index) in mainData">
-				{{item.title}}<img :src="webSelf.$Utils.inArray(item.id,openArray)!=-1?'../../static/images/home-icon10.png':'../../static/images/home-icon10.png'" @click="show(item.id)"/>
+				{{item.title}}
+				<img src='../../static/images/home-icon9.png' @click="show(item.id)" v-if="webSelf.$Utils.inArray(item.id,openArray)!=-1" style="width:10px;height:15px"/>
+				
+				<img src='../../static/images/home-icon10.png' @click="show(item.id)" v-else  />
 				<div class="color2" style="line-height: 20px;" :style="webSelf.$Utils.inArray(item.id,openArray)!=-1?'':'display:none'">{{item.description}}</div>
 			</div>
 		</div>
@@ -129,7 +132,7 @@
 
 <style>
 	@import "../../assets/style/public.css";
-
+	a {text-decoration:none;out-line: none}
 	page {
 		background: #fff;
 	}

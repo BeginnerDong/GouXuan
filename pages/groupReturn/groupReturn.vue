@@ -15,7 +15,7 @@
 			</div>
 			<div class="ilblock retun-item">
 				<div class="color2">￥{{shopCount}}</div>
-				<div>直接受益</div>
+				<div>直接收益</div>
 			</div>
 			<div class="ilblock retun-item">
 				<div class="color2">￥{{groupCount}}</div>
@@ -85,9 +85,9 @@
 
 		methods: {
 
-			getUserInfoData() {
+						getUserInfoData() {
 				const self = this;
-
+			
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
 				const callback = (res) => {
@@ -97,21 +97,21 @@
 						self.$Utils.showToast(res.msg, 'none')
 					};
 					self.gethasWithdraw();
-
+					
 				};
 				self.$apis.userInfoGet(postData, callback);
 			},
-
+			
 			gethasWithdraw() {
 				const self = this;
-
+			
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
 				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 				postData.searchItem = {
 					type: 2,
 					count: ['<', 0],
-					status: ['in', [0, 1]]
+					status:['in',[0,1]]
 				};
 				postData.compute = {
 					TotalCount: [
@@ -122,20 +122,19 @@
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
 						console.log('now', res)
-						self.hasWithdraw = res.info.compute.TotalCount
+						self.hasWithdraw = parseFloat(res.info.compute.TotalCount).toFixed(2); 
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};
-					console.log(self.hasWithdraw)
 					self.getshopCount()
-
+				
 				};
 				self.$apis.flowLogGet(postData, callback);
 			},
-
+			
 			getshopCount() {
 				const self = this;
-
+			
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
 				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
@@ -153,19 +152,19 @@
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
 						console.log('now', res)
-						self.shopCount = res.info.compute.TotalCount
+						self.shopCount = parseFloat(res.info.compute.TotalCount).toFixed(2); 
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};
 					self.getgroupCount()
-					console.log(self.shopCount)
+						
 				};
 				self.$apis.flowLogGet(postData, callback);
 			},
-
+			
 			getgroupCount() {
 				const self = this;
-
+			
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
 				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
@@ -182,15 +181,15 @@
 				};
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
-
-						self.groupCount = res.info.compute.TotalCount;
-						console.log(self.hasWithdraw)
-						console.log(self.userInfoData.balance)
-						self.totalCount = (-parseFloat(self.hasWithdraw) + parseFloat(self.userInfoData.balance)).toFixed(2)
+					
+						self.groupCount =  parseFloat(res.info.compute.TotalCount).toFixed(2);
+						console.log(self.shopCount)
+						console.log(self.groupCount)
+						self.totalCount = (parseFloat(self.shopCount) + parseFloat(self.groupCount)).toFixed(2);
+						console.log(self.totalCount)
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};
-					console.log(self.groupCount)
 					self.$Utils.finishFunc('getUserInfoData');
 				};
 				self.$apis.flowLogGet(postData, callback);

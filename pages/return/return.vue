@@ -16,7 +16,7 @@
 			</div>
 			<div class="ilblock retun-item">
 				<div class="color2">￥{{shopCount}}</div>
-				<div>直接受益</div>
+				<div>直接收益</div>
 			</div>
 			<div class="ilblock retun-item">
 				<div class="color2">￥{{groupCount}}</div>
@@ -54,9 +54,9 @@
 
 		</div>
 
-		<button @click="totalCount>20?webSelf.$Router.navigateTo({route:{path:'/pages/withdrawDepasit/withdrawDepasit'}}):''"
-		 class="color5" :style="totalCount>20?'background:#F98A48':''" style="font-size:14px;background: #FBB091;width:70%;height: 35px;line-height: 35px;border-radius: 20px; margin: 30px auto 100px;">
-			申请提现{{totalCount>20?'':'(不足20元不可提现)'}}
+		<button @click="userInfoData.balance>20?webSelf.$Router.navigateTo({route:{path:'/pages/withdrawDepasit/withdrawDepasit'}}):''"
+		 class="color5" :style="userInfoData.balance>20?'background:#F98A48':''" style="font-size:14px;background: #FBB091;width:70%;height: 35px;line-height: 35px;border-radius: 20px; margin: 30px auto 100px;">
+			申请提现{{userInfoData.balance>20?'':'(不足20元不可提现)'}}
 		</button>
 
 

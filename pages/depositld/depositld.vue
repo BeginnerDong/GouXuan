@@ -12,8 +12,15 @@
 			姓名
 			<input placeholder="请输入您的姓名" v-model="submitData.ali_name"/>
 		</div>
-		<div class="font11 color2" style="text-align: center; margin-top: 30px;margin-bottom: 50px;">关于支付宝</div>
+		<div class="font11 color2" style=" margin-top: 15px;margin-bottom: 5px;padding: 0 15px;">
+			1.为保证您的提现顺利，请您在输入支付宝账号的时候务必填写正确的账号，确认是否为本人常用账号，如果资料填写不正确或不完整则会被系统驳回。
 
+		</div>
+		<div class="font11 color2" style=" margin-top: 15px;margin-bottom: 50px;padding: 0 15px;">
+			2.建议您反复检查账号、姓名是否正确，如果同一个手机号绑定不同的支付宝时，请使用邮箱地址作为您的收款账号。
+		
+		</div>
+		
 		<button class="color5" @click="submit">
 			保存修改
 		</button>

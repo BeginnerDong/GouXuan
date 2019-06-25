@@ -30,10 +30,10 @@ export default {
 		};
 		http.HTTP(allParams);
 	},
-	
-	
+
+
 	bindShop(param, callback) {
-	
+
 		var allParams = {
 			url: 'Project/Solely/bindShop',
 			type: 'post',
@@ -57,9 +57,9 @@ export default {
 		};
 		http.HTTP(allParams);
 	},
-	
+
 	teamTotal(param, callback) {
-	
+
 		var allParams = {
 			url: 'Project/Solely/teamTotal',
 			type: 'post',
@@ -70,9 +70,9 @@ export default {
 		};
 		http.HTTP(allParams);
 	},
-	
+
 	teamFlow(param, callback) {
-	
+
 		var allParams = {
 			url: 'Project/Solely/teamFlow',
 			type: 'post',
@@ -83,9 +83,9 @@ export default {
 		};
 		http.HTTP(allParams);
 	},
-	
+
 	teamOrder(param, callback) {
-	
+
 		var allParams = {
 			url: 'Project/Solely/teamOrder',
 			type: 'post',
@@ -98,7 +98,7 @@ export default {
 	},
 
 	teamRank(param, callback) {
-	
+
 		var allParams = {
 			url: 'Project/Solely/teamRank',
 			type: 'post',
@@ -109,10 +109,10 @@ export default {
 		};
 		http.HTTP(allParams);
 	},
-	
-	
+
+
 	getTeam(param, callback) {
-	
+
 		var allParams = {
 			url: 'Project/Solely/getTeamv',
 			type: 'post',
@@ -223,6 +223,19 @@ export default {
 		http.HTTP(allParams);
 	},
 
+
+	codeGet(param, callback) {
+		var allParams = {
+			url: 'Project/Solely/getCode',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
+
 	productGet(param, callback) {
 		var allParams = {
 			url: 'Common/Product/get',
@@ -234,6 +247,8 @@ export default {
 		};
 		http.HTTP(allParams);
 	},
+
+
 
 	getQrCommonCode(param, callback) {
 		var allParams = {
@@ -276,6 +291,19 @@ export default {
 
 		var allParams = {
 			url: 'Func/Common/loginByUp',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
+
+	shopLogin(param, callback) {
+
+		var allParams = {
+			url: 'Func/Common/loginByShop',
 			type: 'post',
 			data: param,
 			sCallback: function(data) {
@@ -442,7 +470,7 @@ export default {
 		};
 		http.HTTP(allParams);
 	},
-	
+
 	flowLogAdd(param, callback) {
 		var allParams = {
 			url: 'Common/FlowLog/add',

@@ -22,7 +22,7 @@
 					交易时间：{{item.create_time}}
 				</div>	
 			</div>
-			<div class="storebox-btm" :data-id="item.products[0].id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/recommend/recommend?id='+$event.currentTarget.dataset.id}})">
+			<div class="storebox-btm" :data-id="item.products[0].product_id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/recommend/recommend?id='+$event.currentTarget.dataset.id}})">
 				<div class="ilblock img-box">
 					<img :src="item.products[0]&&item.products[0].snap_product&&item.products[0].snap_product.product.mainImg[0]?item.products[0].snap_product.product.mainImg[0].url:''" />
 				</div>
@@ -41,18 +41,20 @@
 					<div  v-for="(c_item,c_index) in item.qrData" style="width:100%;text-align: center;"> 
 						<div v-if="c_index==0" style="display: flex;">
 							
-							<div style="width: 50%;text-align: center;">
+							<div style="width: 35%;text-align: center;">
 								<image :src="c_item.url" style="width: 100px;height: 100px;" @click="tapZoom(c_item.url)"></image>
+								<div style="color: red;">点击放大</div>
 							</div>
 							<div>
-								<div style="height: 33px;line-height: 33px;">{{c_item.message}}</div>
-								<div style="height: 33px;" v-if="c_item.book_time">
-									<div style="height: 33px;">您预约的时间</div>
-									<div style="height: 33px;">{{c_item.book_time}}</div>
+								<div style="height: 28px;line-height: 28px;">{{c_item.message}}({{c_item.behavior==1?'未核销':'已核销'}})</div>
+								<div>核销码：{{c_item.check_code}}</div>
+								<div style="height: 28px;" v-if="c_item.book_time&&item.products[0].snap_product.product.isreserve==1">
+									<div style="height: 28px;">您预约的时间</div>
+									<div style="height: 28px;">{{c_item.book_time}}</div>
 								</div>
-								<div style="display: flex;height: 33px;" v-if="!c_item.book_time">
-									<div style="height: 33px;margin-right: 5px;">请选时间</div>
-									<div style="height: 33px;">
+								<div style="display: flex;height: 28px;" v-if="!c_item.book_time&&item.products[0].snap_product.product.isreserve==1">
+									<div style="height: 28px;margin-right: 5px;">请选时间</div>
+									<div style="height: 28px;">
 										<ruiDatePicker
 											fields="day"
 											start="2010-00-00"
@@ -65,25 +67,29 @@
 									</div>
 									
 								</div>
-								<div v-if="!c_item.book_time" :data-index="index" :data-c_index="c_index" @click="book($event.currentTarget.dataset.index,$event.currentTarget.dataset.c_index)" style="width: 57px;line-height: 16px;height: 18px;font-size: 12px;text-align: -webkit-center;border-radius: 15%;color: white;background: #FF895A;">
+								<div v-if="!c_item.book_time&&item.products[0].snap_product.product.isreserve==1" :data-index="index" :data-c_index="c_index" @click="book($event.currentTarget.dataset.index,$event.currentTarget.dataset.c_index)" style="width: 57px;line-height: 16px;height: 18px;font-size: 12px;text-align: -webkit-center;border-radius: 15%;color: white;background: #FF895A;">
 									立即预约
 								</div>
+								
 							</div>
 						</div>
 						<div v-if="c_index>0&&openId==item.id" style="display: flex;">
 							
-							<div style="width: 50%;text-align: center;">
+							<div style="width: 35%;text-align: center;">
 								<image :src="c_item.url" style="width: 100px;height: 100px;" @click="tapZoom(c_item.url)"></image>
+								<div style="color: red;">点击放大</div>
 							</div>
 							<div>
-								<div style="height: 33px;line-height: 33px;">{{c_item.message}}</div>
-								<div style="height: 33px;" v-if="c_item.book_time">
-									<div style="height: 33px;">您预约的时间</div>
-									<div style="height: 33px;">{{c_item.book_time}}</div>
+								<div style="height: 28px;line-height: 28px;">{{c_item.message}}({{c_item.behavior==1?'未核销':'已核销'}})</div>
+								<div>核销码：{{c_item.check_code}}</div>
+								<div style="height: 28px;" v-if="c_item.book_time&&item.products[0].snap_product.product.isreserve==1">
+									<div style="height: 28px;">您预约的时间</div>
+									<div style="height: 28px;">{{c_item.book_time}}</div>
 								</div>
-								<div style="display: flex;height: 33px;" v-if="!c_item.book_time">
-									<div style="height: 33px;margin-right: 5px;">请选时间</div>
-									<div style="height: 33px;">
+								<div style="display: flex;height: 28px;" v-if="!c_item.book_time&&item.products[0].snap_product.product.isreserve==1">
+									<div style="height: 28px;margin-right: 5px;">请选时间</div>
+									
+									<div style="height: 28px;">
 										<ruiDatePicker
 											fields="day"
 											start="2010-00-00"
@@ -96,19 +102,22 @@
 									</div>
 									
 								</div>
-								<div v-if="!c_item.book_time" :data-index="index" :data-c_index="c_index" @click="book($event.currentTarget.dataset.index,$event.currentTarget.dataset.c_index)" style="width: 57px;line-height: 16px;height: 18px;font-size: 12px;text-align: -webkit-center;border-radius: 15%;color: white;background: #FF895A;">
+								<div v-if="!c_item.book_time&&item.products[0].snap_product.product.isreserve==1" :data-index="index" :data-c_index="c_index" @click="book($event.currentTarget.dataset.index,$event.currentTarget.dataset.c_index)" style="width: 57px;line-height: 16px;height: 18px;font-size: 12px;text-align: -webkit-center;border-radius: 15%;color: white;background: #FF895A;">
 									立即预约
 								</div>
-							</div>
+								
+							</div>						
 						</div>	
+						
 					</div>
+					
 				</div>
 			</div>
 			<view style="clear: both;"></view>
 		</div>
 		<div class="box-c" v-if="mainData.length==0">
 			<div style="margin-top: 100px; margin-left: 140px;">
-				<img src="../../static/images/img3.png" style="width: 90px;"/>
+				<img src="../../static/images/logo1.png" style="width: 90px;"/>
 			</div>
 			<div class="color1 font15" style="text-align: center; margin-top: 30px;">你还没有这个订单状态</div>
 		</div>
@@ -237,7 +246,7 @@
 			getMainData(isNew) {
 				const self = this;	
 				if(isNew){
-					self.mainData = [];
+					self.$Utils.clearPageIndex(self)
 				};
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';

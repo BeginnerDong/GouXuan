@@ -103,7 +103,8 @@
 						trade_info: '提现',
 						status: 0,
 						type: 2,
-						thirdapp_id: 2
+						thirdapp_id: 2,
+						behavior:3
 					},
 					tokenFuncName: 'getProjectToken'
 				};

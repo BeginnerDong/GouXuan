@@ -1,8 +1,8 @@
 <template>
 	<view>
-		<!--<view class="top bg3 color5 font13">
+		<view class="top bg3 color5 font13">
 			分享人ID:{{parent_no}}
-		</view>-->
+		</view>
 		<view class="list-box">
 			<view class="list-item">
 				<image src="../../static/images/icon9.png" style="margin-right: 22px;"></image>
@@ -13,8 +13,8 @@
 			<view class="list-item">
 				<image src="../../static/images/icon10.png" style="width: 19px;"></image>
 				<view class="list-right ilblock bg2">
-					<input class="font14 ilblock" placeholder="请输入验证码" />
-					<button class="bg3 color5 ilblock radiu20 font13 flo-right">获取验证码</button>
+					<input class="font14 ilblock" placeholder="请输入验证码" v-model="submitData.code"/>
+					<button class="bg3 color5 ilblock radiu20 font13 flo-right" @click="webSelf.$Utils.stopMultiClick(getCode)">{{text}}</button>
 				</view>
 			</view>
 			<view class="list-item">
@@ -55,27 +55,32 @@
 
 		data() {
 			return {
+				webSelf:this,
 				submitData: {
 					phone: '',
 					name: '',
-					province_id: ''
+					province_id: '',
+					code: ''
 				},
-				label:'',
+				label: '',
 				imgcode: '',
-				siteData:[],
+				siteData: [],
 				pickerSingleArray: [],
 
 
 				mulLinkageTwoPicker: cityData,
 				cityPickerValueDefault: [0, 0, 0],
 				themeColor: '#F98A48',
-				index:'',
+				index: '',
 				mode: '',
 				deepLength: 1,
 				pickerValueDefault: [0],
 				pickerValueArray: [],
-				parent_no:''
+				parent_no: '',
+				currentTime:61,
+				text:'获取验证码',
 			}
+			
 		},
 
 		onLoad(options) {
@@ -87,6 +92,58 @@
 			self.$Utils.loadAll(['getSiteData'], self)
 		},
 		methods: {
+
+			getCode() {
+				var self = this;
+
+				var phone = self.submitData.phone;
+				var currentTime = self.currentTime //把手机号跟倒计时值变例成js值
+				if (self.submitData.phone == '') {
+
+					uni.setStorageSync('canClick', true);
+					self.$Utils.showToast('手机号码不能为空', 'none');
+					return
+				} else if (phone.trim().length != 11 || !/^1[3|4|5|6|7|8|9]\d{9}$/.test(phone)) {
+
+					uni.setStorageSync('canClick', true);
+					self.$Utils.showToast('手机号格式不正确', 'none');
+					return
+				} else {
+					//当手机号正确的时候提示用户短信验证码已经发送
+					const postData = {
+						tokenFuncName: 'getProjectToken',
+						params: {
+							PhoneNumbers: self.submitData.phone,
+							SignName: "本地捕手",
+							TemplateCode: "SMS_168415504"
+						}
+					};
+					const callback = (res) => {
+						if (res.solely_code == 100000) {
+
+							self.$Utils.showToast('验证码已发送', 'none');
+							//设置一分钟的倒计时
+							var interval = setInterval(function() {
+								currentTime--; //每执行一次让倒计时秒数减一
+								self.text = currentTime + 's'
+								//如果当秒数小于等于0时 停止计时器 且按钮文字变成重新发送 且按钮变成可用状态 倒计时的秒数也要恢复成默认秒数 即让获取验证码的按钮恢复到初始化状态只改变按钮文字
+								if (currentTime <= 0) {
+									uni.setStorageSync('canClick', true);
+
+									clearInterval(interval)
+									self.text = '重新发送'
+								}
+
+							}, 1000);
+						} else {
+							uni.setStorageSync('canClick', true);
+
+							self.$Utils.showToast(res.msg, 'none')
+						}
+					};
+					self.$apis.codeGet(postData, callback)
+				};
+			},
 
 
 			showSinglePicker() {
@@ -131,9 +188,12 @@
 					if (res.info.data.length > 0) {
 						self.siteData.push.apply(self.siteData, res.info.data);
 						for (var i = 0; i < self.siteData.length; i++) {
-							self.pickerSingleArray.push({label:self.siteData[i].title,value:self.siteData[i].id})
+							self.pickerSingleArray.push({
+								label: self.siteData[i].title,
+								value: self.siteData[i].id
+							})
 						}
-						console.log('self.pickerSingleArray',self.pickerSingleArray)
+						console.log('self.pickerSingleArray', self.pickerSingleArray)
 						self.$Utils.finishFunc('getSiteData');
 					};
 				};
@@ -152,7 +212,10 @@
 					phone: self.submitData.phone,
 					province_id: self.submitData.province_id,
 				};
-
+				postData.smsAuth={
+				   code:self.submitData.code,
+				   phone:self.submitData.phone
+				};
 				if (self.$Utils.checkComplete(self.submitData)) {
 					const callback = (res) => {
 						if (res.solely_code == 100000) {
