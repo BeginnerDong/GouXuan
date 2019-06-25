@@ -113,7 +113,13 @@
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 			self.primary_scope  = uni.getStorageSync('user_info').primary_scope;
 			self.site_id = uni.getStorageSync('siteData').id;
-			self.$Utils.loadAll(['getUserInfoData','getUserData'], self)
+			var res = self.$Token.getProjectToken(function(){
+				self.$Utils.loadAll(['getUserInfoData','getUserData'], self)
+			});
+			if(res){
+				self.$Utils.loadAll(['getUserInfoData','getUserData'], self)
+			};
+			
 		},
 
 		onReachBottom() {

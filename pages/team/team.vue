@@ -121,8 +121,13 @@
 			var documentWidth = document.body.clientWidth;
 			this.cWidth2 = parseInt(documentWidth * 0.9);
 			this.cHeight2 = parseInt(documentWidth * 0.9 * 0.7);
+			var res = self.$Token.getProjectToken(function(){
+				self.$Utils.loadAll(['getMainData','getTotalTurnover','getTotalReward','teamOrder'], self)
+			});
+			if(res){
+				self.$Utils.loadAll(['getMainData','getTotalTurnover','getTotalReward','teamOrder'], self)
+			};
 			
-			self.$Utils.loadAll(['getMainData','getTotalTurnover','getTotalReward','teamOrder'], self)
 
 		},
 		methods: {

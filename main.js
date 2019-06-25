@@ -20,6 +20,7 @@ Vue.prototype.$apis = $apis
 Vue.prototype.$AssetsConfig = $AssetsConfig
 Vue.prototype.$Config = $Config
 Vue.prototype.$Router = $Router
+Vue.prototype.$Token = $Token
 Vue.prototype.$jweixin = jweixin
 Vue.config.productionTip = false
 

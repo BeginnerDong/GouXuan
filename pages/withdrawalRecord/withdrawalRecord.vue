@@ -28,7 +28,13 @@
 		onLoad(options) {
 			const self = this;
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			self.$Utils.loadAll(['getMainData'], self)
+			
+			var res = self.$Token.getProjectToken(function(){
+				self.$Utils.loadAll(['getMainData'], self)
+			});
+			if(res){
+				self.$Utils.loadAll(['getMainData'], self)
+			};
 
 		},
 		

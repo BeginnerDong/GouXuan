@@ -88,7 +88,12 @@
 			if (options[0] && options[0].id) {
 				self.id = options[0].id
 			};
-			self.$Utils.loadAll(['getMainData'], self)
+			var res = self.$Token.getProjectToken(function(){
+				self.$Utils.loadAll(['getMainData'], self)
+			});
+			if(res){
+				self.$Utils.loadAll(['getMainData'], self)
+			};
 		},
 		methods: {
 			tapZoom(url) {

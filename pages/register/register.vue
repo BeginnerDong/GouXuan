@@ -89,7 +89,13 @@
 			if (options[0] && options[0].parent_no) {
 				self.parent_no = options[0].parent_no
 			};
-			self.$Utils.loadAll(['getSiteData'], self)
+			
+			var res = self.$Token.getProjectToken(function(){
+				self.$Utils.loadAll(['getSiteData'], self)
+			});
+			if(res){
+				self.$Utils.loadAll(['getSiteData'], self)
+			};
 		},
 		methods: {
 

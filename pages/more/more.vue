@@ -110,7 +110,13 @@
 					false_sale_count: 'desc'
 				}
 			};
-			self.$Utils.loadAll(['getMainData','getUserData'], self);
+			var res = self.$Token.getProjectToken(function(){
+				self.$Utils.loadAll(['getMainData','getUserData'], self);
+			});
+			if(res){
+				self.$Utils.loadAll(['getMainData','getUserData'], self);
+			};
+			
 
 		},
 		onShow() {

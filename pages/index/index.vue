@@ -204,7 +204,6 @@
 <script>
 	import cSwiper from "@/components/swiper/swiper.vue"
 	import cTabbar from "@/components/tabbar/tabbar.vue"
-	import token from "@/common/token.js"
 	export default {
 		components: {
 			cSwiper,
@@ -234,7 +233,6 @@
 		onLoad() {
 			
 			const self = this;
-
 			self.timestampNow = (new Date()).getTime();
 			var options = self.$Utils.getHashParameters();
 			if(options[0]&&options[0].site_id){
@@ -242,13 +240,13 @@
 			};
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 			self.paginateTwo = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			if(uni.getStorageSync('user_token')){
+
+			var res = self.$Token.getProjectToken(function(){
 				self.$Utils.loadAll(['getSiteData', 'getLabelData','wxJsSdk','getUserData'], self);
-			}else{
-				token.getProjectToken(function(){
-					self.$Utils.loadAll(['getSiteData', 'getLabelData','wxJsSdk','getUserData'], self);
-				});
-			}
+			});
+			if(res){
+				self.$Utils.loadAll(['getSiteData', 'getLabelData','wxJsSdk','getUserData'], self);
+			};
 			
 			if(uni.getStorageSync('user_info').primary_scope){
 				self.primary_scope  = uni.getStorageSync('user_info').primary_scope;

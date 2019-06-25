@@ -168,8 +168,13 @@
 		},
 		onLoad(options) {
 			const self = this;
-
-			self.$Utils.loadAll(['getMonthGroupCount','getMonthShopCount','getShopCount','getTotalCount','getDistriDataLength','getOrderData','getUserData'], self)
+			var res = self.$Token.getProjectToken(function(){
+				self.$Utils.loadAll(['getMonthGroupCount','getMonthShopCount','getShopCount','getTotalCount','getDistriDataLength','getOrderData','getUserData'], self)
+			});
+			if(res){
+				self.$Utils.loadAll(['getMonthGroupCount','getMonthShopCount','getShopCount','getTotalCount','getDistriDataLength','getOrderData','getUserData'], self)
+			};
+			
 		},
 
 		methods: {

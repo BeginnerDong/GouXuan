@@ -44,7 +44,12 @@
 		},
 		onLoad(options) {
 			const self = this;
-			self.$Utils.loadAll(['getMainData'], self)
+			var res = self.$Token.getProjectToken(function(){
+				self.$Utils.loadAll(['getMainData'], self)
+			});
+			if(res){
+				self.$Utils.loadAll(['getMainData'], self)
+			};
 		},
 
 		methods: {

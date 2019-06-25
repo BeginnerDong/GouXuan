@@ -157,7 +157,13 @@
 			self.headImgUrl = uni.getStorageSync('user_info').headImgUrl;
 			self.nickName = uni.getStorageSync('user_info').nickname;
 			self.site_id = uni.getStorageSync('siteData').id;
-			self.$Utils.loadAll(['getUserData'], self)
+			
+			var res = self.$Token.getProjectToken(function(){
+				self.$Utils.loadAll(['getUserData'], self)
+			});
+			if(res){
+				self.$Utils.loadAll(['getUserData'], self)
+			};
 		},
 		methods: {
 			

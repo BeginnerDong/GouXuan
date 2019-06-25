@@ -115,7 +115,13 @@
 		onLoad(options) {
 			const self = this;
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			self.$Utils.loadAll(['wxJsSdk', 'getUserData','getMainData'], self)
+			var res = self.$Token.getProjectToken(function(){
+				self.$Utils.loadAll(['wxJsSdk', 'getUserData','getMainData'], self)
+			});
+			if(res){
+				self.$Utils.loadAll(['wxJsSdk', 'getUserData','getMainData'], self)
+			};
+			
 		},
 
 		onReachBottom() {

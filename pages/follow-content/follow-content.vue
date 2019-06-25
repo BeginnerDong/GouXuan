@@ -28,7 +28,13 @@
 		},
 		onLoad(options) {
 			const self = this;
-			self.$Utils.loadAll(['getMainData','getUserInfoData'], self)
+			var res = self.$Token.getProjectToken(function(){
+				self.$Utils.loadAll(['getMainData','getUserInfoData'], self)
+			});
+			if(res){
+				self.$Utils.loadAll(['getMainData','getUserInfoData'], self)
+			};
+			
 		},
 
 		methods: {

@@ -29,7 +29,12 @@
 			}else{
 				self.title = '使用教程'
 			};
-			self.$Utils.loadAll(['getMainData'], self)
+			var res = self.$Token.getProjectToken(function(){
+				self.$Utils.loadAll(['getMainData'], self)
+			});
+			if(res){
+				self.$Utils.loadAll(['getMainData'], self)
+			};
 		},
 		
 		methods: {

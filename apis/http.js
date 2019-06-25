@@ -12,7 +12,6 @@ export default {
             };
             self.HTTP(obj);
         };
-
         if(obj.data.tokenFuncName){
             
             if(obj.data.refreshToken){

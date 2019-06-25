@@ -37,6 +37,7 @@
 	// https://github.com/zhetengbiji/mpvue-citypicker
 	import mpvueCityPicker from '../../components/mpvue-citypicker/mpvueCityPicker.vue'
 	import cityData from '../../common/city.data.js';
+
 	export default {
 		components: {
 			mpvuePicker,
@@ -67,7 +68,12 @@
 			const self = this;
 			if(options.id){
 				self.id = options.id;
-				self.$Utils.loadAll(['getMainData'], self)
+				var res = self.$Token.getProjectToken(function(){
+					self.$Utils.loadAll(['getMainData'], self)
+				});
+				if(res){
+					self.$Utils.loadAll(['getMainData'], self)
+				};
 			}
 			/* self.$Utils.loadAll(['getMainData', 'getLabelData', 'getCaseData'], self) */
 

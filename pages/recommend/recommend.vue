@@ -317,7 +317,13 @@
 			self.todayYear = todayDate.getFullYear();
 			self.todayDay = todayDate.getDate();
 			console.log('self.todayYear', self.todayYear)
-			self.$Utils.loadAll(['calenderInit', 'getUserData'], self)
+			var res = self.$Token.getProjectToken(function(){
+				self.$Utils.loadAll(['calenderInit', 'getUserData'], self)
+			});
+			if(res){
+				self.$Utils.loadAll(['calenderInit', 'getUserData'], self)
+			};
+			
 		},
 
 		onShow() {

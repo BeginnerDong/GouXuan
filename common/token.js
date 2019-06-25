@@ -20,7 +20,21 @@ class Token {
 	
 	getProjectToken(callback,postData) { 
 		//return uni.getStorageSync('user_token')
-		if((postData&&postData.refreshToken)||!uni.getStorageSync('user_token')){
+		var pass = true;
+		if(postData&&postData.refreshToken){
+			pass = false;
+		};
+		if(!uni.getStorageSync('user_token')){
+			pass = false;
+		};
+		if(!uni.getStorageSync('token_expire_time')){
+			pass = false;
+		};
+		if(uni.getStorageSync('token_expire_time')&&parseInt(uni.getStorageSync('token_expire_time'))<parseInt(new Date().getTime())){
+			pass = false;
+		};
+		console.log('new Date().getTime()',parseInt(new Date().getTime()));
+		if(!pass){
 	        var params = {
 	            thirdapp_id:2,
 				refreshToken:true
@@ -38,7 +52,7 @@ class Token {
 	
 	getWeixinToken(params,callback){
 		console.log('getWeixinToken',callback)
-		var href =  window.location.origin + window.location.pathname;
+		var orginHref =  window.location.origin + window.location.pathname;
 		//var href = 'http://test.solelycloud.com/gouxuanweb/'
 	
         var param = $Utils.getHashParameters()[0];
@@ -46,13 +60,15 @@ class Token {
 		console.log('param',param)
 		console.log('hash',hash);
 		if(JSON.stringify(param)!='{}'){
-			href = href +'?';
+			var href = orginHref +'?';
 			Object.keys(param).forEach(function(key){
 				 if(key!='code'&&key!='state'){
 				 	href = href + key + '=' + param[key] + '&'
 				 };
 			});
 			href = href.substr(0, href.length - 1);  
+		}else{
+			var href = orginHref;
 		};
 		console.log('href-before',href);
 			
@@ -63,11 +79,24 @@ class Token {
 				console.log('param',param);
 				console.log('hash',hash);
 				//return;
-				
-				
-					window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7db54ed176405e24&redirect_uri='+
+				var time = uni.getStorageSync('token_get_time');
+				if(time){
+					time++
+				}else{
+					var time = 1
+				};
+				uni.setStorageSync('token_get_time',time);
+				if(time>3){
+					uni.showToast({
+					    title: '获取token回调失败',
+					    icon: 'fail',
+					    duration: 1000,
+					    mask:true
+					});
+					return;
+				};
+				window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7db54ed176405e24&redirect_uri='+
 					encodeURIComponent(href)+'&response_type=code&scope=snsapi_userinfo';
-				
 				return;
 			};
             var postData = {
@@ -91,6 +120,10 @@ class Token {
                     uni.setStorageSync('user_token',res.token);
                     uni.setStorageSync('user_no',res.info.user_no);
                     uni.setStorageSync('user_info',res.info);
+					uni.setStorageSync('token_get_time',0);
+					var time = parseInt(new Date().getTime()) + 3500000;
+					console.log('time',time)
+					uni.setStorageSync('token_expire_time',time)
                     callback&&callback();
                 }else{
                     alert('获取token失败')
@@ -108,17 +141,46 @@ class Token {
 			                c_callback && c_callback(res.data);
 			            };      
 			        }else if(res.data&&res.data.solely_code==300000){
+						
+						
+						if(JSON.stringify(param)!='{}'){
+							var href = orginHref +'?';
+							Object.keys(param).forEach(function(key){
+								 if(key!='code'&&key!='state'&&key!='sub_code'){
+								 	href = href + key + '=' + param[key] + '&'
+								 };
+							});
+							href = href.substr(0, href.length - 1);  
+						};
+						
 						if(hash){
 						   href =  href + hash;
 						};
 						
-							if(param.sub_appid&&param.sub_appsecret){
-								window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+ param.sub_appid +'&redirect_uri='+
-								encodeURIComponent(href)+'&response_type=code&scope=snsapi_userinfo';
-							}else{
-								window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7db54ed176405e24&redirect_uri='+
-								encodeURIComponent(href)+'&response_type=code&scope=snsapi_userinfo';
-							};
+						var time = uni.getStorageSync('token_get_time');
+						if(time){
+							time++
+						}else{
+							var time = 1
+						};
+						uni.setStorageSync('token_get_time',time);
+						if(time>3){
+							uni.showToast({
+							    title: '获取token回调失败',
+							    icon: 'fail',
+							    duration: 1000,
+							    mask:true
+							});
+							return;
+						};
+						
+						if(param.sub_appid&&param.sub_appsecret){
+							window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+ param.sub_appid +'&redirect_uri='+
+							encodeURIComponent(href)+'&response_type=code&scope=snsapi_userinfo';
+						}else{
+							window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7db54ed176405e24&redirect_uri='+
+							encodeURIComponent(href)+'&response_type=code&scope=snsapi_userinfo';
+						};
 						
 						 
 					}else{
@@ -142,19 +204,35 @@ class Token {
 			   href =  href + hash;
 		    };
 			
-				if(param.sub_appid&&param.sub_appsecret){
-					window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+ param.sub_appid +'&redirect_uri='+
-					encodeURIComponent(href)+'&response_type=code&scope=snsapi_userinfo';
-				}else{
-					window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7db54ed176405e24&redirect_uri='+
-					encodeURIComponent(href)+'&response_type=code&scope=snsapi_userinfo';
-				}; 
+			var time = uni.getStorageSync('token_get_time');
+			if(time){
+				time++
+			}else{
+				var time = 1
+			};
+			uni.setStorageSync('token_get_time',time);
+			if(time>3){
+				uni.showToast({
+				    title: '获取token回调失败',
+				    icon: 'fail',
+				    duration: 1000,
+				    mask:true
+				});
+				return;
+			};
 			
-			  
+			if(param.sub_appid&&param.sub_appsecret){
+				window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+ param.sub_appid +'&redirect_uri='+
+				encodeURIComponent(href)+'&response_type=code&scope=snsapi_userinfo';
+			}else{
+				window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7db54ed176405e24&redirect_uri='+
+				encodeURIComponent(href)+'&response_type=code&scope=snsapi_userinfo';
+			};   
 			 
         };
         
     } 
+	
 	getWxauthToken(param,callback) {
   
         

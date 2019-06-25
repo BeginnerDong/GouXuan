@@ -120,8 +120,13 @@
 			today.setDate(1);
 			self.MonthFirst = today.getTime();
 			
-
-			self.$Utils.loadAll(['getMainData'], self)
+			var res = self.$Token.getProjectToken(function(){
+				self.$Utils.loadAll(['getMainData'], self)
+			});
+			if(res){
+				self.$Utils.loadAll(['getMainData'], self)
+			};
+			
 
 		},
 
