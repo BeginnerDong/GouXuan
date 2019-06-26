@@ -67,7 +67,7 @@
 					<div class="ilblock" style="position: absolute;top: 12px;left: 17px;">
 						<img src="../../static/images/about-icon6.png" style="width: 14px;" />
 					</div>
-					<li>达人后台
+					<li>会员后台
 						<div class="ilblock flo-right" style=" width: 6px; height: 6px; border: solid 1px #FF7263;
 						 margin-top: 20px; margin-right: 32px;
 						 background: #FF7263;border-radius: 50%;"></div>
@@ -190,7 +190,7 @@
 					self.$Router.navigateTo({route:{path:'/pages/doyen/doyen'}})
 				}else{
 					uni.showToast({
-					    title: '您还不是达人',
+					    title: '您还不是会员',
 					    icon: 'fail',
 					    duration: 1000,
 					    mask:true

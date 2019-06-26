@@ -7,7 +7,10 @@
 			</view>
 			<view class="bank bg1 flex" >
 				<view v-if="userData.info&&!userData.info.ali_account" class="font24 color2 ilblock" style=" margin-left: 15rpx;"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/depositld/depositld'}})">请完善提现账户信息</view>
-				<view class="font12 color1 ilblock" style=" margin-left: 15rpx;" >{{description}}</view>
+				<view class="font12  ilblock" style=" margin-left: 15rpx;" >
+					<view class="content ql-editor" style="padding: 12px 0;" v-html="content">
+					</view>
+				</view>
 				
 			</view>
 			<view class="cash">
@@ -50,7 +53,7 @@
 				submitData:{
 					count:''
 				},
-				description:''
+				content:''
 
 			}
 		},
@@ -91,7 +94,7 @@
 				};
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
-						self.description = res.info.data[0].description
+						self.content = res.info.data[0].content
 					};
 					self.$Utils.finishFunc('getArticleData');
 				};

@@ -217,13 +217,13 @@
 		{
 			"path": "pages/register/register",
 			"style": {
-				"navigationBarTitleText": "注册成为达人"//设置页面标题文字
+				"navigationBarTitleText": "注册成为会员"//设置页面标题文字
 			}
 		},
 		{
 			"path": "pages/ElectronicCode/ElectronicCode",
 			"style": {
-				"navigationBarTitleText": "注册成为达人"//设置页面标题文字
+				"navigationBarTitleText": "注册成为会员"//设置页面标题文字
 			}
 		},
 		{

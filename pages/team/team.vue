@@ -38,7 +38,7 @@
 
 			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/groupReturn/groupReturn'}})" class="color2 font14 bg1"
 			 style="height: 52px;width: 100%; line-height: 52px;border-bottom: solid 1px #E9E9E9;">
-				<div class="ilblock color2 font14 btm-list">达人团队奖励</div>
+				<div class="ilblock color2 font14 btm-list">会员团队奖励</div>
 				<div class="ilblock color1 font14 list">
 					<image src="../../static/images/home-icon9.png"></image>
 				</div>
@@ -47,7 +47,7 @@
 
 			<div @click="webSelf.$Router.navigateTo({route:{path:'/pages/team-team/team-team'}})" class="color2 font14 bg1"
 			 style="height: 52px;width: 100%; line-height: 52px;">
-				<div class="ilblock color2 font14 btm-list">达人团队</div>
+				<div class="ilblock color2 font14 btm-list">会员团队</div>
 				<view class="list ilblock">
 					<image src="../../static/images/home-icon9.png"></image>
 				</view>
@@ -55,7 +55,7 @@
 
 		</div>
 		<button @click="webSelf.$Router.navigateTo({route:{path:'/pages/team-code/team-code'}})" class="color5" style="font-size:14px;;background: #FB8448;width:80%;height: 35px;line-height: 35px;border-radius: 20px; margin: 20px auto 100px;">
-			邀请达人
+			邀请会员
 		</button>
 
 
@@ -67,13 +67,13 @@
 					<view class="navbar-img">
 						<image src="../../static/images/Talent%20show1.png"></image>
 					</view>
-					<view>达人</view>
+					<view>会员</view>
 				</view>
 				<view class="navbar-item ilblock">
 					<view class="navbar-img">
 						<image src="../../static/images/Talent%20show2-a.png"></image>
 					</view>
-					<view class="color8">达人团队</view>
+					<view class="color8">会员团队</view>
 				</view>
 				<view class="navbar-item ilblock" @click="webSelf.$Router.redirectTo({route:{path:'/pages/return/return'}})">
 					<view class="navbar-img">

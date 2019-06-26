@@ -8,10 +8,10 @@
 				<div class="top-name color5 font15" style="margin-top: 20px;">{{userData.nickName}}</div>
 				<!--<div class="top-id color5 font13 " style="line-height: 30px">ID:{{userData.user_no}}</div>-->
 				<div class="bg1 ilblock radiu20 font14" style="color: #FF8954; padding: 3px 10px; margin-top: 5px;" v-if="userData.info&&userData.info.level==1">
-					达人
+					会员
 				</div>
 				<div class="bg1 ilblock radiu20 font14" style="color: #FF8954; padding: 3px 10px; margin-top: 5px;" v-if="userData.info&&userData.info.level==2">
-					超级达人
+					超级会员
 				</div>
 				<div class="bg1 ilblock radiu20 font14" style="color: #FF8954; padding: 3px 10px; margin-top: 5px;" v-if="userData.info&&userData.info.level==3">
 					导师
@@ -72,13 +72,13 @@
 			</div>
 			<div style="width: 100%; margin-top: 30px;">
 				<div class="color2 font15 ilblock" style="width: 38%;">
-					达人店返
+					会员店返
 				</div>
 				<div class="ilblock" style="color: rgb(49,160,254); font-size: 20px;">{{shopCount}}</div>
 			</div>
 			<div style="width: 100%; margin-top: 10px;">
 				<div class="color2 font15 ilblock" style="width: 38%;">
-					达人粉丝总人数
+					会员粉丝总人数
 				</div>
 				<div class="ilblock" style="color: rgb(49,160,254); font-size: 20px;">{{distriDataLength}}</div>
 			</div>
@@ -86,7 +86,7 @@
 		<div class="bg1" style="margin-top: 10px;width: 100%;">
 			<div class="color2" @click="webSelf.$Router.navigateTo({route:{path:'/pages/return-first/return-first'}})">
 				<div class="flo-left color2 font14 btm-list" style="background: #fff;height: 52px;width: 100%; line-height: 52px;;border-bottom: solid 1px #E9E9E9;">
-					<div class="ilblock color2 font14" style="width: 50%;">达人返佣记录</div>
+					<div class="ilblock color2 font14" style="width: 50%;">会员返佣记录</div>
 					<div class="ilblock color1 font14 flo-right list" style="width: 40%">总返佣{{totalCount}}
 						<image src="../../static/images/home-icon9.png"></image>
 					</div>
@@ -121,13 +121,13 @@
 					<view class="navbar-img">
 						<image src="../../static/images/Talent%20show1-a.png"></image>
 					</view>
-					<view  class="color8">达人</view>
+					<view  class="color8">会员</view>
 				</view>
 				<view class="navbar-item ilblock" @click="webSelf.$Router.redirectTo({route:{path:'/pages/team/team'}})">
 					<view class="navbar-img">
 						<image src="../../static/images/Talent%20show2.png"></image>
 					</view>
-					<view>达人团队</view>
+					<view>会员团队</view>
 				</view>
 				<view class="navbar-item ilblock"  @click="webSelf.$Router.redirectTo({route:{path:'/pages/return/return'}})">
 					<view class="navbar-img">
