@@ -60,7 +60,7 @@
 			</div>
 			<div style="margin-top: 5px;">
 				<span class="color1" style="float: left; font-size: 13px;">已售：{{mainData.false_sale_count}}</span>
-				<span class="color1" style="float: right; font-size: 13px;">库存：{{mainData.stock}}</span>
+				<span class="color1" style="float: right; font-size: 13px;">库存：{{mainData.false_stock}}</span>
 			</div>
 			<div style="clear: both;"></div>
 		</div>

@@ -35,7 +35,7 @@
 			</div>
 			
 			<div v-if="item.qrData.length>0" style="margin-top: 20px;border-top: 1px solid gray;">
-				<div :data-id="item.id" @click="open($event.currentTarget.dataset.id)">{{openId!=item.id?'展开':'收起'}}</div>
+				
 				<div style="width: 100%;margin-top: 5px;display: flex;flex-wrap: wrap;">
 					
 					<div  v-for="(c_item,c_index) in item.qrData" style="width:100%;text-align: center;"> 
@@ -72,6 +72,7 @@
 								</div>
 								
 							</div>
+							
 						</div>
 						<div v-if="c_index>0&&openId==item.id" style="display: flex;">
 							
@@ -112,6 +113,7 @@
 					</div>
 					
 				</div>
+				<div :data-id="item.id" style="text-align: center;" @click="open($event.currentTarget.dataset.id)">{{openId!=item.id?'展开':'收起'}}</div>
 			</div>
 			<view style="clear: both;"></view>
 		</div>

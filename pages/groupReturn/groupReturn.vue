@@ -44,6 +44,9 @@
 			<div class="color2 font14" style="margin-top: 16px;">
 				当前状态:已完成
 			</div>
+			<div class="font14 color2" style="margin-top: 16px;">
+				返佣时间:<span>{{item.create_time}}</span>
+			</div>
 		</div>
 	</view>
 </template>
