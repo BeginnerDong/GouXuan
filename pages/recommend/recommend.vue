@@ -4,17 +4,21 @@
 			<div class="img">
 				<img class="img-one" crossOrigin="anonymous" :src="mainData.posterImg&&mainData.posterImg[0]?mainData.posterImg[0].url+'?'+new Date().getTime():''"
 				 style="width:100%;height:100%" />
+				
 				<!-- <img class="img-one" src="../../static/images/达人/img2.png" /> -->
 			</div>
+			
 			<div class="ilblock imgb">
 				<img :src="QrData&&QrData.url?QrData.url+'?'+new Date().getTime():''" crossOrigin="anonymous" />
 				<!-- <img src="../../static/images/达人/img8.png" /> -->
+				
 			</div>
 		</div>
 
 		<div style="width:100%;height:100%;position:fixed;top:0;background:black;opacity:0.6;z-index:666" v-if="showPoster"></div>
 		<div style="z-index:999;width:80%;height:80%;position: fixed;top: 10%;left:10%" v-if="showPoster">
-			<img :src="url" style="width:100%;height:100%" @click="ifShowPoster" />
+			<img :src="url" style="width:100%;height:100%" />
+			 <img src="../../static/images/icon3.png"  style="position: absolute;position: absolute;right: 43%;top: 102%;" @click="ifShowPoster" />
 		</div>
 		
 		<c-swiper :list="mainData['bannerImg']">
@@ -96,7 +100,7 @@
 
 
 		</div>
-		<div v-if="mainData.skuDateAll&&mainData.skuDateAll.length>0">
+		<div v-if="mainData&&mainData.skuDateAll&&mainData.skuDateAll.length>0">
 			<div style="color: #818181; font-size: 15px; padding: 10px 15px; background: #F2F2F2;">
 				日历
 			</div>
@@ -185,7 +189,7 @@
 					{{mainData.tips}}
 				</div>
 			</div>
-			<div class="foter2-boxa" v-if="mainData.productOne.length>0||mainData.productTwo.length>0">
+			<div class="foter2-boxa" v-if="mainData.productOne&&mainData.productOne.length>0||mainData.productTwo&&mainData.productTwo.length>0">
 				<div class="color2" style="font-weight: bolder; margin-bottom: 5px;">相关商品</div>
 				<div style="display: flex;">
 					<div class="best-box" style="margin-left:0;width:48%" v-if="mainData.productOne.length>0" @click="webSelf.$Router.navigateTo({route:{path:'/pages/recommend/recommend?id='+mainData.productOne[0].id}})">
@@ -784,7 +788,7 @@
 						if (self.mainData.onShelf == -1) {
 							self.buyStatus = 'noStock'
 						};
-						if (self.skuType == 'sku' && self.choosed_skuData.stock < 0) {
+						if (self.skuType == 'sku' && self.choosed_skuData.stock <= 0) {
 							self.buyStatus = 'noStock'
 						};
 

@@ -3,7 +3,7 @@
 	
 		<div class="bg1 top">
 			<div class="ilblock flo-left" style="width: 50%;"  @click="changeMenu('0')">
-				<div class="ilblock top-left" :style="num==0?'background: #FF824F;color:#fff':''">总榜({{mainData.length}}人)</div>
+				<div class="ilblock top-left" :style="num==0?'background: #FF824F;color:#fff':''">总榜({{total}}人)</div>
 			</div>
 			<div class="ilblock flo-left" style="width: 50%;" @click="changeMenu('1')">
 				<div class="ilblock top-right"  :style="num==1?'background: #FF824F;color:#fff':''">月榜</div>
@@ -12,10 +12,11 @@
 		</div>
 		
 		<div class="list-item bg1" style="margin-top: 15px;" v-for="(item,index) in mainData">
-			<div class="cup ilblock flo-left">
+			<div class="cup ilblock flo-left" style="width:15%">
 				<img src="../../static/images/icon5.png"  v-if="index==0"/>
 				<img src="../../static/images/icon6.png"  v-if="index==1"/>
 				<img src="../../static/images/icon7.png"  v-if="index==2"/>
+				<view  style="font-size:20px;font-weight: 700;color: #FF824F;" v-if="index>2">{{index+1}}</view>
 			</div>
 			<div class="heard ilblock flo-left">
 				<div class="heard-img radiu50">
@@ -24,12 +25,14 @@
 				<div class="heard-name color2 font14">{{item.nickname}}</div>
 			</div>
 			<div class="text-rigt ilblock flo-left">
-				<div style="width:100%; margin-top: 22px; ">
+				<div style="width:100%; margin-top: 17px; ">
 					<div class="ilblock" style="width: 50%;">
 						总返佣：{{item.total}}
 					</div>
-					<div class="color1 ilblock">订单数:{{item.order_num}}</div>
+					
+					<div class="color1 ilblock flo-right" style="margin-left: 5px;">{{item.level==1?'子级':'子子级'}}</div>
 				</div>
+				<div class="color1">订单数:{{item.order_num}}</div>
 				<div class="color1" style="line-height: 24px; height: 24px;">营业额：￥{{item.turnover}}</div>
 				<div class="color1" style="line-height: 24px; height: 24px;">手机号：{{item.phone}}</div>
 				<div class="color1" style="line-height: 24px; height: 24px;">ID:{{item.user_no}}</div>
@@ -48,7 +51,8 @@
 				data:{
 					type:1
 				},
-				isLoadAll:false
+				isLoadAll:false,
+				total:''
 			}
 		},
 		onLoad(options) {
@@ -87,7 +91,9 @@
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.mainData.push.apply(self.mainData, res.info.data);
+						self.total = res.info.total;
 					}else{
+						self.total = 0;
 						self.isLoadAll = true
 					};
 					self.$Utils.finishFunc('getMainData');

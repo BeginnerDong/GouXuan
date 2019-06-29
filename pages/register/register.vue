@@ -47,6 +47,7 @@
 	// https://github.com/zhetengbiji/mpvue-citypicker
 	import mpvueCityPicker from '../../components/mpvue-citypicker/mpvueCityPicker.vue'
 	import cityData from '../../common/city.data.js';
+
 	export default {
 		components: {
 			mpvuePicker,
@@ -79,6 +80,7 @@
 				parent_no: '',
 				currentTime:61,
 				text:'获取验证码',
+				hasArticle:false
 			}
 			
 		},
@@ -160,11 +162,17 @@
 				this.$refs.mpvuePicker.show()
 			},
 			onConfirm(e) {
-				console.log('e', e)
+				this.hasArticle =false;
 				this.submitData.province_id = e.value[0];
+				console.log('e', e.value[0])
 				this.label = e.label;
+				console.log('e', this.label)
 				this.index = e.index[0];
-				console.log(this.submitData.province_id)
+				if(this.siteData[e.index[0]].Article.length>0){
+					this.hasArticle = true
+				};
+				console.log(this.siteData[e.index[0]])
+				console.log(this.hasArticle)
 			},
 			onCancel(e) {
 				console.log('e', e)
@@ -189,6 +197,17 @@
 				};
 				postData.order = {
 					listorder: 'desc'
+				};
+				postData.getAfter = {
+					Article: {
+						tableName: 'Article',
+						middleKey: 'title',
+						key: 'title',
+						condition: '=',
+						searchItem: {
+							status: 1
+						}
+					}
 				};
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
@@ -226,7 +245,13 @@
 					const callback = (res) => {
 						if (res.solely_code == 100000) {
 							self.$Utils.showToast('注册成功', 'none');
-							window.location.href = self.siteData[self.index].url
+							if(self.hasArticle){
+								setTimeout(function(){
+								   uni.redirectTo({
+								   	url:'/pages/foucs/foucs?id='+self.siteData[self.index].Article[0].id
+								   })
+								},1000);
+							}
 						} else {
 							self.$Utils.showToast(res.msg, 'none')
 
@@ -236,6 +261,7 @@
 					self.$apis.registerSuper(postData, callback);
 				} else {
 					self.$Utils.showToast('请补全信息', 'none')
+					
 				};
 			},
 

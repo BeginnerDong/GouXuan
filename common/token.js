@@ -22,6 +22,8 @@ class Token {
 		//return uni.getStorageSync('user_token')
 		var pass = true;
 		if(postData&&postData.refreshToken){
+			uni.removeStorageSync('user_token');
+			uni.removeStorageSync('token_expire_time');
 			pass = false;
 		};
 		if(!uni.getStorageSync('user_token')){

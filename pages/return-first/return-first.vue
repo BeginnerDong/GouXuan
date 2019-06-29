@@ -214,6 +214,7 @@
 				postData.tokenFuncName = 'getProjectToken';
 				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
 				postData.searchItem.user_no = uni.getStorageSync('user_no');
+				postData.searchItem.count = ['>',0]
 				postData.order = {
 					create_time: 'desc'
 				};

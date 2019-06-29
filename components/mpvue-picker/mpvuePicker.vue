@@ -438,12 +438,12 @@
     }
 
     .mpvue-picker__action:first-child {
-        text-align: left;
+        text-align: center;
         color: #888;
     }
 
     .mpvue-picker__action:last-child {
-        text-align: right;
+        text-align: center;
     }
 
     .picker-item {

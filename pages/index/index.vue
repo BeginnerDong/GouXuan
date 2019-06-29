@@ -240,7 +240,7 @@
 			};
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 			self.paginateTwo = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-		
+			/* self.$Utils.loadAll(['getSiteData', 'getLabelData','wxJsSdk','getUserData','tokenGet'], self); */
 			var res = self.$Token.getProjectToken(function(){
 				self.$Utils.loadAll(['getSiteData', 'getLabelData','wxJsSdk','getUserData'], self);
 			});

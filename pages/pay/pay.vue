@@ -75,11 +75,23 @@
 				<div class="ilblock color3" style="line-height: 57px;margin-left: 100px;">
 					{{couponData.length>0?'请选择优惠券':'暂无优惠券'}}<img src="../../static/images/home-icon9.png" style="height: 11px;margin-left: 10px;margin-bottom: 2px; " />
 				</div>
-				<div style="position: relative;margin-bottom: 15px;" v-for="(item,index) in couponData" @click="chooseCoupon(index)"
+				<!-- <div style="position: relative;margin-bottom: 15px;" v-for="(item,index) in couponData" @click="chooseCoupon(index)"
 				 :style="webSelf.$Utils.inArray(item.id,chooseCouponId)!=-1?'border-right:2px solid red':''">
 					<img style="width:300px;height: 90px;" src="../../static/images/wximg2.png" />
 					<span style="position:absolute;left:130px;top:30px;font-size: 20px;color:red">{{item.value}}</span>
 					<span style="margin-top: 10px;font-size: 12px;color:gray">购满{{item.condition}}元即可使用</span>
+				</div> -->
+				<div style="display: flex;" v-for="(item,index) in couponData">
+					<div class="box bg1" 
+					  style="margin: 0;margin-bottom: 10px">
+						<img  src="../../static/images/wximg2.png" />
+						<span class="money1">{{item.value}}</span>
+						<span class="money2">购满{{item.condition}}元即可使用</span>
+					</div>
+					<div style="width:20%;display: flex;align-items: center;justify-content: center;"  @click="chooseCoupon(index)">
+						<img src="../../static/images/icon13.png"  v-if="webSelf.$Utils.inArray(item.id,chooseCouponId)==-1"/>
+						<img src="../../static/images/icon-3.png"  v-if="webSelf.$Utils.inArray(item.id,chooseCouponId)!=-1"/>
+					</div>
 				</div>
 			</div>
 
@@ -194,6 +206,9 @@
 				const self = this;
 				var priceGap = self.price - self.couponPrice;
 				var nowLength = self.chooseCouponId.indexOf(self.couponData[index].id);
+				if(self.chooseCouponId.length>0){
+					self.chooseCouponId = []
+				};
 				if (nowLength != -1) {
 					self.chooseCouponId.splice(nowLength, 1);
 					self.countCouponPrice();
@@ -484,7 +499,7 @@
 <style>
 	@import "../../assets/style/public.css";
 	@import "../../assets/style/pay.css";
-
+	@import "../../assets/style/coupon.css";
 	@import "../../assets/style/bootstrap.css";
 	@import "../../assets/style/basic.css";
 </style>

@@ -23,7 +23,8 @@
 		data() {
 			return {
 				currIndex: 0,
-				webSelf:this
+				webSelf:this,
+				screenWidth:0
 			};
 		},
 		mounted:function(){

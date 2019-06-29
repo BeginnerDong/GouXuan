@@ -33,13 +33,19 @@
 			return {
 				num:0,
 				mainData:[],
-				searchItem:{	
-				},
+				paginate:{},
+				searchItem:{},
 				webSelf:this
 			}
 		},
 		onLoad(options) {
 			const self = this;
+			self.paginate = {
+				count: 0,
+				currentPage: 1,
+				pagesize: 10,
+				is_page: true,
+			};
 			var res = self.$Token.getProjectToken(function(){
 				self.$Utils.loadAll(['getMainData'], self)
 			});
@@ -48,13 +54,23 @@
 			};
 
 		},
+		
+		onReachBottom() {
+			console.log('onReachBottom')
+			const self = this;
+			if (!self.isLoadAll && uni.getStorageSync('loadAllArray')) {
+				self.paginate.currentPage++;
+				self.getMainData()
+			};
+		},
+		
 		methods: {
 
 			getMainData() {
 				const self = this;
 				
 				const postData = {};
-				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+				postData.paginate = self.$Utils.cloneForm(self.paginate);
 				postData.tokenFuncName = 'getProjectToken';
 				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
 				postData.searchItem.type = 1;
