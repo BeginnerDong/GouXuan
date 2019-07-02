@@ -32,7 +32,7 @@
 	line-height: 40px;
 }
 .img-box{
-	width:26% ;
+	width:30% ;
 	height: 95px;
 	overflow: hidden;
 	border-radius: 4px;
@@ -43,7 +43,7 @@
 }
 .imgname{
 	height: 95px;
-	width:65%;
+	width:61%;
 	margin-left: 10px;
 	position: absolute;
 	text-align: justify;

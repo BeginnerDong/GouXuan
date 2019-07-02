@@ -192,7 +192,7 @@
 					success: function(res) {
 						var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
 						console.log('result', result)
-						self.searchItem.behavior = 1;
+						
 						self.searchItem.check_code = result;
 						self.getMainData(true)
 					}

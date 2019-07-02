@@ -40,7 +40,7 @@
 
 				</view>
 			</view>
-			<view class="recommend" v-if="currentSiteData.description!='0'">
+			<view class="recommend" v-if="currentSiteData.description!='0'&&showMore">
 				<view class="recommend-top">
 					<span>更多推荐</span>
 					<img src="../../static/images/home-icon11.png" style="margin-left: 10%;" />
@@ -227,7 +227,8 @@
 				isLoadAll:false,
 				show_search:false,
 				title:'',
-				primary_scope:''
+				primary_scope:'',
+				showMore:false
 			}
 		},
 		onLoad() {
@@ -257,7 +258,7 @@
 			const self = this;
 			console.log('onShow',self.timestampNow)
 			self.countDown();
-		},
+		},	
 		
 		onReachBottom(){
 			console.log('onReachBottom')
@@ -347,6 +348,7 @@
 				};		
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
+						self.showMore = true;
 						self.siteData.push.apply(self.siteData, res.info.data);
 						for (var i = 0; i < self.siteData.length; i++) {
 							self.siteDataId.push(self.siteData[i].id)

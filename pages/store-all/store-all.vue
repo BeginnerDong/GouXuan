@@ -34,7 +34,7 @@
 				</div>
 			</div>
 			
-			<div v-if="item.qrData.length>0" style="margin-top: 20px;border-top: 1px solid gray;">
+			<div v-if="item.qrData.length>0&&currentId!=0" style="margin-top: 20px;border-top: 1px solid gray;">
 				
 				<div style="width: 100%;margin-top: 5px;display: flex;flex-wrap: wrap;">
 					
