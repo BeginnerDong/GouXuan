@@ -253,6 +253,21 @@
 				postData.tokenFuncName = 'getMerchantToken';
 				postData.paginate = self.$Utils.cloneForm(self.paginate);
 				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
+				var shops = uni.getStorageSync('merchant_info');
+				console.log('shops',shops)
+				var newShops = [];
+				if(shops&&shops.shops.length>0){
+					for(var i=0;i<shops.shops.length;i++){
+						newShops.push(shops.shops[i].phone);
+					};
+				}else if(shops){
+					console.log('merchant_info',newShops)
+					newShops.push(shops.shop.phone);
+				};
+				if(newShops.length>0){
+					postData.searchItem.check_no = ['in',newShops];
+				};
+				
 				postData.getAfter = {
 					order: {
 						tableName: 'Order',

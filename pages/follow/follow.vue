@@ -123,12 +123,13 @@
 		},
 
 		onReachBottom() {
-
+			
 			const self = this;
 			if (!self.isLoadAll) {
 				self.paginate.currentPage++;
 				self.getMainData()
 			};
+			
 		},
 
 		methods: {

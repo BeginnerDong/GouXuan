@@ -235,10 +235,23 @@ export default {
 		};
 		http.HTTP(allParams);
 	},
+	
 
 	productGet(param, callback) {
 		var allParams = {
 			url: 'Common/Product/get',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
+	
+	qrDateGet(param, callback) {
+		var allParams = {
+			url: 'Common/QrDate/get',
 			type: 'post',
 			data: param,
 			sCallback: function(data) {
@@ -509,5 +522,18 @@ export default {
 		};
 		http.HTTP(allParams);
 	},
+	
+	
+	addVirtualOrder(param, callback) {
+		var allParams = {
+			url: 'Func/Order/addVirtualOrder',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	}
 
 }

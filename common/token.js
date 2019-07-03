@@ -17,7 +17,7 @@ class Token {
             this.getUserInfo();
         };
     }
-	
+
 	getProjectToken(callback,postData) { 
 		//return uni.getStorageSync('user_token')
 		var pass = true;

@@ -12,7 +12,6 @@
 					<image style="width:18px;height:18px" src="../../static/images/home-icon13.png"></image>
 				</view>
 			</view>
-	
 		</view>
 		<view  :style="show_search?'display:block':'display:none'" style="padding: 0 20px;margin-top: 20px;">
 			<input style="width:70%;border: 1px solid #e2e2e2;" placeholder="请输入商品名称搜索" v-model="title" class="ilblock" />
@@ -37,10 +36,9 @@
 							<view class="color2">{{item.title}}</view>
 						</view>
 					</view>
-
 				</view>
 			</view>
-			<view class="recommend" v-if="currentSiteData.description!='0'&&showMore">
+			<view class="recommend" v-if="currentSiteData.description&&currentSiteData.description!='0'&&showMore">
 				<view class="recommend-top">
 					<span>更多推荐</span>
 					<img src="../../static/images/home-icon11.png" style="margin-left: 10%;" />
@@ -80,7 +78,7 @@
 					
 				</view>
 			</view>
-			<view style="width: 100%; height: 15px;" v-if="currentSiteData.description!='0'"></view>
+			<view style="width: 100%; height: 15px;" v-if="currentSiteData.description&&currentSiteData.description!='0'"></view>
 		</view>
 		<view style="width: 100%; height: 10px;"></view>
 		<view style="width: 100%; background: #F8F8F8; overflow: hidden; 
@@ -241,11 +239,13 @@
 			};
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 			self.paginateTwo = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			/* self.$Utils.loadAll(['getSiteData', 'getLabelData','wxJsSdk','getUserData','tokenGet'], self); */
+			//self.$Utils.loadAll(['getSiteData', 'getLabelData','wxJsSdk','getUserData','tokenGet'], self);
 			var res = self.$Token.getProjectToken(function(){
 				self.$Utils.loadAll(['getSiteData', 'getLabelData','wxJsSdk','getUserData'], self);
 			});
+			console.log('res',res)
 			if(res){
+				console.log('login')
 				self.$Utils.loadAll(['getSiteData', 'getLabelData','wxJsSdk','getUserData'], self);
 			};
 			
@@ -290,7 +290,6 @@
 			
 			getUserData() {
 				const self = this;
-				
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
 				const callback = (res) => {
@@ -309,7 +308,7 @@
 				const self = this;
 				const postData = {
 					searchItem: {
-						user_no: 'U621300643113723'
+						user_no: 'U60160324657637'
 					}
 				};
 				console.log('postData', postData)

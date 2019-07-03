@@ -139,29 +139,40 @@
 			self.title = options.title;
 			if (optionsTwo[0].sku_id) {
 				self.id = optionsTwo[0].sku_id;
+				self.sku_no = optionsTwo[0].sku_no;
 				self.getBefore = {
-						sku: {
-							tableName: 'Sku',
-							searchItem: {
-								id: ['in', [self.id]]
-							},
-							middleKey: 'product_no',
-							key: 'product_no',
-							condition: 'in',
-						}
-					},
-					self.getAfter = {
-						sku: {
-							tableName: 'Sku',
-							searchItem: {
-								status: 1,
-								id: self.id
-							},
-							middleKey: 'product_no',
-							key: 'product_no',
-							condition: 'in',
+					sku: {
+						tableName: 'Sku',
+						searchItem: {
+							id: ['in', [self.id]]
 						},
+						middleKey: 'product_no',
+						key: 'product_no',
+						condition: 'in',
 					}
+				};
+				self.getAfter = {
+					sku: {
+						tableName: 'Sku',
+						searchItem: {
+							status: 1,
+							id: self.id
+						},
+						middleKey: 'product_no',
+						key: 'product_no',
+						condition: 'in',
+					},
+					qrData: {
+						tableName: 'SkuQr',
+						searchItem: {
+							status: 1,
+							sku_no:self.sku_no
+						},
+						middleKey: 'product_no',
+						key: 'product_no',
+						condition: 'in',
+					},
+				};
 			} else if (optionsTwo[0].skuDate_id) {
 				self.id = optionsTwo[0].skuDate_id;
 				self.getBefore = {
@@ -186,6 +197,7 @@
 							key: 'product_no',
 							condition: 'in',
 						},
+						
 					}
 			}
 			var res = self.$Token.getProjectToken(function(){
@@ -320,6 +332,26 @@
 						self.count--;
 					}
 				};
+				
+				if((self.mainData.product_no=='P8149615587636'||self.mainData.product_no=='P05039291242219')&&self.count>1){
+					self.count = 1;
+					uni.showToast({
+					    title: '该商品限购',
+					    icon: 'fail',
+					    duration: 2000,
+					    mask:true
+					});
+				};
+				if(self.mainData.product_no=='P35214673547619'&&self.count>2){
+					self.count = 2;
+					uni.showToast({
+					    title: '该商品限购',
+					    icon: 'fail',
+					    duration: 2000,
+					    mask:true
+					});
+				};
+				
 				self.price = (self.count * self.mainData.sku[0].price).toFixed(2);
 				console.log('self.mainData', self.mainData)
 			},
@@ -386,10 +418,21 @@
 						remark: self.submitData.remark,
 						shop_no: self.mainData.user_no,
 						province_id: self.mainData.province_id,
+						
 					},
 					snap_address:self.addressData
 				};
-
+				if(self.mainData.qrData){
+					var isreserve = false;
+					for(var i=0;i<self.mainData.qrData.length;i++){
+						if(self.mainData.qrData[i].isreserve==1){
+							isreserve = true;
+						};
+					};
+					if(isreserve){
+						postData.data.passage1 = 1;
+					};
+				};
 				if (uni.getStorageSync('url_parent_no')) {
 					postData.data.parent_no = uni.getStorageSync('url_parent_no');
 				};

@@ -36,7 +36,8 @@
 					thirdapp_id: 2,
 					type: 2,
 					pay_status:1,
-					order_step:['in',[0,3]]
+					order_step:['in',[0,3]],
+					passage1:'1'
 				}
 			}
 		},
@@ -49,14 +50,17 @@
 						is_page: true,
 					};
 					
+			
+		},
+		onShow(){
+			const self = this;
+			self.mainData = [];
 			var res = self.$Token.getProjectToken(function(){
 				self.$Utils.loadAll(['getMainData'], self)
 			});
 			if(res){
 				self.$Utils.loadAll(['getMainData'], self)
 			};
-
-
 		},
 
 		onReachBottom() {
@@ -77,6 +81,8 @@
 		},
 
 		methods: {
+			
+			
 
 			search() {
 				const self = this;
@@ -88,7 +94,6 @@
 					self.$Utils.showToast('请输入商品名称搜索', 'none')
 				}
 			},
-
 
 			getMainData(isNew) {
 				const self = this;

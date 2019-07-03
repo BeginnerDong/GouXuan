@@ -29,21 +29,12 @@
 				<div>
 					<div style="height: 26px;line-height: 26px;">{{item.message}}</div>
 					<div>核销码：{{item.check_code}}</div>
-					<div style="height: 26px;" v-if="item.book_time&&mainData.products&&mainData.products[0]&&mainData.products[0].snap_product.product.isreserve==1">
-						<div style="height: 26px;">您预约的时间</div>
-						<div style="height: 26px;">{{item.book_time}}</div>
+					<div style="height: 28px;" v-if="item.book_time&&item.isreserve==1">
+						<div style="height: 28px;">您预约的时间</div>
+						<div style="height: 28px;">{{tampToTime(item.book_time)}}</div>
 					</div>
-					<div style="display: flex;height: 26px;" v-if="!item.book_time&&mainData.products&&mainData.products[0]&&mainData.products[0].snap_product.product.isreserve==1">
-						<div style="height: 26px;margin-right: 5px;">请选时间</div>
-						<div style="height: 26px;">
-							<ruiDatePicker fields="day" start="2010-00-00" end="2030-12-30" :otherData="{'index':index}" :value="item.book_time"
-							 @change="bindChange" @cancel="bindCancel"></ruiDatePicker>
-						</div>
-
-					</div>
-					<div v-if="!item.book_time&&mainData.products&&mainData.products[0]&&mainData.products[0].snap_product.product.isreserve==1"
-					 :data-index="index" @click="book($event.currentTarget.dataset.index)" style="width: 57px;line-height: 16px;height: 18px;font-size: 12px;text-align: -webkit-center;border-radius: 15%;color: white;background: #FF895A;">
-						立即预约
+					<div style="display: flex;height: 28px;margin-top: 10px;" v-if="!item.book_time&&item.isreserve==1">
+						<div style="height: 28px;margin-right: 5px;" :data-qr_no="item.qr_no" :data-nid="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/book/book?qr_no='+$event.currentTarget.dataset.qr_no+'&id='+$event.currentTarget.dataset.nid}})">点击去预约</div>
 					</div>
 				</div>
 			</div>
@@ -96,6 +87,16 @@
 			};
 		},
 		methods: {
+			
+			tampToTime(timestamp){
+				var time = new Date(parseInt(timestamp));
+				var y = time.getFullYear();
+				var m = time.getMonth()+1;
+				var d = time.getDate();
+				
+				return y+'-'+m+'-'+d
+			},
+			
 			tapZoom(url) {
 				const self = this;
 				self.tapShow = true;
@@ -153,6 +154,7 @@
 				self.mainData.qrData[e[1].index].newBookTime = e[0];
 				console.log('bindChange', e)
 			},
+
 
 			bindCancel(e) {
 				console.log('bindCancel', e)

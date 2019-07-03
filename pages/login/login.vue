@@ -64,6 +64,7 @@
 		},
 		onLoad(options) {
 			const self = this;
+			uni.setStorageSync('canClick', true);
 			self.show();
 			/* self.$Utils.loadAll(['getMainData', 'getLabelData', 'getCaseData'], self) */
 			if (uni.getStorageSync('merchant_token')) {
@@ -88,16 +89,14 @@
 
 			getCode() {
 				var self = this;
-			
+				console.log('getCode')
 				var phone = self.submitData.login_name;
 				var currentTime = self.currentTime //把手机号跟倒计时值变例成js值
 				if (self.submitData.login_name == '') {
-					
 					uni.setStorageSync('canClick', true);
 					self.$Utils.showToast('手机号码不能为空', 'none');
 					return
 				} else if (phone.trim().length != 11 || !/^1[3|4|5|6|7|8|9]\d{9}$/.test(phone)) {
-					
 					uni.setStorageSync('canClick', true);
 					self.$Utils.showToast('手机号格式不正确', 'none');
 					return
@@ -122,18 +121,16 @@
 								//如果当秒数小于等于0时 停止计时器 且按钮文字变成重新发送 且按钮变成可用状态 倒计时的秒数也要恢复成默认秒数 即让获取验证码的按钮恢复到初始化状态只改变按钮文字
 								if (currentTime <= 0) {
 									uni.setStorageSync('canClick', true);
-								
 									clearInterval(interval)
 									self.text = '重新发送'
-								}
-
+								};
 							}, 1000);
 						} else {
-							uni.setStorageSync('canClick', true);
-							
+							uni.setStorageSync('canClick', true);	
 							self.$Utils.showToast(res.msg, 'none')
 						}
 					};
+					console.log('submitcode')
 					self.$apis.codeGet(postData, callback)
 				};
 			},
@@ -143,7 +140,7 @@
 				const self = this;
 
 				const postData = {
-					login_name: self.submitData.login_name,
+					phone: self.submitData.login_name,
 					smsAuth:{
 					   phone: self.submitData.login_name,
 					   code:self.submitData.code
@@ -164,6 +161,7 @@
 							console.log(res);
 							uni.setStorageSync('merchant_token', res.token);
 							uni.setStorageSync('merchant_no', res.info.user_no);
+							uni.setStorageSync('merchant_info', res.info);
 							uni.redirectTo({
 								url: '/pages/store/store'
 							})

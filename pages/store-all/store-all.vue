@@ -16,13 +16,15 @@
 				<div  :class="currentId == 0?'color6':'color1'">其他</div>
 			</div>
 		</div>
-		<div class="storebox bg1" style="height: auto;" v-for="(item,index) in mainData">
+		
+		
+		<div class="storebox bg1" style="height: auto;" v-if="mainData.length>0" v-for="(item,index) in mainData">
 			<div class="storebox-top">
 				<div class="font12 color1 ilblock">
 					交易时间：{{item.create_time}}
 				</div>	
 			</div>
-			<div class="storebox-btm" :data-id="item.products[0].product_id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/recommend/recommend?id='+$event.currentTarget.dataset.id}})">
+			<div class="storebox-btm" :data-id="item.products[0]&&item.products[0].product_id?item.products[0].product_id:''" @click="webSelf.$Router.navigateTo({route:{path:'/pages/recommend/recommend?id='+$event.currentTarget.dataset.id}})">
 				<div class="ilblock img-box">
 					<img :src="item.products[0]&&item.products[0].snap_product&&item.products[0].snap_product.product.mainImg[0]?item.products[0].snap_product.product.mainImg[0].url:''" />
 				</div>
@@ -47,29 +49,15 @@
 							</div>
 							<div>
 								<div style="height: 28px;line-height: 28px;">{{c_item.message}}({{c_item.behavior==1?'未核销':'已核销'}})</div>
-								<div>核销码：{{c_item.check_code}}</div>
-								<div style="height: 28px;" v-if="c_item.book_time&&item.products[0].snap_product.product.isreserve==1">
+								<div style="font-size: 12px;">核销码：{{c_item.check_code}}</div>
+								<div style="height: 28px;margin-top: 10px;" v-if="c_item.book_time&&c_item.isreserve==1">
 									<div style="height: 28px;">您预约的时间</div>
-									<div style="height: 28px;">{{c_item.book_time}}</div>
+									<div style="height: 28px;">{{tampToTime(c_item.book_time)}}</div>
 								</div>
-								<div style="display: flex;height: 28px;" v-if="!c_item.book_time&&item.products[0].snap_product.product.isreserve==1">
-									<div style="height: 28px;margin-right: 5px;">请选时间</div>
-									<div style="height: 28px;">
-										<ruiDatePicker
-											fields="day"
-											start="2010-00-00"
-											end="2030-12-30"
-											:otherData="{'index':index,'c_index':c_index}"
-											:value="c_item.book_time"
-											@change="bindChange"
-											@cancel="bindCancel"
-										></ruiDatePicker>
-									</div>
-									
+								<div style="display: flex;height: 28px;margin-top: 10px;" v-if="!c_item.book_time&&c_item.isreserve==1">
+									<div style="height: 28px;margin-right: 5px;" :data-qr_no="c_item.qr_no" :data-nid="c_item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/book/book?qr_no='+$event.currentTarget.dataset.qr_no+'&id='+$event.currentTarget.dataset.nid}})">点击去预约</div>
 								</div>
-								<div v-if="!c_item.book_time&&item.products[0].snap_product.product.isreserve==1" :data-index="index" :data-c_index="c_index" @click="book($event.currentTarget.dataset.index,$event.currentTarget.dataset.c_index)" style="width: 57px;line-height: 16px;height: 18px;font-size: 12px;text-align: -webkit-center;border-radius: 15%;color: white;background: #FF895A;">
-									立即预约
-								</div>
+								
 								
 							</div>
 							
@@ -82,29 +70,13 @@
 							</div>
 							<div>
 								<div style="height: 28px;line-height: 28px;">{{c_item.message}}({{c_item.behavior==1?'未核销':'已核销'}})</div>
-								<div>核销码：{{c_item.check_code}}</div>
-								<div style="height: 28px;" v-if="c_item.book_time&&item.products[0].snap_product.product.isreserve==1">
+								<div style="font-size: 12px;">核销码：{{c_item.check_code}}</div>
+								<div style="height: 28px;margin-top: 10px;" v-if="c_item.book_time&&c_item.isreserve==1">
 									<div style="height: 28px;">您预约的时间</div>
-									<div style="height: 28px;">{{c_item.book_time}}</div>
+									<div style="height: 28px;">{{tampToTime(c_item.book_time)}}</div>
 								</div>
-								<div style="display: flex;height: 28px;" v-if="!c_item.book_time&&item.products[0].snap_product.product.isreserve==1">
-									<div style="height: 28px;margin-right: 5px;">请选时间</div>
-									
-									<div style="height: 28px;">
-										<ruiDatePicker
-											fields="day"
-											start="2010-00-00"
-											end="2030-12-30"
-											:otherData="{'index':index,'c_index':c_index}"
-											:value="c_item.book_time"
-											@change="bindChange"
-											@cancel="bindCancel"
-										></ruiDatePicker>
-									</div>
-									
-								</div>
-								<div v-if="!c_item.book_time&&item.products[0].snap_product.product.isreserve==1" :data-index="index" :data-c_index="c_index" @click="book($event.currentTarget.dataset.index,$event.currentTarget.dataset.c_index)" style="width: 57px;line-height: 16px;height: 18px;font-size: 12px;text-align: -webkit-center;border-radius: 15%;color: white;background: #FF895A;">
-									立即预约
+								<div style="display: flex;height: 28px;margin-top: 10px;" v-if="!c_item.book_time&&c_item.isreserve==1">
+									<div style="height: 28px;margin-right: 5px;" :data-qr_no="c_item.qr_no" :data-nid="c_item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/book/book?qr_no='+$event.currentTarget.dataset.qr_no+'&id='+$event.currentTarget.dataset.nid}})">点击去预约</div>
 								</div>
 								
 							</div>						
@@ -117,6 +89,7 @@
 			</div>
 			<view style="clear: both;"></view>
 		</div>
+		
 		<div class="box-c" v-if="mainData.length==0">
 			<div style="margin-top: 100px; margin-left: 140px;">
 				<img src="../../static/images/logo1.png" style="width: 90px;"/>
@@ -147,7 +120,8 @@
 				mainData: [],
 				searchItem:{
 					pay_status:1,
-					transport_status:0
+					transport_status:0,
+					type:2
 				},
 				tapShow:false,
 				tapUrl:'',
@@ -158,10 +132,10 @@
 		onLoad(options) {
 			const self = this;
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+			
 			if(options.num){
 				self.tab(options.num)
 			}else{
-				
 				var res = self.$Token.getProjectToken(function(){
 					self.$Utils.loadAll(['getMainData'], self)
 				});
@@ -170,7 +144,9 @@
 				};
 			}
 		},
-		
+		onShow(options){
+			const self = this;
+		},
 		onReachBottom() {
 		
 			const self = this;
@@ -184,7 +160,14 @@
 		
 		methods: {
 			
-			
+			tampToTime(timestamp){
+				var time = new Date(parseInt(timestamp));
+				var y = time.getFullYear();
+				var m = time.getMonth()+1;
+				var d = time.getDate();
+				
+				return y+'-'+m+'-'+d
+			},
 			book(index,c_index){
 				const self = this;
 				if(self.mainData[index]['qrData'][c_index].book_time){
@@ -301,23 +284,27 @@
 				
 				if (currentId == '0') {
 					self.searchItem = {
-						order_step:2
+						order_step:2,
+						type:2
 					};
 				} else if (currentId == '1') {
 					self.searchItem = {
 						pay_status:1,
-						transport_status:0
+						transport_status:0,
+						type:2
 					};
 				} else if (currentId == '2') {
 					self.searchItem = {
 						pay_status:1,
 			
-						transport_status:1
+						transport_status:1,
+						type:2
 					};
 				} else if (currentId == '3') {
 					self.searchItem = {
 						pay_status:1,
-						transport_status:2
+						transport_status:2,
+						type:2
 					};
 				};
 			

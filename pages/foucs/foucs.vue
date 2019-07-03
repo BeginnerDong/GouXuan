@@ -1,6 +1,6 @@
 <template>
 	<view class="body" :style="'height:'+screenHeight+'px'" style="text-align: center;">	
-		<image :src="url" style="width:80%"></image>
+		<img :src="url" style="width:300px;height:540px"/>
 	</view>
 </template>
 

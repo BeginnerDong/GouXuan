@@ -252,7 +252,13 @@
 				"navigationBarTitleText": "吃喝玩乐推荐"//设置页面标题文字
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/book/book",
+            "style" : {
+				"navigationBarTitleText": "请选择预约时间"
+			}
+        }
+    ],
 
 	"globalStyle": {
 		"navigationStyle":"custom",

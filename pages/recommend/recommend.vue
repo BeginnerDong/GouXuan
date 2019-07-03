@@ -4,14 +4,11 @@
 			<div class="img">
 				<img class="img-one" crossOrigin="anonymous" :src="mainData.posterImg&&mainData.posterImg[0]?mainData.posterImg[0].url+'?'+new Date().getTime():''"
 				 style="width:100%;height:100%" />
-				
 				<!-- <img class="img-one" src="../../static/images/达人/img2.png" /> -->
 			</div>
-			
 			<div class="ilblock imgb">
 				<img :src="QrData&&QrData.url?QrData.url+'?'+new Date().getTime():''" crossOrigin="anonymous" />
 				<!-- <img src="../../static/images/达人/img8.png" /> -->
-				
 			</div>
 		</div>
 
@@ -894,7 +891,7 @@
 						self.$Utils.showToast('商品信息错误', 'none')
 					} else {
 						uni.navigateTo({
-							url: '/pages/pay/pay?type=sku' + '&sku_id=' + self.choosed_skuData.id + '&title=' + self.choosed_skuData.title,
+							url: '/pages/pay/pay?type=sku' + '&sku_id=' + self.choosed_skuData.id + '&title=' + self.choosed_skuData.title + '&sku_no=' + self.choosed_skuData.sku_no,
 						});
 					};
 				};
