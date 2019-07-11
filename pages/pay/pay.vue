@@ -288,7 +288,6 @@
 					create_time: 'desc'
 				};
 				const callback = (res) => {
-
 					if (res.solely_code == 100000) {
 						if (res.info.data.length > 0) {
 							self.couponData.push.apply(self.couponData, res.info.data);
@@ -303,7 +302,6 @@
 
 			getAddressData() {
 				const self = this;
-
 				const postData = {};
 				postData.searchItem = {
 					isdefault: 1
@@ -342,7 +340,8 @@
 					    mask:true
 					});
 				};
-				if(self.mainData.product_no=='P35214673547619'&&self.count>2){
+				
+				if(self.mainData.product_no=='P53712697112119'&&self.count>2){
 					self.count = 2;
 					uni.showToast({
 					    title: '该商品限购',
@@ -353,17 +352,18 @@
 				};
 				
 				self.price = (self.count * self.mainData.sku[0].price).toFixed(2);
-				console.log('self.mainData', self.mainData)
+				console.log('self.mainData', self.mainData);
+				
 			},
 
 			addOrder(e) {
 				const self = this;
 				console.log('self.mainData.type', self.mainData.type);
-				if (self.orderId != '') {
+				/* if (self.orderId != '') {
 
 					self.pay();
 					return
-				};
+				}; */
 				if (self.submitData.name == '') {
 					uni.setStorageSync('canClick', true);
 					self.$Utils.showToast('请填写姓名')
@@ -445,7 +445,7 @@
 					} else {
 						uni.setStorageSync('canClick', true);
 						uni.showToast({
-							title: '下单失败',
+							title: res.msg,
 							duration: 2000
 						});
 					};

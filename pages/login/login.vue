@@ -126,9 +126,9 @@
 								};
 							}, 1000);
 						} else {
-							uni.setStorageSync('canClick', true);	
-							self.$Utils.showToast(res.msg, 'none')
-						}
+							self.$Utils.showToast(res.msg, 'none');
+						};
+						uni.setStorageSync('canClick', true);
 					};
 					console.log('submitcode')
 					self.$apis.codeGet(postData, callback)
@@ -208,7 +208,7 @@
 	.top-list {
 		border-bottom: solid 1px #F0F0F0;
 		height: 60px;
-		width: 80%;
+		width: 100%;
 		line-height: 66px;
 	}
 

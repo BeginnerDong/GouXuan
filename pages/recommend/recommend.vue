@@ -67,10 +67,10 @@
 		</div>
 		<div style="height:2px;width: 100%;background: #f2f2f2;"></div>
 		<div class="address color2" @click="openMap" style=" position: relative;">
-			<div class="ilblock" style="width: 10%;height: 100%;line-height: 48px;text-align: center;">
+			<div class="ilblock" style="width: 10%;height: 100%;line-height: 48px;text-align: center;vertical-align: top;">
 				<img src="../../static/images/details-icon1.png" style="width: 12px; height: 14px;" />
 			</div>
-			<div class="ilblock" style="width: 80%;height: 100%;line-height: 48px;">{{mainData.address}}</div>
+			<div class="ilblock" style="width: 80%;height: 100%;line-height: 48px;vertical-align: top;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">{{mainData.address}}</div>
 			<div class="ilblock" style="position: absolute;right: 15px; top: 16px;">
 				<img src="../../static/images/home-icon9.png" style="height: 12px;" />
 			</div>

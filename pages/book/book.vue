@@ -43,20 +43,20 @@
 			</div>
 			<view class="bg1" style="padding:0upx 0upx 70upx;">
 				<block v-for="item in dateData">
-					<div class="day-item ilblock day-star" :style="item.qrDate&&item.qrDate.id==currentQrDateId?'height:50px;color:red':'height:50px;'"
+					<div class="day-item ilblock day-star" style="vertical-align: top;" :style="item.sDay==currentDay?'height:70px;color:red':'height:70px;'"
 					 @click="dateChoose(item)">
 						<div>{{item.sDay}}</div>
-						<div style="position: absolute;top:12px;text-align: center;left: 46%;transform: translateX(-50%);">
-							<div  v-if="item.qrDate&&item.qrDate.price!='0.00'">￥{{item.qrDate.price}}</div>
-							<div style="color:#72B784;" v-if="item.hasItem>0&&userData.primary_scope>10">返{{item.qrDate.shop_reward}}</div>
-							<div style="color:#71C3CB; margin-top: 8upx;" v-if="item.hasItem>0">{{item.qrDate.stock&&item.qrDate.stock>0?'可预约':'已约满'}}</div>
+						<div style="width:100%;height:30px;">
+							<div  v-if="item.qrDate&&item.qrDate.price!='0.00'">补￥{{item.qrDate.price}}</div>
+							<div style="color:#71C3CB; margin-top: 8upx;" v-if="item.hasItem>0">{{item.qrDate.stock&&item.qrDate.stock>0?'剩余'+item.qrDate.stock:'已约满'}}</div>
 						</div>
 					</div>
 				</block>
 
 			</view>
 		</div>
-		<button @click="submit">预约</button>
+		<button style="color:white;width: 150px;height: 30px;margin-top: 20px;line-height: 30px;background-color: #ffaa31;" @click="submit">点击预约</button>
+		<view style="font-size: 14px;text-align: center;margin: 10px;padding: 10px;">备注：每天18：00前可预约1天后的日期，18：00以后可以预约2天后的日期</view>
 	</view>
 </template>
 
@@ -90,7 +90,7 @@
 				skuLabelData: [],
 				skuIdArray: [],
 				cuurentPrice: 0,
-				currentQrDateId: 0,
+				currentDay: 0,
 				currentShopReward: 0,
 				currentGroupReward: 0,
 				showPoster: false,
@@ -273,20 +273,37 @@
 
 			dateChoose(item) {
 				const self = this;
-				if(!item.qrDate||!item.qrDate.stock>0){
+				
+				if(self.qr_no&&self.qr_no!='undefined'&&(!item.qrDate||!item.qrDate.stock>0)){
 					return;
-				}else{
-					if(self.currentQrDateId==item.qrDate.id){
-						self.currentQrDateId = '';
-						self.item = {};
-					}else{
-						self.currentQrDateId =  item.qrDate.id;
-						self.item = item;
-					};
 				};
-				console.log('item', item);	
+				
+				if(self.todayYear<self.curYear){
+					return;
+				};
+				if(self.todayYear==self.curYear&&self.todayMonth<self.curMonth){
+					return;
+				};
+				if(self.todayMonth==self.curMonth&&self.todayDay>item.sDay-1){
+					return;
+				};
+				console.log(9999);
+				var nowTime = new Date().getTime();
+				var sixTime = new Date(new Date(new Date().toLocaleDateString()).getTime()+18*60*60*1000);
+				if(self.todayDay==item.sDay-1&&nowTime>sixTime){
+					return;
+				};
+				console.log(6666);
+				if(self.currentDay==item.sDay){
+					self.currentDay = '';
+					self.item = {};
+				}else{
+					self.currentDay =  item.sDay;
+					self.item = item;
+				};
+				
+				
 			},
-			
 			submit(){
 				const self = this;
 				if(self.mainData.book_time){
@@ -297,8 +314,29 @@
 					self.$Utils.showToast('请选择预约日期', 'none')
 					return;
 				};
+				if(self.item.qrDate&&self.item.qrDate.price!='0.00'){
+					var content = '预约需加价￥'+self.item.qrDate.price+'元,提交预约后，除不可抗力因素外不可更改和取消';
+				}else{
+					var content = '我同意提交预约后，除不可抗力因素外不可更改和取消';
+				};
+				uni.showModal({
+					title: '提示',
+					content: content,
+					success: function (res) {
+						if (res.confirm) {
+							console.log('用户点击确定');
+							self.submitF()
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+					}
+				});
+			},
+			
+			submitF(){
+				const self = this;
 				var item = self.item;
-				if(item.qrDate.price!='0.00'){
+				if(item.qrDate&&item.qrDate.price!='0.00'){
 					console.log('self.choosed_skuData', self.choosed_skuData)
 					const postData = {};
 					postData.pay = {
@@ -320,7 +358,10 @@
 								status:1
 							},
 							data: {
-								book_time:item.qrDate.time,
+								book_time:self.curYear+'-'+(self.curMonth+1)+'-'+item.sDay,
+								date_no:item.qrDate.date_no,
+								reserve_time:item.qrDate.time,
+								reserved:2
 							},
 					   }
 					];
@@ -367,15 +408,37 @@
 					};
 					self.$apis.addVirtualOrder(postData, callback);
 				}else{
-					const postData = {
-						tokenFuncName:'getProjectToken',
-						searchItem:{
-							qr_no:self.qr_no
-						},
-						data:{
-							book_time:item.qrDate.time
-						}
+					
+					if(item.qrDate){
+						
+						var postData = {
+							tokenFuncName:'getProjectToken',
+							searchItem:{
+								id:self.id,
+							},
+							data:{
+								book_time:self.curYear+'-'+(self.curMonth+1)+'-'+item.sDay,
+								date_no:item.qrDate.date_no,
+								reserve_time:item.qrDate.time,
+								reserved:2
+							}
+						};
+						
+					}else{
+						
+						var postData = {
+							tokenFuncName:'getProjectToken',
+							searchItem:{
+								id:self.id,
+							},
+							data:{
+								book_time:self.curYear+'-'+(self.curMonth+1)+'-'+item.sDay,
+								reserve_time:(new Date()).getTime(),
+								reserved:2
+							}
+						};
 					};
+					
 					const callback = (res) => {
 						if (res.solely_code==100000) {
 							self.$Utils.showToast('预约成功','none');
@@ -471,6 +534,8 @@
 				} else {
 					self.curMonth--;
 				};
+				self.currentDay = '';
+				self.item = {};
 				self.refreshPageData(self.curYear, self.curMonth, 1);
 				self.getQrDateData();
 
@@ -483,7 +548,9 @@
 					self.curYear++
 				} else {
 					self.curMonth++;
-				}
+				};
+				self.currentDay = '';
+				self.item = {};
 				self.refreshPageData(self.curYear, self.curMonth, 1);
 				self.getQrDateData();
 			},

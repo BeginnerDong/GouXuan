@@ -72,6 +72,6 @@
         "router" : {
             "base" : "/wx/"
         },
-        "domain" : "http://test.local-scanner.com"
+        "domain" : "https://www.local-scanner.com"
     }
 }

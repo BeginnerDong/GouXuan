@@ -8,14 +8,14 @@
 		</div>
 		<div class="bg1" style="padding: 15px; border-bottom: solid 1px #F4F4F4;">
 			<div style="height:50px; text-align: center; line-height: 50px;">
-				<div class="ilblock" style="width: 49%;" @click="changeMenu('0')"><span :class="num==0?'color77':'color22'">产品详情</span></div>
+				<div class="ilblock" style="width: 49%;" @click="changeMenu('0')"><span :class="num==0?'color77':'color22'">使用说明</span></div>
 				<div class="ilblock" style="width: 49%;" @click="changeMenu('1')"><span :class="num==1?'color77':'color22'">日历预约</span></div>
 			</div>
 		</div>
 		<div class="middle bg2" v-if="num==0">
 			<div class="color2 font15">
 				<div style="overflow: hidden;">
-					<view class="content ql-editor" v-html="mainData.products&&mainData.products[0]&&mainData.products[0].snap_product&&mainData.products[0].snap_product.product?mainData.products[0].snap_product.product.content:''">
+					<view class="content ql-editor" v-html="mainData.products&&mainData.products[0]&&mainData.products[0].snap_product&&mainData.products[0].snap_product.product?mainData.products[0].snap_product.product.information:''">
 					</view>
 				</div>
 			</div>
@@ -27,11 +27,11 @@
 					<div style="color: red;">点击放大</div>
 				</div>
 				<div>
-					<div style="height: 26px;line-height: 26px;">{{item.message}}</div>
+					<div class="overflow3" style="height: 60px;line-height: 28px;">{{item.message}}</div>
 					<div>核销码：{{item.check_code}}</div>
 					<div style="height: 28px;" v-if="item.book_time&&item.isreserve==1">
 						<div style="height: 28px;">您预约的时间</div>
-						<div style="height: 28px;">{{tampToTime(item.book_time)}}</div>
+						<div style="height: 28px;">{{item.book_time}}</div>
 					</div>
 					<div style="display: flex;height: 28px;margin-top: 10px;" v-if="!item.book_time&&item.isreserve==1">
 						<div style="height: 28px;margin-right: 5px;" :data-qr_no="item.qr_no" :data-nid="item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/book/book?qr_no='+$event.currentTarget.dataset.qr_no+'&id='+$event.currentTarget.dataset.nid}})">点击去预约</div>

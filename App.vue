@@ -40,7 +40,22 @@
 </script>
 
 <style>
+	
 	@import "/assets/style/public.css";
 	@import "/assets/style/quill.css";
+	body, html{
+		 -webkit-user-select:auto;
+		  -moz-user-select:auto;
+		  -ms-user-select:auto;
+		  user-select:auto;
+	}
+	
+	*{
+		 -webkit-user-select:auto;
+		  -moz-user-select:auto;
+		  -ms-user-select:auto;
+		  user-select:auto;
+	}
+	
 	/*每个页面公共css */
 </style>

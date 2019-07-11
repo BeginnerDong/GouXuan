@@ -16,6 +16,9 @@
 				<div class="flo-left" style="padding:2px;border-radius:20%;background: #F67550;color:white" @click="bindWechat">
 					{{userData.openid!=''?'已绑定':'绑定'}}
 				</div>
+				<div class="flo-left" style="padding:2px;border-radius:20%;background: #F67550;color:white;margin-left:5px" @click="loginOut">
+					退出
+				</div>
 				<!-- <div class="flo-left" style="margin-left: 25px;">
 					关联微信昵称为
 				</div> -->
@@ -39,11 +42,13 @@
 					item.order[0].products[0].snap_product.product.mainImg[0].url:''" />
 				</div>
 				<div class="ilblock imgname">
-					<div class="font15 color2 overflow2" style="line-height: 21px; height: 45px;">
+					<div class="font15 color2 overflow2" style="line-height: 21px; height: 25px;">
 						{{item.order&&item.order[0].products&&item.order[0].products[0]&&item.order[0].products[0].snap_product&&item.order[0].products[0].snap_product.product?
 					item.order[0].products[0].snap_product.product.title:''}}
 					</div>
-					
+					<div class="font12 color1 overflow2" style="line-height: 20px; height: 20px;" v-if="item.behavior==2">
+						核销时间:{{item.update_time?item.update_time:''}}
+					</div>
 					<div style="color: rgb(249,138,72); font-size: 11px; margin-top: 16px;">￥<span style="font-size: 20px;">{{item.order[0].price}}<text style="font-size: 15px" class="color2" v-if="item.message">({{item.message}})</text></span>
 					</div>
 				</div>
@@ -70,8 +75,11 @@
 					<img :src="item.product&&item.product[0]&&item.product[0].mainImg&&item.product[0].mainImg[0]?item.product[0].mainImg[0].url:''" />
 				</div>
 				<div class="ilblock imgname">
-					<div class="font15 color2 overflow2" style="line-height: 21px; height: 45px;">
+					<div class="font15 color2 overflow2" style="line-height: 21px; height: 25px;">
 						{{item.product&&item.product[0]?item.product[0].title:''}}
+					</div>
+					<div class="font15 color2 overflow2" style="line-height: 20px; height: 20px;" v-if="item.behavior==2">
+						核销时间:{{item.update_time?item.update_time:''}}
 					</div>
 
 					<div style="color: rgb(249,138,72); font-size: 11px; margin-top: 16px;">￥<span style="font-size: 20px;">{{item.product&&item.product[0]?item.product[0].price:''}}<text style="font-size: 15px" class="color2" v-if="item.message">({{item.message}})</text></span>
@@ -137,15 +145,35 @@
 			const self = this;
 			console.log('refresh');
 			uni.startPullDownRefresh();
-			delete self.searchItem.check_code;
-			self.searchItem.behavior = 2;
+			/* delete self.searchItem.check_code;
+			self.searchItem.behavior = 2; */
+			
+			self.searchItem = {
+				thirdapp_id: 2,
+				shop_no: uni.getStorageSync('merchant_no'),
+				type: ['in', [1, 2]],
+				behavior:2
+			};
 			self.mainData = [];
+			
 			self.getMainData(true);
+			
 		},
 
 
 
 		methods: {
+			
+			
+			loginOut(){
+				const self = this;
+				wx.removeStorageSync('merchant_token');
+				self.$Router.reLaunch({
+					route: {
+						path: '/pages/login/login'
+					}
+				})
+			},
 
 
 			bindWechat() {
@@ -158,8 +186,10 @@
 				};
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
-						self.$Utils.showToast('绑定成功', 'none')
-						self.getUserData()
+						self.$Utils.showToast('绑定成功', 'none');
+						setTimeout(function(){
+							self.getUserData()
+						},1000);
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					}
@@ -179,7 +209,6 @@
 						self.$Utils.showToast(res.msg, 'none')
 					};
 					self.$Utils.finishFunc('getUserData');
-
 				};
 				self.$apis.userGet(postData, callback);
 			},
@@ -192,8 +221,8 @@
 					success: function(res) {
 						var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
 						console.log('result', result)
-						
 						self.searchItem.check_code = result;
+						self.searchItem.behavior = ['in',[1,2]];
 						self.getMainData(true)
 					}
 				});
@@ -206,7 +235,6 @@
 					url: window.location.href
 				};
 				const callback = (res) => {
-
 					self.$jweixin.config({
 						debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
 						appId: res.appId, // 必填，公众号的唯一标识
@@ -231,7 +259,7 @@
 				const self = this;
 				if (self.check_code != '') {
 					self.searchItem.check_code = self.check_code;
-					self.searchItem.behavior = 1;
+					self.searchItem.behavior = ['in',[1,2]];
 					self.getMainData(true)
 				} else {
 					self.$Utils.showToast('无效输入', 'none')
@@ -264,7 +292,7 @@
 					console.log('merchant_info',newShops)
 					newShops.push(shops.shop.phone);
 				};
-				if(newShops.length>0){
+				if(!self.searchItem.check_code&&newShops.length>0){
 					postData.searchItem.check_no = ['in',newShops];
 				};
 				
@@ -289,13 +317,25 @@
 						condition: '='
 					}
 				};
+				
+				postData.order = {
+					'update_time':'desc'
+				};
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.mainData.push.apply(self.mainData, res.info.data);
 					} else {
-					
 						self.isLoadAll = true;
-					}
+					};
+					const start = new Date(new Date(new Date().toLocaleDateString()).getTime());
+					const end = new Date(new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1);
+					for(var i=0;i<self.mainData.length;i++){
+						if(self.mainData[i].isreserve==1&&(self.mainData[i].book_time<start||self.mainData[i].book_time>end)){
+							self.mainData[i].canCheck  = false;
+						}else{
+							self.mainData[i].canCheck  = true;
+						};
+					};
 					setTimeout(function() {
 						uni.stopPullDownRefresh()
 					}, 300);
@@ -315,7 +355,8 @@
 							postData.tokenFuncName = 'getMerchantToken';
 							postData.data = {
 								behavior: 2,
-							}
+								check_time:(new Date()).getTime()
+							};
 							postData.searchItem = {};
 							postData.searchItem.id = id;
 							const callback = res => {
@@ -329,7 +370,6 @@
 						}
 					}
 				});
-				
 				
 			},
 		}

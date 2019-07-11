@@ -243,15 +243,15 @@
 			var res = self.$Token.getProjectToken(function(){
 				self.$Utils.loadAll(['getSiteData', 'getLabelData','wxJsSdk','getUserData'], self);
 			});
-			console.log('res',res)
+			console.log('res',res);
 			if(res){
 				console.log('login')
 				self.$Utils.loadAll(['getSiteData', 'getLabelData','wxJsSdk','getUserData'], self);
 			};
-			
 			if(uni.getStorageSync('user_info').primary_scope){
 				self.primary_scope  = uni.getStorageSync('user_info').primary_scope;
-			};		
+			};	
+				
 		},
 		
 		onShow() {
@@ -308,7 +308,7 @@
 				const self = this;
 				const postData = {
 					searchItem: {
-						user_no: 'U60160324657637'
+						user_no: 'U621300643113723'
 					}
 				};
 				console.log('postData', postData)

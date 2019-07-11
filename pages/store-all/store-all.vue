@@ -29,10 +29,13 @@
 					<img :src="item.products[0]&&item.products[0].snap_product&&item.products[0].snap_product.product.mainImg[0]?item.products[0].snap_product.product.mainImg[0].url:''" />
 				</div>
 				<div class="ilblock imgname">
-					<div class="font14 color2 overflow2" style="line-height: 21px; height: 45px;">
+					<div class="font14 color2 overflow3" style="line-height: 21px; height: 43px;">
 						{{item.products[0]&&item.products[0].snap_product&&item.products[0].snap_product.product?item.products[0].snap_product.product.title:''}}
 					</div>
-					<div class="ilblock" style="color: rgb(249,138,72); font-size: 11px; margin-top: 16px;">￥<span style="font-size: 20px;">{{item.price}}</span> </div>
+					<div class="font12 color2 overflow3" style="line-height: 21px; height: 21px;">
+						姓名:{{item.name}};电话:{{item.phone}}
+					</div>
+					<div class="ilblock" style="color: rgb(249,138,72); font-size: 11px; ">￥<span style="font-size: 20px;">{{item.price}}</span> </div>
 				</div>
 			</div>
 			
@@ -41,49 +44,42 @@
 				<div style="width: 100%;margin-top: 5px;display: flex;flex-wrap: wrap;">
 					
 					<div  v-for="(c_item,c_index) in item.qrData" style="width:100%;text-align: center;"> 
-						<div v-if="c_index==0" style="display: flex;">
-							
+					
+						<div v-if="c_index==0" style="display: flex;margin-top: 20px;">
 							<div style="width: 35%;text-align: center;">
 								<image :src="c_item.url" style="width: 100px;height: 100px;" @click="tapZoom(c_item.url)"></image>
 								<div style="color: red;">点击放大</div>
 							</div>
-							<div>
-								<div style="height: 28px;line-height: 28px;">{{c_item.message}}({{c_item.behavior==1?'未核销':'已核销'}})</div>
+							<div style="width: 60%;text-align: center;">
+								<div class="overflow3" style="height: 60px;line-height: 28px;">{{c_item.message}}({{c_item.behavior==1?'未核销':'已核销'}})</div>
 								<div style="font-size: 12px;">核销码：{{c_item.check_code}}</div>
-								<div style="height: 28px;margin-top: 10px;" v-if="c_item.book_time&&c_item.isreserve==1">
-									<div style="height: 28px;">您预约的时间</div>
-									<div style="height: 28px;">{{tampToTime(c_item.book_time)}}</div>
+								<div style="height: 28px;margin-top: 10px;" v-if="c_item.book_time">
+									<div style="font-size: 12px;height: 28px;">您预约的时间:{{c_item.book_time}}</div>
+									
 								</div>
-								<div style="display: flex;height: 28px;margin-top: 10px;" v-if="!c_item.book_time&&c_item.isreserve==1">
-									<div style="height: 28px;margin-right: 5px;" :data-qr_no="c_item.qr_no" :data-nid="c_item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/book/book?qr_no='+$event.currentTarget.dataset.qr_no+'&id='+$event.currentTarget.dataset.nid}})">点击去预约</div>
+								<div style="display: flex;height: 28px;margin-top: 10px;" v-if="!c_item.book_time&&(c_item.isreserve==1||(item.products[0]&&item.products[0].snap_product&&item.products[0].snap_product.product.isreserve==1))">
+									<div style="width: 100%;height: 28px;margin-right: 5px;" :data-qr_no="c_item.qr_no" :data-nid="c_item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/book/book?qr_no='+$event.currentTarget.dataset.qr_no+'&id='+$event.currentTarget.dataset.nid}})">点击去预约</div>
 								</div>
-								
-								
 							</div>
-							
 						</div>
-						<div v-if="c_index>0&&openId==item.id" style="display: flex;">
-							
+						<div v-if="c_index>0&&openId==item.id" style="display: flex;margin-top: 20px;">
 							<div style="width: 35%;text-align: center;">
 								<image :src="c_item.url" style="width: 100px;height: 100px;" @click="tapZoom(c_item.url)"></image>
 								<div style="color: red;">点击放大</div>
 							</div>
-							<div>
-								<div style="height: 28px;line-height: 28px;">{{c_item.message}}({{c_item.behavior==1?'未核销':'已核销'}})</div>
+							<div style="width: 60%;text-align: center;">
+								<div class="overflow3" style="height: 60px;line-height: 28px;">{{c_item.message}}({{c_item.behavior==1?'未核销':'已核销'}})</div>
 								<div style="font-size: 12px;">核销码：{{c_item.check_code}}</div>
-								<div style="height: 28px;margin-top: 10px;" v-if="c_item.book_time&&c_item.isreserve==1">
-									<div style="height: 28px;">您预约的时间</div>
-									<div style="height: 28px;">{{tampToTime(c_item.book_time)}}</div>
+								<div style="height: 28px;margin-top: 10px;" v-if="c_item.book_time">
+									<div style="font-size: 12px;height: 28px;">您预约的时间:{{c_item.book_time}}</div>
+									
 								</div>
-								<div style="display: flex;height: 28px;margin-top: 10px;" v-if="!c_item.book_time&&c_item.isreserve==1">
-									<div style="height: 28px;margin-right: 5px;" :data-qr_no="c_item.qr_no" :data-nid="c_item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/book/book?qr_no='+$event.currentTarget.dataset.qr_no+'&id='+$event.currentTarget.dataset.nid}})">点击去预约</div>
+								<div style="display: flex;height: 28px;margin-top: 10px;text-align: center;" v-if="!c_item.book_time&&(c_item.isreserve==1||(item.products[0]&&item.products[0].snap_product&&item.products[0].snap_product.product.isreserve==1))">
+									<div style="width: 100%;height: 28px;margin-right: 5px;" :data-qr_no="c_item.qr_no" :data-nid="c_item.id" @click="webSelf.$Router.navigateTo({route:{path:'/pages/book/book?qr_no='+$event.currentTarget.dataset.qr_no+'&id='+$event.currentTarget.dataset.nid}})">点击去预约</div>
 								</div>
-								
 							</div>						
 						</div>	
-						
 					</div>
-					
 				</div>
 				<div :data-id="item.id" style="text-align: center;" @click="open($event.currentTarget.dataset.id)">{{openId!=item.id?'展开':'收起'}}</div>
 			</div>
